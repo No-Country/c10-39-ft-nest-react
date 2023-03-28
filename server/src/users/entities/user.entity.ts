@@ -9,7 +9,7 @@ export class User {
         unique: true
     })
     email: string;
-    @Column('text')
+    @Column({ type: 'text', nullable: true  })
     password: string;
     @Column('text')
     fullName: string;
@@ -19,3 +19,4 @@ export class User {
     roles: string[];
 
 }
+export default User;
