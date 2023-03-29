@@ -14,7 +14,7 @@ const Register: FC = () => {
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3000", {
+      .post("http://localhost:3000/register", {
         mail: email,
         fullName: `${name} ${lastName}`,
         password,
