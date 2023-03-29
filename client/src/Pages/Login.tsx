@@ -27,8 +27,8 @@ const Login: FC = () => {
         <FaBasketballBall />
       </div>
       <form onSubmit={handleSubmit} className="flex flex-col w-full items-center gap-5">
-        <Input type="mail" label="Email" state={mail} setState={setMail} />
-        <Input type="password" label="Contraseña" state={password} setState={setPassword} />
+        <Input type="mail" label="Email" state={mail} setState={setMail} icon />
+        <Input type="password" label="Contraseña" state={password} setState={setPassword} icon />
         <input
           className="mt-5 w-28 py-2 rounded-full font-bold bg-gradone"
           type="submit"
