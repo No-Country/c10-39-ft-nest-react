@@ -5,7 +5,7 @@ type props = {
   setState: (string: string) => void;
 };
 
-export const Input = ({ type, label, state, setState }: props) => {
+const Input = ({ type, label, state, setState }: props) => {
   const handleChange = ({ target }: { target: HTMLInputElement }) => setState(target.value);
 
   return (
