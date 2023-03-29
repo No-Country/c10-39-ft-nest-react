@@ -1,0 +1,42 @@
+import { BaseSyntheticEvent, FC, useState } from "react";
+
+import { FaBasketballBall } from "react-icons/fa";
+
+import Input from "../Components/Input";
+
+import axios from "axios";
+
+const Login: FC = () => {
+  const [mail, setMail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e: BaseSyntheticEvent) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:3000/login", {
+        mail,
+        password,
+      })
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
+  };
+
+  return (
+    <div className="relative h-screen w-screen flex flex-col justify-center items-center gap-10 bg-primary">
+      <div className="[&>svg]:w-32 [&>svg]:h-32 [&>svg]:text-gradone">
+        <FaBasketballBall />
+      </div>
+      <form onSubmit={handleSubmit} className="flex flex-col w-full items-center gap-5">
+        <Input type="mail" label="Email" state={mail} setState={setMail} icon />
+        <Input type="password" label="Contraseña" state={password} setState={setPassword} icon />
+        <input
+          className="mt-5 w-28 py-2 rounded-full font-bold bg-gradone"
+          type="submit"
+          value="Enviar"
+        />
+      </form>
+    </div>
+  );
+};
+
+export default Login;
