@@ -3,6 +3,7 @@ import { BaseSyntheticEvent, FC, useState } from "react";
 import axios from "axios";
 
 import Input from "../Components/Input";
+import ButtonGradient from "../Components/ButtonGradient";
 
 export const Register: FC = () => {
   const [email, setEmail] = useState("");
@@ -14,10 +15,9 @@ export const Register: FC = () => {
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
     axios
-      .post("url", {
-        email,
-        name,
-        lastName,
+      .post("http://localhost:3000", {
+        mail: email,
+        fullName: `${name} ${lastName}`,
         password,
         confirmPass,
       })
@@ -58,6 +58,7 @@ export const Register: FC = () => {
             setState={setConfirmPass}
           />
         </div>
+        <ButtonGradient type="register" />
       </form>
     </div>
   );
