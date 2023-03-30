@@ -64,6 +64,106 @@ npm run start
 
 6. Para poder ver las tablas se puede usar TablePlus o PGAdmin.
 
+# Enpoints
+
+## Sports
+### Get All Sports
+```
+http://localhost:3000/api/sports
+```
+Se obtiene algo asi:
+```
+[
+  {
+    "name": "tenis",
+    "images": [
+      "https://img.freepik.com/free-photo/sports-tools_53876-138077.jpg?w=2000"
+    ]
+  },
+  {
+    "name": "soccer",
+    "images": [
+      "https://img.freepik.com/free-photo/sports-tools_53876-138077.jpg?w=2000"
+    ]
+  }
+]
+```
+### Get One Sport
+```
+http://localhost:3000/api/sports/tenis
+```
+se cambia el `tenis` por el nombre de otro deporte en ingles y se obtiene:
+```
+[
+  {
+    "id": 1,
+    "name": "tenis",
+    "images": [
+      "https://img.freepik.com/free-photo/sports-tools_53876-138077.jpg?w=2000"
+    ],
+    "sportfields": [
+      {
+        "id": "cf237097-e501-4b0d-ab06-bb907d8a62ca",
+        "name": "tennis pro",
+        "images": [
+          "https://img.freepik.com/free-vector/sport-fields-isometric-set_1284-24824.jpg"
+        ]
+      },
+      {
+        "id": "9d19d086-ba9f-4e25-992a-8956d16e3fa2",
+        "name": "tennis always",
+        "images": [
+          "https://img.freepik.com/free-vector/sport-fields-isometric-set_1284-24824.jpg"
+        ]
+      }
+    ]
+  }
+]
+```
+
+## Sportfields
+
+### Get All Sportfields (todas las canchas)
+```
+http://localhost:3000/api/sportfields
+```
+Nos da un json con la siguiente estructura:
+```
+[
+  {
+    "id": "9d19d086-ba9f-4e25-992a-8956d16e3fa2",
+    "name": "tennis always",
+    "description": "Cancha de pasto",
+    "dimensions": "40X20",
+    "grills": false,
+    "locker": false,
+    "showers": false,
+    "bathrooms": false,
+    "restobar": false,
+    "parking": true,
+    "images": [
+      "https://img.freepik.com/free-vector/sport-fields-isometric-set_1284-24824.jpg"
+    ],
+    "sport": "tenis"
+  },
+  {
+    "id": "cf237097-e501-4b0d-ab06-bb907d8a62ca",
+    "name": "tennis pro",
+    "description": "Cancha de polvo de ladrillo",
+    "dimensions": "40X20",
+    "grills": true,
+    "locker": true,
+    "showers": true,
+    "bathrooms": true,
+    "restobar": false,
+    "parking": false,
+    "images": [
+      "https://img.freepik.com/free-vector/sport-fields-isometric-set_1284-24824.jpg"
+    ],
+    "sport": "tenis"
+  }
+]
+```
 ## License
 
 Nest is [MIT licensed](LICENSE).
