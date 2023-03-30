@@ -9,6 +9,7 @@ import Search from "./Pages/Search";
 import Reservation from "./Pages/Reservation";
 
 import SportFields from "./Pages/SportFields";
+import SFDetail from "./Pages/SFDetial";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/reservas/:sport" element={<Search />}></Route>
           <Route path="/reservas" element={<Reservation />}></Route>
           <Route path="/reservas/:sport/canchas" element={<SportFields />}></Route>
+          <Route path="/reservas/:sport/canchas/id" element={<SFDetail />}></Route>
 
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
