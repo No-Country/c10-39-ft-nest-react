@@ -12,6 +12,7 @@ import { Sport } from './sports/entities/sport.entity';
 import { Sportfields } from './sportfields/entities/sportfield.entity';
 import { SeedModule } from './seed/seed.module';
 
+
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
