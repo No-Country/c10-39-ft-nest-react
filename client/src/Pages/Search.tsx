@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import axios from "axios";
 import Select from "../Components/Select";
+import PrimaryButton from "../Components/PrimaryButton";
 
 type fieldSportType = {
   tenis: Array<string>;
@@ -46,15 +47,17 @@ export const Search: FC = () => {
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:3000", {
-        ubication,
-        fieldSport,
-        date,
-        timeTable,
-      })
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error));
+    // axios
+    //   .post("http://localhost:3000", {
+    //     ubication,
+    //     fieldSport,
+    //     date,
+    //     timeTable,
+    //   })
+    //   .then((res) => console.log(res))
+    //   .then((res) => navigate(`/reservas/${sport}/canchas`))
+    //   .catch((error) => console.log(error));
+    navigate(`/reservas/${sport}/canchas`);
   };
 
   return (
@@ -92,7 +95,7 @@ export const Search: FC = () => {
           />
         </div>
         <div className="absolute bottom-10 right-10">
-          <button>Buscar</button>
+          <PrimaryButton text="BUSCAR" />
         </div>
       </form>
     </Layout>

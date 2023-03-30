@@ -18,7 +18,7 @@ const Select: FC<selectType> = ({ array, type, label, state, setState, icon }) =
         onChange={handleChange}
         value={state}
         id={label}
-        className="selectArrow inputFocus cursor-pointer order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none focus:border-blue-500"
+        className="selectArrow bg-secondary inputFocus cursor-pointer order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none focus:border-blue-500"
       >
         <option disabled> Elije un campo</option>
         <option>Cualquier tipo</option>
@@ -26,7 +26,7 @@ const Select: FC<selectType> = ({ array, type, label, state, setState, icon }) =
       </select>
       <label
         htmlFor={label}
-        className="bg-white translate-y-7 translate-x-2 w-max cursor-pointer transition-transform order-1"
+        className="bg-secondary translate-y-7 translate-x-2 w-max cursor-pointer transition-transform order-1"
       >
         {label}
       </label>
