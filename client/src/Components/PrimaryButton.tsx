@@ -1,15 +1,13 @@
 import { FC } from "react";
 
 type Props = {
-  onClick: () => void;
   text: string;
+  onClick?: () => void;
   children?: React.ReactNode;
 };
 
 const PrimaryButton: FC<Props> = ({ text, onClick }) => {
-  const handleClick = () => {
-    onClick();
-  };
+  const handleClick = () => onClick && onClick();
 
   return (
     <button
