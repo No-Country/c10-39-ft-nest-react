@@ -6,6 +6,8 @@ import MainPage from "./Pages/MainPage";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import Search from "./Pages/Search";
+import Reservation from "./Pages/Reservation";
+
 import SportFields from "./Pages/SportFields";
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
           <Route path="/home" element={<Home />}></Route>
 
           <Route path="/reservas/:sport" element={<Search />}></Route>
+          <Route path="/reservas" element={<Reservation />}></Route>
           <Route path="/reservas/:sport/canchas" element={<SportFields />}></Route>
 
           <Route path="/login" element={<Login />}></Route>
