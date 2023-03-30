@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import axios from "axios";
 import Select from "../Components/Select";
+import PrimaryButton from "../Components/PrimaryButton";
 
 type fieldSportType = {
   tenis: Array<string>;
@@ -54,6 +55,7 @@ export const Search: FC = () => {
         timeTable,
       })
       .then((res) => console.log(res))
+      .then((res) => navigate(`/reservas/${sport}/canchas`))
       .catch((error) => console.log(error));
   };
 
@@ -92,7 +94,7 @@ export const Search: FC = () => {
           />
         </div>
         <div className="absolute bottom-10 right-10">
-          <button>Buscar</button>
+          <PrimaryButton text="BUSCAR" />
         </div>
       </form>
     </Layout>

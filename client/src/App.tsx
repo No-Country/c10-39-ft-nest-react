@@ -5,6 +5,7 @@ import MainPage from "./Pages/MainPage";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import Search from "./Pages/Search";
+import SportFields from "./Pages/SportFields";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/home" element={<Home />}></Route>
 
           <Route path="/reservas/:sport" element={<Search />}></Route>
+          <Route path="/reservas/:sport/canchas" element={<SportFields />}></Route>
 
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
