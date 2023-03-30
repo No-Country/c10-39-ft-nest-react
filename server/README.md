@@ -64,14 +64,28 @@ npm run start
 
 6. Para poder ver las tablas se puede usar TablePlus o PGAdmin.
 
+# Seed
+
+Para llenar la base de datos usar el siguient endpoint:
+
+```
+http://localhost:3000/api/seed
+```
+
+Esto crea una pequeña base de datos de `Sports` y `Sportfields`.
+
 # Enpoints
 
 ## Sports
+
 ### Get All Sports
+
 ```
 http://localhost:3000/api/sports
 ```
+
 Se obtiene algo asi:
+
 ```
 [
   {
@@ -88,11 +102,15 @@ Se obtiene algo asi:
   }
 ]
 ```
+
 ### Get One Sport
+
 ```
 http://localhost:3000/api/sports/tenis
 ```
+
 se cambia el `tenis` por el nombre de otro deporte en ingles y se obtiene:
+
 ```
 [
   {
@@ -124,10 +142,13 @@ se cambia el `tenis` por el nombre de otro deporte en ingles y se obtiene:
 ## Sportfields
 
 ### Get All Sportfields (todas las canchas)
+
 ```
 http://localhost:3000/api/sportfields
 ```
+
 Nos da un json con la siguiente estructura:
+
 ```
 [
   {
@@ -164,6 +185,35 @@ Nos da un json con la siguiente estructura:
   }
 ]
 ```
+
+### Get OneSportfield
+
+Para obtener solo un campo usamos el `id` de este:
+
+```
+http://localhost:3000/api/sportfields/9d19d086-ba9f-4e25-992a-8956d16e3fa2
+```
+
+Nos da todas las caracteristicas de la cancha en especifico:
+
+```
+{
+  "id": "9d19d086-ba9f-4e25-992a-8956d16e3fa2",
+  "name": "tennis always",
+  "description": "Cancha de pasto",
+  "dimensions": "40X20",
+  "grills": false,
+  "locker": false,
+  "showers": false,
+  "bathrooms": false,
+  "restobar": false,
+  "parking": true,
+  "images": [
+    "https://img.freepik.com/free-vector/sport-fields-isometric-set_1284-24824.jpg"
+  ]
+}
+```
+
 ## License
 
 Nest is [MIT licensed](LICENSE).
