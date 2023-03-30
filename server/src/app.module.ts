@@ -11,6 +11,10 @@ import { SportfieldsModule } from './sportfields/sportfields.module';
 import { Sport } from './sports/entities/sport.entity';
 import { Sportfields } from './sportfields/entities/sportfield.entity';
 import { SeedModule } from './seed/seed.module';
+import { PropertiesModule } from './properties/properties.module';
+import { ReservesModule } from './reserves/reserves.module';
+import { SportsComplexModule } from './sports-complex/sports-complex.module';
+import { OwnerModule } from './owner/owner.module';
 
 
 @Module({
@@ -53,6 +57,10 @@ import { SeedModule } from './seed/seed.module';
     SportsModule,
     SportfieldsModule,
     SeedModule,
+    PropertiesModule,
+    ReservesModule,
+    SportsComplexModule,
+    OwnerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
