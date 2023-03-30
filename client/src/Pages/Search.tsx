@@ -47,16 +47,17 @@ export const Search: FC = () => {
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:3000", {
-        ubication,
-        fieldSport,
-        date,
-        timeTable,
-      })
-      .then((res) => console.log(res))
-      .then((res) => navigate(`/reservas/${sport}/canchas`))
-      .catch((error) => console.log(error));
+    // axios
+    //   .post("http://localhost:3000", {
+    //     ubication,
+    //     fieldSport,
+    //     date,
+    //     timeTable,
+    //   })
+    //   .then((res) => console.log(res))
+    //   .then((res) => navigate(`/reservas/${sport}/canchas`))
+    //   .catch((error) => console.log(error));
+    navigate(`/reservas/${sport}/canchas`);
   };
 
   return (

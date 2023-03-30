@@ -1,5 +1,6 @@
 import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 
+import ContextProvider from "./Pages/Context";
 import Register from "./Pages/Register";
 import MainPage from "./Pages/MainPage";
 import Home from "./Pages/Home";
@@ -9,7 +10,7 @@ import SportFields from "./Pages/SportFields";
 
 function App() {
   return (
-    <div>
+    <ContextProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainPage />}></Route>
@@ -23,7 +24,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" />}></Route>
         </Routes>
       </BrowserRouter>
-    </div>
+    </ContextProvider>
   );
 }
 
