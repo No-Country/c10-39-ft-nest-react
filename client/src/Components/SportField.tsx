@@ -9,8 +9,8 @@ const SportField: FC = () => {
   const handleClick = () => navigate("/reservas/:sport/canchas/id");
 
   return (
-    <div>
-      <div className="bg-primary w-full h-52"></div>
+    <div className="mb-5 shadow-lg">
+      <div className="bg-cover bg-[url('https://web-assets.playfinder.com/wp-content/uploads/2017/12/27164405/Bookteq-CRM-email-clay-hard-tennis-600x260.jpg')] w-full h-52"></div>
       <div className="flex flex-col gap-5 p-5 bg-white">
         <div>
           <span className="block text-3xl ">Titulo</span>

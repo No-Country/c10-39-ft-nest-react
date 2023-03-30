@@ -15,7 +15,7 @@ const Card: FC<props> = ({ children, title }) => {
     navigate(`/reservas`);
   };
   return (
-    <div className="mt-3">
+    <div className="mt-3 mb-10">
       {children}
       <div className=" relative bg-primary w-full h-[200px]">
         <h1 className=" absolute bottom-4 left-4 text-white text-xl w-10/12 text-left font-semibold">
