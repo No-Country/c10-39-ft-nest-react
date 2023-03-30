@@ -31,8 +31,7 @@ const Layout: FC<props> = ({ children, title }) => {
           </div>
         </div>
       </header>
-      <div className="pt-[80px]"></div>
-      {children}
+      <div className="mb-[100px] pt-[80px] bg-secondary ">{children}</div>
     </div>
   );
 };
