@@ -3,7 +3,9 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'sports' })
 export class Sport {
-    @PrimaryGeneratedColumn('increment')
+    @PrimaryGeneratedColumn('rowid')
+   // @PrimaryGeneratedColumn('increment')
+
     id: number;
     @Column('text', { unique: true })
     name: string;

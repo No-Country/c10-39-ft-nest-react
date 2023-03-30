@@ -1,5 +1,7 @@
 import { Sport } from "src/sports/entities/sport.entity";
-import { Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+
 
 @Entity({ name: 'sportfields' })
 export class Sportfields {
@@ -34,7 +36,12 @@ export class Sportfields {
     @ManyToOne(
         () => Sport,
         (sport) => sport.sportfields,
+
+        { onDelete: 'CASCADE', onUpdate: 'CASCADE' }
     )
+    @JoinColumn({ name: 'sportId' })
     sport: Sport;
+    @Column()
+    sportId: number;
 }
 

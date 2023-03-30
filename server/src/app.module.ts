@@ -10,6 +10,8 @@ import { SportsModule } from './sports/sports.module';
 import { SportfieldsModule } from './sportfields/sportfields.module';
 import { Sport } from './sports/entities/sport.entity';
 import { Sportfields } from './sportfields/entities/sportfield.entity';
+import { SeedModule } from './seed/seed.module';
+
 
 @Module({
   imports: [
@@ -50,6 +52,7 @@ import { Sportfields } from './sportfields/entities/sportfield.entity';
     // AuthModule,
     SportsModule,
     SportfieldsModule,
+    SeedModule,
   ],
   controllers: [AppController],
   providers: [AppService],
