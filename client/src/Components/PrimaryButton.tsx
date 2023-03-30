@@ -11,7 +11,7 @@ const PrimaryButton: FC<Props> = ({ text, onClick }) => {
 
   return (
     <button
-      className="shadow-lg w-[88px] h-[36px] bg-primary rounded-[20px] text-white"
+      className="p-1 shadow-lg w-[88px] h-[36px] bg-primary rounded-[20px] text-white"
       onClick={handleClick}
     >
       {text}

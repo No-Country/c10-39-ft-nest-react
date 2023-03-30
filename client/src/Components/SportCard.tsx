@@ -1,5 +1,6 @@
 import { FC } from "react";
 import PrimaryButton from "./PrimaryButton";
+import { useNavigate, useParams } from "react-router-dom";
 
 type props = {
   children?: React.ReactNode;
@@ -8,8 +9,11 @@ type props = {
 };
 
 const SportCard: FC<props> = ({ children, title, backgroundImage }) => {
+  const navigate = useNavigate();
+
   const handleClick = () => {
     console.log("click");
+    navigate(`/reservas/tenis`);
   };
   return (
     <div

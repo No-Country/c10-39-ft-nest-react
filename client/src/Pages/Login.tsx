@@ -5,20 +5,23 @@ import { FaBasketballBall } from "react-icons/fa";
 import Input from "../Components/Input";
 
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Login: FC = () => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:3000/login", {
-        mail,
-        password,
-      })
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error));
+    // axios
+    //   .post("http://localhost:3000/login", {
+    //     mail,
+    //     password,
+    //   })
+    //   .then((res) => console.log(res))
+    //   .catch((error) => console.log(error));
+    navigate(`/home`);
   };
 
   return (
@@ -26,8 +29,17 @@ const Login: FC = () => {
       <div className="[&>svg]:w-32 [&>svg]:h-32 [&>svg]:text-gradone">
         <FaBasketballBall />
       </div>
-      <form onSubmit={handleSubmit} className="flex flex-col w-full items-center gap-5">
-        <Input type="mail" label="Email" state={mail} setState={setMail} rounded={true} />
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col w-full items-center gap-5"
+      >
+        <Input
+          type="mail"
+          label="Email"
+          state={mail}
+          setState={setMail}
+          rounded={true}
+        />
         <Input
           type="password"
           label="Contraseña"

@@ -1,5 +1,6 @@
 import { FC } from "react";
 import PrimaryButton from "./PrimaryButton";
+import { useNavigate, useParams } from "react-router-dom";
 
 type props = {
   children?: React.ReactNode;
@@ -7,8 +8,11 @@ type props = {
 };
 
 const Card: FC<props> = ({ children, title }) => {
+  const navigate = useNavigate();
+
   const handleClick = () => {
     console.log("click");
+    navigate(`/reservas`);
   };
   return (
     <div className="mt-3">
