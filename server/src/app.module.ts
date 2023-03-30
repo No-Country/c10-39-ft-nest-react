@@ -8,6 +8,8 @@ import User from './users/entities/user.entity';
 import { AuthModule } from './Core/auth/auth.module';
 import { SportsModule } from './sports/sports.module';
 import { SportfieldsModule } from './sportfields/sportfields.module';
+import { Sport } from './sports/entities/sport.entity';
+import { Sportfields } from './sportfields/entities/sportfield.entity';
 
 @Module({
   imports: [
@@ -20,19 +22,19 @@ import { SportfieldsModule } from './sportfields/sportfields.module';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
-        entities:[User],
+        entities: [User, Sport, Sportfields],
         autoLoadEntities: true,
-        synchronize:true,
+        synchronize: true,
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature(),
     ConfigModule.forRoot({
       envFilePath: '.env',
       isGlobal: true,
     }),
     // ConfigModule.forRoot(),
-    
+
     // TypeOrmModule.forRoot({
     //   type: 'postgres',
     //   host: process.env.DB_HOST,
@@ -43,8 +45,8 @@ import { SportfieldsModule } from './sportfields/sportfields.module';
     //   autoLoadEntities: true,
     //   synchronize: true,
     // }),
-    
-    UsersModule,
+
+    // UsersModule,
     // AuthModule,
     SportsModule,
     SportfieldsModule,
@@ -52,4 +54,4 @@ import { SportfieldsModule } from './sportfields/sportfields.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

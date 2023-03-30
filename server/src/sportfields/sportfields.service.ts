@@ -12,9 +12,16 @@ export class SportfieldsService {
     private readonly sportfieldsRepository: Repository<Sportfields>
   ) { }
   async findAll() {
-    const allSportfields = await this.sportfieldsRepository.find();
+    const allSportfields = await this.sportfieldsRepository.find({
+      relations: {
+        sport: true
+      }
+    });
     if (!allSportfields) throw new NotFoundException('Sportfields not found')
-    return allSportfields;
+    return allSportfields.map(sf => ({
+      ...sf,
+      sport: sf.sport.name
+    }));
   }
 
   async findOne(id: string) {
