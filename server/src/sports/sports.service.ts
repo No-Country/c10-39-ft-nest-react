@@ -14,14 +14,12 @@ export class SportsService {
 
   async findAll() {
     const sports = await this.sportRepository.find({
-      select: { name: true },
       relations: {
         sportfields: false
       }
-
     });
     if (!sports) throw new NotFoundException('Sports not found');
-    return sports.map(s => s.name);
+    return sports.map(s => ({ name: s.name, images: s.images }));
   }
 
   async findOne(name: string) {
@@ -32,7 +30,14 @@ export class SportsService {
       }
     })
     if (!sports) throw new NotFoundException('Sport with that name not found');
-    return sports;
+    return sports.map(s => ({
+      ...s,
+      sportfields: s.sportfields.map(sf => ({
+        id: sf.id,
+        name: sf.name,
+        images: sf.images
+      }))
+    }));
   }
 
 }

@@ -27,6 +27,8 @@ export class Sportfields {
     restobar: boolean;
     @Column('boolean', { default: false })
     parking: boolean;
+    @Column('text', { array: true, default: ['https://img.freepik.com/free-vector/sport-fields-isometric-set_1284-24824.jpg'] })
+    images: string[];
 
     //Relation sportfields -> sports
     @ManyToOne(

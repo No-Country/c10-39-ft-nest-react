@@ -7,6 +7,8 @@ export class Sport {
     id: number;
     @Column('text', { unique: true })
     name: string;
+    @Column('text', { array: true, default: ['https://img.freepik.com/free-photo/sports-tools_53876-138077.jpg?w=2000'] })
+    images: string[]
 
     // Relation -> sportsfields
     @OneToMany(
