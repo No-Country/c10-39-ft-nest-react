@@ -18,6 +18,7 @@ export class SportfieldsService {
       }
     });
     if (!allSportfields) throw new NotFoundException('Sportfields not found')
+    console.log(allSportfields);
     return allSportfields.map(sf => ({
       ...sf,
       sport: sf.sport.name
