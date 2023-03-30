@@ -48,3 +48,9 @@ img {
   transform: translateY(0);
   font-size: 12px;
 }
+
+.selectArrow {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}

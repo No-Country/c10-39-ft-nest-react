@@ -5,8 +5,8 @@ type props = {
   label: string;
   state: string;
   setState: (string: string) => void;
-  icon: any | undefined;
-  rounded: boolean;
+  icon?: any;
+  rounded?: boolean;
 };
 
 const Input: FC<props> = ({ type, label, state, setState, icon, rounded }) => {
