@@ -4,6 +4,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 
 import { GoKebabVertical } from "react-icons/go";
 import { AiOutlineSearch } from "react-icons/ai";
+import { TiArrowSortedDown } from "react-icons/ti";
 
 type props = {
   children: React.ReactNode;
@@ -12,7 +13,7 @@ type props = {
 
 const Layout: FC<props> = ({ children, title }) => {
   return (
-    <div>
+    <div className="z-[9000]">
       <header className="bg-primary flex justify-center shadow-lg fixed w-full h-[80px]">
         <div className=" gap-7 justify-start flex w-full ml-5 items-center pb-5 pt-10 ">
           <button className="text-white align-middle">
@@ -24,7 +25,7 @@ const Layout: FC<props> = ({ children, title }) => {
         </div>
         <div className=" gap-7 justify-end flex w-full mr-5 items-center pb-5 pt-10 ">
           <button className="text-white align-middle">
-            <AiOutlineSearch />
+            <TiArrowSortedDown />
           </button>
           <div className="text-white text-xl">
             <GoKebabVertical></GoKebabVertical>
