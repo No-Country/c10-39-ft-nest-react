@@ -28,8 +28,8 @@ export const Search: FC = () => {
   const { sport } = useParams();
 
   const fieldSportLists: fieldSportType = {
-    tenis: ["Polvo y Ladrillo, Cesped, Sintetica"],
-    futbol: ["Piso madera, Cesped, sintetica"],
+    tenis: ["Polvo y Ladrillo", "Cesped", "Sintetica"],
+    futbol: ["Piso madera", "Cesped", "sintetica"],
   };
   const sports = ["tenis", "futbol"];
 
@@ -37,8 +37,8 @@ export const Search: FC = () => {
 
   useEffect(() => {
     if (sport && sports.includes(sport)) {
-      (sport: fieldSportKeyType) => setFieldSportList(fieldSportLists[sport]);
-      (sport: fieldSportKeyType) => console.log(fieldSportLists[sport]);
+      const keySport = sport as fieldSportKeyType;
+      setFieldSportList(fieldSportLists[keySport]);
     } else {
       navigate("/");
     }
@@ -60,7 +60,7 @@ export const Search: FC = () => {
   return (
     <Layout title={`${sport}`}>
       <form onSubmit={handleSubmit} className="flex w-full flex-col items-center">
-        <div className="flex flex-col gap-5 w-full items-center py-10">
+        <div className="flex flex-col gap-5 w-full items-center pt-12">
           <Input
             type="text"
             label="Ubicacion"
@@ -68,8 +68,9 @@ export const Search: FC = () => {
             setState={setUbication}
             icon={<MdLocationOn />}
           />
-          <Input
-            type="text"
+          <Select
+            array={fieldSportList}
+            type={"sportField"}
             label="Tipo de Cancha"
             state={fieldSport}
             setState={setFieldSport}
@@ -89,13 +90,10 @@ export const Search: FC = () => {
             setState={setTimeTable}
             icon={<TfiTime />}
           />
-          {/* <Select array={fieldSportList} type={"sportField"} /> */}
         </div>
-        <input
-          className="mt-5 w-10/12 py-2 rounded-full font-bold bg-gradient-to-tr from-gradone to-gradtwo"
-          type="submit"
-          value="BUSCAR"
-        />
+        <div className="absolute bottom-10 right-10">
+          <button>Buscar</button>
+        </div>
       </form>
     </Layout>
   );

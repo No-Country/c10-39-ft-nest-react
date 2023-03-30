@@ -1,12 +1,41 @@
 import { FC } from "react";
 
-const Select: FC<{ array: Array<string>; type: string }> = (array, type) => {
+type selectType = {
+  array: Array<string>;
+  type: string;
+  label: string;
+  state: string;
+  setState: (string: string) => void;
+  icon?: any;
+};
+
+const Select: FC<selectType> = ({ array, type, label, state, setState, icon }) => {
+  const handleChange = ({ target }: { target: HTMLSelectElement }) => setState(target.value);
+
   return (
-    <select>
-      {array.map((item) => (
-        <option>{item}</option>
-      ))}
-    </select>
+    <div className="w-10/12 flex flex-col relative">
+      <select
+        onChange={handleChange}
+        value={state}
+        id={label}
+        className="selectArrow inputFocus cursor-pointer order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none focus:border-blue-500"
+      >
+        <option disabled> Elije un campo</option>
+        <option>Cualquier tipo</option>
+        {array.length > 0 && array.map((item, index) => <option key={index}>{item}</option>)}
+      </select>
+      <label
+        htmlFor={label}
+        className="bg-white translate-y-7 translate-x-2 w-max cursor-pointer transition-transform order-1"
+      >
+        {label}
+      </label>
+      {icon && (
+        <div className="[&>svg]:absolute [&>svg]:bottom-2 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6">
+          {icon}
+        </div>
+      )}
+    </div>
   );
 };
 
