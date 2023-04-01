@@ -1,7 +1,8 @@
 import { SportsComplex } from "src/sports-complex/entities/sports-complex.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import User from "src/users/entities/user.entity";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity("Owner")
+@Entity("owner")
 export class Owner {
 
     @PrimaryGeneratedColumn('uuid')
@@ -9,17 +10,7 @@ export class Owner {
     @Column('text', {
         unique: true
     })
-    email: string;
-    @Column({ type: 'text', nullable: true  })
-    password: string;
-    @Column('text')
-    firstName: string;
-    @Column('text')
-    lastName: string;
-    @Column('bool')
-    isActive: boolean;
-    @Column('text')
-    dni: string;
+    DNI: string;
     @Column('text')
     address: string;
     @Column('text')
@@ -27,6 +18,10 @@ export class Owner {
 
     @OneToMany(type => SportsComplex, sportsComplex => sportsComplex.owner)
     sportsComplex: SportsComplex[];
+
+    @OneToOne(type => User, user => user.owner)
+    @JoinColumn()
+    user: User;
 
 }
 export default Owner;

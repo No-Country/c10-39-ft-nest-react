@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import * as bcrypt from "bcrypt";
@@ -22,6 +26,12 @@ export class UsersService {
     registerUserDTO: RegisterUserDTO
   ): Promise<{ user: User; token: string }> {
     const hashedPassword = bcrypt.hashSync(registerUserDTO.password, SALT);
+    const existingUser = await this.findByEmail(registerUserDTO.email);
+
+    if (existingUser) {
+      throw new BadRequestException("Email already registered");
+    }
+
     const user: User = this.userRepository.create({
       ...registerUserDTO,
       password: hashedPassword,
@@ -51,17 +61,23 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    return this.userRepository.findOne({
-      where: { id },
-    });
+    console.log(this.userRepository.createQueryBuilder().select().where("id = :id", { id }).getSql());
+
+    const user: User | undefined = await this.userRepository.createQueryBuilder("user")
+    .leftJoinAndSelect("user.owner", "owner")
+    .where("user.id = :id", { id })
+    .getOne();
+
+
+    if (!user) {
+      throw new BadRequestException("User not found");
+    }
+    return user;
   }
 
-
-  /// aca falta terminar el update 
-  async update(
-    id: string,
-    updateUserDTO: UpdateUserDTO
-  ): Promise<User> { // Promise<{user:User, token:string}>
+  /// aca falta terminar el update
+  async update(id: string, updateUserDTO: UpdateUserDTO): Promise<User> {
+    // Promise<{user:User, token:string}>
     const hashedPassword = bcrypt.hashSync(updateUserDTO.password, SALT);
     console.log(id);
 
