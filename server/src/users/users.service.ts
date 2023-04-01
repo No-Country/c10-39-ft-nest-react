@@ -61,10 +61,13 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    const user : User | null | undefined = await this.userRepository.findOne({
-      where: { id },
-      relations: ["owner"],
-    });
+    console.log(this.userRepository.createQueryBuilder().select().where("id = :id", { id }).getSql());
+
+    const user: User | undefined = await this.userRepository.createQueryBuilder("user")
+    .leftJoinAndSelect("user.owner", "owner")
+    .where("user.id = :id", { id })
+    .getOne();
+
 
     if (!user) {
       throw new BadRequestException("User not found");

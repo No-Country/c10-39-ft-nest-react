@@ -14,6 +14,8 @@ import { SeedModule } from './seed/seed.module';
 import { ReservesModule } from './reserves/reserves.module';
 import { SportsComplexModule } from './sports-complex/sports-complex.module';
 import { OwnerModule } from './owner/owner.module';
+import Owner from './owner/entities/owner.entity';
+import SportsComplex from './sports-complex/entities/sports-complex.entity';
 
 
 @Module({
@@ -27,13 +29,13 @@ import { OwnerModule } from './owner/owner.module';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
-        entities: [User, Sport, Sportfields],
-        autoLoadEntities: true,
+        entities: [User, Sport, Sportfields, Owner, SportsComplex],
+        // autoLoadEntities: true,
         synchronize: true,
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature(),
+    TypeOrmModule.forFeature([User, Sport, Sportfields, Owner, SportsComplex]),
     ConfigModule.forRoot({
       envFilePath: '.env',
       isGlobal: true,
@@ -51,14 +53,14 @@ import { OwnerModule } from './owner/owner.module';
     //   synchronize: true,
     // }),
 
-    // UsersModule,
-    // AuthModule,
+    UsersModule,
+    AuthModule,
     SportsModule,
     SportfieldsModule,
     SeedModule,
     // ReservesModule,
     SportsComplexModule,
-    // OwnerModule,
+    OwnerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

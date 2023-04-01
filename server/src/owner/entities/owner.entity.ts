@@ -1,8 +1,8 @@
 import { SportsComplex } from "src/sports-complex/entities/sports-complex.entity";
 import User from "src/users/entities/user.entity";
-import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity("Owner")
+@Entity("owner")
 export class Owner {
 
     @PrimaryGeneratedColumn('uuid')
@@ -20,6 +20,7 @@ export class Owner {
     sportsComplex: SportsComplex[];
 
     @OneToOne(type => User, user => user.owner)
+    @JoinColumn()
     user: User;
 
 }

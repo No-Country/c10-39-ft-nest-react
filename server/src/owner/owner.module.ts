@@ -3,10 +3,11 @@ import { OwnerService } from './owner.service';
 import { OwnerController } from './owner.controller';
 import SportsComplex from 'src/sports-complex/entities/sports-complex.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import User from 'src/users/entities/user.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([SportsComplex])
+    TypeOrmModule.forFeature([SportsComplex,User])
   ],
   controllers: [OwnerController],
   providers: [OwnerService]
