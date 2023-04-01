@@ -1,6 +1,5 @@
 import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
-
-import ContextProvider from "./Pages/Context";
+// import ContextProvider from "./Pages/Context";
 import Register from "./Pages/Register";
 import MainPage from "./Pages/MainPage";
 import Home from "./Pages/Home";
@@ -13,7 +12,7 @@ import SFDetail from "./Pages/SFDetial";
 
 function App() {
   return (
-    <ContextProvider>
+    // <ContextProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainPage />}></Route>
@@ -29,7 +28,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" />}></Route>
         </Routes>
       </BrowserRouter>
-    </ContextProvider>
+    // </ContextProvider>
   );
 }
 
