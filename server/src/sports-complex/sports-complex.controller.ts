@@ -1,14 +1,14 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { SportsComplexService } from './sports-complex.service';
-import { CreateSportsComplexDto } from './dto/create-sports-complex.dto';
-import { UpdateSportsComplexDto } from './dto/update-sports-complex.dto';
+import { CreateSportsComplexDTO } from './dto/create-sports-complex.dto';
+import { UpdateSportsComplexDTO } from './dto/update-sports-complex.dto';
 
 @Controller('sports-complex')
 export class SportsComplexController {
   constructor(private readonly sportsComplexService: SportsComplexService) {}
 
   @Post()
-  create(@Body() createSportsComplexDto: CreateSportsComplexDto) {
+  create(@Body() createSportsComplexDto: CreateSportsComplexDTO) {
     return this.sportsComplexService.create(createSportsComplexDto);
   }
 
@@ -23,8 +23,8 @@ export class SportsComplexController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSportsComplexDto: UpdateSportsComplexDto) {
-    return this.sportsComplexService.update(+id, updateSportsComplexDto);
+  update(@Param('id') id: string, @Body() updateSportsComplexDTO: UpdateSportsComplexDTO) {
+    return this.sportsComplexService.update(+id, updateSportsComplexDTO);
   }
 
   @Delete(':id')
@@ -32,3 +32,4 @@ export class SportsComplexController {
     return this.sportsComplexService.remove(+id);
   }
 }
+

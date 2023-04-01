@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSportsComplexDto } from './dto/create-sports-complex.dto';
-import { UpdateSportsComplexDto } from './dto/update-sports-complex.dto';
+import { CreateSportsComplexDTO } from './dto/create-sports-complex.dto';
+import { UpdateSportsComplexDTO } from './dto/update-sports-complex.dto';
 
 @Injectable()
 export class SportsComplexService {
-  create(createSportsComplexDto: CreateSportsComplexDto) {
+  create(createSportsComplexDTO: CreateSportsComplexDTO) {
     return 'This action adds a new sportsComplex';
   }
 
@@ -16,7 +16,7 @@ export class SportsComplexService {
     return `This action returns a #${id} sportsComplex`;
   }
 
-  update(id: number, updateSportsComplexDto: UpdateSportsComplexDto) {
+  update(id: number, updateSportsComplexDTO: UpdateSportsComplexDTO) {
     return `This action updates a #${id} sportsComplex`;
   }
 

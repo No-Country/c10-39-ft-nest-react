@@ -15,6 +15,11 @@ export class SportsComplex {
   @Column("text", {
     unique: true,
   })
+
+  @Column("text",{
+    unique: true,
+  })
+  email: string;
   @Column("text")
   address: string;
   @Column("text")
