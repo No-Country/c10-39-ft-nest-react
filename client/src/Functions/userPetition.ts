@@ -1,5 +1,5 @@
-import { setUser } from "../App/userSlice";
 import axios from "./axios";
+import { setUser } from "../App/userSlice";
 import store from "../App/Store";
 
 interface UserData {
