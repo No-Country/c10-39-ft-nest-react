@@ -74,17 +74,6 @@ http://localhost:3000/api/seed
 
 Esto crea una pequeña base de datos de `Sports` y `Sportfields`.
 
-# Enpoints
-
-## Sports
-
-### Get All Sports
-
-```
-http://localhost:3000/api/sports
-```
-
-Se obtiene algo asi:
 
 ```
 [
@@ -102,13 +91,10 @@ Se obtiene algo asi:
   }
 ]
 ```
-
 ### Get One Sport
-
 ```
 http://localhost:3000/api/sports/tenis
 ```
-
 se cambia el `tenis` por el nombre de otro deporte en ingles y se obtiene:
 
 ```
@@ -146,9 +132,7 @@ se cambia el `tenis` por el nombre de otro deporte en ingles y se obtiene:
 ```
 http://localhost:3000/api/sportfields
 ```
-
 Nos da un json con la siguiente estructura:
-
 ```
 [
   {
