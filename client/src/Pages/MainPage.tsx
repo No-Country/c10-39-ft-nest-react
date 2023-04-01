@@ -23,12 +23,16 @@ const MainPage = () => {
         >
           REGISTRARSE
         </Link>
-        <Link
-          to={"http://localhost:3000/google/callback"}
+        <div
+          onClick={() => {
+            window.location.href = `${
+              import.meta.env.VITE_BACKEND_URL
+            }/auth/google`;
+          }}
           className="bg-gradone px-20 py-2 rounded-full"
         >
           Google
-        </Link>
+        </div>
       </div>
     </div>
   );

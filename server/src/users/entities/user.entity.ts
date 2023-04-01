@@ -15,7 +15,7 @@ export class User {
   firstName: string;
   @Column("text", {nullable: true })
   lastName: string;
-  @Column("bool")
+  @Column("bool", {default: true})
   isActive: boolean;
 
   @OneToOne((type) => Owner, (owner) => owner.user)

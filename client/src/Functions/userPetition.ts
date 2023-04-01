@@ -22,7 +22,7 @@ export async function getHello(state: (data: any) => void) {
 export async function registerUser(body: any) {
   try {
     const petition = await axios.post("/users/register", body);
-    await store.dispatch(setUser(petition?.data.user));
+    store.dispatch(setUser(petition?.data.user));
     localStorage.setItem("tkn", petition?.data.token);
     window.alert("Usuario creado con exito");
     return;
