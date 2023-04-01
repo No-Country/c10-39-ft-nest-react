@@ -2,7 +2,7 @@ import { BaseSyntheticEvent, FC, useState } from "react";
 import { FaBasketballBall } from "react-icons/fa";
 import Input from "../Components/Input";
 import { useNavigate, useParams } from "react-router-dom";
-import { loginUser } from "../Functions/UserPetition";
+import { loginUser } from "../Functions/userPetition";
 
 const Login: FC = () => {
   const [mail, setMail] = useState("");
