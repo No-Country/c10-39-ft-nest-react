@@ -22,6 +22,22 @@ export class UsersService {
     private readonly configService: ConfigService
   ) {}
 
+
+  async findOrCreate(
+    body: RegisterUserDTO,
+  ): Promise<{ user: User; token: string }> {
+    let user = await this.findByEmail(body.email);
+    if (!user) {
+      user = await this.userRepository.create(body);
+      await this.userRepository.save(user);
+    }
+    const token = await this.generateToken(user);
+    return {
+      user,
+      token,
+    };
+  }
+
   async register(
     registerUserDTO: RegisterUserDTO
   ): Promise<{ user: User; token: string }> {
@@ -96,7 +112,7 @@ export class UsersService {
   private async findByEmail(email: string): Promise<User | undefined> {
     return this.userRepository.findOne({ where: { email } });
   }
-  private async generateToken(user: User) {
+  async generateToken(user: User) {
     const token = jwt.sign(
       {
         id: user.id,
