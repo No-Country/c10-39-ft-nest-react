@@ -12,6 +12,7 @@ const MainPage = () => {
       if (token) {
         localStorage.setItem("tkn", token);
         authUser()
+            //aca simplemente borramos en token de la URL
           .then(() => {
             // Obtener la URL actual
             let url = window.location.href;
