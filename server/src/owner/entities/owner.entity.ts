@@ -20,8 +20,10 @@ export class Owner {
     sportsComplex: SportsComplex[];
 
     @OneToOne(type => User, user => user.owner)
-    @JoinColumn()
+    @JoinColumn({ name: "userId" })
     user: User;
+    @Column()
+    userId: string;
 
 }
 export default Owner;
