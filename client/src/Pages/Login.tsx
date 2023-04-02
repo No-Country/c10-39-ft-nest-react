@@ -1,11 +1,9 @@
 import { BaseSyntheticEvent, FC, useState } from "react";
-
 import { FaBasketballBall } from "react-icons/fa";
-
 import Input from "../Components/Input";
-
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { loginUser } from "../Functions/userPetition";
+import { useSelector } from "react-redux";
 
 const Login: FC = () => {
   const [mail, setMail] = useState("");
@@ -14,14 +12,13 @@ const Login: FC = () => {
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    // axios
-    //   .post("http://localhost:3000/login", {
-    //     mail,
-    //     password,
-    //   })
-    //   .then((res) => console.log(res))
-    //   .catch((error) => console.log(error));
-    navigate(`/home`);
+    loginUser({ mail, password })
+      .then(() => {
+        navigate("/home");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

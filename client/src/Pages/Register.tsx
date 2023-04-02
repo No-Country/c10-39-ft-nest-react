@@ -1,13 +1,11 @@
 import { BaseSyntheticEvent, FC, useState } from "react";
-
-import axios from "axios";
-
 import Input from "../Components/Input";
 
 import { IoMdMail } from "react-icons/io";
 import { HiOutlineUser, HiUser } from "react-icons/hi";
 import { AiFillEye } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
+import { registerUser } from "../Functions/userPetition";
 
 const Register: FC = () => {
   const [email, setEmail] = useState("");
@@ -28,7 +26,18 @@ const Register: FC = () => {
     //   })
     //   .then((res) => console.log(res))
     //   .catch((error) => console.log(error));
-    navigate(`/home`);
+    registerUser({
+      email,
+      firstName: name,
+      lastName,
+      password,
+    })
+      .then(() => {
+        navigate(`/home`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
