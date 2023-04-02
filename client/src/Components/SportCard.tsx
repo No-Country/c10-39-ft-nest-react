@@ -5,10 +5,9 @@ import { useNavigate, useParams } from "react-router-dom";
 type props = {
   children?: React.ReactNode;
   title: string;
-  backgroundImage: string;
 };
 
-const SportCard: FC<props> = ({ children, title, backgroundImage }) => {
+const SportCard: FC<props> = ({ children, title }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -17,7 +16,7 @@ const SportCard: FC<props> = ({ children, title, backgroundImage }) => {
   };
   return (
     <div
-      className={`mt-3 bg-cover mb-10 relative h-[200px] bg-[url('${backgroundImage}')] w-full h-[220px] flex items-center justify-center`}
+      className={`mt-3 bg-cover mb-10 relative h-[200px] w-full flex items-center justify-center`}
     >
       <div className="font-segoeScript font-bold text-6xl text-center">
         {title}
