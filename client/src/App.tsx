@@ -10,7 +10,7 @@ import Reservation from "./Pages/Reservation";
 import SportFields from "./Pages/SportFields";
 import SFDetail from "./Pages/SFDetial";
 import { useEffect } from "react";
-import { authUser } from "./Functions/UserPetition";
+import { authUser } from "./Functions/userPetition";
 
 function App() {
   useEffect(() => {

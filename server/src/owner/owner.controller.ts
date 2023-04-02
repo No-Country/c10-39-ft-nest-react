@@ -1,11 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
 import { OwnerService } from './owner.service';
 import { CreateOwnerDto } from './dto/create-owner.dto';
 import { UpdateOwnerDto } from './dto/update-owner.dto';
 
 @Controller('owner')
 export class OwnerController {
-  constructor(private readonly ownerService: OwnerService) {}
+  constructor(private readonly ownerService: OwnerService) { }
 
   @Post()
   create(@Body() createOwnerDto: CreateOwnerDto) {
@@ -18,17 +18,14 @@ export class OwnerController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ownerService.findOne(+id);
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return this.ownerService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOwnerDto: UpdateOwnerDto) {
-    return this.ownerService.update(+id, updateOwnerDto);
+  @Patch(':userId')
+  update(@Param('userId', ParseUUIDPipe) userId: string, @Body() updateOwnerDto: UpdateOwnerDto) {
+    return this.ownerService.update(userId, updateOwnerDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.ownerService.remove(+id);
-  }
+
 }

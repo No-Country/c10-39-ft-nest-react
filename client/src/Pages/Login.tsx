@@ -4,6 +4,8 @@ import Input from "../Components/Input";
 import { useNavigate, useParams } from "react-router-dom";
 import { loginUser } from "../Functions/userPetition";
 
+import { useSelector } from "react-redux";
+
 const Login: FC = () => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
