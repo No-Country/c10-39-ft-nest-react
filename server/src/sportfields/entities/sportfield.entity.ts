@@ -24,18 +24,6 @@ export class Sportfields {
   @Column("text")
   dimensions: string;
 
-  @Column("boolean", { default: false })
-  grills: boolean;
-  @Column("boolean", { default: false })
-  locker: boolean;
-  @Column("boolean", { default: false })
-  showers: boolean;
-  @Column("boolean", { default: false })
-  bathrooms: boolean;
-  @Column("boolean", { default: false })
-  restobar: boolean;
-  @Column("boolean", { default: false })
-  parking: boolean;
   @Column("text", {
     array: true,
     default: [
@@ -53,8 +41,6 @@ export class Sportfields {
   )
   @JoinColumn({ name: "sportId" })
   sport: Sport;
-  @Column()
-  sportId: number;
 
   //Relation sportfields -> sportsComplex
   @ManyToOne(
