@@ -32,9 +32,7 @@ const Layout: FC<props> = ({ children, title }) => {
           </div>
         </div>
       </header>
-      <div className="z-10 mb-[100px] pt-[80px] bg-secondary min-h-screen">
-        {children}
-      </div>
+      <div className="z-10  pt-[80px] bg-secondary h-screen">{children}</div>
     </div>
   );
 };

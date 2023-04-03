@@ -24,27 +24,32 @@ const Login: FC = () => {
 
   return (
     <div className="relative h-screen w-screen flex flex-col justify-center items-center gap-10 bg-primary">
-      <div className="[&>svg]:w-32 [&>svg]:h-32 [&>svg]:text-gradone">
-        <FaBasketballBall />
+      <div>
+        <FaBasketballBall className="lg:w-[272px] lg:h-[248px]   w-[128px] h-[128px] text-gradone" />
       </div>
       <form
         onSubmit={handleSubmit}
         className="flex flex-col w-full items-center gap-5"
       >
-        <Input
-          type="mail"
-          label="Email"
-          state={mail}
-          setState={setMail}
-          rounded={true}
-        />
-        <Input
-          type="password"
-          label="Contraseña"
-          state={password}
-          setState={setPassword}
-          rounded={true}
-        />
+        <div className="lg:w-1/3 w-5/6 flex justify-center">
+          <Input
+            type="mail"
+            label="Email"
+            state={mail}
+            setState={setMail}
+            rounded={true}
+          />
+        </div>
+        <div className="lg:w-1/3  w-5/6 flex justify-center">
+          <Input
+            type="password"
+            label="Contraseña"
+            state={password}
+            setState={setPassword}
+            rounded={true}
+          />
+        </div>
+
         <input
           className="mt-5 w-28 py-2 rounded-full font-bold bg-gradone"
           type="submit"
