@@ -4,6 +4,7 @@ import { Sportfields } from 'src/sportfields/entities/sportfield.entity';
 import { Sport } from 'src/sports/entities/sport.entity';
 import { Repository } from 'typeorm';
 import { initialData } from './data/seed-data';
+
 @Injectable()
 export class SeedService {
   constructor(
@@ -21,6 +22,7 @@ export class SeedService {
       .insert()
       .values(initialData.sports)
       .execute();
+
     await this.sportfieldsRepository
       .createQueryBuilder('sportfield')
       .insert()
