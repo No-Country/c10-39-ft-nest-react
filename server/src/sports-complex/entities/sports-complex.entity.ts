@@ -16,20 +16,26 @@ export class SportsComplex {
     unique: true,
   })
 
-  @Column("text",{
+  @Column("text", {
     unique: true,
   })
   email: string;
+
   @Column("text")
   address: string;
+
   @Column("text")
   phone: string;
+
   @Column("text")
   name: string;
+
   @Column("text")
   description: string;
+
   @Column("text")
   image: string[];
+
   @Column("boolean", { default: false })
   grills?: boolean;
   @Column("boolean", { default: false })

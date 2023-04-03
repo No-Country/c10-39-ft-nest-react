@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateSportfieldDto } from './dto/create-sportfield.dto';
-import { UpdateSportfieldDto } from './dto/update-sportfield.dto';
+// TODO: Use dtos to implement crud
+// import { CreateSportfieldDto } from './dto/create-sportfield.dto';
+// import { UpdateSportfieldDto } from './dto/update-sportfield.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Sportfields } from './entities/sportfield.entity';
 import { Repository } from 'typeorm';
@@ -11,6 +12,7 @@ export class SportfieldsService {
     @InjectRepository(Sportfields)
     private readonly sportfieldsRepository: Repository<Sportfields>
   ) { }
+
   async findAll() {
     const allSportfields = await this.sportfieldsRepository.find({
       relations: {
@@ -30,4 +32,5 @@ export class SportfieldsService {
     return sportfield;
   }
 
+  // TODO: Implement CREATE UPDATE AND DELETE
 }
