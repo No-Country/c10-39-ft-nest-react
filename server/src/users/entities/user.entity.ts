@@ -1,5 +1,5 @@
-import Owner from "src/owner/entities/owner.entity";
 import { Reservation } from "src/reservation/entities/reservation.entity";
+import Owner from "src/sports-complex/entities/owner.entity";
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 
 @Entity("user")

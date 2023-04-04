@@ -16,14 +16,12 @@ export class Owner {
     @Column('text')
     phone: string;
 
-    @OneToMany(type => SportsComplex, sportsComplex => sportsComplex.owner)
-    sportsComplex: SportsComplex[];
+    @OneToOne(type => SportsComplex, sportsComplex => sportsComplex.owner)
+    sportsComplex: SportsComplex;
 
     @OneToOne(type => User, user => user.owner)
-    @JoinColumn({ name: "userId" })
+    // @JoinColumn({ name: "userId" })
     user: User;
-    @Column()
-    userId: string;
 
 }
 export default Owner;

@@ -1,12 +1,13 @@
-import Owner from "src/owner/entities/owner.entity";
 import { Sportfields } from "src/sportfields/entities/sportfield.entity";
 import {
   Column,
   Entity,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import Owner from "./owner.entity";
 
 @Entity("sportsComplex")
 export class SportsComplex {
@@ -15,9 +16,10 @@ export class SportsComplex {
   @Column("text", {
     unique: true,
   })
-
   @Column("text", {
     unique: true,
+    // bug
+    nullable: true,
   })
   email: string;
 
@@ -27,13 +29,19 @@ export class SportsComplex {
   @Column("text")
   phone: string;
 
-  @Column("text")
+  @Column("text", {
+    nullable: true,
+  })
   name: string;
 
-  @Column("text")
+  @Column("text", {
+    nullable: true,
+  })
   description: string;
 
-  @Column("text")
+  @Column("text", {
+    nullable: true,
+  })
   image: string[];
 
   @Column("boolean", { default: false })
@@ -49,7 +57,7 @@ export class SportsComplex {
   @Column("boolean", { default: false })
   parking?: boolean;
 
-  @ManyToOne((type) => Owner, (owner) => owner.sportsComplex)
+  @OneToOne((type) => Owner, (owner) => owner.sportsComplex)
   owner: Owner;
 
   @OneToMany((type) => Sportfields, (sportfields) => sportfields.sportsComplex)

@@ -4,20 +4,41 @@ import { Repository } from "typeorm";
 import { CreateSportsComplexDTO } from "./dto/create-sports-complex.dto";
 import { UpdateSportsComplexDTO } from "./dto/update-sports-complex.dto";
 import SportsComplex from "./entities/sports-complex.entity";
+import Owner from "./entities/owner.entity";
+import { CreateOwnerDTO } from "./dto/create-owner.dto";
 
 @Injectable()
 export class SportsComplexService {
   constructor(
     @InjectRepository(SportsComplex)
-    private readonly SportsComplexRepository: Repository<SportsComplex>
+    private readonly SportsComplexRepository: Repository<SportsComplex>,
+    @InjectRepository(Owner)
+    private readonly ownerRepository: Repository<Owner>,
   ) {}
 
-  create(createSportsComplexDTO: CreateSportsComplexDTO, owner: any) {
-    const newSportComplex: SportsComplex = this.SportsComplexRepository.create(
-      createSportsComplexDTO
-    );
-    newSportComplex.owner = owner;
-    return this.SportsComplexRepository.save(newSportComplex);
+  async createOwner(createOwnerDTO: CreateOwnerDTO) {
+    const { user, DNI, address, phone } = createOwnerDTO;
+    const newOwner: Owner = await this.ownerRepository.create({
+      user,
+      DNI,
+      address,
+      phone,
+    });
+    return this.SportsComplexRepository.save(newOwner);
+
+  }
+
+
+  create(createSportsComplexDTO: any, newOwner: any) {
+
+
+    console.log("createSportsComplexDTO", createSportsComplexDTO);
+    const sportsComplex = this.SportsComplexRepository.create({
+      ...createSportsComplexDTO,
+      owner: newOwner.id,
+    });
+    return this.SportsComplexRepository.save(sportsComplex);
+    
   }
 
   async findAll(): Promise<SportsComplex[]> {

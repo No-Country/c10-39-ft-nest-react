@@ -4,8 +4,8 @@ import { UsersController } from './users.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { AuthMiddleware } from 'src/Core/Middleware/auth-token.middleware';
-import Owner from 'src/owner/entities/owner.entity';
 import { Reservation } from 'src/reservation/entities/reservation.entity';
+import Owner from 'src/sports-complex/entities/owner.entity';
 
 @Module({
   controllers: [UsersController],
