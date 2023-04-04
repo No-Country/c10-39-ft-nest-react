@@ -21,7 +21,7 @@ export class SportsComplexController {
     const id: string = req.user.id;
     const user: User = await this.usersService.findOne(id);
     const owner = user.owner;
-    if (!owner) {
+    if (owner) {
       throw new Error('User is not owner');
     }
     return this.sportsComplexService.create(createSportsComplexDto, owner);

@@ -1,3 +1,4 @@
+import { Reservation } from "src/reservation/entities/reservation.entity";
 import SportsComplex from "src/sports-complex/entities/sports-complex.entity";
 import { Sport } from "src/sports/entities/sport.entity";
 
@@ -6,6 +7,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryColumn,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -46,7 +48,12 @@ export class Sportfields {
   @ManyToOne(
     () => SportsComplex,
     (sportsComplex) => sportsComplex.sportfields,
-    { onDelete: "CASCADE", onUpdate: "CASCADE" }
   )
   sportsComplex: SportsComplex;
+
+  @OneToMany(() => Reservation, (reservation) => reservation.sportfields, {
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  })
+  reservation: Reservation[];
 }
