@@ -17,9 +17,9 @@ export class Sport {
   images: string[];
 
   // Relation -> sportsfields
+  // TODO: Is this really necessary?
   @OneToMany(() => SportField, (sportfields) => sportfields.sport, {
     cascade: true,
-    eager: true,
   })
   sportfields?: SportField[];
 }

@@ -15,4 +15,7 @@ export class CreateSportFieldDto {
   @IsArray()
   @IsOptional()
   images: string[];
+
+  @IsString()
+  sport: string;
 }

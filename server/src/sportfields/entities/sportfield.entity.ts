@@ -10,6 +10,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Expose, Transform } from 'class-transformer';
 
 @Entity({ name: 'sportfields' })
 export class SportField {
@@ -44,11 +45,13 @@ export class SportField {
   sport: Sport;
 
   //Relation SportField -> sportsComplex
+  // TODO: It shouldn't be null
   @ManyToOne(
     () => SportsComplex,
     (sportsComplex) => sportsComplex.sportfields,
     { onDelete: 'CASCADE', onUpdate: 'CASCADE' }
   )
+  @JoinColumn({ name: 'sportComplexId' })
   sportsComplex: SportsComplex;
 
   @OneToMany(() => Reservation, (reservation) => reservation.sportfields, {
