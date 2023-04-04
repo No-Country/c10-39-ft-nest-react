@@ -1,11 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
-import { SportfieldsService } from './sportfields.service';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 
+import { SportfieldsService } from './sportfields.service';
 
 @Controller('sportfields')
 export class SportfieldsController {
   constructor(private readonly sportfieldsService: SportfieldsService) {}
-
 
   @Get()
   findAll() {
@@ -17,4 +25,8 @@ export class SportfieldsController {
     return this.sportfieldsService.findOne(id);
   }
 
+  @Delete(':id')
+  async remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.sportfieldsService.remove(id);
+  }
 }

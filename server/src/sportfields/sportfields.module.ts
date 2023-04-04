@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { SportfieldsService } from './sportfields.service';
 import { SportfieldsController } from './sportfields.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Sportfields } from './entities/sportfield.entity';
+import { SportField } from './entities/sportfield.entity';
 import SportsComplex from 'src/sports-complex/entities/sports-complex.entity';
 import { Reservation } from 'src/reservation/entities/reservation.entity';
 
@@ -10,7 +10,7 @@ import { Reservation } from 'src/reservation/entities/reservation.entity';
   controllers: [SportfieldsController],
   providers: [SportfieldsService],
   imports: [
-    TypeOrmModule.forFeature([Sportfields, SportsComplex, Reservation])
+    TypeOrmModule.forFeature([SportField, SportsComplex, Reservation])
   ],
   exports: [TypeOrmModule]
 })
