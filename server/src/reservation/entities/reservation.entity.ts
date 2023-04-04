@@ -1,5 +1,5 @@
-import { Sportfields } from "src/sportfields/entities/sportfield.entity";
-import User from "src/users/entities/user.entity";
+import { SportField } from 'src/sportfields/entities/sportfield.entity';
+import User from 'src/users/entities/user.entity';
 
 import {
   Check,
@@ -9,42 +9,42 @@ import {
   ManyToOne,
   PrimaryColumn,
   PrimaryGeneratedColumn,
-} from "typeorm";
+} from 'typeorm';
 
-@Entity({ name: "reservation" })
+@Entity({ name: 'reservation' })
 export class Reservation {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column("int")
-  @Check("start_time < end_time")
-  @Check("start_time >= 0")
-  @Check("start_time < 24")
+  @Column('int')
+  @Check('start_time < end_time')
+  @Check('start_time >= 0')
+  @Check('start_time < 24')
   start_time: number;
 
-  @Column("int")
-  @Check("end_time > 0")
-  @Check("end_time < 24")
-  @Check("end_time < start_time")
+  @Column('int')
+  @Check('end_time > 0')
+  @Check('end_time < 24')
+  @Check('end_time < start_time')
   end_time: number;
 
-  @Column("int")
+  @Column('int')
   day: number;
 
-  @Column("int")
+  @Column('int')
   mounth: number;
 
-  @Column("int")
+  @Column('int')
   year: number;
 
-  @Column("date")
+  @Column('date')
   date: Date;
 
-  @ManyToOne(() => Sportfields, (sportfields) => sportfields.reservation)
-  @JoinColumn({ name: "sportfieldId" })
-  sportfields: Sportfields;
+  @ManyToOne(() => SportField, (sportfields) => sportfields.reservation)
+  @JoinColumn({ name: 'sportfieldId' })
+  sportfields: SportField;
 
   @ManyToOne(() => User, (user) => user.reservation)
-  @JoinColumn({ name: "userId" })
+  @JoinColumn({ name: 'userId' })
   user: User;
 }
