@@ -9,16 +9,12 @@ type props = {
   rounded?: boolean;
 };
 
-const Input: FC<props> = ({ type, label, state, setState, icon, rounded }) => {
+const Input: FC<props> = ({ type, label, state, setState, icon }) => {
   const handleChange = ({ target }: { target: HTMLInputElement }) => {
     setInputWritten(() => {
       return target.value === '' ? 'translate-y-7 translate-x-2' : 'inputWritten';
     });
     setState(target.value);
-  };
-
-  const handleRound: () => string = () => {
-    return rounded ? '20px' : 'unset';
   };
 
   const [inputWritten, setInputWritten] = useState(() =>
@@ -29,9 +25,8 @@ const Input: FC<props> = ({ type, label, state, setState, icon, rounded }) => {
     <div className="w-10/12 flex flex-col relative">
       <input
         id={label}
-        style={{ borderRadius: handleRound() }}
         className={
-          'inputFocus cursor-pointer order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none focus:border-blue-500'
+          'inputFocus cursor-pointer bg-bg order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none'
         }
         type={type}
         value={state}
