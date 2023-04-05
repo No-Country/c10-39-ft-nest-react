@@ -1,18 +1,19 @@
-import { FC } from "react";
-import PrimaryButton from "./PrimaryButton";
-import { useNavigate, useParams } from "react-router-dom";
+import { FC } from 'react';
+import PrimaryButton from './PrimaryButton';
+import { useNavigate, useParams } from 'react-router-dom';
 
 type props = {
   title: string;
+  route: string;
 };
 
-const Card: FC<props> = ({ title }) => {
+const Card: FC<props> = ({ title, route }) => {
   const navigate = useNavigate();
 
-  const handleClick = () => navigate(`/reservas`);
+  const handleClick = () => navigate(`${route}`);
   return (
     <div className="mx-1  my-[70px]">
-      <div className="relative rounded-t bg-opacity-80 bg-primary bg-opacity-80 w-full h-[150px]">
+      <div className="relative rounded-t  bg-primary bg-opacity-80 w-full h-[150px]">
         <h1 className=" absolute bottom-4 left-4 text-white text-xl w-10/12 text-left font-semibold">
           {title}
         </h1>
