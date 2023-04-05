@@ -1,5 +1,6 @@
 import Owner from "src/owner/entities/owner.entity";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Reservation } from "src/reservation/entities/reservation.entity";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 
 @Entity("user")
 export class User {
@@ -21,5 +22,12 @@ export class User {
   @OneToOne((type) => Owner, (owner) => owner.user)
   @JoinColumn()
   owner?: Owner;
+
+
+  @OneToMany(() => Reservation, (reservation) => reservation.user, {
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+  })
+  reservation: Reservation[];
 }
 export default User;

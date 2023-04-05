@@ -1,52 +1,57 @@
-import Owner from "src/owner/entities/owner.entity";
-import { Sportfields } from "src/sportfields/entities/sportfield.entity";
+import Owner from 'src/owner/entities/owner.entity';
+import { SportField } from 'src/sportfields/entities/sportfield.entity';
 import {
   Column,
   Entity,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-} from "typeorm";
+} from 'typeorm';
 
-@Entity("sportsComplex")
+@Entity('sportsComplex')
 export class SportsComplex {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
-  @Column("text", {
+  @Column('text', {
     unique: true,
   })
-
-  @Column("text",{
+  @Column('text', {
     unique: true,
   })
   email: string;
-  @Column("text")
+
+  @Column('text')
   address: string;
-  @Column("text")
+
+  @Column('text')
   phone: string;
-  @Column("text")
+
+  @Column('text')
   name: string;
-  @Column("text")
+
+  @Column('text')
   description: string;
-  @Column("text")
+
+  @Column('text')
   image: string[];
-  @Column("boolean", { default: false })
+
+  @Column('boolean', { default: false })
   grills?: boolean;
-  @Column("boolean", { default: false })
+  @Column('boolean', { default: false })
   locker?: boolean;
-  @Column("boolean", { default: false })
+  @Column('boolean', { default: false })
   showers?: boolean;
-  @Column("boolean", { default: false })
+  @Column('boolean', { default: false })
   bathrooms?: boolean;
-  @Column("boolean", { default: false })
+  @Column('boolean', { default: false })
   restobar?: boolean;
-  @Column("boolean", { default: false })
+  @Column('boolean', { default: false })
   parking?: boolean;
 
   @ManyToOne((type) => Owner, (owner) => owner.sportsComplex)
   owner: Owner;
 
-  @OneToMany((type) => Sportfields, (sportfields) => sportfields.sportsComplex)
-  sportfields: Sportfields[];
+  @OneToMany((type) => SportField, (sportfields) => sportfields.sportsComplex)
+  sportfields: SportField[];
 }
 export default SportsComplex;
