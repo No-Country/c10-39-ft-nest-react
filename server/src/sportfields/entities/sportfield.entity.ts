@@ -1,6 +1,6 @@
-import { Reservation } from "src/reservation/entities/reservation.entity";
-import SportsComplex from "src/sports-complex/entities/sports-complex.entity";
-import { Sport } from "src/sports/entities/sport.entity";
+import { SportsComplex } from 'src/sports-complex/entities/sports-complex.entity';
+import { Reservation } from 'src/reservation/entities/reservation.entity';
+import { Sport } from 'src/sports/entities/sport.entity';
 
 import {
   Column,
@@ -8,52 +8,55 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
-} from "typeorm";
+} from 'typeorm';
+import { Expose, Transform } from 'class-transformer';
 
-@Entity({ name: "sportfields" })
-export class Sportfields {
-  @PrimaryGeneratedColumn("uuid")
+@Entity({ name: 'sportfields' })
+export class SportField {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column("text")
+  @Column('text')
   name: string;
 
-  @Column("text")
+  @Column('text')
   description: string;
 
-  @Column("text")
+  @Column('text')
   dimensions: string;
 
-  @Column("text", {
+  @Column('text', {
     array: true,
     default: [
-      "https://img.freepik.com/free-vector/sport-fields-isometric-set_1284-24824.jpg",
+      'https://img.freepik.com/free-vector/sport-fields-isometric-set_1284-24824.jpg',
     ],
   })
   images: string[];
 
-  //Relation sportfields -> sports
+  //Relation SportField -> sports
   @ManyToOne(
     () => Sport,
     (sport) => sport.sportfields,
 
-    { onDelete: "CASCADE", onUpdate: "CASCADE" }
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE' }
   )
-  @JoinColumn({ name: "sportId" })
+  @JoinColumn({ name: 'sportId' })
   sport: Sport;
 
-  //Relation sportfields -> sportsComplex
+  //Relation SportField -> sportsComplex
+  // TODO: It shouldn't be null
   @ManyToOne(
     () => SportsComplex,
     (sportsComplex) => sportsComplex.sportfields,
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE' }
   )
+  @JoinColumn({ name: 'sportComplexId' })
   sportsComplex: SportsComplex;
 
   @OneToMany(() => Reservation, (reservation) => reservation.sportfields, {
-    onDelete: "CASCADE",
-    onUpdate: "CASCADE",
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   })
   reservation: Reservation[];
 }
