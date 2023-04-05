@@ -39,7 +39,7 @@ export class SportfieldsController {
   @Patch(':id')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() updateSportFieldDto: UpdateSportFieldDto
+    @Body() updateSportFieldDto: UpdateSportFieldDto,
   ) {
     return this.sportfieldsService.update(id, updateSportFieldDto);
   }
