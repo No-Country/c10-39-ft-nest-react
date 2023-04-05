@@ -15,7 +15,7 @@ const Login: FC = () => {
     e.preventDefault();
     loginUser({ mail, password })
       .then(() => {
-        navigate("/home");
+        navigate("/inicio");
       })
       .catch((err) => {
         console.log(err);
@@ -27,18 +27,9 @@ const Login: FC = () => {
       <div>
         <FaBasketballBall className="lg:w-[272px] lg:h-[248px]   w-[128px] h-[128px] text-gradone" />
       </div>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col w-full items-center gap-5"
-      >
+      <form onSubmit={handleSubmit} className="flex flex-col w-full items-center gap-5">
         <div className="lg:w-1/3 w-5/6 flex justify-center">
-          <Input
-            type="mail"
-            label="Email"
-            state={mail}
-            setState={setMail}
-            rounded={true}
-          />
+          <Input type="mail" label="Email" state={mail} setState={setMail} rounded={true} />
         </div>
         <div className="lg:w-1/3  w-5/6 flex justify-center">
           <Input

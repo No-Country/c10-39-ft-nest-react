@@ -23,7 +23,6 @@ const Layout: FC<props> = ({ children, title }) => {
     setOpenSecondMenu(false);
     setOpenSportMenu(false);
   };
-  const handleCloseMenu = () => setOpenMenu(false);
   const handleClickSecondMenu = () => {
     setOpenSecondMenu(!openSecondMenu);
     setOpenMenu(false);
@@ -34,6 +33,9 @@ const Layout: FC<props> = ({ children, title }) => {
     setOpenMenu(false);
     setOpenSecondMenu(false);
   };
+  const handleCloseMenu = () => setOpenMenu(false);
+  const handleCloseSecondMenu = () => setOpenSecondMenu(false);
+  const handleCloseSportMenu = () => setOpenSportMenu(false);
 
   return (
     <div>
@@ -60,10 +62,14 @@ const Layout: FC<props> = ({ children, title }) => {
               } text-white text-2xl flex-col justify-around absolute -left-56 top-10 w-52 bg-[#000] py-10 rounded-md`}
             >
               <li className="pl-5 py-5 active:bg-primary">
-                <Link to={"/reservas/tenis"}>Tenis</Link>
+                <Link onClick={handleCloseSportMenu} to={"/reservas/tenis"}>
+                  Tenis
+                </Link>
               </li>
               <li className="pl-5 py-5 active:bg-primary">
-                <Link to={"/reservas/futbol"}>Futbol</Link>
+                <Link onClick={handleCloseSportMenu} to={"/reservas/futbol"}>
+                  Futbol
+                </Link>
               </li>
             </ul>
             <div className="text-white text-2xl">
@@ -75,7 +81,9 @@ const Layout: FC<props> = ({ children, title }) => {
                   openSecondMenu ? "flex" : "hidden"
                 }   items-center absolute -left-40 top-10 h-40 w-52 bg-[#000] py-10 rounded-md`}
               >
-                <li className="pl-5 py-5 active:bg-primary w-full">Cerrar sesion</li>
+                <li onClick={handleCloseSecondMenu} className="pl-5 py-5 active:bg-primary w-full">
+                  Cerrar sesion
+                </li>
               </ul>
             </div>
           </div>
@@ -85,7 +93,7 @@ const Layout: FC<props> = ({ children, title }) => {
             } transition-transform absolute left-0 w-5/6 h-screen bg-[#000] text-white pt-10`}
           >
             <div className="flex flex-row w-full justify-between px-5">
-              <Link onClick={handleCloseMenu} to={"/home"} className="text-2xl">
+              <Link onClick={handleCloseMenu} to={"/inicio"} className="text-2xl">
                 <FaBasketballBall />
               </Link>
               <div className="text-2xl" onClick={handleClickMenu}>
