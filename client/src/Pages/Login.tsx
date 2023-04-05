@@ -29,7 +29,7 @@ const Login: FC = () => {
       <form onSubmit={handleSubmit} className="flex flex-col w-full items-center gap-5">
         <div className="lg:w-1/3 w-full flex justify-center text-lg">
           <input
-            className="py-4 px-5 rounded-full focus:outline-none w-10/12"
+            className="py-3 px-5 rounded-2xl focus:outline-none w-10/12"
             type="mail"
             placeholder="Mail"
             value={mail}
@@ -40,7 +40,7 @@ const Login: FC = () => {
         </div>
         <div className="lg:w-1/3  w-full flex justify-center text-lg">
           <input
-            className="py-4 px-5 rounded-full focus:outline-none w-10/12"
+            className="py-3 px-5 rounded-2xl focus:outline-none w-10/12"
             type="password"
             placeholder="Contraseña"
             value={password}
@@ -48,9 +48,9 @@ const Login: FC = () => {
           />
         </div>
         <input
-          className="mt-5 w-28 py-2 rounded-full font-bold bg-gradone"
+          className="mt-5 font-semibold w-28 py-3 text-lg rounded-full bg-[#CAE0DB]"
           type="submit"
-          value="Enviar"
+          value="INICIAR"
         />
       </form>
     </div>

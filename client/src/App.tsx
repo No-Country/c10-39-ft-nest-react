@@ -41,7 +41,7 @@ function App() {
         <Route path="/propietarios/canchas" element={<SFOwner />}></Route>
         <Route path="/propietarios/canchas/:id" element={<SFOwnerId />}></Route>
         <Route path="/propietarios/agregar-cancha" element={<AddSFOwner />}></Route>
-        <Route path="/propietarios/registrarse" element={<OwnerRegister />}></Route>
+        <Route path="/propietarios/registro" element={<OwnerRegister />}></Route>
 
         <Route path="/perfil" element={<Profile />}></Route>
         <Route path="/perfil/reservas" element={<ProfileReservation />}></Route>

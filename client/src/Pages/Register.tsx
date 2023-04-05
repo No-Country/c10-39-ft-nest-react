@@ -1,18 +1,19 @@
-import { BaseSyntheticEvent, FC, useState } from "react";
-import Input from "../Components/Input";
+import { BaseSyntheticEvent, FC, useState } from 'react';
+import Input from '../Components/Input';
 
-import { IoMdMail } from "react-icons/io";
-import { HiOutlineUser, HiUser } from "react-icons/hi";
-import { AiFillEye } from "react-icons/ai";
-import { useNavigate, useParams } from "react-router-dom";
-import { registerUser } from "../Functions/userPetition";
+import { IoMdMail } from 'react-icons/io';
+import { HiOutlineUser, HiUser } from 'react-icons/hi';
+import { AiFillEye } from 'react-icons/ai';
+import { useNavigate, useParams } from 'react-router-dom';
+import { registerUser } from '../Functions/userPetition';
+import Layout from '../Components/Layout';
 
 const Register: FC = () => {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPass, setConfirmPass] = useState("");
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPass, setConfirmPass] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
@@ -41,12 +42,7 @@ const Register: FC = () => {
   };
 
   return (
-    <div>
-      <header className="bg-primary flex justify-center shadow-lg">
-        <h1 className="text-white text-xl w-10/12 pb-5 pt-10 text-left font-semibold">
-          Registrarse
-        </h1>
-      </header>
+    <Layout title="Registrarse">
       <form onSubmit={handleSubmit} className="flex flex-col w-full items-center">
         <div className="flex flex-col w-full items-center gap-5 py-12">
           <Input type="mail" label="Mail" state={email} setState={setEmail} icon={<IoMdMail />} />
@@ -85,7 +81,7 @@ const Register: FC = () => {
           value="REGISTRARSE"
         />
       </form>
-    </div>
+    </Layout>
   );
 };
 

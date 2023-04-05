@@ -1,16 +1,18 @@
-import { Link } from "react-router-dom";
+import { useEffect } from 'react';
 
-import { FaBasketballBall } from "react-icons/fa";
-import { useEffect } from "react";
-import { authUser } from "../Functions/userPetition";
+import { Link } from 'react-router-dom';
+
+import { FaBasketballBall } from 'react-icons/fa';
+
+import { authUser } from '../Functions/userPetition';
 
 const MainPage = () => {
   useEffect(() => {
     setTimeout(() => {
       const params = new URLSearchParams(window.location.search);
-      const token = params.get("token");
+      const token = params.get('token');
       if (token) {
-        localStorage.setItem("tkn", token);
+        localStorage.setItem('tkn', token);
         authUser()
           //aca simplemente borramos en token de la URL
           .then(() => {
@@ -24,13 +26,13 @@ const MainPage = () => {
             // Si se encontró el parámetro "token"
             if (match) {
               // Eliminar el parámetro y su valor de la URL
-              url = url.replace(match[0], "");
+              url = url.replace(match[0], '');
 
               // Reemplazar la URL actual sin el parámetro "token"
-              window.history.replaceState(null, "", url);
+              window.history.replaceState(null, '', url);
             }
           })
-          .then(() => (window.location.pathname = "/inicio"));
+          .then(() => (window.location.pathname = '/inicio'));
       }
     }, 50);
   }, []);
@@ -51,7 +53,7 @@ const MainPage = () => {
         </Link>
         <Link
           className="w-10/12 lg:w-1/5 py-3 rounded-full text-center font-bold bg-gradone"
-          to={"/register"}
+          to={'/registro'}
         >
           REGISTRARSE
         </Link>

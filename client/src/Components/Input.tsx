@@ -6,20 +6,19 @@ type props = {
   state: string;
   setState: (string: string) => void;
   icon?: any;
-  rounded?: boolean;
 };
 
 const Input: FC<props> = ({ type, label, state, setState, icon }) => {
+  const [inputWritten, setInputWritten] = useState(() =>
+    state === '' ? 'translate-y-7 translate-x-2' : 'inputWritten',
+  );
+
   const handleChange = ({ target }: { target: HTMLInputElement }) => {
     setInputWritten(() => {
       return target.value === '' ? 'translate-y-7 translate-x-2' : 'inputWritten';
     });
     setState(target.value);
   };
-
-  const [inputWritten, setInputWritten] = useState(() =>
-    state === '' ? 'translate-y-7 translate-x-2' : 'inputWritten',
-  );
 
   return (
     <div className="w-10/12 flex flex-col relative">
