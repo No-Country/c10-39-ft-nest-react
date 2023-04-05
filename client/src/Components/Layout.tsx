@@ -122,7 +122,7 @@ const Layout: FC<PropsWithChildren<props>> = ({ children, title }) => {
           </div>
         </nav>
       </header>
-      <div className="z-10 mb-[100px] pt-[80px] bg-secondary min-h-screen">{children}</div>
+      <div className="z-10 pt-[80px] bg-bg min-h-screen">{children}</div>
     </div>
   );
 };
