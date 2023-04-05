@@ -1,25 +1,23 @@
 import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
-// import ContextProvider from "./Pages/Context";
+
+import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import MainPage from "./Pages/MainPage";
 import Home from "./Pages/Home";
-import Login from "./Pages/Login";
 import Search from "./Pages/Search";
 import Reservation from "./Pages/Reservation";
-
 import SportFields from "./Pages/SportFields";
 import SFDetail from "./Pages/SFDetial";
+
 import { useEffect } from "react";
 import { authUser } from "./Functions/userPetition";
 
 function App() {
   useEffect(() => {
-    localStorage.getItem("tkn") &&
-    authUser();
+    localStorage.getItem("tkn") && authUser();
   }, []);
 
   return (
-    // <ContextProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage />}></Route>
@@ -27,21 +25,14 @@ function App() {
 
         <Route path="/reservas/:sport" element={<Search />}></Route>
         <Route path="/reservas" element={<Reservation />}></Route>
-        <Route
-          path="/reservas/:sport/canchas"
-          element={<SportFields />}
-        ></Route>
-        <Route
-          path="/reservas/:sport/canchas/id"
-          element={<SFDetail />}
-        ></Route>
+        <Route path="/reservas/:sport/canchas" element={<SportFields />}></Route>
+        <Route path="/reservas/:sport/canchas/id" element={<SFDetail />}></Route>
 
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="*" element={<Navigate to="/" />}></Route>
       </Routes>
     </BrowserRouter>
-    // </ContextProvider>
   );
 }
 
