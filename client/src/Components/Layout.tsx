@@ -1,19 +1,18 @@
-import { FC, useState } from "react";
+import { FC, useState, PropsWithChildren } from 'react';
 
-import { GiHamburgerMenu } from "react-icons/gi";
+import { GiHamburgerMenu } from 'react-icons/gi';
 
-import { GoKebabVertical } from "react-icons/go";
-import { MdKeyboardArrowLeft } from "react-icons/md";
-import { FaBasketballBall } from "react-icons/fa";
+import { GoKebabVertical } from 'react-icons/go';
+import { MdKeyboardArrowLeft } from 'react-icons/md';
+import { FaBasketballBall } from 'react-icons/fa';
 
 type props = {
-  children: React.ReactNode;
   title: string;
 };
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
-const Layout: FC<props> = ({ children, title }) => {
+const Layout: FC<PropsWithChildren<props>> = ({ children, title }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const [openSecondMenu, setOpenSecondMenu] = useState(false);
   const [openSportMenu, setOpenSportMenu] = useState(false);
@@ -50,7 +49,7 @@ const Layout: FC<props> = ({ children, title }) => {
           <div className="relative gap-7 justify-end flex items-center pb-5 pt-10 ">
             <button
               className={`${
-                openSportMenu ? "rotate-90" : "-rotate-90"
+                openSportMenu ? 'rotate-90' : '-rotate-90'
               } text-white align-middle text-2xl transition-transform`}
               onClick={handleClickSportsMenu}
             >
@@ -58,16 +57,16 @@ const Layout: FC<props> = ({ children, title }) => {
             </button>
             <ul
               className={`${
-                openSportMenu ? "flex" : "hidden"
+                openSportMenu ? 'flex' : 'hidden'
               } text-white text-2xl flex-col justify-around absolute -left-56 top-10 w-52 bg-[#000] py-10 rounded-md`}
             >
               <li className="pl-5 py-5 active:bg-primary">
-                <Link onClick={handleCloseSportMenu} to={"/reservas/tenis"}>
+                <Link onClick={handleCloseSportMenu} to={'/reservas/tenis'}>
                   Tenis
                 </Link>
               </li>
               <li className="pl-5 py-5 active:bg-primary">
-                <Link onClick={handleCloseSportMenu} to={"/reservas/futbol"}>
+                <Link onClick={handleCloseSportMenu} to={'/reservas/futbol'}>
                   Futbol
                 </Link>
               </li>
@@ -78,7 +77,7 @@ const Layout: FC<props> = ({ children, title }) => {
               </div>
               <ul
                 className={`${
-                  openSecondMenu ? "flex" : "hidden"
+                  openSecondMenu ? 'flex' : 'hidden'
                 }   items-center absolute -left-40 top-10 h-40 w-52 bg-[#000] py-10 rounded-md`}
               >
                 <li onClick={handleCloseSecondMenu} className="pl-5 py-5 active:bg-primary w-full">
@@ -89,11 +88,11 @@ const Layout: FC<props> = ({ children, title }) => {
           </div>
           <div
             className={`${
-              openMenu ? "tranlate-x-0" : "translate-x-[-100%]"
+              openMenu ? 'tranlate-x-0' : 'translate-x-[-100%]'
             } transition-transform absolute left-0 w-5/6 h-screen bg-[#000] text-white pt-10`}
           >
             <div className="flex flex-row w-full justify-between px-5">
-              <Link onClick={handleCloseMenu} to={"/inicio"} className="text-2xl">
+              <Link onClick={handleCloseMenu} to={'/inicio'} className="text-2xl">
                 <FaBasketballBall />
               </Link>
               <div className="text-2xl" onClick={handleClickMenu}>
@@ -103,19 +102,19 @@ const Layout: FC<props> = ({ children, title }) => {
             <div className="flex flex-col w-full items-center gap-16 mt-10">
               <div className="w-36 h-36 bg-white rounded-full"></div>
               <ul className="flex flex-col items-center gap-10 text-2xl">
-                <Link onClick={handleCloseMenu} to={"/perfil"}>
+                <Link onClick={handleCloseMenu} to={'/perfil'}>
                   Perfil
                 </Link>
-                <Link onClick={handleCloseMenu} to={"/perfil/reservas"}>
+                <Link onClick={handleCloseMenu} to={'/perfil/reservas'}>
                   Mis reservas
                 </Link>
-                <Link onClick={handleCloseMenu} to={"/propietarios/canchas"}>
+                <Link onClick={handleCloseMenu} to={'/propietarios/canchas'}>
                   Mis canchas
                 </Link>
-                <Link onClick={handleCloseMenu} to={"/nosotros"}>
+                <Link onClick={handleCloseMenu} to={'/nosotros'}>
                   Nosotros
                 </Link>
-                <Link onClick={handleCloseMenu} to={"/ayuda"}>
+                <Link onClick={handleCloseMenu} to={'/ayuda'}>
                   Ayuda
                 </Link>
               </ul>
