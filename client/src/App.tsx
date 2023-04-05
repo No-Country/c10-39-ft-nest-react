@@ -1,28 +1,28 @@
-import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
+import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
 
-import MainPage from "./Pages/MainPage";
-import Home from "./Pages/Home";
-import Reservation from "./Pages/Reservation";
-import Search from "./Pages/Search";
-import SportFields from "./Pages/SportFields";
-import SFDetail from "./Pages/SFDetial";
-import Owner from "./Pages/Owner";
-import SFOwner from "./Pages/SFOwner";
-import AddSFOwner from "./Pages/AddSFOwner";
-import OwnerRegister from "./Pages/OwnerRegister";
-import Profile from "./Pages/Profile";
-import ProfileReservation from "./Pages/ProfileReservation";
-import Help from "./Pages/Help";
-import About from "./Pages/About";
-import Login from "./Pages/Login";
-import Register from "./Pages/Register";
+import MainPage from './Pages/MainPage';
+import Home from './Pages/Home';
+import Reservation from './Pages/Reservation';
+import Search from './Pages/Search';
+import SportFields from './Pages/SportFields';
+import SFDetail from './Pages/SFDetial';
+import Owner from './Pages/Owner';
+import SFOwner from './Pages/SFOwner';
+import AddSFOwner from './Pages/AddSFOwner';
+import OwnerRegister from './Pages/OwnerRegister';
+import Profile from './Pages/Profile';
+import ProfileReservation from './Pages/ProfileReservation';
+import Help from './Pages/Help';
+import About from './Pages/About';
+import Login from './Pages/Login';
+import Register from './Pages/Register';
 
-import { useEffect } from "react";
-import { authUser } from "./Functions/userPetition";
+import { useEffect } from 'react';
+import { authUser } from './Functions/userPetition';
 
 function App() {
   useEffect(() => {
-    localStorage.getItem("tkn") && authUser();
+    localStorage.getItem('tkn') && authUser();
   }, []);
 
   return (
