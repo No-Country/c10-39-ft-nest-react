@@ -1,6 +1,6 @@
-import { FC } from "react";
-import PrimaryButton from "./PrimaryButton";
-import { useNavigate, useParams } from "react-router-dom";
+import { FC } from 'react';
+import PrimaryButton from './PrimaryButton';
+import { useNavigate, useParams } from 'react-router-dom';
 
 type props = {
   children?: React.ReactNode;
@@ -12,17 +12,15 @@ const SportCard: FC<props> = ({ children, title, bgImage }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    console.log("click");
+    console.log('click');
     navigate(`/reservas/tenis`);
   };
   return (
     <div
-      className={`mx-1 my-[70px] relative rounded-t bg-opacity-10 h-[220px]
+      className={`mx-1 my-[70px] relative rounded bg-opacity-10 h-[220px]
       bg-[url('https://www.rere.jp/beginners/uploads/2019/09/i-471621500-3-1024x667.jpg')]  flex items-center justify-center`}
     >
-      <div className="font-segoeScript font-bold text-6xl text-center">
-        {title}
-      </div>
+      <div className="font-segoeScript font-bold text-6xl text-center">{title}</div>
       <div className="absolute bottom-4 right-4">
         <PrimaryButton text="IR" onClick={handleClick}></PrimaryButton>
       </div>
