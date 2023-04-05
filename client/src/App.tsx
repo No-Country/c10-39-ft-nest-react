@@ -8,6 +8,7 @@ import SportFields from './Pages/SportFields';
 import SFDetail from './Pages/SFDetial';
 import Owner from './Pages/Owner';
 import SFOwner from './Pages/SFOwner';
+import SFOwnerId from './Pages/SFOwnerId';
 import AddSFOwner from './Pages/AddSFOwner';
 import OwnerRegister from './Pages/OwnerRegister';
 import Profile from './Pages/Profile';
@@ -34,10 +35,11 @@ function App() {
         <Route path="/reservas" element={<Reservation />}></Route>
         <Route path="/reservas/:sport" element={<Search />}></Route>
         <Route path="/reservas/:sport/canchas" element={<SportFields />}></Route>
-        <Route path="/reservas/:sport/canchas/id" element={<SFDetail />}></Route>
+        <Route path="/reservas/:sport/canchas/:id" element={<SFDetail />}></Route>
 
         <Route path="/propietarios" element={<Owner />}></Route>
         <Route path="/propietarios/canchas" element={<SFOwner />}></Route>
+        <Route path="/propietarios/canchas/:id" element={<SFOwnerId />}></Route>
         <Route path="/propietarios/agregar-cancha" element={<AddSFOwner />}></Route>
         <Route path="/propietarios/registrarse" element={<OwnerRegister />}></Route>
 
