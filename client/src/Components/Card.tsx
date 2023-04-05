@@ -11,7 +11,7 @@ const Card: FC<props> = ({ title }) => {
 
   const handleClick = () => navigate(`/reservas`);
   return (
-    <div className="mt-3 mb-10">
+    <div className="mt-3 my-10">
       <div className="relative bg-primary bg-opacity-80 w-full h-[200px]">
         <h1 className=" absolute bottom-4 left-4 text-white text-xl w-10/12 text-left font-semibold">
           {title}

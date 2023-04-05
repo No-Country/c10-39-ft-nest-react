@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Req,
+} from '@nestjs/common';
 import { SportsComplexService } from './sports-complex.service';
 import { CreateSportsComplexDTO } from './dto/create-sports-complex.dto';
 import { UpdateSportsComplexDTO } from './dto/update-sports-complex.dto';
@@ -9,27 +18,27 @@ import User from 'src/users/entities/user.entity';
 
 @Controller('sports-complex')
 export class SportsComplexController {
-  constructor(private readonly sportsComplexService: SportsComplexService,
+  constructor(
+    private readonly sportsComplexService: SportsComplexService,
     private readonly usersService: UsersService
-  ) { }
+  ) {}
 
   @Post()
-  async create(@Body() createSportsComplexDto: CreateSportsComplexDTO,
+  async create(
+    @Body() createSportsComplexDto: CreateSportsComplexDTO,
     @Req() req: Request & { user: any }
-  )
-    : Promise<SportsComplex> {
+  ): Promise<SportsComplex> {
     const id: string = req.user.id;
     const user: User = await this.usersService.findOne(id);
     const owner = user.owner;
-    if (!owner) {
+    if (owner) {
       throw new Error('User is not owner');
     }
     return this.sportsComplexService.create(createSportsComplexDto, owner);
   }
 
   @Get()
-  async findAll()
-    : Promise<SportsComplex[]> {
+  async findAll(): Promise<SportsComplex[]> {
     return this.sportsComplexService.findAll();
   }
 
@@ -47,7 +56,9 @@ export class SportsComplexController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateSportsComplexDTO: UpdateSportsComplexDTO,
+  async update(
+    @Param('id') id: string,
+    @Body() updateSportsComplexDTO: UpdateSportsComplexDTO,
     @Req() req: Request & { user: any }
   ) {
     const idUser: string = req.user.id;
@@ -57,7 +68,11 @@ export class SportsComplexController {
       throw new Error('User is not owner');
     }
 
-    return this.sportsComplexService.update(owner.id, id, updateSportsComplexDTO);
+    return this.sportsComplexService.update(
+      owner.id,
+      id,
+      updateSportsComplexDTO
+    );
   }
 
   @Delete(':id')
@@ -71,4 +86,3 @@ export class SportsComplexController {
     return this.sportsComplexService.remove(id, owner.id);
   }
 }
-
