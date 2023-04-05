@@ -12,7 +12,7 @@ const MainPage = () => {
       if (token) {
         localStorage.setItem("tkn", token);
         authUser()
-            //aca simplemente borramos en token de la URL
+          //aca simplemente borramos en token de la URL
           .then(() => {
             // Obtener la URL actual
             let url = window.location.href;
@@ -30,7 +30,7 @@ const MainPage = () => {
               window.history.replaceState(null, "", url);
             }
           })
-          .then(() => (window.location.pathname = "/home"));
+          .then(() => (window.location.pathname = "/inicio"));
       }
     }, 50);
   }, []);
@@ -45,7 +45,7 @@ const MainPage = () => {
       <div className="flex flex-col w-full items-center gap-5">
         <Link
           className="w-10/12 lg:w-1/5 py-3 rounded-full text-center font-bold bg-gradient-to-tr from-gradone to-gradtwo"
-          to="/login"
+          to="/inicio"
         >
           INICIAR SESION
         </Link>
@@ -57,9 +57,7 @@ const MainPage = () => {
         </Link>
         <div
           onClick={() => {
-            window.location.href = `${
-              import.meta.env.VITE_BACKEND_URL
-            }/auth/google`;
+            window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/google`;
           }}
           className="bg-gradone px-20 py-2 rounded-full"
         >

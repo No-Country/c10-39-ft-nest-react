@@ -33,7 +33,7 @@ const Register: FC = () => {
       password,
     })
       .then(() => {
-        navigate(`/home`);
+        navigate(`/inicio`);
       })
       .catch((err) => {
         console.log(err);
@@ -47,18 +47,9 @@ const Register: FC = () => {
           Registrarse
         </h1>
       </header>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col w-full items-center"
-      >
+      <form onSubmit={handleSubmit} className="flex flex-col w-full items-center">
         <div className="flex flex-col w-full items-center gap-5 py-12">
-          <Input
-            type="mail"
-            label="Mail"
-            state={email}
-            setState={setEmail}
-            icon={<IoMdMail />}
-          />
+          <Input type="mail" label="Mail" state={email} setState={setEmail} icon={<IoMdMail />} />
           <Input
             type="text"
             label="Nombre"
