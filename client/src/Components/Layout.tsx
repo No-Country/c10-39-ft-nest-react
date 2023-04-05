@@ -15,16 +15,18 @@ import { Link } from "react-router-dom";
 
 const Layout: FC<props> = ({ children, title }) => {
   const [openMenu, setOpenMenu] = useState(false);
+  const [openSecondMenu, setOpenSecondMenu] = useState(false);
 
-  const handleClick = () => setOpenMenu(!openMenu);
+  const handleClickMenu = () => setOpenMenu(!openMenu);
   const handleCloseMenu = () => setOpenMenu(false);
+  const handleClickSecondMenu = () => setOpenSecondMenu(!openSecondMenu);
 
   return (
     <div>
       <header>
         <nav className="z-[300] px-5 bg-primary flex justify-center shadow-lg fixed w-full h-[80px]">
           <div className=" gap-7 justify-start flex w-full items-center pb-5 pt-10 ">
-            <button className="text-white text-2xl align-middle" onClick={handleClick}>
+            <button className="text-white text-2xl align-middle" onClick={handleClickMenu}>
               <GiHamburgerMenu />
             </button>
             <h1 className="text-white text-2xl w-10/12 text-left font-semibold">{title}</h1>
@@ -33,8 +35,17 @@ const Layout: FC<props> = ({ children, title }) => {
             <button className="text-white align-middle text-2xl -rotate-90">
               <MdKeyboardArrowLeft />
             </button>
-            <div className="text-white text-2xl">
-              <GoKebabVertical />
+            <div className="relative text-white text-2xl">
+              <div onClick={handleClickSecondMenu}>
+                <GoKebabVertical />
+              </div>
+              <div
+                className={`${
+                  openSecondMenu ? "flex" : "hidden"
+                }   items-center absolute -left-52 top-0 h-40 w-52 bg-[#000] py-5 rounded-md`}
+              >
+                <span className="pl-5 py-5 active:bg-primary w-full">Cerrar sesion</span>
+              </div>
             </div>
           </div>
           <div
@@ -46,7 +57,7 @@ const Layout: FC<props> = ({ children, title }) => {
               <Link to={"/home"} className="text-2xl">
                 <FaBasketballBall />
               </Link>
-              <div className="text-2xl" onClick={handleClick}>
+              <div className="text-2xl" onClick={handleClickMenu}>
                 <MdKeyboardArrowLeft />
               </div>
             </div>
