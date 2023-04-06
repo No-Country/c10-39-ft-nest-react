@@ -1,11 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import { OwnerService } from './owner.service';
 import { CreateOwnerDto } from './dto/create-owner.dto';
 import { UpdateOwnerDto } from './dto/update-owner.dto';
 
 @Controller('owner')
 export class OwnerController {
-  constructor(private readonly ownerService: OwnerService) { }
+  constructor(private readonly ownerService: OwnerService) {}
 
   @Post()
   create(@Body() createOwnerDto: CreateOwnerDto) {
@@ -23,9 +32,10 @@ export class OwnerController {
   }
 
   @Patch(':userId')
-  update(@Param('userId', ParseUUIDPipe) userId: string, @Body() updateOwnerDto: UpdateOwnerDto) {
+  update(
+    @Param('userId', ParseUUIDPipe) userId: string,
+    @Body() updateOwnerDto: UpdateOwnerDto,
+  ) {
     return this.ownerService.update(userId, updateOwnerDto);
   }
-
-
 }

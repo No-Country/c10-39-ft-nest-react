@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { SportfieldsService } from './sportfields.service';
 import { SportfieldsController } from './sportfields.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -7,6 +7,7 @@ import SportsComplex from 'src/sports-complex/entities/sports-complex.entity';
 import { Reservation } from 'src/reservation/entities/reservation.entity';
 import { Sport } from 'src/sports/entities/sport.entity';
 import { SportsModule } from 'src/sports/sports.module';
+import { AuthMiddleware } from 'src/Core/Middleware/auth-token.middleware';
 
 @Module({
   controllers: [SportfieldsController],
@@ -17,4 +18,8 @@ import { SportsModule } from 'src/sports/sports.module';
   ],
   exports: [TypeOrmModule],
 })
-export class SportfieldsModule {}
+export class SportfieldsModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes('sportfields');
+  }
+}

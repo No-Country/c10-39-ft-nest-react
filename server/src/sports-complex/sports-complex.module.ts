@@ -9,10 +9,8 @@ import { UsersService } from 'src/users/users.service';
 import User from 'src/users/entities/user.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Owner, SportField, SportsComplex, User]),
-  ],
+  imports: [TypeOrmModule.forFeature([SportField, SportsComplex, User])],
   controllers: [SportsComplexController],
-  providers: [SportsComplexService, UsersService]
+  providers: [SportsComplexService, UsersService],
 })
 export class SportsComplexModule {}
