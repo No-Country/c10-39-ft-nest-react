@@ -14,9 +14,9 @@ const SFDetail = () => {
 
   return (
     <Layout title="Detalles de la reserva">
-      <div className="mx-[5%] my-5 flex flex-col w-[90%] bg-[#aaa3] px-5 py-2 rounded-lg">
+      <div className="mx-[5%] my-5 flex flex-col bg-[#aaa3] px-5 py-2 rounded-lg">
         <span className="opacity-70">Titulo</span>
-        <span>Ubicacion</span>
+        <span className="text-lg">Ubicacion</span>
       </div>
       <div className="flex flex-col gap-5 bg-white pb-2 mb-10 mx-2 shadow-lg rounded-lg">
         <div className="flex flex-row items-center justify-between p-5">
