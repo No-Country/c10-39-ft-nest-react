@@ -38,7 +38,7 @@ const Input: FC<props> = ({ type, label, state, setState, icon }) => {
         {label}
       </label>
       {icon && (
-        <div className="[&>svg]:absolute [&>svg]:bottom-2 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6">
+        <div className="[&>svg]:absolute [&>svg]:bottom-2 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none">
           {icon}
         </div>
       )}
