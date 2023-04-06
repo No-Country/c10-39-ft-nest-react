@@ -49,8 +49,8 @@ const SFDetail = () => {
         </span>
       </div>
       <div className="flex flex-row justify-evenly w-full">
-        <PrimaryButton text="Cancelar" onClick={handleCancel} />
-        <PrimaryButton text="Confirmar" onClick={handleConfirm} />
+        <PrimaryButton text="CANCELAR" onClick={handleCancel} alternative={true} />
+        <PrimaryButton text="CONFIRMAR" onClick={handleConfirm} />
       </div>
     </Layout>
   );
