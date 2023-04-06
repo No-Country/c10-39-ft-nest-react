@@ -1,5 +1,6 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { MdKeyboardArrowLeft } from 'react-icons/md';
 
 import PrimaryButton from '../Components/PrimaryButton';
 
@@ -10,7 +11,11 @@ type sportFieldType = {
 };
 
 const SportField: FC<sportFieldType> = ({ complexData, btnText, route }) => {
+  const [moreInfo, setMoreInfo] = useState(false);
+
   const navigate = useNavigate();
+
+  const handleClick = () => setMoreInfo(!moreInfo);
 
   return (
     <div className="mb-5 shadow-lg">
@@ -40,8 +45,18 @@ const SportField: FC<sportFieldType> = ({ complexData, btnText, route }) => {
         </div>
         {complexData && (
           <>
-            <span className="text-lg">Ver más</span>
-            <ul className="text-lg">
+            <span
+              className="text-lg flex items-center justify-between w-[125px]"
+              onClick={handleClick}
+            >
+              {moreInfo ? 'Ver menos' : 'Ver más'}
+              <span className={`${moreInfo ? 'rotate-90' : '-rotate-90'} transition-all`}>
+                <MdKeyboardArrowLeft />
+              </span>
+            </span>
+            <ul
+              className={`${moreInfo ? 'h-[125px]' : 'h-0'} transition-all text-lg overflow-hidden`}
+            >
               <li>Estacionamiento</li>
               <li>Asador</li>
               <li>Vestuario</li>
