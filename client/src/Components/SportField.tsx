@@ -1,5 +1,7 @@
-import { type FC } from 'react';
+import { FC, useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
+import { MdKeyboardArrowLeft } from 'react-icons/md';
 
 import PrimaryButton from '../Components/PrimaryButton';
 
@@ -10,9 +12,11 @@ interface sportFieldType {
 }
 
 const SportField: FC<sportFieldType> = ({ complexData, btnText, route }) => {
+  const [moreInfo, setMoreInfo] = useState(false);
+
   const navigate = useNavigate();
 
-  const handleClick = () => navigate(route);
+  const handleClick = () => setMoreInfo(!moreInfo);
 
   return (
     <div className="mb-5 shadow-lg">
@@ -20,16 +24,40 @@ const SportField: FC<sportFieldType> = ({ complexData, btnText, route }) => {
       <div className="flex flex-col gap-5 p-5 bg-white">
         <div>
           <span className="block text-3xl ">Titulo</span>
-          {complexData && <span className="block opacity-70 relative bottom-2">Ubicacion</span>}
+          {complexData && (
+            <span className="block opacity-70 relative bottom-2 text-lg">Ubicacion</span>
+          )}
         </div>
-        <div className="flex flex-row w-full justify-left gap-5 items-center">
-          <span className="w-1/2">Estrellas</span>
-          <PrimaryButton text={btnText} onClick={handleClick} />
+        <div
+          className={`${
+            complexData ? 'items-center' : 'gap-5 flex-row-reverse'
+          } flex w-full justify-left`}
+        >
+          {complexData ? (
+            <span className="w-1/2">Estrellas</span>
+          ) : (
+            <PrimaryButton text="ADMINISTRAR" onClick={() => navigate('/propietarios/turnos')} />
+          )}
+          <PrimaryButton
+            text={btnText}
+            onClick={() => navigate(route)}
+            alternative={!complexData}
+          />
         </div>
         {complexData && (
           <>
-            <span>Ver más</span>
-            <ul>
+            <span
+              className="text-lg flex items-center justify-between w-[125px]"
+              onClick={handleClick}
+            >
+              {moreInfo ? 'Ver menos' : 'Ver más'}
+              <span className={`${moreInfo ? 'rotate-90' : '-rotate-90'} transition-all`}>
+                <MdKeyboardArrowLeft />
+              </span>
+            </span>
+            <ul
+              className={`${moreInfo ? 'h-[125px]' : 'h-0'} transition-all text-lg overflow-hidden`}
+            >
               <li>Estacionamiento</li>
               <li>Asador</li>
               <li>Vestuario</li>

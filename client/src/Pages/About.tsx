@@ -1,6 +1,5 @@
-import { type FC } from "react";
-
-import Layout from "../Components/Layout";
+import { FC } from 'react';
+import Layout from '../Components/Layout';
 
 const About: FC = () => {
   return (

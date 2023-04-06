@@ -12,7 +12,7 @@ const SFOwner: FC = () => {
         <SportField
           key={index}
           complexData={false}
-          btnText={'ADMINISTRAR'}
+          btnText={'EDITAR'}
           route="/propietarios/canchas/id"
         />
       ))}

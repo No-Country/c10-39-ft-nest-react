@@ -13,6 +13,7 @@ import OwnerRegister from './Pages/OwnerRegister';
 import Profile from './Pages/Profile';
 import ProfileReservation from './Pages/ProfileReservation';
 import Register from './Pages/Register';
+import Turns from './Pages/Turns';
 import Reservation from './Pages/Reservation';
 import Search from './Pages/Search';
 import SFDetail from './Pages/SFDetial';
@@ -41,11 +42,12 @@ function App() {
         <Route path='/reservas/:sport/canchas' element={<SportFields />}></Route>
         <Route path='/reservas/:sport/canchas/:id' element={<SFDetail />}></Route>
 
-        <Route path='/propietarios' element={<Owner />}></Route>
-        <Route path='/propietarios/canchas' element={<SFOwner />}></Route>
-        <Route path='/propietarios/canchas/:id' element={<SFOwnerId />}></Route>
-        <Route path='/propietarios/agregar-cancha' element={<AddSFOwner />}></Route>
-        <Route path='/propietarios/registro' element={<OwnerRegister />}></Route>
+        <Route path="/propietarios" element={<Owner />}></Route>
+        <Route path="/propietarios/canchas" element={<SFOwner />}></Route>
+        <Route path="/propietarios/canchas/:id" element={<SFOwnerId />}></Route>
+        <Route path="/propietarios/turnos" element={<Turns />}></Route>
+        <Route path="/propietarios/agregar-cancha" element={<AddSFOwner />}></Route>
+        <Route path="/propietarios/registro" element={<OwnerRegister />}></Route>
 
         <Route path='/perfil' element={<Profile />}></Route>
         <Route path='/perfil/reservas' element={<ProfileReservation />}></Route>

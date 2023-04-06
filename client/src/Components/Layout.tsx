@@ -43,7 +43,7 @@ const Layout: FC<PropsWithChildren<props>> = ({ children, title }) => {
             <button className="text-white text-2xl" onClick={handleClickMenu}>
               <GiHamburgerMenu />
             </button>
-            <h1 className="text-white text-xl w-full pr-1 text-left font-semibold">{title}</h1>
+            <h1 className="text-white text-xl w-full pr-1 text-left font-light">{title}</h1>
           </div>
           <div className="relative gap-7 justify-end flex items-center pb-5 pt-10 ">
             <button
