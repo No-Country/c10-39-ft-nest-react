@@ -7,9 +7,9 @@ import { GiSoccerField } from 'react-icons/gi';
 import { GrGroup } from 'react-icons/gr';
 import { AiOutlineClockCircle } from 'react-icons/ai';
 
-const AddSFOwner: FC = () => {
+const SFownerEdit: FC = () => {
   return (
-    <Layout title="Agregar cancha">
+    <Layout title="Editar cancha">
       <div className="bg-[#D9D9D9] cursor-pointer mx-1 my-[70px] relative rounded h-[227px] text-center ">
         +
       </div>
@@ -37,4 +37,4 @@ const AddSFOwner: FC = () => {
   );
 };
 
-export default AddSFOwner;
+export default SFownerEdit;
