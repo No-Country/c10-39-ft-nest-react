@@ -15,10 +15,13 @@ export class Owner {
   @Column('text')
   phone: string;
 
-  @OneToMany((type) => SportsComplex, (sportsComplex) => sportsComplex.owner)
+  @OneToMany(() => SportsComplex, (sportsComplex) => sportsComplex.owner)
   sportsComplex: SportsComplex[];
 
-  @OneToOne((type) => User, (user) => user.owner)
+  @OneToOne(() => User, (user) => user.owner, {
+    cascade: true,
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'userId' })
   user: User;
   @Column()
