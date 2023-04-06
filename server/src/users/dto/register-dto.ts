@@ -16,7 +16,6 @@ export class RegisterUserDTO {
   @IsNotEmpty()
   @Length(3, 40)
   lastName: string;
-
 }
 export class LoginUserDTO {
   @IsNotEmpty()

@@ -1,4 +1,5 @@
-import { FC } from 'react';
+import { type FC } from 'react';
+
 import Layout from '../Components/Layout';
 import ReservationCard from '../Components/ReservationCard';
 

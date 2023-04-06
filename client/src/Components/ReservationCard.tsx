@@ -1,5 +1,6 @@
-import { FC } from 'react';
+import { type FC } from 'react';
 import { Link } from 'react-router-dom';
+
 import { MdEdit } from 'react-icons/md';
 // import { BsFillShareFill } from 'react-icons/bs';
 

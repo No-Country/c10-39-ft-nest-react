@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
-import { SportfieldsService } from './sportfields.service';
-import { SportfieldsController } from './sportfields.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SportField } from './entities/sportfield.entity';
-import SportsComplex from 'src/sports-complex/entities/sports-complex.entity';
 import { Reservation } from 'src/reservation/entities/reservation.entity';
 import { Sport } from 'src/sports/entities/sport.entity';
 import { SportsModule } from 'src/sports/sports.module';
+import SportsComplex from 'src/sports-complex/entities/sports-complex.entity';
+
+import { SportField } from './entities/sportfield.entity';
+import { SportfieldsController } from './sportfields.controller';
+import { SportfieldsService } from './sportfields.service';
 
 @Module({
   controllers: [SportfieldsController],

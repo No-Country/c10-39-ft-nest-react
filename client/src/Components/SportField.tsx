@@ -1,14 +1,15 @@
 import { FC, useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
 
 import PrimaryButton from '../Components/PrimaryButton';
 
-type sportFieldType = {
+interface sportFieldType {
   complexData: boolean;
   btnText: string;
   route: string;
-};
+}
 
 const SportField: FC<sportFieldType> = ({ complexData, btnText, route }) => {
   const [moreInfo, setMoreInfo] = useState(false);

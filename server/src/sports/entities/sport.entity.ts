@@ -10,9 +10,7 @@ export class Sport {
   name: string;
   @Column('text', {
     array: true,
-    default: [
-      'https://img.freepik.com/free-photo/sports-tools_53876-138077.jpg?w=2000',
-    ],
+    default: ['https://img.freepik.com/free-photo/sports-tools_53876-138077.jpg?w=2000'],
   })
   images: string[];
 

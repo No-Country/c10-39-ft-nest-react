@@ -35,9 +35,7 @@ const sports: SeedSport[] = [
   },
   {
     name: 'basketball',
-    images: [
-      'https://img.freepik.com/foto-gratis/aro-baloncesto_1127-3376.jpg',
-    ],
+    images: ['https://img.freepik.com/foto-gratis/aro-baloncesto_1127-3376.jpg'],
   },
   {
     name: 'tennis',
@@ -47,9 +45,7 @@ const sports: SeedSport[] = [
   },
   {
     name: 'volleyball',
-    images: [
-      'https://img.freepik.com/foto-gratis/pelota-golpeando-red_23-2149450951.jpg',
-    ],
+    images: ['https://img.freepik.com/foto-gratis/pelota-golpeando-red_23-2149450951.jpg'],
   },
 ];
 
@@ -80,9 +76,7 @@ const sportFields: SeedSportField[] = [
     name: 'Staples Center',
     description: 'Cancha de basket cerrada.',
     dimensions: '28x15',
-    images: [
-      'https://integralspor.com/uploads/blog/detail/162445d5fbd2b893161.jpg',
-    ],
+    images: ['https://integralspor.com/uploads/blog/detail/162445d5fbd2b893161.jpg'],
   },
   {
     sportId: 2,

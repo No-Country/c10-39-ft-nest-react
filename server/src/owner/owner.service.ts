@@ -1,10 +1,17 @@
-import { BadRequestException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import User from 'src/users/entities/user.entity';
+import { Repository } from 'typeorm';
+
 import { CreateOwnerDto } from './dto/create-owner.dto';
 import { UpdateOwnerDto } from './dto/update-owner.dto';
-import { InjectRepository } from '@nestjs/typeorm';
 import Owner from './entities/owner.entity';
-import { Repository } from 'typeorm';
-import User from 'src/users/entities/user.entity';
 
 @Injectable()
 export class OwnerService {
@@ -13,17 +20,17 @@ export class OwnerService {
     @InjectRepository(Owner)
     private readonly ownerRepository: Repository<Owner>,
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>
-  ) { }
+    private readonly userRepository: Repository<User>,
+  ) {}
 
   async create(createOwnerDto: CreateOwnerDto) {
     try {
       const { userId, ...ownerData } = createOwnerDto;
       const user = await this.userRepository.findOneBy({ id: userId });
-      if (!user) throw new NotFoundException('The user not exist')
+      if (!user) throw new NotFoundException('The user not exist');
       const owner = await this.ownerRepository.create({
         userId,
-        ...ownerData
+        ...ownerData,
       });
       await this.ownerRepository.save(owner);
 
@@ -37,9 +44,9 @@ export class OwnerService {
     try {
       const owners = await this.ownerRepository.find({
         relations: {
-          user: true
-        }
-      })
+          user: true,
+        },
+      });
       return owners;
     } catch (error) {
       this.handleDBException(error);
@@ -49,7 +56,7 @@ export class OwnerService {
   async findOne(id: string) {
     try {
       const owner = await this.ownerRepository.findOneBy({ id });
-      return owner
+      return owner;
     } catch (error) {
       this.handleDBException(error);
     }
@@ -57,21 +64,17 @@ export class OwnerService {
 
   async update(userId: string, updateOwnerDto: UpdateOwnerDto) {
     try {
-      let owner = await this.ownerRepository.update(userId, updateOwnerDto);
+      const owner = await this.ownerRepository.update(userId, updateOwnerDto);
       return owner;
     } catch (error) {
       this.handleDBException(error);
     }
   }
 
-
-
   private handleDBException(error: any) {
-    if (error.code === '23505')
-      throw new BadRequestException(error.detail);
+    if (error.code === '23505') throw new BadRequestException(error.detail);
     // console.log(error)
-    this.logger.error(error)
-    throw new InternalServerErrorException('Unexpected error, check server logs')
+    this.logger.error(error);
+    throw new InternalServerErrorException('Unexpected error, check server logs');
   }
-
 }

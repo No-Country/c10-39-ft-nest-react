@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 
-type Props = {
+interface Props {
   text: string;
   onClick?: () => void;
   children?: ReactNode;

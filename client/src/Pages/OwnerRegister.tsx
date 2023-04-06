@@ -1,7 +1,8 @@
-import { FC } from 'react';
+import { type FC } from 'react';
+
+import Input from '../Components/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
-import Input from '../Components/Input';
 
 const OwnerRegister: FC = () => {
   return (

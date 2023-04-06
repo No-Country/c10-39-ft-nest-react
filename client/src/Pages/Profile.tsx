@@ -1,7 +1,9 @@
-import { FC, useState } from 'react';
-import Layout from '../Components/Layout';
-import Input from '../Components/Input';
+import { type FC, useState } from 'react';
+
 import { MdEdit } from 'react-icons/md';
+
+import Input from '../Components/Input';
+import Layout from '../Components/Layout';
 
 const Profile: FC = () => {
   const [name, setName] = useState('Nayib');
