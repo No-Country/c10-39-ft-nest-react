@@ -19,7 +19,7 @@ const OwnerRegister: FC = () => {
           </div>
         </div>
         <div className="flex w-full justify-end px-10">
-          <PrimaryButton text="BUSCAR" />
+          <PrimaryButton text="CONTINUAR" />
         </div>
       </div>
     </Layout>
