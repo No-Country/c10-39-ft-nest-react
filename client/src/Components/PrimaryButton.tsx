@@ -1,4 +1,4 @@
-import { type FC } from "react";
+import { type FC } from 'react';
 
 interface Props {
   text: string;
@@ -7,11 +7,11 @@ interface Props {
 }
 
 const PrimaryButton: FC<Props> = ({ text, onClick }) => {
-  const handleClick = () => (onClick != null) && onClick();
+  const handleClick = () => onClick && onClick();
 
   return (
     <button
-      className="font-roboto px-5 font-semibold tracking-widest text-center text-[10px] p-1 shadow-lg min-w-[88px] h-[36px] bg-primary rounded-[20px] text-white"
+      className='font-roboto px-5 font-semibold tracking-widest text-center text-[10px] p-1 shadow-lg min-w-[88px] h-[36px] bg-primary rounded-[20px] text-white'
       onClick={handleClick}
     >
       {text}

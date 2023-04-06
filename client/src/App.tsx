@@ -22,13 +22,12 @@ import SportFields from './Pages/SportFields';
 
 const getUser = async () => {
   // TODO: localStorage.getItem is call inside authUser too. is needed here?
-  localStorage.getItem('tkn') || (await authUser());
+  localStorage.getItem('tkn') && (await authUser());
 };
 
 function App() {
   useEffect(() => {
     getUser().catch(() => console.log('Auth Failed'));
-    // localStorage.getItem('tkn') || authUser();
   }, []);
 
   return (

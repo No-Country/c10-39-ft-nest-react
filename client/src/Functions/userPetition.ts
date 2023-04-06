@@ -49,11 +49,11 @@ export async function loginUser(body: any) {
 
 export async function authUser(): Promise<void> {
   const token = localStorage.getItem('tkn') ?? '';
-  // TODO: this enters in a endless loop if token doesn't exists.
-  // if (!token) {
-  //   window.location.pathname = '/';
-  //   return;
-  // }
+
+  if (!token) {
+    window.location.pathname = '/';
+    return;
+  }
   try {
     const petition = await axios.get('/users/auth', {
       headers: {

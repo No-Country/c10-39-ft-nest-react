@@ -1,5 +1,5 @@
 import { type BaseSyntheticEvent, type FC, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { AiFillEye } from 'react-icons/ai';
 import { HiOutlineUser, HiUser } from 'react-icons/hi';
@@ -43,43 +43,43 @@ const Register: FC = () => {
   };
 
   return (
-    <Layout title="Registrarse">
-      <form onSubmit={handleSubmit} className="flex flex-col w-full items-center">
-        <div className="flex flex-col w-full items-center gap-5 py-12">
-          <Input type="mail" label="Mail" state={email} setState={setEmail} icon={<IoMdMail />} />
+    <Layout title='Registrarse'>
+      <form onSubmit={handleSubmit} className='flex flex-col w-full items-center'>
+        <div className='flex flex-col w-full items-center gap-5 py-12'>
+          <Input type='mail' label='Mail' state={email} setState={setEmail} icon={<IoMdMail />} />
           <Input
-            type="text"
-            label="Nombre"
+            type='text'
+            label='Nombre'
             state={name}
             setState={setName}
             icon={<HiOutlineUser />}
           />
           <Input
-            type="text"
-            label="Apellido"
+            type='text'
+            label='Apellido'
             state={lastName}
             setState={setLastName}
             icon={<HiUser />}
           />
           <Input
-            type="password"
-            label="Contraseña"
+            type='password'
+            label='Contraseña'
             state={password}
             setState={setPassword}
             icon={<AiFillEye />}
           />
           <Input
-            type="password"
-            label="Confirmar contraseña"
+            type='password'
+            label='Confirmar contraseña'
             state={confirmPass}
             setState={setConfirmPass}
             icon={<AiFillEye />}
           />
         </div>
         <input
-          className="mt-5 w-10/12 py-2 rounded-full font-bold bg-gradient-to-tr from-gradone to-gradtwo"
-          type="submit"
-          value="REGISTRARSE"
+          className='mt-5 w-10/12 py-2 rounded-full font-bold bg-gradient-to-tr from-gradone to-gradtwo'
+          type='submit'
+          value='REGISTRARSE'
         />
       </form>
     </Layout>
