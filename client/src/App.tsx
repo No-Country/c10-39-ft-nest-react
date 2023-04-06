@@ -17,6 +17,7 @@ import Help from './Pages/Help';
 import About from './Pages/About';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
+import Turns from './Pages/Turns';
 
 import { useEffect } from 'react';
 import { authUser } from './Functions/userPetition';
@@ -40,6 +41,7 @@ function App() {
         <Route path="/propietarios" element={<Owner />}></Route>
         <Route path="/propietarios/canchas" element={<SFOwner />}></Route>
         <Route path="/propietarios/canchas/:id" element={<SFOwnerId />}></Route>
+        <Route path="/propietarios/turnos" element={<Turns />}></Route>
         <Route path="/propietarios/agregar-cancha" element={<AddSFOwner />}></Route>
         <Route path="/propietarios/registro" element={<OwnerRegister />}></Route>
 
