@@ -14,7 +14,7 @@ const PrimaryButton: FC<Props> = ({ text, onClick, alternative = false }) => {
     <button
       className={`${
         alternative ? 'bg-white text-[#000] border-primary' : 'bg-primary'
-      } font-roboto py-4 px-7 font-semibold tracking-widest border-2 text-center text-[14px] shadow-lg rounded-full text-white`}
+      } font-roboto py-4 px-6 font-semibold tracking-widest border-2 text-center text-[14px] min-w-[125px] shadow-lg rounded-full text-white`}
       onClick={handleClick}
     >
       {text}
