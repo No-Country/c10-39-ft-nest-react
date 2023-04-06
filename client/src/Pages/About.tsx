@@ -1,8 +1,6 @@
 import { FC } from 'react';
 import Layout from '../Components/Layout';
 
-import Layout from "../Components/Layout";
-
 const About: FC = () => {
   return (
     <Layout title="Nosotros">
