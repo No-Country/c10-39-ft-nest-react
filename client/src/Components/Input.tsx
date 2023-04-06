@@ -1,12 +1,12 @@
-import { FC, useState } from 'react';
+import { type FC, useState } from 'react';
 
-type props = {
+interface props {
   type: string;
   label: string;
   state: string;
   setState: (string: string) => void;
   icon?: any;
-};
+}
 
 const Input: FC<props> = ({ type, label, state, setState, icon }) => {
   const [inputWritten, setInputWritten] = useState(() =>

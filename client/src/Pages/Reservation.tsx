@@ -1,6 +1,7 @@
+import { useState, useEffect } from "react";
+
 import Layout from "../Components/Layout";
 import SportCard from "../Components/SportCard";
-import { useState, useEffect } from "react";
 import { getAllSports } from "../Functions/SportPetition";
 
 const Reservation = () => {

@@ -1,12 +1,13 @@
-import { BaseSyntheticEvent, FC, useState } from 'react';
-import Input from '../Components/Input';
-
-import { IoMdMail } from 'react-icons/io';
-import { HiOutlineUser, HiUser } from 'react-icons/hi';
-import { AiFillEye } from 'react-icons/ai';
+import { type BaseSyntheticEvent, type FC, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { registerUser } from '../Functions/userPetition';
+
+import { AiFillEye } from 'react-icons/ai';
+import { HiOutlineUser, HiUser } from 'react-icons/hi';
+import { IoMdMail } from 'react-icons/io';
+
+import Input from '../Components/Input';
 import Layout from '../Components/Layout';
+import { registerUser } from '../Functions/userPetition';
 
 const Register: FC = () => {
   const [email, setEmail] = useState('');

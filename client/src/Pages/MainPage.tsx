@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-
 import { Link } from 'react-router-dom';
 
 import { FaBasketballBall } from 'react-icons/fa';
@@ -14,17 +13,17 @@ const MainPage = () => {
       if (token) {
         localStorage.setItem('tkn', token);
         authUser()
-          //aca simplemente borramos en token de la URL
+          // aca simplemente borramos en token de la URL
           .then(() => {
             // Obtener la URL actual
             let url = window.location.href;
 
             // Buscar el parámetro "token" y su valor
-            let regex = /[?&]token=([^&#]*)/;
-            let match = regex.exec(url);
+            const regex = /[?&]token=([^&#]*)/;
+            const match = regex.exec(url);
 
             // Si se encontró el parámetro "token"
-            if (match) {
+            if (match != null) {
               // Eliminar el parámetro y su valor de la URL
               url = url.replace(match[0], '');
 

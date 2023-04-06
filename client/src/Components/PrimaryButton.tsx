@@ -1,13 +1,13 @@
-import { FC } from "react";
+import { type FC } from "react";
 
-type Props = {
+interface Props {
   text: string;
   onClick?: () => void;
   children?: React.ReactNode;
-};
+}
 
 const PrimaryButton: FC<Props> = ({ text, onClick }) => {
-  const handleClick = () => onClick && onClick();
+  const handleClick = () => (onClick != null) && onClick();
 
   return (
     <button

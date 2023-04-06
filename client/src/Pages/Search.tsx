@@ -1,21 +1,21 @@
-import { BaseSyntheticEvent, FC, useState, useEffect } from "react";
-import Input from "../Components/Input";
-import Layout from "../Components/Layout";
-
-import { MdLocationOn } from "react-icons/md";
-import { GiSoccerField } from "react-icons/gi";
-import { BsCalendar2Event } from "react-icons/bs";
-import { TfiTime } from "react-icons/tfi";
+import { type BaseSyntheticEvent, type FC, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import axios from "axios";
-import Select from "../Components/Select";
-import PrimaryButton from "../Components/PrimaryButton";
+import { BsCalendar2Event } from "react-icons/bs";
+import { GiSoccerField } from "react-icons/gi";
+import { MdLocationOn } from "react-icons/md";
+import { TfiTime } from "react-icons/tfi";
 
-type fieldSportType = {
-  tenis: Array<string>;
-  futbol: Array<string>;
-};
+import Input from "../Components/Input";
+import Layout from "../Components/Layout";
+import PrimaryButton from "../Components/PrimaryButton";
+import Select from "../Components/Select";
+
+interface fieldSportType {
+  tenis: string[];
+  futbol: string[];
+}
 type fieldSportKeyType = keyof fieldSportType;
 
 export const Search: FC = () => {

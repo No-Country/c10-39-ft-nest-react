@@ -1,12 +1,13 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import User from "../types/User.type";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+
+import type User from "../types/User.type";
 
 interface UserState {
   user: User | null;
 }
 
 const initialState: UserState = {
-  user: null
+  user: null,
 };
 
 const userSlice = createSlice({
@@ -17,8 +18,8 @@ const userSlice = createSlice({
       state.user = payload;
       console.log("user", state.user);
       
-    }
-  }
+    },
+  },
 });
 
 export const { setUser } = userSlice.actions;

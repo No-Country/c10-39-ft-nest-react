@@ -1,13 +1,13 @@
-import { FC } from 'react';
+import { type FC } from 'react';
 
-type selectType = {
-  array: Array<string>;
+interface selectType {
+  array: string[];
   type: string;
   label: string;
   state: string;
   setState: (string: string) => void;
   icon?: any;
-};
+}
 
 const Select: FC<selectType> = ({ array, type, label, state, setState, icon }) => {
   const handleChange = ({ target }: { target: HTMLSelectElement }) => setState(target.value);

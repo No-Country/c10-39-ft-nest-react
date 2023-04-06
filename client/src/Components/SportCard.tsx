@@ -1,12 +1,13 @@
-import { FC } from 'react';
-import PrimaryButton from './PrimaryButton';
+import { type FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-type props = {
+import PrimaryButton from './PrimaryButton';
+
+interface props {
   children?: React.ReactNode;
   title: string;
   bgImage: string;
-};
+}
 
 const SportCard: FC<props> = ({ children, title, bgImage }) => {
   const navigate = useNavigate();
