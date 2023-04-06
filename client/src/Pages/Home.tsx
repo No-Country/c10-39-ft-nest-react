@@ -1,11 +1,12 @@
-import Layout from "../Components/Layout";
-import Card from "../Components/Card";
+import Card from '../Components/Card';
+import Layout from '../Components/Layout';
+
 const Home = () => {
   return (
     <Layout title="Home">
-      <div className="w-full h-full bg-tenis bg-cover bg-[45%] pt-[160px]">
-        <Card title="Reservas" />
-        <Card title="Propietarios" />
+      <div className="w-full h-full overflow-scroll fixed bg-tenis bg-cover bg-[45%] pt-[50px] pb-[70px]">
+        <Card route="/reservas" title="Reservas" />
+        <Card route="/propietarios" title="Propietarios" />
       </div>
     </Layout>
   );
