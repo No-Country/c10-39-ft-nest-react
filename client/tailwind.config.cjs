@@ -12,6 +12,7 @@ module.exports = {
       },
       backgroundImage: {
         'tenis': "url('/src/assets/home-bg.jpg')",
+        'tenis-desktop': "url('/src/assets/desktop.jpg')",
         'home': "url('https://www.rere.jp/beginners/uploads/2019/09/i-471621500-3-1024x667.jpg')"
       }
     },
