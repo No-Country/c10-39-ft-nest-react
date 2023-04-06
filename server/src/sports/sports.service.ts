@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOptionsSelect, Repository } from 'typeorm';
 
 import { CreateSportDto } from './dto/create-sport.dto';
 import { UpdateSportDto } from './dto/update-sport.dto';
@@ -41,8 +41,11 @@ export class SportsService {
     }));
   }
 
-  async findOneByName(name: string) {
-    const sport = await this.sportRepository.findOneBy({ name });
+  async findOneByName(name: string, selection?: FindOptionsSelect<Sport>) {
+    const sport = await this.sportRepository.findOne({
+      where: { name },
+      select: selection,
+    });
     if (!sport) throw new NotFoundException('Sport not found');
 
     return sport;

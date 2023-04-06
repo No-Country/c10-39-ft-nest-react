@@ -28,11 +28,15 @@ export class OwnerService {
       const { userId, ...ownerData } = createOwnerDto;
       const user = await this.userRepository.findOneBy({ id: userId });
       if (!user) throw new NotFoundException('The user not exist');
-      const owner = await this.ownerRepository.create({
+      const owner = this.ownerRepository.create({
         userId,
         ...ownerData,
       });
       await this.ownerRepository.save(owner);
+
+      user.owner = owner;
+
+      await this.userRepository.save(user);
 
       return { ...owner };
     } catch (error) {

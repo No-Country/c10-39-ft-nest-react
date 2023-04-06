@@ -1,6 +1,14 @@
 import Owner from 'src/owner/entities/owner.entity';
 import { Reservation } from 'src/reservation/entities/reservation.entity';
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  BeforeInsert,
+} from 'typeorm';
 
 @Entity('user')
 export class User {
@@ -19,7 +27,7 @@ export class User {
   @Column('bool', { default: true })
   isActive: boolean;
 
-  @OneToOne((type) => Owner, (owner) => owner.user)
+  @OneToOne((type) => Owner, (owner) => owner.user, { eager: true })
   @JoinColumn()
   owner?: Owner;
 
@@ -28,5 +36,9 @@ export class User {
     onUpdate: 'CASCADE',
   })
   reservation: Reservation[];
+
+  get isOwner() {
+    return !!this.owner;
+  }
 }
 export default User;
