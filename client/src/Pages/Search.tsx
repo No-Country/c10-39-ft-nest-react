@@ -61,42 +61,44 @@ export const Search: FC = () => {
 
   return (
     <Layout title={`${sport}`}>
-      <form onSubmit={handleSubmit} className='flex w-full flex-col items-center'>
-        <div className='flex flex-col gap-5 w-full items-center pt-12'>
-          <Input
-            type='text'
-            label='Ubicacion'
-            state={ubication}
-            setState={setUbication}
-            icon={<MdLocationOn />}
-          />
-          <Select
-            array={fieldSportList}
-            type={'sportField'}
-            label='Tipo de Cancha'
-            state={fieldSport}
-            setState={setFieldSport}
-            icon={<GiSoccerField />}
-          />
-          <Input
-            type='text'
-            label='Turno'
-            state={date}
-            setState={setDate}
-            icon={<BsCalendar2Event />}
-          />
-          <Input
-            type='text'
-            label='Horario'
-            state={timeTable}
-            setState={setTimeTable}
-            icon={<TfiTime />}
-          />
-        </div>
-        <div className='absolute bottom-10 right-10'>
-          <PrimaryButton text='BUSCAR' />
-        </div>
-      </form>
+      <div className="w-full flex justify-center items-center h-[70vh]">
+        <form onSubmit={handleSubmit} className="flex w-full flex-col items-center lg:mx-[30%]">
+          <div className="flex flex-col gap-5 w-full items-center pt-12 lg:gap-10">
+            <Input
+              type="text"
+              label="Ubicacion"
+              state={ubication}
+              setState={setUbication}
+              icon={<MdLocationOn />}
+            />
+            <Select
+              array={fieldSportList}
+              type={'sportField'}
+              label="Tipo de Cancha"
+              state={fieldSport}
+              setState={setFieldSport}
+              icon={<GiSoccerField />}
+            />
+            <Input
+              type="text"
+              label="Turno"
+              state={date}
+              setState={setDate}
+              icon={<BsCalendar2Event />}
+            />
+            <Input
+              type="text"
+              label="Horario"
+              state={timeTable}
+              setState={setTimeTable}
+              icon={<TfiTime />}
+            />
+          </div>
+          <div className="absolute bottom-10 right-10 lg:right-[33%]">
+            <PrimaryButton text="BUSCAR" />
+          </div>
+        </form>
+      </div>
     </Layout>
   );
 };
