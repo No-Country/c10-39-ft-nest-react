@@ -1,32 +1,24 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Req,
-} from '@nestjs/common';
-import { SportsComplexService } from './sports-complex.service';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
+import { Request } from 'express';
+import User from 'src/users/entities/user.entity';
+import { UsersService } from 'src/users/users.service';
+
 import { CreateSportsComplexDTO } from './dto/create-sports-complex.dto';
 import { UpdateSportsComplexDTO } from './dto/update-sports-complex.dto';
-import { Request } from 'express';
-import { UsersService } from 'src/users/users.service';
 import SportsComplex from './entities/sports-complex.entity';
-import User from 'src/users/entities/user.entity';
+import { SportsComplexService } from './sports-complex.service';
 
 @Controller('sports-complex')
 export class SportsComplexController {
   constructor(
     private readonly sportsComplexService: SportsComplexService,
-    private readonly usersService: UsersService
+    private readonly usersService: UsersService,
   ) {}
 
   @Post()
   async create(
     @Body() createSportsComplexDto: CreateSportsComplexDTO,
-    @Req() req: Request & { user: any }
+    @Req() req: Request & { user: any },
   ): Promise<SportsComplex> {
     const id: string = req.user.id;
     const user: User = await this.usersService.findOne(id);
@@ -59,7 +51,7 @@ export class SportsComplexController {
   async update(
     @Param('id') id: string,
     @Body() updateSportsComplexDTO: UpdateSportsComplexDTO,
-    @Req() req: Request & { user: any }
+    @Req() req: Request & { user: any },
   ) {
     const idUser: string = req.user.id;
     const user: User = await this.usersService.findOne(idUser);
@@ -68,11 +60,7 @@ export class SportsComplexController {
       throw new Error('User is not owner');
     }
 
-    return this.sportsComplexService.update(
-      owner.id,
-      id,
-      updateSportsComplexDTO
-    );
+    return this.sportsComplexService.update(owner.id, id, updateSportsComplexDTO);
   }
 
   @Delete(':id')

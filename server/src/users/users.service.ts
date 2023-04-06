@@ -1,31 +1,25 @@
-import {
-  BadRequestException,
-  Injectable,
-  UnauthorizedException,
-} from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import * as bcrypt from "bcrypt";
-import * as jwt from "jsonwebtoken";
-import { LoginUserDTO, RegisterUserDTO } from "./dto/register-dto";
-import { UpdateUserDTO } from "./dto/update-user.dto";
-import User from "./entities/user.entity";
-import { SALT } from "src/Core/Constants";
-import { EXPIRED_TOKEN } from "src/Core/Constants/constants";
-import { ConfigService } from "@nestjs/config";
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
+import { SALT } from 'src/Core/Constants';
+import { EXPIRED_TOKEN } from 'src/Core/Constants/constants';
+import { Repository } from 'typeorm';
+
+import { LoginUserDTO, RegisterUserDTO } from './dto/register-dto';
+import { UpdateUserDTO } from './dto/update-user.dto';
+import User from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
   ) {}
 
-
-  async findOrCreate(
-    body: RegisterUserDTO,
-  ): Promise<{ user: User; token: string }> {
+  async findOrCreate(body: RegisterUserDTO): Promise<{ user: User; token: string }> {
     let user = await this.findByEmail(body.email);
     if (!user) {
       user = await this.userRepository.create(body);
@@ -38,14 +32,12 @@ export class UsersService {
     };
   }
 
-  async register(
-    registerUserDTO: RegisterUserDTO
-  ): Promise<{ user: User; token: string }> {
+  async register(registerUserDTO: RegisterUserDTO): Promise<{ user: User; token: string }> {
     const hashedPassword = bcrypt.hashSync(registerUserDTO.password, SALT);
     const existingUser = await this.findByEmail(registerUserDTO.email);
 
     if (existingUser) {
-      throw new BadRequestException("Email already registered");
+      throw new BadRequestException('Email already registered');
     }
 
     const user: User = this.userRepository.create({
@@ -59,14 +51,11 @@ export class UsersService {
     return { user, token };
   }
 
-  async login(
-    loginUserDTO: LoginUserDTO
-  ): Promise<{ user: User; token: string }> {
+  async login(loginUserDTO: LoginUserDTO): Promise<{ user: User; token: string }> {
     const { email, password } = loginUserDTO;
     const user = await this.findByEmail(email);
 
-    if (!user || !bcrypt.compareSync(password, user.password))
-      throw new UnauthorizedException();
+    if (!user || !bcrypt.compareSync(password, user.password)) throw new UnauthorizedException();
 
     const token: string = await this.generateToken(user);
     return { user, token };
@@ -77,16 +66,18 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    console.log(this.userRepository.createQueryBuilder().select().where("id = :id", { id }).getSql());
+    console.log(
+      this.userRepository.createQueryBuilder().select().where('id = :id', { id }).getSql(),
+    );
 
-    const user: User | undefined = await this.userRepository.createQueryBuilder("user")
-    .leftJoinAndSelect("user.owner", "owner")
-    .where("user.id = :id", { id })
-    .getOne();
-
+    const user: User | undefined = await this.userRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.owner', 'owner')
+      .where('user.id = :id', { id })
+      .getOne();
 
     if (!user) {
-      throw new BadRequestException("User not found");
+      throw new BadRequestException('User not found');
     }
     return user;
   }
@@ -118,8 +109,8 @@ export class UsersService {
         id: user.id,
         email: user.email,
       },
-      this.configService.get<string>("JWT_SECRET"),
-      { expiresIn: EXPIRED_TOKEN }
+      this.configService.get<string>('JWT_SECRET'),
+      { expiresIn: EXPIRED_TOKEN },
     );
     return token;
   }
