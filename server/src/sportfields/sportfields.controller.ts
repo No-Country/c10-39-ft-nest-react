@@ -1,15 +1,6 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  ParseUUIDPipe,
-} from '@nestjs/common';
-import { CreateSportFieldDto, UpdateSportFieldDto } from './dto';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
 
+import { CreateSportFieldDto, UpdateSportFieldDto } from './dto';
 import { SportfieldsService } from './sportfields.service';
 
 @Controller('sportfields')
@@ -39,7 +30,7 @@ export class SportfieldsController {
   @Patch(':id')
   async update(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() updateSportFieldDto: UpdateSportFieldDto
+    @Body() updateSportFieldDto: UpdateSportFieldDto,
   ) {
     return this.sportfieldsService.update(id, updateSportFieldDto);
   }

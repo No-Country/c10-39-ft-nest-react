@@ -18,8 +18,8 @@ module.exports = {
     project: ['./tsconfig.json'],
   },
   plugins: ['react', 'react-hooks', 'import'],
+  ignorePatterns: ['vite-env.d.ts'],
   rules: {
-    'no-console': 'warn',
     'no-debugger': 'warn',
     'no-alert': 'warn',
     'react/react-in-jsx-scope': 'off',
@@ -28,6 +28,8 @@ module.exports = {
     '@typescript-eslint/semi': [2, 'always'],
     '@typescript-eslint/no-confusing-void-expression': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off',
+    '@typescript-eslint/prefer-optional-chain': 'off',
     'import/order': [
       'error',
       {
@@ -52,6 +54,9 @@ module.exports = {
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+    react: {
+      version: 'detect',
     },
   },
 };

@@ -1,16 +1,15 @@
-import { FC, useState, PropsWithChildren } from 'react';
+import { type FC, useState, type PropsWithChildren } from 'react';
+import { Link } from 'react-router-dom';
 
+import { FaBasketballBall } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
-
 import { GoKebabVertical } from 'react-icons/go';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
-import { FaBasketballBall } from 'react-icons/fa';
 
-type props = {
+
+interface props {
   title: string;
-};
-
-import { Link } from 'react-router-dom';
+}
 
 const Layout: FC<PropsWithChildren<props>> = ({ children, title }) => {
   const [openMenu, setOpenMenu] = useState(false);

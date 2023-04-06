@@ -1,13 +1,13 @@
-import { FC } from 'react';
+import { type FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import PrimaryButton from '../Components/PrimaryButton';
 
-type sportFieldType = {
+interface sportFieldType {
   complexData: boolean;
   btnText: string;
   route: string;
-};
+}
 
 const SportField: FC<sportFieldType> = ({ complexData, btnText, route }) => {
   const navigate = useNavigate();
