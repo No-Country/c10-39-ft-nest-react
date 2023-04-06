@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 const SFDetail = () => {
   const navigate = useNavigate();
@@ -18,12 +19,17 @@ const SFDetail = () => {
         <span>Ubicacion</span>
       </div>
       <div className="flex flex-col gap-5 bg-white pb-2 mb-10 mx-2 shadow-lg rounded-lg">
-        <span className="p-5 text-lg">Informacion del partido:</span>
-        <div className="bg-gradone p-5">
+        <div className="flex flex-row items-center justify-between p-5">
+          <span className="text-lg">Informacion del partido</span>
+          <span className="text-3xl">
+            <AiOutlineInfoCircle />
+          </span>
+        </div>
+        <div className="bg-[#aaa2] p-5">
           <span className="block">Cancha 4 - Polvo y ladrillo</span>
           <span className="block">Dobles</span>
         </div>
-        <div className="bg-gradone p-5">
+        <div className="bg-[#aaa2] p-5">
           <div className="flex flex-row justify-between w-full">
             <span>Dia</span>
             <span>Miercoles 30/3</span>
