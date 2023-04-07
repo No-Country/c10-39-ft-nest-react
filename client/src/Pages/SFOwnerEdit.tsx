@@ -26,7 +26,7 @@ const SFownerEdit: FC = () => {
           <Input type="text" label="Capacidad" icon={<GrGroup />} state="" setState={() => {}} />
         </div>
         <div className="absolute bottom-0 right-10 lg:relative lg:my-10 lg:w-[675px] lg:flex lg:justify-end">
-          <PrimaryButton text="AGREGAR" />
+          <PrimaryButton text="EDITAR" />
         </div>
       </div>
     </Layout>
