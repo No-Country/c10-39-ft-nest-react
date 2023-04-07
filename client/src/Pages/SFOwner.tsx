@@ -8,14 +8,16 @@ const SFOwner: FC = () => {
 
   return (
     <Layout title="Mis canchas">
-      {Data.map((item, index) => (
-        <SportField
-          key={index}
-          complexData={false}
-          btnText={'EDITAR'}
-          route="/propietarios/canchas/id"
-        />
-      ))}
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 px-1 py-20 lg:px-10">
+        {Data.map((item, index) => (
+          <SportField
+            key={index}
+            complexData={false}
+            btnText={'EDITAR'}
+            route="/propietarios/canchas/id"
+          />
+        ))}
+      </div>
     </Layout>
   );
 };
