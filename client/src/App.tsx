@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
 
-import { authUser } from './Functions/userPetition';
+import { authUser } from './Functions/UserQuery';
 import About from './Pages/About';
 import AddSFOwner from './Pages/AddSFOwner';
 import Help from './Pages/Help';
