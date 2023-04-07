@@ -13,17 +13,16 @@ import OwnerRegister from './Pages/OwnerRegister';
 import Profile from './Pages/Profile';
 import ProfileReservation from './Pages/ProfileReservation';
 import Register from './Pages/Register';
-import Turns from './Pages/Turns';
 import Reservation from './Pages/Reservation';
 import Search from './Pages/Search';
 import SFDetail from './Pages/SFDetial';
 import SFOwner from './Pages/SFOwner';
 import SFownerEdit from './Pages/SFOwnerEdit';
 import SportFields from './Pages/SportFields';
+import Turns from './Pages/Turns';
 
 const getUser = async () => {
-  // TODO: localStorage.getItem is call inside authUser too. is needed here?
-  localStorage.getItem('tkn') && (await authUser());
+  localStorage.getItem('token') && (await authUser());
 };
 
 function App() {
