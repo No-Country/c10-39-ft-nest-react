@@ -21,9 +21,20 @@ export class SportfieldsController {
   constructor(private readonly sportfieldsService: SportfieldsService) {}
 
   @Get()
-  findAll(@GetUser() user: UserDTO) {
-    console.log(user);
+  findAll(
+    // @GetUser() user: UserDTO
+    ) {
+    // console.log(user);
     return this.sportfieldsService.findAll();
+  }
+
+  @Get('sport/:sport')
+  findWithSport(
+    @Param('sport') sport: string, 
+  ) {
+    console.log(sport);
+    
+    return this.sportfieldsService.findWithSport(sport);
   }
 
   @Get(':id')
