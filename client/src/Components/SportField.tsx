@@ -31,7 +31,7 @@ const SportField: FC<sportFieldType> = ({ complexData, btnText, route }) => {
         <div
           className={`${
             complexData ? 'items-center' : 'gap-5 flex-row-reverse'
-          } flex w-full justify-left`}
+          } flex w-full justify-left flex-wrap`}
         >
           {complexData ? (
             <span className="w-1/2">Estrellas</span>
