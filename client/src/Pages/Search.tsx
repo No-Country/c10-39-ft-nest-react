@@ -54,9 +54,9 @@ export const Search: FC = () => {
     //     timeTable,
     //   })
     //   .then((res) => console.log(res))
-    //   .then((res) => navigate(`/reservas/${sport}/canchas`))
+    //   .then((res) => navigate(`/reservar/${sport}/canchas`))
     //   .catch((error) => console.log(error));
-    navigate(`/reservas/${sport}/canchas`);
+    navigate(`/reservar/${sport}/canchas`);
   };
 
   return (

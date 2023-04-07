@@ -3,23 +3,34 @@ import { type FC } from 'react';
 import Input from '../Components/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
+import { HiOutlineIdentification } from 'react-icons/hi';
+import { AiOutlinePhone } from 'react-icons/ai';
 
 const OwnerRegister: FC = () => {
   return (
-    <Layout title="Propietario">
-      <div className="flex flex-col min-h-[90vh] gap-10 justify-between">
-        <div>
-          <h2 className="text-center text-3xl mt-[40px]">Registrarse</h2>
-          <div className="bg-[#D9D9D9] cursor-pointer mx-1 my-[50px] relative rounded h-[225px] text-center ">
-            +
-          </div>
-          <div className="flex flex-col w-full items-center gap-5">
-            <Input type="text" label="Documento" state="" setState={() => {}} />
-            <Input type="text" label="Numero de telefono" state="" setState={() => {}} />
-          </div>
+    <Layout title="Registro de propietario">
+      <div className="relative min-h-[100vh] flex flex-col items-center">
+        <div className="bg-[#D9D9D9] rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[800px] text-center ">
+          +
         </div>
-        <div className="flex w-full justify-end px-10">
-          <PrimaryButton text="CONTINUAR" />
+        <div className="flex flex-col w-full items-center gap-10 lg:w-[700px]">
+          <Input
+            type="text"
+            label="Documento"
+            state=""
+            icon={<HiOutlineIdentification />}
+            setState={() => {}}
+          />
+          <Input
+            type="text"
+            label="Numero de telefono"
+            state=""
+            icon={<AiOutlinePhone />}
+            setState={() => {}}
+          />
+        </div>
+        <div className="absolute bottom-0 right-10 lg:relative lg:my-10 lg:w-[675px] lg:flex lg:justify-end">
+          <PrimaryButton text="AGREGAR" />
         </div>
       </div>
     </Layout>

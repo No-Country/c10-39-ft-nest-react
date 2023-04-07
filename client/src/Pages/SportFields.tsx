@@ -2,7 +2,7 @@ import { useState, type FC, useEffect } from 'react';
 
 import Layout from '../Components/Layout';
 import SportField from '../Components/SportField';
-import { getSportFieldsWithSport } from '../Functions/SportFieldsPetition';
+import { getSportFieldsWithSport } from '../Functions/SportFieldsQuery';
 
 const SportFields: FC = () => {
   // const Data = ['1', '1', '1', '1', '1', '1', '1'];
@@ -20,7 +20,7 @@ const SportFields: FC = () => {
               key={index}
               complexData={true}
               btnText={'RESERVAR'}
-              route="/reservas/:sport/canchas/id"
+              route="/reservar/:sport/canchas/id"
             />
           ))}
         </div>

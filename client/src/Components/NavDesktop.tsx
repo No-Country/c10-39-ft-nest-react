@@ -23,7 +23,7 @@ const NavDesktop: FC = () => {
   return (
     <nav className="hidden z-[500] px-20 text-white bg-primary lg:flex flex-row shadow-lg fixed w-full h-28 justify-between items-center">
       <div className="flex gap-10 items-center">
-        <div className="text-6xl">
+        <div className="bounce text-6xl">
           <Link to={'/inicio'}>
             <FaBasketballBall />
           </Link>
@@ -65,12 +65,12 @@ const NavDesktop: FC = () => {
             } text-white text-lg flex-col justify-around absolute -left-44 top-0 w-40 bg-[#000] py-5 rounded-md`}
           >
             <li className="pl-5 py-5 active:bg-primary">
-              <Link onClick={handleCloseSportMenu} to={'/reservas/tenis'}>
+              <Link onClick={handleCloseSportMenu} to={'/reservar/tenis'}>
                 Tenis
               </Link>
             </li>
             <li className="pl-5 py-5 active:bg-primary">
-              <Link onClick={handleCloseSportMenu} to={'/reservas/futbol'}>
+              <Link onClick={handleCloseSportMenu} to={'/reservar/futbol'}>
                 Futbol
               </Link>
             </li>

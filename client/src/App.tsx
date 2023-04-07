@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
 
-import { authUser } from './Functions/userPetition';
+import { authUser } from './Functions/UserQuery';
 import About from './Pages/About';
 import AddSFOwner from './Pages/AddSFOwner';
 import Help from './Pages/Help';
@@ -36,10 +36,10 @@ function App() {
         <Route path="/" element={<MainPage />}></Route>
         <Route path="/inicio" element={<Home />}></Route>
 
-        <Route path="/reservas" element={<Reservation />}></Route>
-        <Route path="/reservas/:sport" element={<Search />}></Route>
-        <Route path="/reservas/:sport/canchas" element={<SportFields />}></Route>
-        <Route path="/reservas/:sport/canchas/:id" element={<SFDetail />}></Route>
+        <Route path="/reservar" element={<Reservation />}></Route>
+        <Route path="/reservar/:sport" element={<Search />}></Route>
+        <Route path="/reservar/:sport/canchas" element={<SportFields />}></Route>
+        <Route path="/reservar/:sport/canchas/:id" element={<SFDetail />}></Route>
 
         <Route path="/propietarios" element={<Owner />}></Route>
         <Route path="/propietarios/canchas" element={<SFOwner />}></Route>
@@ -49,7 +49,7 @@ function App() {
         <Route path="/propietarios/registro" element={<OwnerRegister />}></Route>
 
         <Route path="/perfil" element={<Profile />}></Route>
-        <Route path="/perfil/reservas" element={<ProfileReservation />}></Route>
+        <Route path="/perfil/reservar" element={<ProfileReservation />}></Route>
 
         <Route path="/ayuda" element={<Help />}></Route>
         <Route path="/nosotros" element={<About />}></Route>
