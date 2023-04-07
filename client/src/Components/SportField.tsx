@@ -20,8 +20,8 @@ const SportField: FC<sportFieldType> = ({ complexData, btnText, route }) => {
 
   return (
     <div className="mb-5 shadow-lg">
-      <div className="bg-cover bg-[url('https://web-assets.playfinder.com/wp-content/uploads/2017/12/27164405/Bookteq-CRM-email-clay-hard-tennis-600x260.jpg')] w-full h-52"></div>
-      <div className="flex flex-col gap-5 p-5 bg-white">
+      <div className="bg-cover bg-[url('https://web-assets.playfinder.com/wp-content/uploads/2017/12/27164405/Bookteq-CRM-email-clay-hard-tennis-600x260.jpg')] w-full h-52 rounded-t-lg"></div>
+      <div className="flex flex-col gap-5 p-5 bg-white rounded-b-lg">
         <div>
           <span className="block text-3xl ">Titulo</span>
           {complexData && (
