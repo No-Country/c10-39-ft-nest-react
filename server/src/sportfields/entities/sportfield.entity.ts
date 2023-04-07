@@ -43,9 +43,10 @@ export class SportField {
   @JoinColumn({ name: 'sportComplexId' })
   sportsComplex: SportsComplex;
 
-  @OneToMany(() => Reservation, (reservation) => reservation.sportfields, {
+  @OneToMany(() => Reservation, (reservation) => reservation.sportfield, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   reservation: Reservation[];
 }
+export default SportField;

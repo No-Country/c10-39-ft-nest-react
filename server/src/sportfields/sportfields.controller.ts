@@ -22,7 +22,7 @@ export class SportfieldsController {
 
   @Get()
   findAll(
-    // @GetUser() user: UserDTO
+    @GetUser() user: UserDTO
     ) {
     // console.log(user);
     return this.sportfieldsService.findAll();
