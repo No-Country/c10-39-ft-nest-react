@@ -30,6 +30,23 @@ export class SportfieldsService {
       sport: sf.sport.name,
     }));
   }
+  async findWithSport(sport: string) {
+    const allSportfields = await this.sportFieldRepository.find({
+      where:{
+        sport: {
+          name: sport
+        }
+      },
+      relations: {
+        sport: true,
+      },
+    });
+    if (!allSportfields.length) throw new NotFoundException('SportField not found');
+    return allSportfields.map((sf) => ({
+      ...sf,
+      sport: sf.sport.name,
+    }));
+  }
 
   async findOne(id: string) {
     const sportfield = await this.sportFieldRepository.findOneBy({ id });

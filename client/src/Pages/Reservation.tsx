@@ -4,8 +4,15 @@ import Layout from '../Components/Layout';
 import SportCard from '../Components/SportCard';
 import { getAllSports } from '../Functions/SportPetition';
 
+
+  interface Sport {
+    name: string;
+    images: string[];
+  }
+
+
 const Reservation = () => {
-  const [sports, setSports] = useState<object[] | null>(null); //eslint-disable-line
+  const [sports, setSports] = useState<Sport[] | null>(null); //eslint-disable-line
 
   useEffect(() => {
     getAllSports(setSports).catch(() => console.log('Sports fetch failed'));
@@ -13,18 +20,13 @@ const Reservation = () => {
   return (
     <Layout title="Deportes">
       <div className="w-full h-full overflow-scroll fixed bg-cover bg-[45%]">
-        {/*
-        {
-          sports?.map( (sport)=>{  
-            <SportCard
-            backgroundImage={sport.image}
-              title={sport.title}
-             />
-          })
-        }
-         
-        */}
+
         <div className="flex flex-col gap-16 mx-1 h-full pt-24 relative lg:flex-row lg:mx-20 lg:pt-0 lg:items-center lg:bottom-20 lg:justify-between">
+          {sports?.map((sport, index) => (
+            <SportCard bgImage={sport.images[0]} title={sport.name} key={index} />
+          ))}
+        </div>
+        {/* <div className="flex flex-col gap-16 mx-1 h-full pt-24 relative lg:flex-row lg:mx-20 lg:pt-0 lg:items-center lg:bottom-20 lg:justify-between">
           <SportCard
             href={`/reservas/tenis`}
             bgImage={'https://www.rere.jp/beginners/uploads/2019/09/i-471621500-3-1024x667.jpg'}
@@ -37,7 +39,7 @@ const Reservation = () => {
             }
             title={'Futbol'}
           />
-        </div>
+        </div> */}
       </div>
     </Layout>
   );

@@ -2,7 +2,7 @@ import axios from "./axios";
 
 export async function getAllSports(state: (data: any) => void) {
   try {
-    const { data } = await axios.post("/sports");
+    const { data } = await axios.get("/sports");
     state(data);
   } catch (error) {
     console.error(error);
