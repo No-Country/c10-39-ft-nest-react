@@ -1,11 +1,7 @@
 interface Owner {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  isActive: boolean;
-  image?: string;
+  DNI: string;
+  address: string;
+  phone: string;
 }
 
 export default interface User {

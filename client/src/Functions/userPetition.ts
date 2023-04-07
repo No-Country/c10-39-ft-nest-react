@@ -6,7 +6,7 @@ import axios from './axios';
 
 interface QueryResponse {
   error?: string;
-  data?: User;
+  user?: User;
   token?: string;
 }
 interface RegisterBody {
@@ -23,7 +23,7 @@ export async function registerUser(body: RegisterBody) {
 
     if (query.error) throw new Error(query.error);
 
-    if (query.data) store.dispatch(setUser(query.data));
+    if (query.user) store.dispatch(setUser(query.user));
     if (query.token) localStorage.setItem('token', query.token);
   } catch (error) {
     console.log(error);
@@ -41,7 +41,7 @@ export async function loginUser(body: LoginBody) {
 
     if (query.error) throw new Error(query.error);
 
-    if (query.data) store.dispatch(setUser(query.data));
+    if (query.user) store.dispatch(setUser(query.user));
     if (query.token) localStorage.setItem('token', query.token);
   } catch (error) {
     console.log(error);

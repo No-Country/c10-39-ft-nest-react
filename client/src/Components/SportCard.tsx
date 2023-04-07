@@ -4,17 +4,17 @@ import { useNavigate } from 'react-router-dom';
 import PrimaryButton from './PrimaryButton';
 
 interface props {
-  children?: React.ReactNode;
   title: string;
   bgImage: string;
+  href: string;
 }
 
-const SportCard: FC<props> = ({ children, title, bgImage }) => {
+const SportCard: FC<props> = ({ title, bgImage, href }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
     console.log('click');
-    navigate(`/reservas/tenis`);
+    navigate(href);
   };
   return (
     <div
