@@ -6,7 +6,6 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -16,32 +15,16 @@ export class Reservation {
   id: string;
 
   @Column('int')
-  @Check('start_time < end_time')
-  @Check('start_time >= 0')
-  @Check('start_time < 24')
-  start_time: number;
-
-  @Column('int')
-  @Check('end_time > 0')
-  @Check('end_time < 24')
-  @Check('end_time < start_time')
-  end_time: number;
-
-  @Column('int')
-  day: number;
-
-  @Column('int')
-  mounth: number;
-
-  @Column('int')
-  year: number;
+  @Check('hour >= 0')
+  @Check('hour < 24')
+  hour: number;
 
   @Column('date')
   date: Date;
 
   @ManyToOne(() => SportField, (sportfields) => sportfields.reservation)
   @JoinColumn({ name: 'sportfieldId' })
-  sportfields: SportField;
+  sportfield: SportField;
 
   @ManyToOne(() => User, (user) => user.reservation)
   @JoinColumn({ name: 'userId' })

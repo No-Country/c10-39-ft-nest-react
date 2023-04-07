@@ -8,26 +8,27 @@ export class NotPastDateConstraint implements ValidatorConstraintInterface {
     const now = new Date();
     return date.getTime() >= now.getTime();
   }
+
   defaultMessage() {
     return 'Date cannot be in the past';
   }
 }
 
+@ValidatorConstraint({ name: 'notPastHour', async: false })
+export class NotPastHourConstraint implements ValidatorConstraintInterface {
+  validate(hour: number) {
+    const now = new Date();
+    return hour >= now.getHours();
+  }
+}
+
 export class CreateReservationDto {
-  // @IsNotEmpty()
-  // start_time: number;
+  @IsNotEmpty()
+  sportfieldId: string;
 
-  // @IsNotEmpty()
-  // end_time: number;
-
-  // @IsNotEmpty()
-  // day: number;
-
-  // @IsNotEmpty()
-  // mounth: number;
-
-  // @IsNotEmpty()
-  // year: number;
+  @IsNotEmpty()
+  @Validate(NotPastHourConstraint)
+  hour: number;
 
   @Transform(({ value }) => new Date(value))
   @IsDate()
@@ -35,3 +36,4 @@ export class CreateReservationDto {
   @Validate(NotPastDateConstraint)
   date: Date;
 }
+
