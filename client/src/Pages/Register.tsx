@@ -7,7 +7,7 @@ import { IoMdMail } from 'react-icons/io';
 
 import Input from '../Components/Input';
 import Layout from '../Components/Layout';
-import { registerUser } from '../Functions/userPetition';
+import { registerUser } from '../Functions/UserQuery';
 
 const Register: FC = () => {
   const [email, setEmail] = useState('');

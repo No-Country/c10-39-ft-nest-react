@@ -10,20 +10,10 @@ const Reservation = () => {
   useEffect(() => {
     getAllSports(setSports).catch(() => console.log('Sports fetch failed'));
   }, []);
+
   return (
     <Layout title="Deportes">
       <div className="w-full h-full overflow-scroll fixed bg-cover bg-[45%]">
-        {/*
-        {
-          sports?.map( (sport)=>{  
-            <SportCard
-            backgroundImage={sport.image}
-              title={sport.title}
-             />
-          })
-        }
-         
-        */}
         <div className="flex flex-col gap-16 mx-1 h-full pt-24 relative lg:flex-row lg:mx-20 lg:pt-0 lg:items-center lg:bottom-20 lg:justify-between">
           <SportCard
             href={`/reservas/tenis`}

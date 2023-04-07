@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { FaBasketballBall } from 'react-icons/fa';
 
-import { authUser } from '../Functions/userPetition';
+import { authUser } from '../Functions/UserQuery';
 
 // TODO: Move this to a constants file
 const BACKEND_URL: string = import.meta.env.VITE_BACKEND_URL;
@@ -16,9 +16,8 @@ const MainPage = () => {
       const params = new URLSearchParams(window.location.search);
       const token = params.get('token');
       if (token) {
-        localStorage.setItem('tkn', token);
+        localStorage.setItem('token', token);
         authUser()
-          // aca simplemente borramos en token de la URL
           .then(() => {
             // Obtener la URL actual
             let url = window.location.href;
