@@ -65,12 +65,12 @@ const NavDesktop: FC = () => {
             } text-white text-lg flex-col justify-around absolute -left-44 top-0 w-40 bg-[#000] py-5 rounded-md`}
           >
             <li className="pl-5 py-5 active:bg-primary">
-              <Link onClick={handleCloseSportMenu} to={'/reservar/tenis'}>
+              <Link onClick={handleCloseSportMenu} to={'/reservas/tenis'}>
                 Tenis
               </Link>
             </li>
             <li className="pl-5 py-5 active:bg-primary">
-              <Link onClick={handleCloseSportMenu} to={'/reservar/futbol'}>
+              <Link onClick={handleCloseSportMenu} to={'/reservas/futbol'}>
                 Futbol
               </Link>
             </li>

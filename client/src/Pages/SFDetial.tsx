@@ -6,10 +6,10 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 const SFDetail = () => {
   const navigate = useNavigate();
 
-  const handleCancel = () => navigate('/reservar/:sport/canchas');
+  const handleCancel = () => navigate('/reservas/:sport/canchas');
   const handleConfirm = () => {
     alert('Cancha confirmada');
-    navigate('/reservar/:sport/canchas');
+    navigate('/reservas/:sport/canchas');
   };
 
   return (

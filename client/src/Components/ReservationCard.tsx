@@ -11,7 +11,7 @@ const ReservationCard: FC = () => {
       <div className="flex flex-row w-full justify-between items-center">
         <span className="text-lg">Ubicacion</span>
         <div className="flex flex-row gap-5 text-2xl">
-          <Link to={'/reservar/:sport/canchas/:id'}>
+          <Link to={'/reservas/:sport/canchas/:id'}>
             <MdEdit />
           </Link>
           {/* <BsFillShareFill /> */}
