@@ -1,36 +1,42 @@
-import { Link } from "react-router-dom";
+import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { FaBasketballBall } from "react-icons/fa";
-import { useEffect } from "react";
-import { authUser } from "../Functions/userPetition";
+import { FaBasketballBall } from 'react-icons/fa';
+
+import { authUser } from '../Functions/UserQuery';
+
+// TODO: Move this to a constants file
+const BACKEND_URL: string = import.meta.env.VITE_BACKEND_URL;
 
 const MainPage = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     setTimeout(() => {
       const params = new URLSearchParams(window.location.search);
-      const token = params.get("token");
+      const token = params.get('token');
       if (token) {
-        localStorage.setItem("tkn", token);
+        localStorage.setItem('token', token);
         authUser()
-          //aca simplemente borramos en token de la URL
           .then(() => {
             // Obtener la URL actual
             let url = window.location.href;
 
             // Buscar el parámetro "token" y su valor
-            let regex = /[?&]token=([^&#]*)/;
-            let match = regex.exec(url);
+            const regex = /[?&]token=([^&#]*)/;
+            const match = regex.exec(url);
 
             // Si se encontró el parámetro "token"
-            if (match) {
+            if (match != null) {
               // Eliminar el parámetro y su valor de la URL
-              url = url.replace(match[0], "");
+              url = url.replace(match[0], '');
 
               // Reemplazar la URL actual sin el parámetro "token"
-              window.history.replaceState(null, "", url);
+              window.history.replaceState(null, '', url);
             }
           })
-          .then(() => (window.location.pathname = "/inicio"));
+          .then(() => navigate('/inicio'))
+          .catch((e) => console.log('Auth failed', e));
       }
     }, 50);
   }, []);
@@ -45,19 +51,19 @@ const MainPage = () => {
       <div className="flex flex-col w-full items-center gap-5">
         <Link
           className="w-10/12 lg:w-1/5 py-3 rounded-full text-center font-bold bg-gradient-to-tr from-gradone to-gradtwo"
-          to="/inicio"
+          to="/ingresar"
         >
           INICIAR SESION
         </Link>
         <Link
           className="w-10/12 lg:w-1/5 py-3 rounded-full text-center font-bold bg-gradone"
-          to={"/register"}
+          to={'/registro'}
         >
           REGISTRARSE
         </Link>
         <div
           onClick={() => {
-            window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/google`;
+            window.location.href = `${BACKEND_URL}/auth/google`;
           }}
           className="bg-gradone px-20 py-2 rounded-full"
         >

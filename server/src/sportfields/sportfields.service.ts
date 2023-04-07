@@ -1,19 +1,21 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-// TODO: Use dtos to implement crud
-// import { CreateSportfieldDto } from './dto/create-sportfield.dto';
-// import { UpdateSportfieldDto } from './dto/update-sportfield.dto';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SportField } from './entities/sportfield.entity';
-import { Repository } from 'typeorm';
-import { CreateSportFieldDto, UpdateSportFieldDto } from './dto';
 import { SportsService } from 'src/sports/sports.service';
+import { Repository } from 'typeorm';
+
+import { CreateSportFieldDto, UpdateSportFieldDto } from './dto';
+import { SportField } from './entities/sportfield.entity';
 
 @Injectable()
 export class SportfieldsService {
   constructor(
     @InjectRepository(SportField)
     private readonly sportFieldRepository: Repository<SportField>,
-    private readonly sportService: SportsService
+    private readonly sportService: SportsService,
   ) {}
 
   async findAll() {
@@ -23,6 +25,23 @@ export class SportfieldsService {
       },
     });
     if (!allSportfields) throw new NotFoundException('SportField not found');
+    return allSportfields.map((sf) => ({
+      ...sf,
+      sport: sf.sport.name,
+    }));
+  }
+  async findWithSport(sport: string) {
+    const allSportfields = await this.sportFieldRepository.find({
+      where:{
+        sport: {
+          name: sport
+        }
+      },
+      relations: {
+        sport: true,
+      },
+    });
+    if (!allSportfields.length) throw new NotFoundException('SportField not found');
     return allSportfields.map((sf) => ({
       ...sf,
       sport: sf.sport.name,
@@ -38,16 +57,16 @@ export class SportfieldsService {
   // TODO: Implement CREATE UPDATE AND DELETE
   async create(createSportFieldDto: CreateSportFieldDto) {
     const { sport: sportName, ...sportFieldAttrs } = createSportFieldDto;
-    const sport = await this.sportService.findOneByName(sportName);
 
     const newSportField = this.sportFieldRepository.create({
       ...sportFieldAttrs,
-      sport,
     });
+
+    await this.bindSport(newSportField, sportName);
 
     await this.sportFieldRepository.save(newSportField);
 
-    return { ...newSportField, sport: newSportField.sport.name };
+    return { ...newSportField, sport: sportName };
   }
 
   async update(id: string, updateSportFieldDto: UpdateSportFieldDto) {
@@ -60,15 +79,14 @@ export class SportfieldsService {
 
     if (!updatedSportField) throw new NotFoundException('SportField not found');
 
-    // TODO: If sport doesn't exists it should return a diferent exception
-    const sport = await this.sportService.findOneByName(sportName);
+    if (sportName) {
+      await this.bindSport(updatedSportField, sportName);
+    }
 
-    // if sport doesn't exist findOneByName throw an Exception
-    updatedSportField.sport = sport;
-
+    // TODO: this is not the most performant way of update
     await this.sportFieldRepository.save(updatedSportField);
 
-    return { ...updatedSportField, sport: updatedSportField.sport.name };
+    return { ...updatedSportField, sport: sportName };
   }
 
   async remove(id: string) {
@@ -79,5 +97,24 @@ export class SportfieldsService {
     await this.sportFieldRepository.remove(sportfield);
 
     return sportfield;
+  }
+
+  private async bindSport(sportField: SportField, sportName: string) {
+    try {
+      const { id: sportId } = await this.sportService.findOneByName(sportName, {
+        id: true,
+      });
+
+      const queryBuilder = this.sportFieldRepository.createQueryBuilder();
+      await queryBuilder
+        .relation(SportField, 'sport')
+        .of(sportField)
+        .set(sportId);
+
+      return sportField;
+    } catch (e: any) {
+      if (e.constructor === NotFoundException)
+        throw new BadRequestException("Sport doesn't exists");
+    }
   }
 }

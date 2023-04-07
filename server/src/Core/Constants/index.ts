@@ -1,1 +1,1 @@
-export {SALT} from './constants';
+export { SALT } from './constants';

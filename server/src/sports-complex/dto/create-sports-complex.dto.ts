@@ -1,9 +1,9 @@
-import { IsEmail, IsNotEmpty, Length, Matches } from "class-validator";
+import { IsEmail, IsNotEmpty, Length, Matches } from 'class-validator';
 
 export class CreateSportsComplexDTO {
   @IsEmail()
   email?: string;
-  
+
   @IsNotEmpty()
   @Length(3, 60)
   address: string;

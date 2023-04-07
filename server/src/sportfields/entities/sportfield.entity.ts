@@ -1,16 +1,8 @@
-import { SportsComplex } from 'src/sports-complex/entities/sports-complex.entity';
+import { Expose, Transform } from 'class-transformer';
 import { Reservation } from 'src/reservation/entities/reservation.entity';
 import { Sport } from 'src/sports/entities/sport.entity';
-
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Expose, Transform } from 'class-transformer';
+import { SportsComplex } from 'src/sports-complex/entities/sports-complex.entity';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'sportfields' })
 export class SportField {
@@ -28,9 +20,7 @@ export class SportField {
 
   @Column('text', {
     array: true,
-    default: [
-      'https://img.freepik.com/free-vector/sport-fields-isometric-set_1284-24824.jpg',
-    ],
+    default: ['https://img.freepik.com/free-vector/sport-fields-isometric-set_1284-24824.jpg'],
   })
   images: string[];
 
@@ -39,18 +29,17 @@ export class SportField {
     () => Sport,
     (sport) => sport.sportfields,
 
-    { onDelete: 'CASCADE', onUpdate: 'CASCADE' }
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
   )
   @JoinColumn({ name: 'sportId' })
   sport: Sport;
 
   //Relation SportField -> sportsComplex
   // TODO: It shouldn't be null
-  @ManyToOne(
-    () => SportsComplex,
-    (sportsComplex) => sportsComplex.sportfields,
-    { onDelete: 'CASCADE', onUpdate: 'CASCADE' }
-  )
+  @ManyToOne(() => SportsComplex, (sportsComplex) => sportsComplex.sportfields, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'sportComplexId' })
   sportsComplex: SportsComplex;
 

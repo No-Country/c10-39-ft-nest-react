@@ -1,13 +1,13 @@
-import { FC } from "react";
+import { type FC } from 'react';
 
-type selectType = {
-  array: Array<string>;
+interface selectType {
+  array: string[];
   type: string;
   label: string;
   state: string;
   setState: (string: string) => void;
   icon?: any;
-};
+}
 
 const Select: FC<selectType> = ({ array, type, label, state, setState, icon }) => {
   const handleChange = ({ target }: { target: HTMLSelectElement }) => setState(target.value);
@@ -18,7 +18,7 @@ const Select: FC<selectType> = ({ array, type, label, state, setState, icon }) =
         onChange={handleChange}
         value={state}
         id={label}
-        className="selectArrow bg-secondary inputFocus cursor-pointer order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none focus:border-blue-500"
+        className="selectArrow bg-bg inputFocus cursor-pointer order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none focus:border-blue-500"
       >
         <option disabled> Elije un campo</option>
         <option>Cualquier tipo</option>
@@ -26,7 +26,7 @@ const Select: FC<selectType> = ({ array, type, label, state, setState, icon }) =
       </select>
       <label
         htmlFor={label}
-        className="bg-secondary translate-y-7 translate-x-2 w-max cursor-pointer transition-transform order-1"
+        className="bg-bg translate-y-7 translate-x-2 w-max cursor-pointer transition-transform order-1"
       >
         {label}
       </label>

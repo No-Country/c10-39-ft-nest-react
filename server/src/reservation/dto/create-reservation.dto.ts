@@ -4,7 +4,7 @@ import { ValidatorConstraint, ValidatorConstraintInterface } from 'class-validat
 
 @ValidatorConstraint({ name: 'notPastDate', async: false })
 export class NotPastDateConstraint implements ValidatorConstraintInterface {
-  validate(date: Date) { 
+  validate(date: Date) {
     const now = new Date();
     return date.getTime() >= now.getTime();
   }
@@ -14,25 +14,24 @@ export class NotPastDateConstraint implements ValidatorConstraintInterface {
 }
 
 export class CreateReservationDto {
-    // @IsNotEmpty()
-    // start_time: number;
-    
-    // @IsNotEmpty()
-    // end_time: number;
-    
-    // @IsNotEmpty()
-    // day: number;
-    
-    // @IsNotEmpty()
-    // mounth: number;
-    
-    // @IsNotEmpty()
-    // year: number;
-    
+  // @IsNotEmpty()
+  // start_time: number;
 
-    @Transform(({ value }) => new Date(value))
-    @IsDate()
-    @IsNotEmpty()
-    @Validate(NotPastDateConstraint)
-    date: Date;
+  // @IsNotEmpty()
+  // end_time: number;
+
+  // @IsNotEmpty()
+  // day: number;
+
+  // @IsNotEmpty()
+  // mounth: number;
+
+  // @IsNotEmpty()
+  // year: number;
+
+  @Transform(({ value }) => new Date(value))
+  @IsDate()
+  @IsNotEmpty()
+  @Validate(NotPastDateConstraint)
+  date: Date;
 }

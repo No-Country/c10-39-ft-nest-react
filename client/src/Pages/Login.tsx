@@ -1,25 +1,21 @@
-import { BaseSyntheticEvent, FC, useState } from "react";
-import { FaBasketballBall } from "react-icons/fa";
-import Input from "../Components/Input";
-import { useNavigate, useParams } from "react-router-dom";
-import { loginUser } from "../Functions/userPetition";
+import { type BaseSyntheticEvent, type FC, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { useSelector } from "react-redux";
+import { FaBasketballBall } from 'react-icons/fa';
+
+import { loginUser } from '../Functions/UserQuery';
 
 const Login: FC = () => {
-  const [mail, setMail] = useState("");
-  const [password, setPassword] = useState("");
+  const [mail, setMail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
+
     loginUser({ mail, password })
-      .then(() => {
-        navigate("/inicio");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(() => navigate('/inicio'))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -28,23 +24,30 @@ const Login: FC = () => {
         <FaBasketballBall className="lg:w-[272px] lg:h-[248px]   w-[128px] h-[128px] text-gradone" />
       </div>
       <form onSubmit={handleSubmit} className="flex flex-col w-full items-center gap-5">
-        <div className="lg:w-1/3 w-5/6 flex justify-center">
-          <Input type="mail" label="Email" state={mail} setState={setMail} rounded={true} />
-        </div>
-        <div className="lg:w-1/3  w-5/6 flex justify-center">
-          <Input
-            type="password"
-            label="Contraseña"
-            state={password}
-            setState={setPassword}
-            rounded={true}
+        <div className="lg:w-1/3 w-full flex justify-center text-lg">
+          <input
+            className="py-3 px-5 rounded-2xl focus:outline-none w-10/12"
+            type="mail"
+            placeholder="Mail"
+            value={mail}
+            onChange={(event) => {
+              setMail(event.target.value);
+            }}
           />
         </div>
-
+        <div className="lg:w-1/3  w-full flex justify-center text-lg">
+          <input
+            className="py-3 px-5 rounded-2xl focus:outline-none w-10/12"
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+        </div>
         <input
-          className="mt-5 w-28 py-2 rounded-full font-bold bg-gradone"
+          className="mt-5 font-semibold w-28 py-3 text-lg rounded-full bg-[#CAE0DB]"
           type="submit"
-          value="Enviar"
+          value="INICIAR"
         />
       </form>
     </div>

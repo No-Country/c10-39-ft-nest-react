@@ -1,22 +1,23 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './users/users.module';
-import User from './users/entities/user.entity';
+
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 import { AuthModule } from './Core/auth/auth.module';
-import { SportsModule } from './sports/sports.module';
+import Owner from './owner/entities/owner.entity';
+import { OwnerModule } from './owner/owner.module';
+import { Reservation } from './reservation/entities/reservation.entity';
+import { ReservationModule } from './reservation/reservation.module';
+import { SeedModule } from './seed/seed.module';
+import { SportField } from './sportfields/entities/sportfield.entity';
 import { SportfieldsModule } from './sportfields/sportfields.module';
 import { Sport } from './sports/entities/sport.entity';
-import { SportField } from './sportfields/entities/sportfield.entity';
-import { SeedModule } from './seed/seed.module';
-import { SportsComplexModule } from './sports-complex/sports-complex.module';
-import { OwnerModule } from './owner/owner.module';
-import { ReservationModule } from './reservation/reservation.module';
-import Owner from './owner/entities/owner.entity';
+import { SportsModule } from './sports/sports.module';
 import SportsComplex from './sports-complex/entities/sports-complex.entity';
-import { Reservation } from './reservation/entities/reservation.entity';
+import { SportsComplexModule } from './sports-complex/sports-complex.module';
+import User from './users/entities/user.entity';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -35,14 +36,7 @@ import { Reservation } from './reservation/entities/reservation.entity';
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([
-      User,
-      Sport,
-      SportField,
-      Owner,
-      SportsComplex,
-      Reservation,
-    ]),
+    TypeOrmModule.forFeature([User, Sport, SportField, Owner, SportsComplex, Reservation]),
     ConfigModule.forRoot({
       envFilePath: '.env',
       isGlobal: true,

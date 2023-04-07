@@ -1,15 +1,18 @@
-import { FC, useState } from 'react';
+import { type FC, useState } from 'react';
 
-type props = {
+interface props {
   type: string;
   label: string;
   state: string;
   setState: (string: string) => void;
   icon?: any;
-  rounded?: boolean;
-};
+}
 
-const Input: FC<props> = ({ type, label, state, setState, icon, rounded }) => {
+const Input: FC<props> = ({ type, label, state, setState, icon }) => {
+  const [inputWritten, setInputWritten] = useState(() =>
+    state === '' ? 'translate-y-7 translate-x-2' : 'inputWritten',
+  );
+
   const handleChange = ({ target }: { target: HTMLInputElement }) => {
     setInputWritten(() => {
       return target.value === '' ? 'translate-y-7 translate-x-2' : 'inputWritten';
@@ -17,21 +20,12 @@ const Input: FC<props> = ({ type, label, state, setState, icon, rounded }) => {
     setState(target.value);
   };
 
-  const handleRound: () => string = () => {
-    return rounded ? '20px' : 'unset';
-  };
-
-  const [inputWritten, setInputWritten] = useState(() =>
-    state === '' ? 'translate-y-7 translate-x-2' : 'inputWritten',
-  );
-
   return (
     <div className="w-10/12 flex flex-col relative">
       <input
         id={label}
-        style={{ borderRadius: handleRound() }}
         className={
-          'inputFocus cursor-pointer order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none focus:border-blue-500'
+          'inputFocus cursor-pointer bg-bg order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none'
         }
         type={type}
         value={state}
@@ -44,7 +38,7 @@ const Input: FC<props> = ({ type, label, state, setState, icon, rounded }) => {
         {label}
       </label>
       {icon && (
-        <div className="[&>svg]:absolute [&>svg]:bottom-2 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6">
+        <div className="[&>svg]:absolute [&>svg]:bottom-2 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none">
           {icon}
         </div>
       )}

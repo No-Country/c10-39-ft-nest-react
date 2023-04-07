@@ -1,12 +1,6 @@
 import Owner from 'src/owner/entities/owner.entity';
 import { SportField } from 'src/sportfields/entities/sportfield.entity';
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('sportsComplex')
 export class SportsComplex {
