@@ -15,7 +15,7 @@ const SportFields: FC = () => {
               key={index}
               complexData={true}
               btnText={'RESERVAR'}
-              route="/reservas/:sport/canchas/id"
+              route="/reservar/:sport/canchas/id"
             />
           ))}
         </div>

@@ -53,12 +53,12 @@ const NavMobile: FC<{ title: string }> = ({ title }) => {
           } text-white text-2xl flex-col justify-around absolute -left-56 top-10 w-52 bg-[#000] py-10 rounded-md`}
         >
           <li className="pl-5 py-5 active:bg-primary">
-            <Link onClick={handleCloseSportMenu} to={'/reservas/tenis'}>
+            <Link onClick={handleCloseSportMenu} to={'/reservar/tenis'}>
               Tenis
             </Link>
           </li>
           <li className="pl-5 py-5 active:bg-primary">
-            <Link onClick={handleCloseSportMenu} to={'/reservas/futbol'}>
+            <Link onClick={handleCloseSportMenu} to={'/reservar/futbol'}>
               Futbol
             </Link>
           </li>
@@ -98,7 +98,7 @@ const NavMobile: FC<{ title: string }> = ({ title }) => {
               <Link to={'/perfil'}>Perfil</Link>
             </li>
             <li>
-              <Link to={'/perfil/reservas'}>Mis reservas</Link>
+              <Link to={'/perfil/reservar'}>Mis reservas</Link>
             </li>
             <li>
               {' '}
