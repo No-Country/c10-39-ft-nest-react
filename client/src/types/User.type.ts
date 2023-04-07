@@ -1,21 +1,19 @@
-interface Owner {   
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    isActive: boolean;
-    image?: string;
+interface Owner {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  isActive: boolean;
+  image?: string;
 }
 
-
-export default interface User{
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    isActive: boolean;
-    image?: string;
-    owner?: Owner;
+export default interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  image?: string;
+  owner?: Owner;
 }

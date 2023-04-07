@@ -11,7 +11,7 @@ import { registerUser } from '../Functions/userPetition';
 
 const Register: FC = () => {
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
@@ -19,27 +19,16 @@ const Register: FC = () => {
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    // axios
-    //   .post("http://localhost:3000/register", {
-    //     mail: email,
-    //     fullName: `${name} ${lastName}`,
-    //     password,
-    //     confirmPass,
-    //   })
-    //   .then((res) => console.log(res))
-    //   .catch((error) => console.log(error));
+
     registerUser({
       email,
-      firstName: name,
+      firstName,
       lastName,
       password,
+      confirmPass,
     })
-      .then(() => {
-        navigate(`/inicio`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      .then(() => navigate(`/inicio`))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -51,8 +40,8 @@ const Register: FC = () => {
             <Input
               type="text"
               label="Nombre"
-              state={name}
-              setState={setName}
+              state={firstName}
+              setState={setFirstName}
               icon={<HiOutlineUser />}
             />
             <Input
