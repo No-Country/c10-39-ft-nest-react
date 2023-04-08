@@ -15,7 +15,11 @@ export class Owner {
   @Column('text')
   phone: string;
 
-  @OneToMany(() => SportsComplex, (sportsComplex) => sportsComplex.owner)
+  @OneToMany(() => SportsComplex, (sportsComplex) => sportsComplex.owner, {
+    cascade: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   sportsComplex: SportsComplex[];
 
   @OneToOne(() => User, (user) => user.owner, {

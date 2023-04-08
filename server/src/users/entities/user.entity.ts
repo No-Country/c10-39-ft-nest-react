@@ -27,8 +27,11 @@ export class User {
   @Column('bool', { default: true })
   isActive: boolean;
 
-  @OneToOne((type) => Owner, (owner) => owner.user, { eager: true })
-  @JoinColumn()
+  @OneToOne((type) => Owner, (owner) => owner.user, {
+    eager: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   owner?: Owner;
 
   @OneToMany(() => Reservation, (reservation) => reservation.user, {
