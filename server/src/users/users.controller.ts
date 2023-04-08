@@ -1,13 +1,15 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Request } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 import { LoginUserDTO, RegisterUserDTO } from './dto/register-dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
 import User from './entities/user.entity';
 import { UsersService } from './users.service';
 
+@ApiTags('Users Enpoints')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @Post('register')
   register(
@@ -48,7 +50,7 @@ export class UsersController {
     updateUserDTO: UpdateUserDTO,
     @Param('id') id: string,
   ): // Promise<User>
-  any {
+    any {
     return this.usersService.update(id, updateUserDTO);
   }
 }

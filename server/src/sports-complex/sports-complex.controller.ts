@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
 import { Request } from 'express';
+import { ApiTags } from '@nestjs/swagger';
 import User from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 
@@ -8,12 +9,13 @@ import { UpdateSportsComplexDTO } from './dto/update-sports-complex.dto';
 import SportsComplex from './entities/sports-complex.entity';
 import { SportsComplexService } from './sports-complex.service';
 
+@ApiTags('Sports-Complex endpoints')
 @Controller('sports-complex')
 export class SportsComplexController {
   constructor(
     private readonly sportsComplexService: SportsComplexService,
     private readonly usersService: UsersService,
-  ) {}
+  ) { }
 
   @Post()
   async create(

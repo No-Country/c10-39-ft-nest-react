@@ -1,12 +1,14 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 import { CreateOwnerDto } from './dto/create-owner.dto';
 import { UpdateOwnerDto } from './dto/update-owner.dto';
 import { OwnerService } from './owner.service';
 
+@ApiTags('Owner Enpoints')
 @Controller('owner')
 export class OwnerController {
-  constructor(private readonly ownerService: OwnerService) {}
+  constructor(private readonly ownerService: OwnerService) { }
 
   @Post()
   create(@Body() createOwnerDto: CreateOwnerDto) {

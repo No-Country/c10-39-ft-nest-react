@@ -1,13 +1,15 @@
 import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { UsersService } from 'src/users/users.service';
 
 import { GoogleAuthGuard } from './utils/Guards';
 
+@ApiTags('Auth endpoints')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
   @Get('google')
   @UseGuards(GoogleAuthGuard)
   handleLogin() {
