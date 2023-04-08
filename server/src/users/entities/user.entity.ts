@@ -32,7 +32,6 @@ export class User {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn()
   owner?: Owner;
 
   @OneToMany(() => Reservation, (reservation) => reservation.user, {

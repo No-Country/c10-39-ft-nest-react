@@ -29,14 +29,15 @@ interface SeedUsers {
   password: string;
   firstName: string;
   lastName: string;
+  ownerId?: string;
 }
 interface SeedOwners {
   id?: string;
   DNI: string;
   address: string;
   phone: string;
-  user?: any;
-  sportsComplex?: any;
+  userId?: any;
+  sportsComplexId?: string;
 }
 interface SeedSportsComplex {
   id: string;
@@ -52,6 +53,7 @@ interface SeedSportsComplex {
   bathrooms?: boolean;
   restobar?: boolean;
   parking?: boolean;
+  ownerId?: string;
 }
 
 interface SeedData {
@@ -62,6 +64,18 @@ interface SeedData {
   sportfields: SeedSportFieldRecord[]
 }
 // DATOS
+const idRelations = [
+  {
+    idUser: uuidv4(),
+    idOwner: uuidv4(),
+    idSportComplex: uuidv4()
+  },
+  {
+    idUser: uuidv4(),
+    idOwner: uuidv4(),
+    idSportComplex: uuidv4()
+  },
+]
 const sports: SeedSport[] = [
   {
     name: 'football',
@@ -153,11 +167,12 @@ const sportFields: SeedSportField[] = [
 ];
 const users: SeedUsers[] = [
   {
-    id: uuidv4(),
+    id: idRelations[0].idUser,
     email: "test1@gmail.com",
     firstName: "test1",
     lastName: "test1",
     password: bcrypt.hashSync("12345Test", SALT),
+    ownerId: idRelations[0].idOwner,
   },
   {
     id: uuidv4(),
@@ -176,7 +191,7 @@ const users: SeedUsers[] = [
 ];
 const sportscomplex: SeedSportsComplex[] = [
   {
-    id: uuidv4(),
+    id: idRelations[0].idSportComplex,
     name: 'Quality',
     email: 'quality1@gmail.com',
     address: 'Calle Fuerza Aerea 1234',
@@ -189,15 +204,17 @@ const sportscomplex: SeedSportsComplex[] = [
     parking: true,
     restobar: true,
     showers: true,
+    ownerId: idRelations[0].idOwner
   },
 ]
 const owners: SeedOwners[] = [
   {
+    id: idRelations[0].idOwner,
     address: 'calle 1',
     DNI: "111222333",
     phone: "123123123",
-    user: users[1],
-    sportsComplex: sportscomplex[0]
+    userId: idRelations[0].idUser,
+    sportsComplexId: idRelations[0].idSportComplex
   }
 ]
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 
 import { Sport } from 'src/sports/entities/sport.entity';
 import { SportField } from 'src/sportfields/entities/sportfield.entity';
@@ -56,6 +56,18 @@ export class SeedService {
       .insert()
       .values(initialData.sportscomplex)
       .execute();
+
+    // await this.userRepository
+    //   .createQueryBuilder()
+    //   .relation(User, 'owner')
+    //   .of(initialData.users[0].id)
+    //   .set(initialData.owners[0])
+
+    await this.ownerRespository
+      .createQueryBuilder()
+      .relation(Owner, 'sportsComplex')
+      .of(initialData.owners[0].id)
+      .add(initialData.sportscomplex[0].id)
   }
 
   async deleteAll() {
@@ -67,10 +79,10 @@ export class SeedService {
       .delete()
       .where({})
       .execute();
-    // await this.sportcomplexRespository.createQueryBuilder('sportsComplex')
-    //   .delete()
-    //   .where({})
-    //   .execute();
+    await this.sportcomplexRespository.createQueryBuilder('sportsComplex')
+      .delete()
+      .where({})
+      .execute();
     await this.ownerRespository.createQueryBuilder('owner')
       .delete()
       .where({})
