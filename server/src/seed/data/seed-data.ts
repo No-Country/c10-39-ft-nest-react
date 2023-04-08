@@ -1,4 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
+import * as bcrypt from "bcrypt";
+import { SALT } from "src/Core/Constants";
 
 interface SeedSport {
   name: string;
@@ -21,11 +23,45 @@ interface SeedSportFieldRecord extends SeedSportField {
   sport: SeedSport;
 }
 
-interface SeedData {
-  sports: SeedSportWithUUID[];
-  sportfields: SeedSportFieldRecord[];
+interface SeedUsers {
+  id: string;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}
+interface SeedOwners {
+  id?: string;
+  DNI: string;
+  address: string;
+  phone: string;
+  user?: any;
+  sportsComplex?: any;
+}
+interface SeedSportsComplex {
+  id: string;
+  email: string;
+  address: string;
+  phone: string;
+  name: string;
+  description: string;
+  image: string[];
+  grills?: boolean;
+  locker?: boolean;
+  showers?: boolean;
+  bathrooms?: boolean;
+  restobar?: boolean;
+  parking?: boolean;
 }
 
+interface SeedData {
+  users: SeedUsers[];
+  owners: SeedOwners[];
+  sportscomplex: SeedSportsComplex[];
+  sports: SeedSportWithUUID[];
+  sportfields: SeedSportFieldRecord[]
+}
+// DATOS
 const sports: SeedSport[] = [
   {
     name: 'football',
@@ -115,8 +151,60 @@ const sportFields: SeedSportField[] = [
     ],
   },
 ];
+const users: SeedUsers[] = [
+  {
+    id: uuidv4(),
+    email: "test1@gmail.com",
+    firstName: "test1",
+    lastName: "test1",
+    password: bcrypt.hashSync("12345Test", SALT),
+  },
+  {
+    id: uuidv4(),
+    email: "test2@gmail.com",
+    firstName: "test2",
+    lastName: "test2",
+    password: bcrypt.hashSync("12345Test", SALT),
+  },
+  {
+    id: uuidv4(),
+    email: "test3@gmail.com",
+    firstName: "test3",
+    lastName: "test3",
+    password: bcrypt.hashSync("12345Test", SALT),
+  },
+];
+const sportscomplex: SeedSportsComplex[] = [
+  {
+    id: uuidv4(),
+    name: 'Quality',
+    email: 'quality1@gmail.com',
+    address: 'Calle Fuerza Aerea 1234',
+    phone: "1234512345",
+    description: 'Complejo Deportivo de primer nivel con toda la equipacion disponible para el deporte amateur',
+    image: ['https://inuba.com/wp-content/uploads/2022/03/que-es-un-complejo-deportivo.webp'],
+    bathrooms: true,
+    grills: true,
+    locker: true,
+    parking: true,
+    restobar: true,
+    showers: true,
+  },
+]
+const owners: SeedOwners[] = [
+  {
+    address: 'calle 1',
+    DNI: "111222333",
+    phone: "123123123",
+    user: users[1],
+    sportsComplex: sportscomplex[0]
+  }
+]
 
 export const initialData: SeedData = {
+  users,
+  owners,
+  sportscomplex,
   sports: sportsWithUUIDS,
   sportfields: sportFields.map((field) => {
     const idx = field.sportId ? field.sportId - 1 : 0;
