@@ -33,14 +33,16 @@ export class SportField {
   )
   @JoinColumn({ name: 'sportId' })
   sport: Sport;
+  @Column()
+  sportId: string;
 
   //Relation SportField -> sportsComplex
   // TODO: It shouldn't be null
   @ManyToOne(() => SportsComplex, (sportsComplex) => sportsComplex.sportfields, {
+    eager: true,
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn({ name: 'sportComplexId' })
   sportsComplex: SportsComplex;
 
   @OneToMany(() => Reservation, (reservation) => reservation.sportfield, {

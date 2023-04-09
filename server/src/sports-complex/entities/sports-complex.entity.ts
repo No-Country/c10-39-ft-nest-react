@@ -1,6 +1,6 @@
 import Owner from 'src/owner/entities/owner.entity';
 import { SportField } from 'src/sportfields/entities/sportfield.entity';
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('sportsComplex')
 export class SportsComplex {
@@ -45,7 +45,10 @@ export class SportsComplex {
   @ManyToOne((type) => Owner, (owner) => owner.sportsComplex, {
     eager: true,
   })
+  @JoinColumn({ name: "ownerId" })
   owner: Owner;
+  @Column()
+  ownerId: string; 
 
   @OneToMany((type) => SportField, (sportfields) => sportfields.sportsComplex)
   sportfields: SportField[];
