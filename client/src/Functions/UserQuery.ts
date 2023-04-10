@@ -14,7 +14,6 @@ interface RegisterBody {
   firstName: string;
   lastName: string;
   password: string;
-  confirmPass: string;
 }
 
 export async function registerUser(body: RegisterBody) {
@@ -31,13 +30,13 @@ export async function registerUser(body: RegisterBody) {
 }
 
 interface LoginBody {
-  mail: string;
+  email: string;
   password: string;
 }
 
 export async function loginUser(body: LoginBody) {
   try {
-    const query: QueryResponse = await axios.post('/user/login', body);
+    const query: QueryResponse = await axios.post('/users/login', body);
 
     if (query.error) throw new Error(query.error);
 

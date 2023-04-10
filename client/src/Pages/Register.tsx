@@ -30,10 +30,11 @@ const Register: FC = () => {
 
     console.log(state);
   };
+
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
-
-    registerUser(state)
+    const { confirmPass, ...user } = state;
+    registerUser(user)
       .then(() => navigate(`/inicio`))
       .catch((err) => console.log(err));
   };
