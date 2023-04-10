@@ -9,9 +9,19 @@ interface sportFieldType {
   complexData: boolean;
   btnText: string;
   route: string;
+  title: string;
+  complex: {
+    ubication: string;
+    data: {
+      parking: true;
+      grill: true;
+      changing: true;
+      bar: true;
+    };
+  };
 }
 
-const SportField: FC<sportFieldType> = ({ complexData, btnText, route }) => {
+const SportField: FC<sportFieldType> = ({ complexData, btnText, route, title, complex }) => {
   const [moreInfo, setMoreInfo] = useState(false);
 
   const navigate = useNavigate();
@@ -23,9 +33,9 @@ const SportField: FC<sportFieldType> = ({ complexData, btnText, route }) => {
       <div className="bg-cover bg-[url('https://web-assets.playfinder.com/wp-content/uploads/2017/12/27164405/Bookteq-CRM-email-clay-hard-tennis-600x260.jpg')] w-full h-52 rounded-t-lg"></div>
       <div className="flex flex-col gap-5 p-5 bg-white rounded-b-lg">
         <div>
-          <span className="block text-3xl ">Titulo</span>
+          <span className="block text-3xl ">{title}</span>
           {complexData && (
-            <span className="block opacity-70 relative bottom-2 text-lg">Ubicacion</span>
+            <span className="block opacity-70 relative bottom-2 text-lg">{complex.ubication}</span>
           )}
         </div>
         <div
