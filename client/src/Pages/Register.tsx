@@ -10,23 +10,30 @@ import Layout from '../Components/Layout';
 import { registerUser } from '../Functions/UserQuery';
 
 const Register: FC = () => {
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPass, setConfirmPass] = useState('');
   const navigate = useNavigate();
+  const [state, setState] = useState({
+    email: '',
+    firstName: '',
+    lastName: '',
+    password: '',
+    confirmPass: '',
+  });
 
+  const handleChange = (event: BaseSyntheticEvent) => {
+    setState((prev) => {
+      const target = event.target;
+      return {
+        ...prev,
+        [target.name]: target.value,
+      };
+    });
+
+    console.log(state);
+  };
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
 
-    registerUser({
-      email,
-      firstName,
-      lastName,
-      password,
-      confirmPass,
-    })
+    registerUser(state)
       .then(() => navigate(`/inicio`))
       .catch((err) => console.log(err));
   };
@@ -36,33 +43,44 @@ const Register: FC = () => {
       <div className=" w-full m-auto lg:w-2/5 flex flex-col ">
         <form onSubmit={handleSubmit} className="flex flex-col w-full  items-center">
           <div className="flex flex-col w-full items-center gap-5 lg:gap-7 py-12">
-            <Input type="mail" label="Mail" state={email} setState={setEmail} icon={<IoMdMail />} />
+            <Input
+              type="mail"
+              label="Mail"
+              icon={<IoMdMail />}
+              handleChange={handleChange}
+              name="email"
+              value={state.email}
+            />
             <Input
               type="text"
               label="Nombre"
-              state={firstName}
-              setState={setFirstName}
+              handleChange={handleChange}
+              name="firstName"
+              value={state.firstName}
               icon={<HiOutlineUser />}
             />
             <Input
               type="text"
               label="Apellido"
-              state={lastName}
-              setState={setLastName}
               icon={<HiUser />}
+              name="lastName"
+              value={state.lastName}
+              handleChange={handleChange}
             />
             <Input
               type="password"
               label="Contraseña"
-              state={password}
-              setState={setPassword}
+              handleChange={handleChange}
+              name={'password'}
+              value={state.password}
               icon={<AiFillEye />}
             />
             <Input
               type="password"
               label="Confirmar contraseña"
-              state={confirmPass}
-              setState={setConfirmPass}
+              handleChange={handleChange}
+              value={state.confirmPass}
+              name={'confirmPass'}
               icon={<AiFillEye />}
             />
           </div>
