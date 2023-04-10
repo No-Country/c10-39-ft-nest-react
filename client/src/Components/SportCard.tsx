@@ -13,10 +13,11 @@ const SportCard: FC<props> = ({ title, bgImage, href }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    console.log('click');
-    navigate(`/reservas/tenis`);
+    // console.log('click');
+    // navigate(`/reservas/tenis`);
     // navigate(`/reservas/${title}`);
     // navigate(href);
+
   };
   return (
     <div

@@ -26,7 +26,7 @@ const Reservation = () => {
               return (
                 <SportCard
                   key={sport.id}
-                  href={`/reservas/${sport.name}`}
+                  href={`/reservar/${sport.name}`}
                   bgImage={sport.images[0]}
                   title={sport.name}
                 />
