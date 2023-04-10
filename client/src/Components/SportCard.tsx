@@ -17,11 +17,10 @@ const SportCard: FC<props> = ({ title, bgImage, href }) => {
     navigate(`/reservas/tenis`);
     // navigate(`/reservas/${title}`);
     // navigate(href);
-
   };
   return (
     <div
-      className={`mx-1 relative rounded  h-[220px] w-full max-w-[700px] lg:mt-20
+      className={`mx-1 relative rounded h-[220px] max-w-[700px]
       bg-[url('https://www.rere.jp/beginners/uploads/2019/09/i-471621500-3-1024x667.jpg')] flex items-center justify-center lg:h-[350px]`}
     >
       <div className="font-segoeScript  bg-opacity-10 font-bold text-6xl text-center">{title}</div>
