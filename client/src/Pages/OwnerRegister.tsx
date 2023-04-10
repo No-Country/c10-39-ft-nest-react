@@ -1,12 +1,29 @@
-import { type FC } from 'react';
+import { useState, type FC, type BaseSyntheticEvent } from 'react';
+
+import { AiOutlinePhone } from 'react-icons/ai';
+import { HiOutlineIdentification } from 'react-icons/hi';
 
 import Input from '../Components/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
-import { HiOutlineIdentification } from 'react-icons/hi';
-import { AiOutlinePhone } from 'react-icons/ai';
 
 const OwnerRegister: FC = () => {
+  const [state, setState] = useState({
+    phone: '',
+    document: '',
+  });
+
+  const handleChange = (event: BaseSyntheticEvent) => {
+    setState((prev) => {
+      const target = event.target;
+      return {
+        ...prev,
+        [target.name]: target.value,
+      };
+    });
+    console.log(state);
+  };
+
   return (
     <Layout title="Registro de propietario">
       <div className="relative min-h-[100vh] flex flex-col items-center">
@@ -17,16 +34,18 @@ const OwnerRegister: FC = () => {
           <Input
             type="text"
             label="Documento"
-            state=""
             icon={<HiOutlineIdentification />}
-            setState={() => {}}
+            handleChange={handleChange}
+            value={state.document}
+            name={'document'}
           />
           <Input
             type="text"
             label="Numero de telefono"
-            state=""
             icon={<AiOutlinePhone />}
-            setState={() => {}}
+            handleChange={handleChange}
+            value={state.phone}
+            name={'phone'}
           />
         </div>
         <div className="absolute bottom-0 right-10 lg:relative lg:my-10 lg:w-[675px] lg:flex lg:justify-end">

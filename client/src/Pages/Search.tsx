@@ -18,10 +18,24 @@ interface fieldSportType {
 type fieldSportKeyType = keyof fieldSportType;
 
 export const Search: FC = () => {
-  const [ubication, setUbication] = useState('');
-  const [fieldSport, setFieldSport] = useState('');
-  const [date, setDate] = useState('');
-  const [timeTable, setTimeTable] = useState('');
+  const [state, setState] = useState({
+    ubication: '',
+    turn: '',
+    field: '',
+    time: '',
+  });
+
+  const handleChange = (event: BaseSyntheticEvent) => {
+    setState((prev) => {
+      const target = event.target;
+      return {
+        ...prev,
+        [target.name]: target.value,
+      };
+    });
+
+    console.log(state);
+  };
 
   const [fieldSportList, setFieldSportList] = useState(['']);
 
@@ -67,30 +81,34 @@ export const Search: FC = () => {
             <Input
               type="text"
               label="Ubicacion"
-              state={ubication}
-              setState={setUbication}
+              handleChange={handleChange}
+              name="ubication"
+              value={state.ubication}
               icon={<MdLocationOn />}
             />
             <Select
               array={fieldSportList}
               type={'sportField'}
               label="Tipo de Cancha"
-              state={fieldSport}
-              setState={setFieldSport}
+              value={state.field}
+              handleChange={handleChange}
+              name="field"
               icon={<GiSoccerField />}
             />
             <Input
               type="text"
               label="Turno"
-              state={date}
-              setState={setDate}
+              handleChange={handleChange}
+              name="turn"
+              value={state.turn}
               icon={<BsCalendar2Event />}
             />
             <Input
               type="text"
               label="Horario"
-              state={timeTable}
-              setState={setTimeTable}
+              handleChange={handleChange}
+              name="time"
+              value={state.time}
               icon={<TfiTime />}
             />
           </div>
