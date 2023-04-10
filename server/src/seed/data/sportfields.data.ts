@@ -1,32 +1,22 @@
-import { v4 as uuidv4 } from 'uuid';
-
-interface SeedSport {
+export interface SportSeed {
   name: string;
   images: string[];
 }
 
-interface SeedSportWithUUID extends SeedSport {
-  id: string;
-}
-
-interface SeedSportField {
+export interface SportFieldSeed {
   name: string;
   description: string;
   dimensions: string;
   images: string[];
-  sportId?: number;
+  sport: string;
 }
 
-interface SeedSportFieldRecord extends SeedSportField {
-  sport: SeedSport;
+export interface SeedData {
+  sports: SportSeed[];
+  sportFields: SportFieldSeed[];
 }
 
-interface SeedData {
-  sports: SeedSportWithUUID[];
-  sportfields: SeedSportFieldRecord[];
-}
-
-const sports: SeedSport[] = [
+export const sportsData: SportSeed[] = [
   {
     name: 'football',
     images: [
@@ -49,79 +39,57 @@ const sports: SeedSport[] = [
   },
 ];
 
-const sportsWithUUIDS: SeedSportWithUUID[] = sports.map((sport) => ({
-  id: uuidv4(),
-  ...sport,
-}));
-
-const sportFields: SeedSportField[] = [
+export const sportFieldsData: SportFieldSeed[] = [
   {
     name: 'La Bombonerita',
     description: 'Cancha de futbol 5 de pasto sintetico y cerrado.',
     dimensions: '30x16',
-    sportId: 1,
     images: [
       'https://www.hoysejuega.com/uploads/Modules/ImagenesComplejos/800_600_la-cancha-f%C3%BAtbol-5-y-6-.-2.jpg',
     ],
+    sport: 'football',
   },
-  // {
-  //   sportId: 1,
-  //   name: 'El Monumental',
-  //   description: 'Cancha de futbol 11 de pasto natural.',
-  //   dimensions: '90x45',
-  //   images: ['https://donpotrero.com/img/posts/2/medidas_sm.jpg']
-  // },
   {
-    sportId: 2,
     name: 'Staples Center',
     description: 'Cancha de basket cerrada.',
     dimensions: '28x15',
     images: ['https://integralspor.com/uploads/blog/detail/162445d5fbd2b893161.jpg'],
+    sport: 'basketball',
   },
   {
-    sportId: 2,
     name: 'Madison Center',
     description: 'Cancha de basket cerrada.',
     dimensions: '28x15',
     images: [
       'https://www.geoplastglobal.com/wp-content/uploads/2016/09/basket_indoor_gripper_geoplast-3.jpg',
     ],
+    sport: 'basketball',
   },
   {
-    sportId: 2,
     name: 'Quality Sport',
     description: 'Cancha de basket cerrada.',
     dimensions: '28x15',
     images: [
       'https://www.qualitysportinstalacionesdeportivas.com/wp-content/uploads/2022/05/tipos-de-superficies-de-pista-de-basket.png',
     ],
+    sport: 'basketball',
   },
   {
-    sportId: 2,
     name: 'United Center',
     description: 'Cancha de basket cerrada.',
     dimensions: '28x15',
     images: [
       'https://www.revistaelabasto.com.ar/wp-content/uploads/2021/03/156221395_4205449606134895_5504940228789878318_o.jpg',
     ],
+    sport: 'basketball',
   },
   {
-    sportId: 2,
     name: 'American Airlines Center',
     description: 'Cancha de basket cerrada.',
     dimensions: '28x15',
     images: [
       'https://www.qualitysportinstalacionesdeportivas.com/wp-content/uploads/2022/05/tipos-de-superficies-de-pista-de-basket.png',
     ],
+    sport: 'basketball',
   },
 ];
-
-export const initialData: SeedData = {
-  sports: sportsWithUUIDS,
-  sportfields: sportFields.map((field) => {
-    const idx = field.sportId ? field.sportId - 1 : 0;
-    const sport = sportsWithUUIDS[idx];
-    const { sportId, ...rField } = field;
-    return { ...rField, sport };
-  }),
-};

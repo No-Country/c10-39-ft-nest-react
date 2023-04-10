@@ -25,12 +25,11 @@ export class SportField {
   images: string[];
 
   //Relation SportField -> sports
-  @ManyToOne(
-    () => Sport,
-    (sport) => sport.sportfields,
-
-    { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
-  )
+  @ManyToOne(() => Sport, (sport) => sport.sportfields, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    nullable: false,
+  })
   @JoinColumn({ name: 'sportId' })
   sport: Sport;
 
@@ -39,8 +38,9 @@ export class SportField {
   @ManyToOne(() => SportsComplex, (sportsComplex) => sportsComplex.sportfields, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
+    nullable: false,
   })
-  @JoinColumn({ name: 'sportComplexId' })
+  @JoinColumn({ name: 'sportsComplexId' })
   sportsComplex: SportsComplex;
 
   @OneToMany(() => Reservation, (reservation) => reservation.sportfields, {

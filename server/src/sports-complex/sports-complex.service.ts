@@ -36,11 +36,21 @@ export class SportsComplexService {
     });
   }
 
+  findOneWithOwner(id: string) {
+    return this.SportsComplexRepository.findOne({
+      where: { id },
+      relations: {
+        owner: true,
+      },
+    });
+  }
+
   async update(ownerId: string, id: string, updateSportsComplexDTO: UpdateSportsComplexDTO) {
     const sportsComplex = await this.SportsComplexRepository.createQueryBuilder('sportsComplex')
       .leftJoinAndSelect('sportsComplex.owner', 'owner')
       .where('sportsComplex.id = :id AND owner.id = :ownerId', { id, ownerId })
       .getOne();
+
     if (!sportsComplex) {
       throw new NotFoundException(`Sports complex with id ${id} not found`);
     }

@@ -27,7 +27,7 @@ export class SportsComplex {
   description: string;
 
   @Column('text')
-  image: string[];
+  images: string[];
 
   @Column('boolean', { default: false })
   grills?: boolean;
@@ -42,7 +42,7 @@ export class SportsComplex {
   @Column('boolean', { default: false })
   parking?: boolean;
 
-  @ManyToOne((type) => Owner, (owner) => owner.sportsComplex)
+  @ManyToOne((type) => Owner, (owner) => owner.sportsComplex, { onDelete: 'CASCADE' })
   owner: Owner;
 
   @OneToMany((type) => SportField, (sportfields) => sportfields.sportsComplex)
