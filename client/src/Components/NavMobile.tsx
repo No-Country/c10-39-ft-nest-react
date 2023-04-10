@@ -50,7 +50,7 @@ const NavMobile: FC<{ title: string }> = ({ title }) => {
         <ul
           className={`${
             openSportMenu ? 'flex' : 'hidden'
-          } text-white text-2xl flex-col justify-around absolute -left-56 top-10 w-52 bg-[#000] py-10 rounded-md`}
+          } text-white text-2xl flex-col justify-around absolute -left-56 top-10 w-52 bg-black py-10 rounded-md`}
         >
           <li className="pl-5 py-5 active:bg-primary">
             <Link onClick={handleCloseSportMenu} to={'/reservar/tenis'}>
@@ -70,7 +70,7 @@ const NavMobile: FC<{ title: string }> = ({ title }) => {
           <ul
             className={`${
               openSecondMenu ? 'flex' : 'hidden'
-            }   items-center absolute -left-40 top-10 h-40 w-52 bg-[#000] py-10 rounded-md`}
+            }   items-center absolute -left-40 top-10 h-40 w-52 bg-black py-10 rounded-md`}
           >
             <li onClick={handleCloseSecondMenu} className="pl-5 py-5 active:bg-primary w-full">
               Cerrar sesion
@@ -81,7 +81,7 @@ const NavMobile: FC<{ title: string }> = ({ title }) => {
       <div
         className={`${
           openMenu ? 'tranlate-x-0' : 'translate-x-[-100%]'
-        } transition-transform absolute left-0 w-5/6 h-screen bg-[#000] text-white pt-10`}
+        } transition-transform absolute left-0 w-5/6 h-screen bg-black text-white pt-10`}
       >
         <div className="flex flex-row w-full justify-between px-5">
           <Link to={'/inicio'} className="text-2xl">

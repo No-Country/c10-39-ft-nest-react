@@ -15,7 +15,7 @@ const Profile: FC = () => {
   return (
     <Layout title="Perfil">
       <div className="flex flex-col items-center w-full relative min-h-[85vh]">
-        <div className="bg-[#000] w-36 h-36 rounded-full m-10 lg:m-20 lg:w-40 lg:h-40"></div>
+        <div className="bg-black w-36 h-36 rounded-full m-10 lg:m-20 lg:w-40 lg:h-40"></div>
         <div className="w-full flex flex-col items-center gap-5 lg:w-5/12">
           <Input type="text" label="Nombre" state={name} setState={setName} icon={<MdEdit />} />
           <Input
