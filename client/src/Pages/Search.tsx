@@ -35,14 +35,14 @@ export const Search: FC = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (sport && sports.includes(sport)) {
-      const keySport = sport as fieldSportKeyType;
-      setFieldSportList(fieldSportLists[keySport]);
-    } else {
-      navigate('/');
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (sport && sports.includes(sport)) {
+  //     const keySport = sport as fieldSportKeyType;
+  //     setFieldSportList(fieldSportLists[keySport]);
+  //   } else {
+  //     navigate('/');
+  //   }
+  // }, []);
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
