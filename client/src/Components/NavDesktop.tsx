@@ -62,7 +62,7 @@ const NavDesktop: FC = () => {
           <ul
             className={`${
               openSportMenu ? 'flex' : 'hidden'
-            } text-white text-lg flex-col justify-around absolute -left-44 top-0 w-40 bg-[#000] py-5 rounded-md`}
+            } text-white text-lg flex-col justify-around absolute -left-44 top-0 w-40 bg-black py-5 rounded-md`}
           >
             <li className="pl-5 py-5 active:bg-primary">
               <Link onClick={handleCloseSportMenu} to={'/reservar/tenis'}>
@@ -84,7 +84,7 @@ const NavDesktop: FC = () => {
         <ul
           className={`${
             openSecondMenu ? 'flex' : 'hidden'
-          }   items-center absolute text-lg -left-40 top-5 h-32 w-40 bg-[#000] py-10 rounded-md`}
+          }   items-center absolute text-lg -left-40 top-5 h-32 w-40 bg-black py-10 rounded-md`}
         >
           <li onClick={handleCloseSecondMenu} className="pl-5 py-5 active:bg-primary w-full">
             Cerrar sesion
