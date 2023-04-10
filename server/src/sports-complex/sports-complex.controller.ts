@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
 import { ApiTags } from '@nestjs/swagger';
 import User from 'src/users/entities/user.entity';
@@ -8,6 +8,9 @@ import { CreateSportsComplexDTO } from './dto/create-sports-complex.dto';
 import { UpdateSportsComplexDTO } from './dto/update-sports-complex.dto';
 import SportsComplex from './entities/sports-complex.entity';
 import { SportsComplexService } from './sports-complex.service';
+import { GetUser } from 'src/Core/auth/decorators';
+import { AuthUserDTO } from 'src/Core/auth/dto';
+import { RoleGuard } from 'src/Core/auth/guards';
 
 @ApiTags('Sports-Complex endpoints')
 @Controller('sports-complex')
@@ -18,14 +21,15 @@ export class SportsComplexController {
   ) { }
 
   @Post()
+  @UseGuards(RoleGuard)
   async create(
     @Body() createSportsComplexDto: CreateSportsComplexDTO,
-    @Req() req: Request & { user: any },
+    @GetUser() user: AuthUserDTO,
   ): Promise<SportsComplex> {
-    const id: string = req.user.id;
-    const user: User = await this.usersService.findOne(id);
-    const owner = user.owner;
-    if (owner) {
+    const id: string = user.id;
+    const userDB: User = await this.usersService.findOne(id);
+    const owner = userDB.owner;
+    if (!owner) {
       throw new Error('User is not owner');
     }
     return this.sportsComplexService.create(createSportsComplexDto, owner);

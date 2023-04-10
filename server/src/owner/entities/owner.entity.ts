@@ -20,16 +20,15 @@ export class Owner {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn({ name: "sportsComplexId" })
+  @JoinColumn({ name: 'sportsComplexId' })
   sportsComplex: SportsComplex[];
 
   @OneToOne(() => User, (user) => user.owner, {
     cascade: true,
+    onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'userId' })
   user: User;
-  @Column()
-  userId: string;
 }
 export default Owner;

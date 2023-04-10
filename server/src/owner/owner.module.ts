@@ -11,5 +11,6 @@ import { OwnerService } from './owner.service';
   imports: [TypeOrmModule.forFeature([SportsComplex, User, Owner])],
   controllers: [OwnerController],
   providers: [OwnerService],
+  exports: [OwnerService],
 })
 export class OwnerModule {}

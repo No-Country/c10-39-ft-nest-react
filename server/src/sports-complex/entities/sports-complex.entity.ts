@@ -27,7 +27,7 @@ export class SportsComplex {
   description: string;
 
   @Column('text')
-  image: string[];
+  images: string[];
 
   @Column('boolean', { default: false })
   grills?: boolean;
@@ -45,10 +45,10 @@ export class SportsComplex {
   @ManyToOne((type) => Owner, (owner) => owner.sportsComplex, {
     eager: true,
   })
-  @JoinColumn({ name: "ownerId" })
+  @JoinColumn({ name: 'ownerId' })
   owner: Owner;
   @Column()
-  ownerId: string; 
+  ownerId: string;
 
   @OneToMany((type) => SportField, (sportfields) => sportfields.sportsComplex)
   sportfields: SportField[];
