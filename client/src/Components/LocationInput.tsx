@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import '../types/googlemaps.d.ts'
 
 type LocationInputProps = {
   onLocationChange: (latitude: number, longitude: number) => void;
