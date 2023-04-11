@@ -59,7 +59,9 @@ interface SeedSportsComplex {
   restobar?: boolean;
   parking?: boolean;
   ownerId?: string;
-  sportfieldsId?: string[];
+  sportfields?: SeedSportField[];
+  lat: number;
+  lng: number;
 }
 
 interface SeedData {
@@ -244,8 +246,10 @@ const sportscomplex: SeedSportsComplex[] = [
     parking: true,
     restobar: true,
     showers: true,
+    lat: -31.4201,
+    lng: -64.1888,
     ownerId: idRelations[0].idOwner,
-    sportfieldsId: [sportfields[0].id, sportfields[1].id, sportfields[2].id, sportfields[3].id]
+    sportfields: [sportfields[0], sportfields[1], sportfields[2], sportfields[3]]
   },
   {
     id: idRelations[1].idSportComplex,
@@ -261,8 +265,10 @@ const sportscomplex: SeedSportsComplex[] = [
     parking: true,
     restobar: true,
     showers: true,
+    lat: -32.4201,
+    lng: -64.1888,
     ownerId: idRelations[1].idOwner,
-    sportfieldsId: [sportfields[5].id, sportfields[6].id, sportfields[4].id]
+    sportfields: [sportfields[5], sportfields[6], sportfields[4]]
   },
 ]
 const owners: SeedOwners[] = [

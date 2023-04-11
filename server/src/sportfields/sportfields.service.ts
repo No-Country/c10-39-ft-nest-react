@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 
 import { CreateSportFieldDto, UpdateSportFieldDto } from './dto';
 import { SportField } from './entities/sportfield.entity';
+import { UserDTO } from 'src/Core/auth/dto';
 
 @Injectable()
 export class SportfieldsService {
@@ -23,7 +24,7 @@ export class SportfieldsService {
     if (!allSportfields) throw new NotFoundException('SportField not found');
     return allSportfields.map((sf) => ({
       ...sf,
-      sport: sf.sport.name,
+      sport: sf.sport?.name,
     }));
   }
   async findWithSport(sport: string) {
@@ -51,7 +52,7 @@ export class SportfieldsService {
   }
 
   // TODO: Implement CREATE UPDATE AND DELETE
-  async create(createSportFieldDto: CreateSportFieldDto) {
+  async create(createSportFieldDto: CreateSportFieldDto, user: UserDTO) {
     const { sport: sportName, ...sportFieldAttrs } = createSportFieldDto;
 
     const newSportField = this.sportFieldRepository.create({

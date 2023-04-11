@@ -56,7 +56,7 @@ export class SportfieldsController {
   @Post()
   @UseGuards(OwnerRoleGuard)
   async create(@Body() createSportFieldDto: CreateSportFieldDto, @GetUser() user: UserDTO) {
-    return this.sportfieldsService.create(createSportFieldDto);
+    return this.sportfieldsService.create(createSportFieldDto, user);
   }
 
   @Delete(':id')

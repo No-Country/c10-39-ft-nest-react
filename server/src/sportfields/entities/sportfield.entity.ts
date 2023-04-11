@@ -33,7 +33,7 @@ export class SportField {
   )
   @JoinColumn({ name: 'sportId' })
   sport: Sport;
-  @Column()
+  @Column({ nullable: true})
   sportId: string;
 
   //Relation SportField -> sportsComplex
