@@ -10,6 +10,6 @@ export default interface User {
   lastName: string;
   email: string;
   password: string;
+  owner: Owner;
   image?: string;
-  owner?: Owner;
 }

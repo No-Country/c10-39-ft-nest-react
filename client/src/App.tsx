@@ -46,7 +46,6 @@ function App() {
         <Route path="/propietarios/canchas/:id" element={<SFownerEdit />}></Route>
         <Route path="/propietarios/turnos" element={<Turns />}></Route>
         <Route path="/propietarios/agregar-cancha" element={<AddSFOwner />}></Route>
-        <Route path="/propietarios/registro" element={<OwnerRegister />}></Route>
 
         <Route path="/perfil" element={<Profile />}></Route>
         <Route path="/perfil/reservar" element={<ProfileReservation />}></Route>

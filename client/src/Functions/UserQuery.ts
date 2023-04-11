@@ -5,9 +5,11 @@ import type User from '../types/User.type';
 import axios from './axios';
 
 interface QueryResponse {
-  error?: string;
-  user?: User;
-  token?: string;
+  data: {
+    error?: string;
+    user?: User;
+    token?: string;
+  };
 }
 interface RegisterBody {
   email: string;
@@ -20,10 +22,10 @@ export async function registerUser(body: RegisterBody) {
   try {
     const query: QueryResponse = await axios.post('/users/register', body);
 
-    if (query.error) throw new Error(query.error);
+    if (query.data.error) throw new Error(query.data.error);
 
-    if (query.user) store.dispatch(setUser(query.user));
-    if (query.token) localStorage.setItem('token', query.token);
+    if (query.data.user) store.dispatch(setUser(query.data.user));
+    if (query.data.token) localStorage.setItem('token', query.data.token);
   } catch (error) {
     console.log(error);
   }
@@ -38,10 +40,10 @@ export async function loginUser(body: LoginBody) {
   try {
     const query: QueryResponse = await axios.post('/users/login', body);
 
-    if (query.error) throw new Error(query.error);
+    if (query.data.error) throw new Error(query.data.error);
 
-    if (query.user) store.dispatch(setUser(query.user));
-    if (query.token) localStorage.setItem('token', query.token);
+    if (query.data.user) store.dispatch(setUser(query.data.user));
+    if (query.data.token) localStorage.setItem('token', query.data.token);
   } catch (error) {
     console.log(error);
   }

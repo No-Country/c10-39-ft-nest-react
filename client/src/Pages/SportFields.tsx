@@ -1,9 +1,9 @@
 import { useState, type FC, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import Layout from '../Components/Layout';
 import SportField from '../Components/SportField';
 import { getSportFieldsWithSport } from '../Functions/SportFieldsQuery';
-import { useParams } from 'react-router-dom';
 import { type sportData } from '../types/Sport.type';
 
 const SportFields: FC = () => {
@@ -13,6 +13,7 @@ const SportFields: FC = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token') ?? '';
+
     getSportFieldsWithSport(sport, token)
       .then((data) => data && setData(data))
       .catch((err) => console.log(err));
