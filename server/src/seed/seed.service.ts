@@ -63,11 +63,11 @@ export class SeedService {
     //   .of(initialData.users[0].id)
     //   .set(initialData.owners[0])
 
-    await this.ownerRespository
-      .createQueryBuilder()
-      .relation(Owner, 'sportsComplex')
-      .of(initialData.owners[0].id)
-      .add(initialData.sportscomplex[0].id)
+    // await this.ownerRespository
+    //   .createQueryBuilder()
+    //   .relation(Owner, 'sportsComplex')
+    //   .of(initialData.owners[0].id)
+    //   .add(initialData.sportscomplex[0].id)
   }
 
   async deleteAll() {

@@ -1,25 +1,15 @@
-import { type FC, useState } from 'react';
+import { type FC, type BaseSyntheticEvent } from 'react';
 
 interface props {
   type: string;
   label: string;
-  state: string;
-  setState: (string: string) => void;
+  value: string;
+  name: string;
+  handleChange: (event: BaseSyntheticEvent) => void;
   icon?: any;
 }
 
-const Input: FC<props> = ({ type, label, state, setState, icon }) => {
-  const [inputWritten, setInputWritten] = useState(() =>
-    state === '' ? 'translate-y-7 translate-x-2' : 'inputWritten',
-  );
-
-  const handleChange = ({ target }: { target: HTMLInputElement }) => {
-    setInputWritten(() => {
-      return target.value === '' ? 'translate-y-7 translate-x-2' : 'inputWritten';
-    });
-    setState(target.value);
-  };
-
+const Input: FC<props> = ({ type, label, icon, value, handleChange, name }) => {
   return (
     <div className="w-10/12 flex flex-col relative">
       <input
@@ -28,12 +18,15 @@ const Input: FC<props> = ({ type, label, state, setState, icon }) => {
           'inputFocus cursor-pointer bg-bg order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none'
         }
         type={type}
-        value={state}
+        value={value}
         onChange={handleChange}
+        name={name}
       />
       <label
         htmlFor={label}
-        className={`${inputWritten} w-max cursor-pointer transition-transform order-1 z-[300]`}
+        className={`${
+          value.length === 0 ? 'translate-y-7 translate-x-2' : 'inputWritten'
+        } w-max cursor-pointer transition-transform order-1 z-[300]`}
       >
         {label}
       </label>

@@ -10,32 +10,32 @@ interface SportItem {
   images: string[];
 }
 
-
 const Reservation = () => {
   const [sports, setSports] = useState<SportItem[] | []>([]);
 
   useEffect(() => {
-    getAllSports(setSports)
+    getAllSports(setSports);
   }, []);
 
   return (
     <Layout title="Deportes">
-      <div className="w-full h-full overflow-scroll fixed bg-cover bg-[45%]">
-        <div className="flex flex-col gap-16 mx-1 h-full pt-24 relative lg:flex-row lg:mx-20 lg:pt-0 lg:items-center lg:bottom-20 lg:justify-between">
-  
+      <div className="w-full h-full overflow-scroll fixed bg-cover bg-[45%] py-10 lg:py-20">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-2 lg:gap-10 lg:px-10 lg:pb-5">
           {sports.length ? (
             sports.map((sport) => {
               return (
                 <SportCard
                   key={sport.id}
-                  href={`/reservas/${sport.name}`}
+                  href={`/reservar/${sport.name}`}
                   bgImage={sport.images[0]}
                   title={sport.name}
                 />
               );
             })
           ) : (
-            <h2 className="text-2xl text-center">ERROR - DEPORTES EN MANTENIMIENTO</h2>
+            <h2 className="text-2xl text-center flex w-screen mt-20 justify-center items-center">
+              ERROR - DEPORTES EN MANTENIMIENTO
+            </h2>
           )}
         </div>
       </div>

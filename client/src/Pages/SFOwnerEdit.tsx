@@ -1,13 +1,32 @@
-import { type FC } from 'react';
+import { useState, type FC, type BaseSyntheticEvent } from 'react';
 
-import Input from '../Components/Input';
-import Layout from '../Components/Layout';
-import PrimaryButton from '../Components/PrimaryButton';
 import { GiSoccerField } from 'react-icons/gi';
 import { GrGroup } from 'react-icons/gr';
 import { MdTitle } from 'react-icons/md';
 
+import Input from '../Components/Input';
+import Layout from '../Components/Layout';
+import PrimaryButton from '../Components/PrimaryButton';
+
 const SFownerEdit: FC = () => {
+  const [state, setState] = useState({
+    fieldType: '',
+    title: '',
+    capacity: '',
+  });
+
+  const handleChange = (event: BaseSyntheticEvent) => {
+    setState((prev) => {
+      const target = event.target;
+      return {
+        ...prev,
+        [target.name]: target.value,
+      };
+    });
+
+    console.log(state);
+  };
+
   return (
     <Layout title="Editar cancha">
       <div className="relative min-h-[100vh] flex flex-col items-center">
@@ -15,15 +34,30 @@ const SFownerEdit: FC = () => {
           +
         </div>
         <div className="flex flex-col w-full items-center gap-10 lg:w-[700px]">
-          <Input type="text" label="Titulo" icon={<MdTitle />} state="" setState={() => {}} />
+          <Input
+            type="text"
+            label="Titulo"
+            icon={<MdTitle />}
+            handleChange={handleChange}
+            name="title"
+            value={state.title}
+          />
           <Input
             type="text"
             label="Tipo de cancha"
             icon={<GiSoccerField />}
-            state=""
-            setState={() => {}}
+            handleChange={handleChange}
+            name="fieldType"
+            value={state.fieldType}
           />
-          <Input type="text" label="Capacidad" icon={<GrGroup />} state="" setState={() => {}} />
+          <Input
+            type="text"
+            label="Capacidad"
+            icon={<GrGroup />}
+            handleChange={handleChange}
+            name="capacity"
+            value={state.capacity}
+          />
         </div>
         <div className="absolute bottom-0 right-10 lg:relative lg:my-10 lg:w-[675px] lg:flex lg:justify-end">
           <PrimaryButton text="EDITAR" />

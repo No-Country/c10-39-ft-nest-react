@@ -8,7 +8,10 @@ import {
   Delete,
   ParseUUIDPipe,
   UseGuards,
+  Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+
 import { GetUser } from 'src/Core/auth/decorators';
 import { UserDTO } from 'src/Core/auth/dto';
 import { OwnerRoleGuard } from 'src/Core/auth/guards';
@@ -16,24 +19,25 @@ import { OwnerRoleGuard } from 'src/Core/auth/guards';
 import { CreateSportFieldDto, UpdateSportFieldDto } from './dto';
 import { SportfieldsService } from './sportfields.service';
 
+@ApiTags('SportFields Endpoints')
 @Controller('sportfields')
 export class SportfieldsController {
-  constructor(private readonly sportfieldsService: SportfieldsService) {}
+  constructor(private readonly sportfieldsService: SportfieldsService) { }
 
   @Get()
   findAll(
     @GetUser() user: UserDTO
-    ) {
+  ) {
     // console.log(user);
     return this.sportfieldsService.findAll();
   }
 
   @Get('sport/:sport')
   findWithSport(
-    @Param('sport') sport: string, 
+    @Param('sport') sport: string,
   ) {
     console.log(sport);
-    
+
     return this.sportfieldsService.findWithSport(sport);
   }
 
@@ -41,6 +45,13 @@ export class SportfieldsController {
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.sportfieldsService.findOne(id);
   }
+
+  @Get('search')
+  async search(@Query('lat') lat: number, @Query('lng') lng: number) {
+    const canchas = await this.sportfieldsService.search(lat, lng);
+    return { canchas };
+  }
+
 
   @Post()
   @UseGuards(OwnerRoleGuard)

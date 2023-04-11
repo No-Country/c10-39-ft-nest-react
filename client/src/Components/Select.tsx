@@ -1,22 +1,22 @@
-import { type FC } from 'react';
+import { type BaseSyntheticEvent, type FC } from 'react';
 
 interface selectType {
   array: string[];
   type: string;
   label: string;
-  state: string;
-  setState: (string: string) => void;
+  value: string;
+  name: string;
+  handleChange: (event: BaseSyntheticEvent) => void;
   icon?: any;
 }
 
-const Select: FC<selectType> = ({ array, type, label, state, setState, icon }) => {
-  const handleChange = ({ target }: { target: HTMLSelectElement }) => setState(target.value);
-
+const Select: FC<selectType> = ({ handleChange, name, array, value, label, icon }) => {
   return (
     <div className="w-10/12 flex flex-col relative">
       <select
         onChange={handleChange}
-        value={state}
+        value={value}
+        name={name}
         id={label}
         className="selectArrow bg-bg inputFocus cursor-pointer order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none focus:border-blue-500"
       >
@@ -26,7 +26,9 @@ const Select: FC<selectType> = ({ array, type, label, state, setState, icon }) =
       </select>
       <label
         htmlFor={label}
-        className="bg-bg translate-y-7 translate-x-2 w-max cursor-pointer transition-transform order-1"
+        className={`${
+          value.length === 0 ? 'translate-y-7 translate-x-2' : 'inputWritten'
+        } w-max cursor-pointer transition-transform order-1 z-[300]`}
       >
         {label}
       </label>
