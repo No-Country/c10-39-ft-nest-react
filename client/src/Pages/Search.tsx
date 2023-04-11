@@ -10,6 +10,7 @@ import Input from '../Components/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
 import Select from '../Components/Select';
+import { getAllSports } from '../Functions/SportQuery';
 
 interface fieldSportType {
   tenis: string[];
@@ -33,8 +34,6 @@ export const Search: FC = () => {
         [target.name]: target.value,
       };
     });
-
-    console.log(state);
   };
 
   const [fieldSportList, setFieldSportList] = useState(['']);
@@ -45,31 +44,26 @@ export const Search: FC = () => {
     tenis: ['Polvo y Ladrillo', 'Cesped', 'Sintetica'],
     futbol: ['Piso madera', 'Cesped', 'sintetica'],
   };
-  const sports = ['tenis', 'futbol'];
+  const sports: string[] = [];
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (sport && sports.includes(sport)) {
-  //     const keySport = sport as fieldSportKeyType;
-  //     setFieldSportList(fieldSportLists[keySport]);
-  //   } else {
-  //     navigate('/');
-  //   }
-  // }, []);
+  useEffect(() => {
+    const token = localStorage.getItem('token') ?? '';
+    getAllSports(token)
+      .then((data) => data && data.forEach((item) => sports.push(item.name)))
+      .catch((err) => console.log(err));
+
+    if (sport && sports.includes(sport)) {
+      const keySport = sport as fieldSportKeyType;
+      setFieldSportList(fieldSportLists[keySport]);
+    } else {
+      navigate('/');
+    }
+  }, []);
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    // axios
-    //   .post("http://localhost:3000", {
-    //     ubication,
-    //     fieldSport,
-    //     date,
-    //     timeTable,
-    //   })
-    //   .then((res) => console.log(res))
-    //   .then((res) => navigate(`/reservar/${sport}/canchas`))
-    //   .catch((error) => console.log(error));
     navigate(`/reservar/${sport}/canchas`);
   };
 
