@@ -2,7 +2,9 @@ import Owner from 'src/owner/entities/owner.entity';
 import { SportField } from 'src/sportfields/entities/sportfield.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('SportsComplex')
+import { AvailabilityRange } from './availability-range.entity';
+
+@Entity('sportsComplex')
 export class SportsComplex {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -33,7 +35,7 @@ export class SportsComplex {
   lng: number;
 
   @Column('text')
-  image: string[];
+  images: string[];
 
   @Column('boolean', { default: false })
   grills?: boolean;
@@ -58,5 +60,11 @@ export class SportsComplex {
 
   @OneToMany((type) => SportField, (sportfields) => sportfields.sportsComplex)
   sportfields: SportField[];
+
+  @OneToMany(() => AvailabilityRange, (availabilityRanges) => availabilityRanges.sportsComplex, {
+    eager: true,
+    cascade: true,
+  })
+  availability: AvailabilityRange[];
 }
 export default SportsComplex;

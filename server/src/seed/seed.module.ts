@@ -13,4 +13,4 @@ import { SportsComplexModule } from 'src/sports-complex/sports-complex.module';
   providers: [SeedService],
   imports: [SportsModule, SportfieldsModule, UsersModule, OwnerModule, SportsComplexModule],
 })
-export class SeedModule { }
+export class SeedModule {}

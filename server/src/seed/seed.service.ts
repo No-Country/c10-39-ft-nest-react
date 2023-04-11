@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import { Sport } from 'src/sports/entities/sport.entity';
 import { SportField } from 'src/sportfields/entities/sportfield.entity';
@@ -23,7 +23,7 @@ export class SeedService {
     private readonly ownerRespository: Repository<Owner>,
     @InjectRepository(SportsComplex)
     private readonly sportcomplexRespository: Repository<SportsComplex>,
-  ) { }
+  ) {}
 
   async runSeed() {
     await this.deleteAll();
@@ -33,11 +33,10 @@ export class SeedService {
       .values(initialData.sports)
       .execute();
 
-    // await this.SportFieldRepository
-    //   .createQueryBuilder('sportfield')
-    //   .insert()
-    //   .values(initialData.sportfields)
-    //   .execute();
+    await this.SportFieldRepository.createQueryBuilder('sportfield')
+      .insert()
+      .values(initialData.sportfields)
+      .execute();
 
     await this.userRepository
       .createQueryBuilder('user')
@@ -63,35 +62,22 @@ export class SeedService {
     //   .of(initialData.users[0].id)
     //   .set(initialData.owners[0])
 
-    // await this.ownerRespository
-    //   .createQueryBuilder()
-    //   .relation(Owner, 'sportsComplex')
-    //   .of(initialData.owners[0].id)
-    //   .add(initialData.sportscomplex[0].id)
+    await this.ownerRespository
+      .createQueryBuilder()
+      .relation(Owner, 'sportsComplex')
+      .of(initialData.owners[0].id)
+      .add(initialData.sportscomplex[0].id);
   }
 
   async deleteAll() {
-    await this.sportRepository.createQueryBuilder('sport')
+    await this.sportRepository.createQueryBuilder('sport').delete().where({}).execute();
+    await this.SportFieldRepository.createQueryBuilder('sportfield').delete().where({}).execute();
+    await this.sportcomplexRespository
+      .createQueryBuilder('sportsComplex')
       .delete()
       .where({})
       .execute();
-    await this.SportFieldRepository.createQueryBuilder('sportfield')
-      .delete()
-      .where({})
-      .execute();
-    await this.sportcomplexRespository.createQueryBuilder('sportsComplex')
-      .delete()
-      .where({})
-      .execute();
-    await this.ownerRespository.createQueryBuilder('owner')
-      .delete()
-      .where({})
-      .execute();
-    await this.userRepository.createQueryBuilder('user')
-      .delete()
-      .where({})
-      .execute();
-
+    await this.ownerRespository.createQueryBuilder('owner').delete().where({}).execute();
+    await this.userRepository.createQueryBuilder('user').delete().where({}).execute();
   }
 }
-

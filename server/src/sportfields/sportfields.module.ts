@@ -4,7 +4,7 @@ import { AuthMiddleware } from 'src/Core/Middleware/auth-token.middleware';
 import { Reservation } from 'src/reservation/entities/reservation.entity';
 import { Sport } from 'src/sports/entities/sport.entity';
 import { SportsModule } from 'src/sports/sports.module';
-import SportsComplex from 'src/sports-complex/entities/sports-complex.entity';
+import { SportsComplexModule } from 'src/sports-complex/sports-complex.module';
 
 import { SportField } from './entities/sportfield.entity';
 import { SportfieldsController } from './sportfields.controller';
@@ -14,10 +14,11 @@ import { SportfieldsService } from './sportfields.service';
   controllers: [SportfieldsController],
   providers: [SportfieldsService],
   imports: [
-    TypeOrmModule.forFeature([SportField, SportsComplex, Reservation, Sport]),
+    TypeOrmModule.forFeature([SportField, Reservation, Sport]),
     SportsModule,
+    SportsComplexModule,
   ],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, SportfieldsService],
 })
 export class SportfieldsModule {
   configure(consumer: MiddlewareConsumer) {

@@ -1,7 +1,6 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Patch,
   Param,
@@ -9,14 +8,12 @@ import {
   ParseUUIDPipe,
   UseGuards,
   Query,
-  ParseIntPipe,
   ParseFloatPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-
 import { GetUser } from 'src/Core/auth/decorators';
-import { UserDTO } from 'src/Core/auth/dto';
-import { OwnerRoleGuard } from 'src/Core/auth/guards';
+import { AuthUserDTO } from 'src/Core/auth/dto';
+import { RoleGuard } from 'src/Core/auth/guards';
 
 import { CreateSportFieldDto, UpdateSportFieldDto } from './dto';
 import { SportfieldsService } from './sportfields.service';
@@ -24,26 +21,24 @@ import { SportfieldsService } from './sportfields.service';
 @ApiTags('SportFields Endpoints')
 @Controller('sportfields')
 export class SportfieldsController {
-  constructor(private readonly sportfieldsService: SportfieldsService) { }
+  constructor(private readonly sportfieldsService: SportfieldsService) {}
 
   @Get()
-  findAll(
-    @GetUser() user: UserDTO
-  ) {
-    console.log(user);
+  findAll() {
     return this.sportfieldsService.findAll();
   }
 
   @Get('sport/:sport')
-  findWithSport(
-    @Param('sport') sport: string,
-  ) {
-    console.log(sport);
-
+  findWithSport(@Param('sport') sport: string) {
     return this.sportfieldsService.findWithSport(sport);
   }
 
-  @Get('id/:id')
+  @Get(':id/availability')
+  getAvailability(@Param('id', ParseUUIDPipe) id: string) {
+    return this.sportfieldsService.getAvailability(id);
+  }
+
+  @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.sportfieldsService.findOne(id);
   }
@@ -56,25 +51,24 @@ export class SportfieldsController {
     return await this.sportfieldsService.search(lat, lng);
   }
 
-  @Post()
-  @UseGuards(OwnerRoleGuard)
-  async create(@Body() createSportFieldDto: CreateSportFieldDto, @GetUser() user: UserDTO) {
-    return this.sportfieldsService.create(createSportFieldDto, user);
+  @UseGuards(RoleGuard)
+  async create(@Body() createSportFieldDto: CreateSportFieldDto, @GetUser() user: AuthUserDTO) {
+    return this.sportfieldsService.create(createSportFieldDto, user.ownerId);
   }
 
   @Delete(':id')
-  @UseGuards(OwnerRoleGuard)
-  async remove(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: UserDTO) {
-    return this.sportfieldsService.remove(id);
+  @UseGuards(RoleGuard)
+  async remove(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: AuthUserDTO) {
+    return this.sportfieldsService.remove(id, user.ownerId);
   }
 
   @Patch(':id')
-  @UseGuards(OwnerRoleGuard)
+  @UseGuards(RoleGuard)
   async update(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateSportFieldDto: UpdateSportFieldDto,
-    @GetUser() user: UserDTO,
+    @GetUser() user: AuthUserDTO,
   ) {
-    return this.sportfieldsService.update(id, updateSportFieldDto);
+    return this.sportfieldsService.update(id, updateSportFieldDto, user.ownerId);
   }
 }

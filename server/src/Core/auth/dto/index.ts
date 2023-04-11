@@ -1,1 +1,1 @@
-export { UserDTO } from './user.dto';
+export { AuthUserDTO } from './auth-user.dto';
