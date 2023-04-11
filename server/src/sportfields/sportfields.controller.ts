@@ -53,9 +53,7 @@ export class SportfieldsController {
     @Query('lat', ParseFloatPipe) lat: number,
     @Query('lng', ParseFloatPipe) lng: number,
   ) {
-    const canchas = await this.sportfieldsService.search(lat, lng);
-    return { canchas };
-    return { lat, lng };
+    return await this.sportfieldsService.search(lat, lng);
   }
 
   @Post()

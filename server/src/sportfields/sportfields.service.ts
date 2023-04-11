@@ -138,7 +138,7 @@ export class SportfieldsService {
       .setParameter('lat', lat)
       .setParameter('lng', lng)
       .limit(limit)
-      .getRawMany();
+      .getMany();
 
     const sportFields = plainToClass(SportField, nearbySportFields);
     return sportFields;
