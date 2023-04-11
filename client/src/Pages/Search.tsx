@@ -10,15 +10,18 @@ import Input from '../Components/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
 import Select from '../Components/Select';
-import { getAllSports } from '../Functions/SportQuery';
+// import { getAllSportNames } from '../Functions/SportQuery';
 
-interface fieldSportType {
-  tenis: string[];
-  futbol: string[];
-}
-type fieldSportKeyType = keyof fieldSportType;
+// interface fieldSportType {
+//   tenis: string[];
+//   futbol: string[];
+// }
+// type fieldSportKeyType = keyof fieldSportType;
 
 export const Search: FC = () => {
+  const navigate = useNavigate();
+  const { sport = '' } = useParams();
+
   const [state, setState] = useState({
     ubication: '',
     turn: '',
@@ -36,31 +39,27 @@ export const Search: FC = () => {
     });
   };
 
-  const [fieldSportList, setFieldSportList] = useState(['']);
+  // const [fieldSportList, setFieldSportList] = useState(['']);
+  // const [sportFieldsNames, setSportFieldsNames] = useState<string[]>([]);
 
-  const { sport = '' } = useParams();
+  // const fieldSportLists: fieldSportType = {
+  //   tenis: ['Polvo y Ladrillo', 'Cesped', 'Sintetica'],
+  //   futbol: ['Piso madera', 'Cesped', 'sintetica'],
+  // };
 
-  const fieldSportLists: fieldSportType = {
-    tenis: ['Polvo y Ladrillo', 'Cesped', 'Sintetica'],
-    futbol: ['Piso madera', 'Cesped', 'sintetica'],
-  };
-  const sports: string[] = [];
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token') ?? '';
+  //   getAllSportNames(token)
+  //     .then((data) => data && setSportFieldsNames(data))
+  //     .catch((err) => console.log(err));
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem('token') ?? '';
-    getAllSports(token)
-      .then((data) => data && data.forEach((item) => sports.push(item.name)))
-      .catch((err) => console.log(err));
-
-    if (sport && sports.includes(sport)) {
-      const keySport = sport as fieldSportKeyType;
-      setFieldSportList(fieldSportLists[keySport]);
-    } else {
-      navigate('/');
-    }
-  }, []);
+  //   if (sport && sportFieldsNames.includes(sport)) {
+  //     const keySport = sport as fieldSportKeyType;
+  //     setFieldSportList(fieldSportLists[keySport]);
+  //   } else {
+  //     navigate('/');
+  //   }
+  // }, []);
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
@@ -81,7 +80,7 @@ export const Search: FC = () => {
               icon={<MdLocationOn />}
             />
             <Select
-              array={fieldSportList}
+              array={['tenis']}
               type={'sportField'}
               label="Tipo de Cancha"
               value={state.field}
@@ -89,6 +88,15 @@ export const Search: FC = () => {
               name="field"
               icon={<GiSoccerField />}
             />
+            {/* <Select
+              array={fieldSportList}
+              type={'sportField'}
+              label="Tipo de Cancha"
+              value={state.field}
+              handleChange={handleChange}
+              name="field"
+              icon={<GiSoccerField />}
+            /> */}
             <Input
               type="text"
               label="Turno"

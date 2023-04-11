@@ -19,3 +19,18 @@ export async function getAllSports(token: string) {
     console.error(error);
   }
 }
+
+export async function getAllSportNames(token: string) {
+  try {
+    const { data }: { data: SportItem[] } = await axios.get('/sports', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const names = data.map((item) => item.name);
+    return names;
+  } catch (error) {
+    console.error(error);
+  }
+}
