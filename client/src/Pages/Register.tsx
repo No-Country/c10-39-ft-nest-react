@@ -32,9 +32,13 @@ const Register: FC = () => {
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
     const { confirmPass, ...user } = state;
-    registerUser(user)
-      .then(() => navigate(`/inicio`))
-      .catch((err) => console.log(err));
+    if (state.password === confirmPass) {
+      registerUser(user)
+        .then(() => navigate(`/inicio`))
+        .catch((err) => console.log(err));
+    } else {
+      console.log('ERROR: Las contraseñas deben ser iguales');
+    }
   };
 
   return (
