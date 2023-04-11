@@ -22,10 +22,10 @@ export async function registerUser(body: RegisterBody) {
   try {
     const query: QueryResponse = await axios.post('/users/register', body);
 
-    if (query.error) throw new Error(query.error);
+    if (query.data.error) throw new Error(query.data.error);
 
-    if (query.user) store.dispatch(setUser(query.user));
-    if (query.token) localStorage.setItem('token', query.token);
+    if (query.data.user) store.dispatch(setUser(query.data.user));
+    if (query.data.token) localStorage.setItem('token', query.data.token);
   } catch (error) {
     console.log(error);
   }
