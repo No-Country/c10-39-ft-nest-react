@@ -7,7 +7,7 @@ import { HiOutlineIdentification } from 'react-icons/hi';
 import Input from '../Components/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
-import OwnerQuery from '../Functions/OwnerQuery';
+import { OwnerRegisterQuery } from '../Functions/OwnerQuery';
 
 const OwnerRegister: FC = () => {
   const [state, setState] = useState({
@@ -30,7 +30,7 @@ const OwnerRegister: FC = () => {
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
     const token = localStorage.getItem('token') ?? '';
-    OwnerQuery(state, token, userId)
+    OwnerRegisterQuery(state, token, userId)
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
   };

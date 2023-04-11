@@ -1,4 +1,5 @@
 import { type FC, useState, type BaseSyntheticEvent } from 'react';
+import { useSelector } from 'react-redux';
 
 import { GiSoccerField } from 'react-icons/gi';
 import { GrGroup } from 'react-icons/gr';
@@ -7,6 +8,7 @@ import { MdTitle } from 'react-icons/md';
 import Input from '../Components/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
+import { OwnerAddSFQuery } from '../Functions/OwnerQuery';
 
 const AddSFOwner: FC = () => {
   const [state, setState] = useState({
@@ -14,6 +16,8 @@ const AddSFOwner: FC = () => {
     sportField: '',
     capacity: '',
   });
+
+  const userId = useSelector<any>((state) => state.user?.user?.id);
 
   const handleChange = (event: BaseSyntheticEvent) => {
     setState((prev) => {
@@ -25,16 +29,24 @@ const AddSFOwner: FC = () => {
     });
   };
 
+  const handleSubmit = (e: BaseSyntheticEvent) => {
+    e.preventDefault();
+    const token = localStorage.getItem('token') ?? '';
+    OwnerAddSFQuery(state, token, userId)
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  };
+
   return (
     <Layout title="Agregar cancha">
-      <div className="relative min-h-[100vh] flex flex-col items-center">
+      <form onSubmit={handleSubmit} className="relative min-h-[100vh] flex flex-col items-center">
         <div className="bg-[#D9D9D9] rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[800px] text-center ">
           +
         </div>
         <div className="flex flex-col w-full items-center gap-10 lg:w-[700px]">
           <Input
             type="text"
-            label="Titulo"
+            label="Nombre"
             icon={<MdTitle />}
             handleChange={handleChange}
             value={state.title}
@@ -60,7 +72,7 @@ const AddSFOwner: FC = () => {
         <div className="absolute bottom-0 right-10 lg:relative lg:my-10 lg:w-[675px] lg:flex lg:justify-end">
           <PrimaryButton text="AGREGAR" />
         </div>
-      </div>
+      </form>
     </Layout>
   );
 };
