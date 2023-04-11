@@ -5,6 +5,9 @@ import { Repository } from 'typeorm';
 
 import { CreateSportFieldDto, UpdateSportFieldDto } from './dto';
 import { SportField } from './entities/sportfield.entity';
+import { UserDTO } from 'src/Core/auth/dto';
+import SportsComplex from 'src/sports-complex/entities/sports-complex.entity';
+import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class SportfieldsService {
@@ -12,6 +15,8 @@ export class SportfieldsService {
     @InjectRepository(SportField)
     private readonly sportFieldRepository: Repository<SportField>,
     private readonly sportService: SportsService,
+    @InjectRepository(SportsComplex)
+    private readonly sportsComplexRepository: Repository<SportsComplex>,
   ) {}
 
   async findAll() {
@@ -23,7 +28,7 @@ export class SportfieldsService {
     if (!allSportfields) throw new NotFoundException('SportField not found');
     return allSportfields.map((sf) => ({
       ...sf,
-      sport: sf.sport.name,
+      sport: sf.sport?.name,
     }));
   }
   async findWithSport(sport: string) {
@@ -51,13 +56,22 @@ export class SportfieldsService {
   }
 
   // TODO: Implement CREATE UPDATE AND DELETE
-  async create(createSportFieldDto: CreateSportFieldDto) {
+  async create(createSportFieldDto: CreateSportFieldDto, user: UserDTO) {
     const { sport: sportName, ...sportFieldAttrs } = createSportFieldDto;
+
+    const ownerId = user.owner.id;
+
+    console.log(ownerId);
+    
+
+    const sportsComplex = await this.sportsComplexRepository.findOneBy({
+      owner: { id: ownerId },
+    });
 
     const newSportField = this.sportFieldRepository.create({
       ...sportFieldAttrs,
     });
-
+    newSportField.sportsComplex = sportsComplex;
     await this.bindSport(newSportField, sportName);
 
     await this.sportFieldRepository.save(newSportField);
@@ -98,22 +112,39 @@ export class SportfieldsService {
   async search(lat: number, lng: number): Promise<SportField[]> {
     const R = 6371; // Radio de la Tierra en kilómetros
     const limit = 20; // Límite de resultados
-    const canchasCercanas = await this.sportFieldRepository
+
+    const nearbySportFields = await this.sportFieldRepository
       .createQueryBuilder('sportField')
-      .select('sportField.*')
-      .addSelect(
-        `(${R} * acos(cos(radians(:latitud)) * cos(radians(cancha.latitud)) * cos(radians(cancha.longitud) - radians(:longitud)) + sin(radians(:latitud)) * sin(radians(cancha.latitud)))) as distancia`,
-        'distancia',
-      )
-      .leftJoinAndSelect('sportField.sportComplex', 'sportComplex')
+      .select([
+        'sportField.id',
+        'sportField.name',
+        'sportField.description',
+        'sportField.dimensions',
+        'sportField.images',
+        'sportField.sportId',
+        'sportsComplex.id',
+        'sportsComplex.name',
+        'sportsComplex.email',
+        'sportsComplex.address',
+        'sportsComplex.phone',
+        'sportsComplex.description',
+        'sportsComplex.lat',
+        'sportsComplex.lng',
+        'sportsComplex.image',
+        `(${R} * acos(cos(radians(:lat)) * cos(radians(:lat)) * cos(radians(:lng) - radians(:lng)) + sin(radians(:lat)) * sin(radians(:lat)))) as distancia`,
+      ])
+      .leftJoin('sportField.sportsComplex', 'sportsComplex')
       .orderBy('distancia', 'ASC')
       .setParameter('lat', lat)
       .setParameter('lng', lng)
       .limit(limit)
-      .getRawMany();
+      .getMany();
 
-      return canchasCercanas;
+    const sportFields = plainToClass(SportField, nearbySportFields);
+    return sportFields;
   }
+
+  
 
   private async bindSport(sportField: SportField, sportName: string) {
     try {

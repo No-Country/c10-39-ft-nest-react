@@ -108,6 +108,7 @@ export class UsersService {
         id: user.id,
         email: user.email,
         role: user.isOwner ? 'owner' : 'user',
+        owner: user.owner,
       },
       this.configService.get<string>('JWT_SECRET'),
       { expiresIn: EXPIRED_TOKEN },

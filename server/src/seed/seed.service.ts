@@ -33,11 +33,11 @@ export class SeedService {
       .values(initialData.sports)
       .execute();
 
-    await this.SportFieldRepository
-      .createQueryBuilder('sportfield')
-      .insert()
-      .values(initialData.sportfields)
-      .execute();
+    // await this.SportFieldRepository
+    //   .createQueryBuilder('sportfield')
+    //   .insert()
+    //   .values(initialData.sportfields)
+    //   .execute();
 
     await this.userRepository
       .createQueryBuilder('user')

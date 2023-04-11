@@ -9,6 +9,8 @@ import {
   ParseUUIDPipe,
   UseGuards,
   Query,
+  ParseIntPipe,
+  ParseFloatPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -28,7 +30,7 @@ export class SportfieldsController {
   findAll(
     @GetUser() user: UserDTO
   ) {
-    // console.log(user);
+    console.log(user);
     return this.sportfieldsService.findAll();
   }
 
@@ -41,22 +43,23 @@ export class SportfieldsController {
     return this.sportfieldsService.findWithSport(sport);
   }
 
-  @Get(':id')
+  @Get('id/:id')
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.sportfieldsService.findOne(id);
   }
 
   @Get('search')
-  async search(@Query('lat') lat: number, @Query('lng') lng: number) {
-    const canchas = await this.sportfieldsService.search(lat, lng);
-    return { canchas };
+  async search(
+    @Query('lat', ParseFloatPipe) lat: number,
+    @Query('lng', ParseFloatPipe) lng: number,
+  ) {
+    return await this.sportfieldsService.search(lat, lng);
   }
-
 
   @Post()
   @UseGuards(OwnerRoleGuard)
   async create(@Body() createSportFieldDto: CreateSportFieldDto, @GetUser() user: UserDTO) {
-    return this.sportfieldsService.create(createSportFieldDto);
+    return this.sportfieldsService.create(createSportFieldDto, user);
   }
 
   @Delete(':id')
