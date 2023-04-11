@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SportsService } from 'src/sports/sports.service';
 import { Repository } from 'typeorm';
@@ -32,10 +28,10 @@ export class SportfieldsService {
   }
   async findWithSport(sport: string) {
     const allSportfields = await this.sportFieldRepository.find({
-      where:{
+      where: {
         sport: {
-          name: sport
-        }
+          name: sport,
+        },
       },
       relations: {
         sport: true,
@@ -100,16 +96,24 @@ export class SportfieldsService {
   }
 
   async search(lat: number, lng: number): Promise<SportField[]> {
-    const query = this.sportFieldRepository.createQueryBuilder('Sportfield');
-    query.select(`Sportfield.*, ST_Distance(SportsComplex.location, ST_SetSRID(ST_MakePoint(:lng, :lat), 4326)) as distance`);
-    query.innerJoin('SportField.SportsComplex', 'SportsComplex');
-    query.where('SportsComplex.location IS NOT NULL');
-    query.orderBy('distance', 'ASC');
-    query.limit(20);
-    query.setParameters({ lat, lng });
-    return await query.getMany();
-  }
+    const R = 6371; // Radio de la Tierra en kilómetros
+    const limit = 20; // Límite de resultados
+    const canchasCercanas = await this.sportFieldRepository
+      .createQueryBuilder('sportField')
+      .select('sportField.*')
+      .addSelect(
+        `(${R} * acos(cos(radians(:latitud)) * cos(radians(cancha.latitud)) * cos(radians(cancha.longitud) - radians(:longitud)) + sin(radians(:latitud)) * sin(radians(cancha.latitud)))) as distancia`,
+        'distancia',
+      )
+      .leftJoinAndSelect('sportField.sportComplex', 'sportComplex')
+      .orderBy('distancia', 'ASC')
+      .setParameter('lat', lat)
+      .setParameter('lng', lng)
+      .limit(limit)
+      .getRawMany();
 
+      return canchasCercanas;
+  }
 
   private async bindSport(sportField: SportField, sportName: string) {
     try {
@@ -118,10 +122,7 @@ export class SportfieldsService {
       });
 
       const queryBuilder = this.sportFieldRepository.createQueryBuilder();
-      await queryBuilder
-        .relation(SportField, 'sport')
-        .of(sportField)
-        .set(sportId);
+      await queryBuilder.relation(SportField, 'sport').of(sportField).set(sportId);
 
       return sportField;
     } catch (e: any) {

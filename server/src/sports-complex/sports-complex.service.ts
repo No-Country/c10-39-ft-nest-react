@@ -6,7 +6,6 @@ import { CreateSportsComplexDTO } from './dto/create-sports-complex.dto';
 import { UpdateSportsComplexDTO } from './dto/update-sports-complex.dto';
 import SportsComplex from './entities/sports-complex.entity';
 
-import { Point } from 'geojson';
 @Injectable()
 export class SportsComplexService {
   constructor(
@@ -16,14 +15,9 @@ export class SportsComplexService {
 
   create(createSportsComplexDTO: CreateSportsComplexDTO, owner: any) {
 
-    const location = {
-      type: 'Point',
-      coordinates: [createSportsComplexDTO.lng, createSportsComplexDTO.lat],
-    } as Point;
     const newSportComplex: SportsComplex =
       this.SportsComplexRepository.create(createSportsComplexDTO);
     newSportComplex.owner = owner;
-    newSportComplex.location = location;
     return this.SportsComplexRepository.save(newSportComplex);
   }
 

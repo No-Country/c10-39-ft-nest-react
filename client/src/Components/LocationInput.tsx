@@ -33,7 +33,7 @@ export const LocationInput: React.FC<LocationInputProps> = ({ onLocationChange }
       const {
         lat,
         lng,
-      } : any = place?.geometry?.location;
+      } : any = place.geometry.location;
       onLocationChange(lat(), lng());
     }
   };
