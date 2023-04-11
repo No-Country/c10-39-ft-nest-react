@@ -8,6 +8,7 @@ import {
   Delete,
   ParseUUIDPipe,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -44,6 +45,13 @@ export class SportfieldsController {
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.sportfieldsService.findOne(id);
   }
+
+  @Get('search')
+  async search(@Query('lat') lat: number, @Query('lng') lng: number) {
+    const canchas = await this.sportfieldsService.search(lat, lng);
+    return { canchas };
+  }
+
 
   @Post()
   @UseGuards(OwnerRoleGuard)

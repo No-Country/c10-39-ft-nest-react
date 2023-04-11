@@ -1,8 +1,9 @@
+import { Point } from 'geojson';
 import Owner from 'src/owner/entities/owner.entity';
 import { SportField } from 'src/sportfields/entities/sportfield.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('sportsComplex')
+@Entity('SportsComplex')
 export class SportsComplex {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -25,6 +26,14 @@ export class SportsComplex {
 
   @Column('text')
   description: string;
+
+  @Column({
+    type: 'geography',
+    nullable: true,
+    spatialFeatureType: 'Point',
+    srid: 4326,
+  })
+  location: Point;
 
   @Column('text')
   image: string[];
