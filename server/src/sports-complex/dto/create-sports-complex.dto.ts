@@ -19,6 +19,10 @@ export class CreateSportsComplexDTO {
   @Length(10, 500)
   description: string;
 
+  /// TODO: Add validation for lat and lng
+  lat: number;
+  lng: number;
+
   @IsNotEmpty()
   image: string[];
 

@@ -99,6 +99,18 @@ export class SportfieldsService {
     return sportfield;
   }
 
+  async search(lat: number, lng: number): Promise<SportField[]> {
+    const query = this.sportFieldRepository.createQueryBuilder('Sportfield');
+    query.select(`Sportfield.*, ST_Distance(SportsComplex.location, ST_SetSRID(ST_MakePoint(:lng, :lat), 4326)) as distance`);
+    query.innerJoin('SportField.SportsComplex', 'SportsComplex');
+    query.where('SportsComplex.location IS NOT NULL');
+    query.orderBy('distance', 'ASC');
+    query.limit(20);
+    query.setParameters({ lat, lng });
+    return await query.getMany();
+  }
+
+
   private async bindSport(sportField: SportField, sportName: string) {
     try {
       const { id: sportId } = await this.sportService.findOneByName(sportName, {
