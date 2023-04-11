@@ -6,7 +6,7 @@ import Layout from '../Components/Layout';
 import OwnerRegister from './OwnerRegister';
 
 const Owner = () => {
-  const isOwner = useSelector<any>((state) => state.user.owner);
+  const isOwner = useSelector<any>((state) => state.user?.user?.owner);
   return (
     <>
       {isOwner ? (

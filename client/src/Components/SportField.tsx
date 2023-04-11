@@ -10,7 +10,7 @@ interface sportFieldType {
   btnText: string;
   route: string;
   title: string;
-  complex: {
+  complex?: {
     ubication: string;
     data: {
       parking: true;
@@ -35,7 +35,7 @@ const SportField: FC<sportFieldType> = ({ complexData, btnText, route, title, co
         <div>
           <span className="block text-3xl ">{title}</span>
           {complexData && (
-            <span className="block opacity-70 relative bottom-2 text-lg">{complex.ubication}</span>
+            <span className="block opacity-70 relative bottom-2 text-lg">{complex?.ubication}</span>
           )}
         </div>
         <div

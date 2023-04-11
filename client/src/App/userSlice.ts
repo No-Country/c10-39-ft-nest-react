@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 import type User from '../types/User.type';
 
-interface UserState {
+export interface UserState {
   user: User | null;
 }
 

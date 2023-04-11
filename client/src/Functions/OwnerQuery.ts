@@ -5,6 +5,22 @@ interface ownerProps {
   document: string;
 }
 
-export default function OwnerRegister(props: ownerProps) {
-  const { data } = axios.post();
+export default async function OwnerQuery(props: ownerProps, token: string, id: any) {
+  const { phone, document } = props;
+  const body = {
+    DNI: document,
+    phone,
+    userId: id,
+    address: 'hola',
+  };
+  try {
+    const { data } = await axios.post('/owner', body, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 }
