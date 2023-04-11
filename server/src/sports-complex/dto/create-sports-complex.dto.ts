@@ -1,4 +1,7 @@
-import { IsEmail, IsNotEmpty, Length, Matches } from 'class-validator';
+import { IsArray, IsEmail, IsNotEmpty, Length, Matches } from 'class-validator';
+
+import { CreateAvailabilityRange } from './create-availability-range.dto';
+import { AvailabilityRange } from '../entities/availability-range.entity';
 
 export class CreateSportsComplexDTO {
   @IsEmail()
@@ -20,7 +23,10 @@ export class CreateSportsComplexDTO {
   description: string;
 
   @IsNotEmpty()
-  image: string[];
+  images: string[];
+
+  @IsArray()
+  availability?: CreateAvailabilityRange[];
 
   grills?: boolean;
   locker?: boolean;

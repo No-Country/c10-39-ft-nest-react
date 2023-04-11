@@ -109,7 +109,7 @@ export class UsersService {
       {
         id: user.id,
         email: user.email,
-        ownerId: user.owner.id,
+        ownerId: user.owner?.id,
         roles: user.isOwner ? [Role.Owner] : [Role.User],
       },
       this.configService.get<string>('JWT_SECRET'),

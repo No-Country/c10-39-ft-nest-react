@@ -29,9 +29,12 @@ export class SportfieldsController {
 
   @Get('sport/:sport')
   findWithSport(@Param('sport') sport: string) {
-    console.log(sport);
-
     return this.sportfieldsService.findWithSport(sport);
+  }
+
+  @Get(':id/availability')
+  getAvailability(@Param('id', ParseUUIDPipe) id: string) {
+    return this.sportfieldsService.getAvailability(id);
   }
 
   @Get(':id')

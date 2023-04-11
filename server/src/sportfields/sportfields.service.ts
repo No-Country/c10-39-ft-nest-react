@@ -28,17 +28,24 @@ export class SportfieldsService {
       },
     });
     if (!allSportfields) throw new NotFoundException('SportField not found');
-    return allSportfields.map((sf) => ({
-      ...sf,
-      sport: sf.sport.name,
+    // TODO: Refactor this to use an interceptor
+    return allSportfields.map(({ sportsComplex, sport, ...field }) => ({
+      ...field,
+      sportsComplex: {
+        name: sportsComplex?.name,
+        sportsComplexId: sportsComplex?.id,
+      },
+      availability: sportsComplex?.availability,
+      sport: sport.name,
     }));
   }
+
   async findWithSport(sport: string) {
     const allSportfields = await this.sportFieldRepository.find({
-      where:{
+      where: {
         sport: {
-          name: sport
-        }
+          name: sport,
+        },
       },
       relations: {
         sport: true,
@@ -49,6 +56,12 @@ export class SportfieldsService {
       ...sf,
       sport: sf.sport.name,
     }));
+  }
+
+  async getAvailability(id: string) {
+    const sportField = await this.sportFieldRepository.findOneBy({ id });
+
+    return sportField.availability;
   }
 
   async findOne(id: string) {

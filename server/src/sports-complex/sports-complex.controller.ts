@@ -18,10 +18,10 @@ export class SportsComplexController {
   constructor(
     private readonly sportsComplexService: SportsComplexService,
     private readonly usersService: UsersService,
-  ) { }
+  ) {}
 
   @Post()
-  @UseGuards(RoleGuard)
+  // @UseGuards(RoleGuard)
   async create(
     @Body() createSportsComplexDto: CreateSportsComplexDTO,
     @GetUser() user: AuthUserDTO,

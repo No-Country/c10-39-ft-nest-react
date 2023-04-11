@@ -4,7 +4,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { ReservationService } from './reservation.service';
-import { UserDTO } from 'src/Core/auth/dto';
+import { AuthUserDTO } from 'src/Core/auth/dto';
 import { GetUser } from 'src/Core/auth/decorators';
 
 @ApiTags('Reservations Endpoints')
@@ -13,8 +13,7 @@ export class ReservationController {
   constructor(private readonly reservationService: ReservationService) {}
 
   @Post()
-  create(@Body() createReservationDto: CreateReservationDto, @GetUser() user: UserDTO) {
-
+  create(@Body() createReservationDto: CreateReservationDto, @GetUser() user: AuthUserDTO) {
     return this.reservationService.create(createReservationDto, user.id);
   }
 

@@ -16,7 +16,7 @@ interface SeedSportField {
   description: string;
   dimensions: string;
   images: string[];
-  sportId?: number;
+  sportId?: any;
 }
 
 interface SeedSportFieldRecord extends SeedSportField {
@@ -46,7 +46,7 @@ interface SeedSportsComplex {
   phone: string;
   name: string;
   description: string;
-  image: string[];
+  images: string[];
   grills?: boolean;
   locker?: boolean;
   showers?: boolean;
@@ -198,7 +198,7 @@ const sportscomplex: SeedSportsComplex[] = [
     phone: '1234512345',
     description:
       'Complejo Deportivo de primer nivel con toda la equipacion disponible para el deporte amateur',
-    image: ['https://inuba.com/wp-content/uploads/2022/03/que-es-un-complejo-deportivo.webp'],
+    images: ['https://inuba.com/wp-content/uploads/2022/03/que-es-un-complejo-deportivo.webp'],
     bathrooms: true,
     grills: true,
     locker: true,

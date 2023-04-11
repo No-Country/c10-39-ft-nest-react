@@ -1,4 +1,4 @@
-import { Expose, Transform } from 'class-transformer';
+import { Expose } from 'class-transformer';
 import { Reservation } from 'src/reservation/entities/reservation.entity';
 import { Sport } from 'src/sports/entities/sport.entity';
 import { SportsComplex } from 'src/sports-complex/entities/sports-complex.entity';
@@ -28,7 +28,6 @@ export class SportField {
   @ManyToOne(() => Sport, (sport) => sport.sportfields, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
-    nullable: false,
   })
   @JoinColumn({ name: 'sportId' })
   sport: Sport;
@@ -41,7 +40,6 @@ export class SportField {
     eager: true,
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
-    nullable: false,
   })
   @JoinColumn({ name: 'sportsComplexId' })
   sportsComplex: SportsComplex;
@@ -51,5 +49,10 @@ export class SportField {
     onUpdate: 'CASCADE',
   })
   reservation: Reservation[];
+
+  get availability() {
+    return this.sportsComplex.availability;
+  }
 }
+
 export default SportField;

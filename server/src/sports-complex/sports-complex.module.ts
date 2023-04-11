@@ -9,9 +9,10 @@ import SportsComplex from './entities/sports-complex.entity';
 import { SportsComplexController } from './sports-complex.controller';
 import { SportsComplexService } from './sports-complex.service';
 import { AuthMiddleware } from 'src/Core/Middleware/auth-token.middleware';
+import { AvailabilityRange } from './entities/availability-range.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Owner, SportField, SportsComplex, User])],
+  imports: [TypeOrmModule.forFeature([Owner, SportField, SportsComplex, User, AvailabilityRange])],
   controllers: [SportsComplexController],
   providers: [SportsComplexService, UsersService],
   exports: [TypeOrmModule, SportsComplexService],
