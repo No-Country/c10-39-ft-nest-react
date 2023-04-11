@@ -27,8 +27,6 @@ const Register: FC = () => {
         [target.name]: target.value,
       };
     });
-
-    console.log(state);
   };
 
   const handleSubmit = (e: BaseSyntheticEvent) => {

@@ -23,7 +23,6 @@ const AddSFOwner: FC = () => {
         [target.name]: target.value,
       };
     });
-    console.log(state);
   };
 
   return (

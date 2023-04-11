@@ -11,13 +11,8 @@ interface props {
 
 const SportCard: FC<props> = ({ title, bgImage, href }) => {
   const navigate = useNavigate();
+  const handleClick = () => navigate(href);
 
-  const handleClick = () => {
-    // console.log('click');
-    // navigate(`/reservas/tenis`);
-    // navigate(`/reservas/${title}`);
-    // navigate(href);
-  };
   return (
     <div
       className={`mx-1 relative rounded h-[220px] max-w-[700px]
