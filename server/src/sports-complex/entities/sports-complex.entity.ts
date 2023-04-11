@@ -1,4 +1,3 @@
-import { Point } from 'geojson';
 import Owner from 'src/owner/entities/owner.entity';
 import { SportField } from 'src/sportfields/entities/sportfield.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
@@ -27,13 +26,11 @@ export class SportsComplex {
   @Column('text')
   description: string;
 
-  @Column({
-    type: 'geography',
-    nullable: true,
-    spatialFeatureType: 'Point',
-    srid: 4326,
-  })
-  location: Point;
+  @Column({ type: 'double precision', nullable: true })
+  lat: number;
+
+  @Column({ type: 'double precision', nullable: true })
+  lng: number;
 
   @Column('text')
   image: string[];
@@ -54,10 +51,10 @@ export class SportsComplex {
   @ManyToOne((type) => Owner, (owner) => owner.sportsComplex, {
     eager: true,
   })
-  @JoinColumn({ name: "ownerId" })
+  @JoinColumn({ name: 'ownerId' })
   owner: Owner;
   @Column()
-  ownerId: string; 
+  ownerId: string;
 
   @OneToMany((type) => SportField, (sportfields) => sportfields.sportsComplex)
   sportfields: SportField[];
