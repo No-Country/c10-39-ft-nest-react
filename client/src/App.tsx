@@ -20,6 +20,8 @@ import SFOwner from './Pages/SFOwner';
 import SFownerEdit from './Pages/SFOwnerEdit';
 import SportFields from './Pages/SportFields';
 import Turns from './Pages/Turns';
+import GoogleMapExample from './Pages/googleMapExample';
+import AAAA from './Pages/googleMapExample';
 
 const getUser = async () => {
   localStorage.getItem('token') && (await authUser());
@@ -56,6 +58,8 @@ function App() {
 
         <Route path="/ingresar" element={<Login />}></Route>
         <Route path="/registro" element={<Register />}></Route>
+
+        <Route path="/dani" element={<AAAA />}></Route>
 
         <Route path="*" element={<Navigate to="/" />}></Route>
       </Routes>
