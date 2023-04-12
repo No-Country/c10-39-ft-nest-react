@@ -18,10 +18,8 @@ export class ReservationService {
     @InjectRepository(SportField)
     private readonly sportFieldRepository: Repository<SportField>,
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-  ) // private readonly sportfieldService: SportfieldsService,
-  // private readonly userService: UsersService,
-  {}
+    private readonly userRepository: Repository<User>, // private readonly sportfieldService: SportfieldsService, // private readonly userService: UsersService,
+  ) {}
 
   async create(createReservationDto: CreateReservationDto, userId: string) {
     const sportfield = await this.sportFieldRepository.findOne({
@@ -37,7 +35,7 @@ export class ReservationService {
     if (!user) {
       throw new NotFoundError('User not found');
     }
-    const reservation = await this.reservationRepository.create({
+    const reservation = this.reservationRepository.create({
       ...createReservationDto,
       sportfield,
       user,

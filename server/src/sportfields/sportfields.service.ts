@@ -129,7 +129,7 @@ export class SportfieldsService {
     return sportfield;
   }
 
-  async search(lat: number, lng: number): Promise<SportField[]> {
+  async search(lat: number, lng: number, rHour: number, date: string, sport: string): Promise<any> {
     const R = 6371; // Radio de la Tierra en kilómetros
     const limit = 20; // Límite de resultados
 
@@ -142,6 +142,7 @@ export class SportfieldsService {
         'sportField.dimensions',
         'sportField.images',
         'sportField.sportId',
+        'sport.name',
         'sportsComplex.id',
         'sportsComplex.name',
         'sportsComplex.email',
@@ -150,17 +151,30 @@ export class SportfieldsService {
         'sportsComplex.description',
         'sportsComplex.lat',
         'sportsComplex.lng',
-        'sportsComplex.image',
+        'sportsComplex.images',
         `(${R} * acos(cos(radians(:lat)) * cos(radians(:lat)) * cos(radians(:lng) - radians(:lng)) + sin(radians(:lat)) * sin(radians(:lat)))) as distancia`,
       ])
+      .innerJoin('sportField.sport', 'sport', 'sport.name = :sport', { sport })
       .leftJoin('sportField.sportsComplex', 'sportsComplex')
+      .innerJoin(
+        'sportsComplex.availability',
+        'ar',
+        'ar.start_hour <= :rHour AND ar.end_hour >= :rHour',
+        { rHour },
+      )
+      .leftJoinAndSelect('sportField.reservation', 'r', 'r.hour = :rHour AND r.date = :date', {
+        rHour,
+        date,
+      })
       .orderBy('distancia', 'ASC')
       .setParameter('lat', lat)
       .setParameter('lng', lng)
       .limit(limit)
       .getMany();
 
-    const sportFields = plainToClass(SportField, nearbySportFields);
+    const availableSportFields = nearbySportFields.filter((sp) => sp.reservation.length === 0);
+
+    const sportFields = plainToClass(SportField, availableSportFields);
     return sportFields;
   }
 

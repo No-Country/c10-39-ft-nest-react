@@ -10,6 +10,7 @@ import {
   Query,
   ParseFloatPipe,
   Post,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { GetUser } from 'src/Core/auth/decorators';
@@ -34,6 +35,17 @@ export class SportfieldsController {
     return this.sportfieldsService.findWithSport(sport);
   }
 
+  @Get('search')
+  async search(
+    @Query('lat', ParseFloatPipe) lat: number,
+    @Query('lng', ParseFloatPipe) lng: number,
+    @Query('rHour', ParseIntPipe) rHour: number,
+    @Query('date') date: string,
+    @Query('sport') sport: string,
+  ) {
+    return await this.sportfieldsService.search(lat, lng, rHour, date, sport);
+  }
+
   @Get(':id/availability')
   getAvailability(@Param('id', ParseUUIDPipe) id: string) {
     return this.sportfieldsService.getAvailability(id);
@@ -42,14 +54,6 @@ export class SportfieldsController {
   @Get(':id')
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.sportfieldsService.findOne(id);
-  }
-
-  @Get('search')
-  async search(
-    @Query('lat', ParseFloatPipe) lat: number,
-    @Query('lng', ParseFloatPipe) lng: number,
-  ) {
-    return await this.sportfieldsService.search(lat, lng);
   }
 
   @Post()

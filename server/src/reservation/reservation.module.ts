@@ -15,6 +15,6 @@ import { AuthMiddleware } from 'src/Core/Middleware/auth-token.middleware';
 })
 export class ReservationModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes('sportfields');
+    consumer.apply(AuthMiddleware).forRoutes('reservation');
   }
 }
