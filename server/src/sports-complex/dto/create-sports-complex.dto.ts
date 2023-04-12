@@ -1,41 +1,46 @@
-import { IsEmail, IsNotEmpty, Length, Matches, IsOptional, IsBoolean } from 'class-validator';
+import {
+  IsEmail,
+  IsArray,
+  IsNotEmpty,
+  Length,
+  Matches,
+  IsOptional,
+  IsBoolean,
+} from 'class-validator';
 
 import { CreateAvailabilityRange } from './create-availability-range.dto';
 import { AvailabilityRange } from '../entities/availability-range.entity';
 
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
-
-
 export class CreateSportsComplexDTO {
-
-  @ApiProperty({ example: "complexname@gmail.com" })
+  @ApiProperty({ example: 'complexname@gmail.com' })
   @IsEmail()
   email?: string;
 
   @ApiProperty({
-    description: "Address of the Complex",
+    description: 'Address of the Complex',
     maxLength: 60,
     minLength: 3,
-    example: "Av. Fuerza Aerea Argentina 3712"
+    example: 'Av. Fuerza Aerea Argentina 3712',
   })
   @IsNotEmpty()
   @Length(3, 60)
   address: string;
 
   @ApiProperty({
-    description: "Phone of the Complex",
+    description: 'Phone of the Complex',
     maxLength: 60,
     minLength: 3,
-    example: "(0351) 155 68 7890"
+    example: '(0351) 155 68 7890',
   })
   @IsNotEmpty()
   @Length(3, 60)
   phone: string;
 
   @ApiProperty({
-    description: "Name of the Complex",
-    example: "Complejo Deportivo Quality",
+    description: 'Name of the Complex',
+    example: 'Complejo Deportivo Quality',
     maxLength: 60,
     minLength: 3,
   })
@@ -44,8 +49,8 @@ export class CreateSportsComplexDTO {
   name: string;
 
   @ApiProperty({
-    description:"Brief description of the complex",
-    example:"Un lugar con todas las comodidades para el deportista amateur."
+    description: 'Brief description of the complex',
+    example: 'Un lugar con todas las comodidades para el deportista amateur.',
   })
   @Length(10, 500)
   description: string;
@@ -55,8 +60,9 @@ export class CreateSportsComplexDTO {
   lng: number;
 
   @ApiProperty({
-    description:"Images of the complex",
-    example:"https://img.freepik.com/fotos-premium/complejo-deportivo-centro-minsk-canchas-deportivas-al-aire-libre-juegos-bielorrusia_217593-15330.jpg?w=360"
+    description: 'Images of the complex',
+    example:
+      'https://img.freepik.com/fotos-premium/complejo-deportivo-centro-minsk-canchas-deportivas-al-aire-libre-juegos-bielorrusia_217593-15330.jpg?w=360',
   })
   @IsNotEmpty()
   images: string[];
