@@ -33,30 +33,33 @@ export class SeedService {
       .values(initialData.sports)
       .execute();
 
-    // await this.SportFieldRepository
-    //   .createQueryBuilder('sportfield')
-    //   .insert()
-    //   .values(initialData.sportfields)
-    //   .execute();
-
-    await this.userRepository
+      
+      await this.userRepository
       .createQueryBuilder('user')
       .insert()
       .values(initialData.users)
       .execute();
-
-    await this.ownerRespository
+      
+      await this.ownerRespository
       .createQueryBuilder('owner')
       .insert()
       .values(initialData.owners)
       .execute();
-
-    await this.sportcomplexRespository
+      
+      await this.sportcomplexRespository
       .createQueryBuilder('sportsComplex')
       .insert()
       .values(initialData.sportscomplex)
       .execute();
 
+      
+      
+      await this.SportFieldRepository
+        .createQueryBuilder('sportfield')
+        .insert()
+        .values(initialData.sportfields)
+        .execute();
+      
     // await this.userRepository
     //   .createQueryBuilder()
     //   .relation(User, 'owner')

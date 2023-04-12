@@ -33,7 +33,7 @@ export class SportField {
   )
   @JoinColumn({ name: 'sportId' })
   sport: Sport;
-  @Column({ nullable: true})
+  @Column({ nullable: true })
   sportId: string;
 
   //Relation SportField -> sportsComplex
@@ -43,7 +43,10 @@ export class SportField {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
+  @JoinColumn({ name: "sportsComplexId" })
   sportsComplex: SportsComplex;
+  @Column()
+  sportsComplexId: string;
 
   @OneToMany(() => Reservation, (reservation) => reservation.sportfield, {
     onDelete: 'CASCADE',

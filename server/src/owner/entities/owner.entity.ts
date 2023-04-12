@@ -21,7 +21,9 @@ export class Owner {
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: "sportsComplexId" })
-  sportsComplex: SportsComplex[];
+  sportsComplex: SportsComplex;
+  @Column()
+  sportsComplexId: string;
 
   @OneToOne(() => User, (user) => user.owner, {
     cascade: true,

@@ -51,12 +51,14 @@ export class SportsComplex {
   @ManyToOne((type) => Owner, (owner) => owner.sportsComplex, {
     eager: true,
   })
-  @JoinColumn({ name: 'ownerId' })
+  @JoinColumn({ name: "ownerId" })
   owner: Owner;
   @Column()
   ownerId: string;
 
+
   @OneToMany((type) => SportField, (sportfields) => sportfields.sportsComplex)
   sportfields: SportField[];
+
 }
 export default SportsComplex;
