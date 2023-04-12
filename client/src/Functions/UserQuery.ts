@@ -44,6 +44,7 @@ export async function loginUser(body: LoginBody) {
 
     if (query.data.user) store.dispatch(setUser(query.data.user));
     if (query.data.token) localStorage.setItem('token', query.data.token);
+    console.log(query.data.token);
   } catch (error) {
     console.log(error);
   }
@@ -68,6 +69,18 @@ export async function authUser(): Promise<void> {
     return;
   } catch (error) {
     localStorage.removeItem('token');
+    console.log(error);
+  }
+}
+
+export async function updateUser(body: RegisterBody, token: string, id: string) {
+  try {
+    const query: QueryResponse = await axios.patch(`/users/${id}`, body);
+
+    if (query.data.error) throw new Error(query.data.error);
+
+    return query.data;
+  } catch (error) {
     console.log(error);
   }
 }

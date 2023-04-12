@@ -4,12 +4,13 @@ import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
 import { authUser } from './Functions/UserQuery';
 import About from './Pages/About';
 import AddSFOwner from './Pages/AddSFOwner';
+import AAAA from './Pages/googleMapExample';
+import GoogleMapExample from './Pages/googleMapExample';
 import Help from './Pages/Help';
 import Home from './Pages/Home';
 import Login from './Pages/Login';
 import MainPage from './Pages/MainPage';
 import Owner from './Pages/Owner';
-import OwnerRegister from './Pages/OwnerRegister';
 import Profile from './Pages/Profile';
 import ProfileReservation from './Pages/ProfileReservation';
 import Register from './Pages/Register';
@@ -20,16 +21,11 @@ import SFOwner from './Pages/SFOwner';
 import SFownerEdit from './Pages/SFOwnerEdit';
 import SportFields from './Pages/SportFields';
 import Turns from './Pages/Turns';
-import GoogleMapExample from './Pages/googleMapExample';
-import AAAA from './Pages/googleMapExample';
-
-const getUser = async () => {
-  localStorage.getItem('token') && (await authUser());
-};
+import OwnerComplex from './Pages/OwnerComplex';
 
 function App() {
   useEffect(() => {
-    getUser().catch(() => console.log('Auth Failed'));
+    localStorage.getItem('token') && authUser().catch(() => console.log('Auth Failed'));
   }, []);
 
   return (
@@ -48,6 +44,7 @@ function App() {
         <Route path="/propietarios/canchas/:id" element={<SFownerEdit />}></Route>
         <Route path="/propietarios/turnos" element={<Turns />}></Route>
         <Route path="/propietarios/agregar-cancha" element={<AddSFOwner />}></Route>
+        <Route path="/propietarios/complejo" element={<OwnerComplex />}></Route>
 
         <Route path="/perfil" element={<Profile />}></Route>
         <Route path="/perfil/reservar" element={<ProfileReservation />}></Route>

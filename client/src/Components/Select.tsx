@@ -28,7 +28,7 @@ const Select: FC<selectType> = ({ handleChange, name, array, value, label, icon 
         htmlFor={label}
         className={`${
           value.length === 0 ? 'translate-y-7 translate-x-2' : 'inputWritten'
-        } w-max cursor-pointer transition-transform order-1 z-[300]`}
+        } w-max cursor-pointer transition-transform order-1 z-[300] bg-bg`}
       >
         {label}
       </label>
