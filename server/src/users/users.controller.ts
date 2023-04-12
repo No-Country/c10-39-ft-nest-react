@@ -13,8 +13,9 @@ export class UsersController {
 
   @Post('register')
   @ApiBearerAuth("token")
-  @ApiCreatedResponse({ description: 'User was register'})
+  @ApiCreatedResponse({ description: 'User was register' })
   @ApiResponse({ status: 400, description: 'Email already registered' })
+  @ApiBody({ type: RegisterUserDTO })
   register(
     @Body()
     registerUserDTO: RegisterUserDTO,
@@ -53,7 +54,7 @@ export class UsersController {
   }
 
   @Patch(':id')
-  @ApiParam({name:"id", description:"Must be a user UUID", example: "0abb36cb-7a5e-428f-bad2-fc326c6a14f6"})
+  @ApiParam({ name: "id", description: "Must be a user UUID", example: "0abb36cb-7a5e-428f-bad2-fc326c6a14f6" })
   update(
     @Body()
     updateUserDTO: UpdateUserDTO,
