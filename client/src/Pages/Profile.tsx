@@ -1,4 +1,5 @@
 import { type FC, useState, type BaseSyntheticEvent } from 'react';
+import { useSelector } from 'react-redux';
 
 import { AiFillEye } from 'react-icons/ai';
 import { HiOutlineUser, HiUser } from 'react-icons/hi';
@@ -7,12 +8,15 @@ import { IoMdMail } from 'react-icons/io';
 import Input from '../Components/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
+import { type AppState } from '../types/App.type';
 
 const Profile: FC = () => {
+  const userInfo = useSelector((state: AppState) => state.user.user);
+
   const [state, setState] = useState({
-    email: '',
-    firstName: '',
-    lastName: '',
+    email: userInfo.email,
+    firstName: userInfo.firstName,
+    lastName: userInfo.lastName,
     password: '',
   });
 
