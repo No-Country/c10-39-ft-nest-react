@@ -43,10 +43,7 @@ export class SportfieldsService {
     // TODO: Refactor this to use an interceptor
     return allSportfields.map(({ sportsComplex, sport, ...field }) => ({
       ...field,
-      sportsComplex: {
-        name: sportsComplex?.name,
-        sportsComplexId: sportsComplex?.id,
-      },
+      sportsComplex,
       availability: sportsComplex?.availability,
       sport: sport.name,
     }));
@@ -74,6 +71,8 @@ export class SportfieldsService {
     const reservation = await this.sportFieldRepository
       .createQueryBuilder('sf')
       .innerJoinAndSelect('sf.reservation', 'res', 'res.userId = :userId', { userId: user.id })
+      .leftJoin('sf.sportsComplex', 'sc')
+      .addSelect('sc.address')
       .getMany();
 
     return reservation;
