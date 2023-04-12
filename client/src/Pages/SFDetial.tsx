@@ -1,14 +1,17 @@
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+
+import { AiOutlineInfoCircle } from 'react-icons/ai';
+
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { useEffect, useState } from 'react';
+import { getSportAvailability, getSportDetail } from '../Functions/SportFieldsQuery';
 import { type sportData } from '../types/Sport.type';
-import { getSportDetail } from '../Functions/SportFieldsQuery';
 
 const SFDetail = () => {
   const navigate = useNavigate();
   const { id = '' } = useParams();
+  const [openMenu, setOpenMenu] = useState(false);
 
   const [data, setData] = useState<sportData>({
     id: '',
@@ -31,9 +34,20 @@ const SFDetail = () => {
     navigate('/reservar/:sport/canchas');
   };
 
+  const handleClick = () => {
+    setOpenMenu(!openMenu);
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('token') ?? '';
     getSportDetail(id, token)
+      .then((data) => data && setData(data))
+      .catch((err) => console.log(err));
+  }, [id]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token') ?? '';
+    getSportAvailability(id, token)
       .then((data) => data && setData(data))
       .catch((err) => console.log(err));
   }, [id]);
@@ -49,9 +63,18 @@ const SFDetail = () => {
           <div className="flex flex-col gap-5 bg-white pb-2 mb-10 mx-2 shadow-lg rounded-lg">
             <div className="flex flex-row items-center justify-between p-5">
               <span className="text-lg">Informacion del partido</span>
-              <span className="text-3xl">
+              <button onClick={handleClick} className="text-3xl">
                 <AiOutlineInfoCircle />
-              </span>
+              </button>
+              <div
+                className={`${
+                  openMenu ? 'flex' : 'hidden'
+                }   items-center absolute left-40 top-[200px] h-auto w-52 bg-white  rounded-md flex-col`}
+              >
+                <div className="pl-5 py-5 active:bg-primary w-full">Cambiar día</div>
+                <div className="pl-5 py-5 active:bg-primary w-full">Cambiar cancha</div>
+                <div className="pl-5 py-5 active:bg-primary w-full">Cambiar horario</div>
+              </div>
             </div>
             <div className="bg-[#aaa2] p-5">
               <span className="block">{data?.description}</span>

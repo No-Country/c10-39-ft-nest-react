@@ -27,3 +27,16 @@ export async function getSportDetail(id: string, token: string) {
     console.error(error);
   }
 }
+
+export async function getSportAvailability(id: string, token: string) {
+  try {
+    const { data }: { data: sportData } = await axios.get(`/sportfields/${id}/availability`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
