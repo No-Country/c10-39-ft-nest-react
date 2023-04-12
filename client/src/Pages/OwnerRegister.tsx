@@ -8,7 +8,7 @@ import Input from '../Components/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
 import { OwnerRegisterQuery } from '../Functions/OwnerQuery';
-import { AppUser } from '../types/App.type';
+import { type AppUser } from '../types/App.type';
 
 const OwnerRegister: FC = () => {
   const [state, setState] = useState({
@@ -32,7 +32,7 @@ const OwnerRegister: FC = () => {
     e.preventDefault();
     const token = localStorage.getItem('token') ?? '';
     OwnerRegisterQuery(state, token, userId)
-      .then((data) => console.log(data))
+      .then(() => window.location.reload())
       .catch((err) => console.log(err));
   };
 

@@ -34,9 +34,7 @@ const Profile: FC = () => {
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
     const token = localStorage.getItem('token') ?? '';
-    updateUser(state, token, userInfo.id)
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+    updateUser(state, token, userInfo.id).catch((err) => console.log(err));
   };
 
   const handleCancel = () =>

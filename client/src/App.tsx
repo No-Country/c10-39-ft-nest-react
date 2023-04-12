@@ -21,14 +21,11 @@ import SFOwner from './Pages/SFOwner';
 import SFownerEdit from './Pages/SFOwnerEdit';
 import SportFields from './Pages/SportFields';
 import Turns from './Pages/Turns';
-
-const getUser = async () => {
-  localStorage.getItem('token') && (await authUser());
-};
+import OwnerComplex from './Pages/OwnerComplex';
 
 function App() {
   useEffect(() => {
-    getUser().catch(() => console.log('Auth Failed'));
+    localStorage.getItem('token') && authUser().catch(() => console.log('Auth Failed'));
   }, []);
 
   return (
@@ -47,6 +44,7 @@ function App() {
         <Route path="/propietarios/canchas/:id" element={<SFownerEdit />}></Route>
         <Route path="/propietarios/turnos" element={<Turns />}></Route>
         <Route path="/propietarios/agregar-cancha" element={<AddSFOwner />}></Route>
+        <Route path="/propietarios/complejo" element={<OwnerComplex />}></Route>
 
         <Route path="/perfil" element={<Profile />}></Route>
         <Route path="/perfil/reservar" element={<ProfileReservation />}></Route>

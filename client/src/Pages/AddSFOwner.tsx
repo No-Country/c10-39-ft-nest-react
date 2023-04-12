@@ -32,9 +32,7 @@ const AddSFOwner: FC = () => {
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
     const token = localStorage.getItem('token') ?? '';
-    OwnerAddSFQuery(state, token, userId)
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+    OwnerAddSFQuery(state, token, userId).catch((err) => console.log(err));
   };
 
   return (

@@ -15,9 +15,7 @@ const SportMenu: FC<sportProps> = ({ handleClick, state }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token') ?? '';
-    getAllSportNames(token)
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+    getAllSportNames(token).catch((err) => console.log(err));
   }, []);
 
   return (

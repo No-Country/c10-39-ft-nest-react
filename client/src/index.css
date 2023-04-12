@@ -48,11 +48,13 @@ img {
 .inputFocus:focus + label {
   transform: translateY(0);
   font-size: 12px;
+  padding-bottom: 6px;
 }
 
 .inputWritten {
   transform: translateY(0);
   font-size: 12px;
+  padding-bottom: 6px;
 }
 
 .selectArrow {

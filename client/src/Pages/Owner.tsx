@@ -17,6 +17,7 @@ const Owner = () => {
                 {' '}
                 <Card route="/propietarios/canchas" title="Mis canchas" />
                 <Card route="/propietarios/agregar-cancha" title="Agregar cancha" />
+                <Card route="/propietarios/complejo" title="Mi Complejo" />
               </div>
             </div>
           </Layout>
