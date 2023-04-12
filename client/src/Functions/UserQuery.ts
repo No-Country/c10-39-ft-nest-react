@@ -71,3 +71,15 @@ export async function authUser(): Promise<void> {
     console.log(error);
   }
 }
+
+export async function updateUser(body: RegisterBody, token: string, id: string) {
+  try {
+    const query: QueryResponse = await axios.patch(`/users/${id}`, body);
+
+    if (query.data.error) throw new Error(query.data.error);
+
+    return query.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
