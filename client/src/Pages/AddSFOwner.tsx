@@ -9,6 +9,7 @@ import Input from '../Components/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
 import { OwnerAddSFQuery } from '../Functions/OwnerQuery';
+import { AppUser } from '../types/App.type';
 
 const AddSFOwner: FC = () => {
   const [state, setState] = useState({
@@ -17,7 +18,7 @@ const AddSFOwner: FC = () => {
     capacity: '',
   });
 
-  const userId = useSelector<any>((state) => state.user?.user?.id);
+  const userId = useSelector((state: AppUser) => state.user?.user?.id);
 
   const handleChange = (event: BaseSyntheticEvent) => {
     setState((prev) => {

@@ -38,7 +38,7 @@ interface SportFieldProps {
   capacity: string;
 }
 
-export async function OwnerAddSFQuery(props: SportFieldProps, token: string, id: any) {
+export async function OwnerAddSFQuery(props: SportFieldProps, token: string, id: string) {
   try {
     const { data }: dataType = await axios.post(
       '/sportfields',
@@ -57,7 +57,7 @@ export async function OwnerAddSFQuery(props: SportFieldProps, token: string, id:
     console.log(error);
   }
 }
-export async function OwnerEditSFQuery(props: SportFieldProps, token: string, id: any) {
+export async function OwnerEditSFQuery(props: SportFieldProps, token: string, id: string) {
   try {
     const { data }: dataType = await axios.patch(
       '/sportfields',
