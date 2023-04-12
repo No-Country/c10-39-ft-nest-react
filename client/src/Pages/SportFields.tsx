@@ -22,7 +22,11 @@ const SportFields: FC = () => {
   return (
     <Layout title="Canchas">
       <div className="flex flex-row w-full justify-center gap-20 overflow-hidden max-h-[90vh]">
-        <div className="scrollbarSF flex flex-col gap-5 my-5 w-full max-w-[450px] overflow-y-scroll lg:mt-10 lg:max-h-[525px] px-5">
+        <div
+          className={`${
+            data.length > 1 ? 'scrollbarSF overflow-y-scroll' : ''
+          } flex flex-col gap-5 my-5 w-full max-w-[450px]  lg:mt-10 lg:max-h-[525px] px-5`}
+        >
           {data.length ? (
             data.map((item) => (
               <SportField
