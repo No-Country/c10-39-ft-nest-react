@@ -15,6 +15,7 @@ const SFOwner: FC = () => {
             complexData={false}
             btnText={'EDITAR'}
             route="/propietarios/canchas/id"
+            title={'title'}
           />
         ))}
       </div>

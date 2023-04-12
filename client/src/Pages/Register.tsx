@@ -27,15 +27,18 @@ const Register: FC = () => {
         [target.name]: target.value,
       };
     });
-
-    console.log(state);
   };
+
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
-
-    registerUser(state)
-      .then(() => navigate(`/inicio`))
-      .catch((err) => console.log(err));
+    const { confirmPass, ...user } = state;
+    if (state.password === confirmPass) {
+      registerUser(user)
+        .then(() => navigate(`/inicio`))
+        .catch((err) => console.log(err));
+    } else {
+      console.log('ERROR: Las contraseñas deben ser iguales');
+    }
   };
 
   return (

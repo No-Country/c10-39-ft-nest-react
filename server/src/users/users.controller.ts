@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Request } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { LoginUserDTO, RegisterUserDTO } from './dto/register-dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
@@ -12,6 +12,9 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   @Post('register')
+  @ApiBearerAuth()
+  @ApiCreatedResponse({ description: 'User was register'})
+  @ApiResponse({ status: 400, description: 'Email already registered' })
   register(
     @Body()
     registerUserDTO: RegisterUserDTO,
@@ -20,6 +23,8 @@ export class UsersController {
   }
 
   @Post('login')
+  @ApiResponse({ status: 200, description: 'User was register', type: User })
+  @ApiResponse({ status: 400, description: 'Email already registered' })
   login(
     @Body()
     loginUserDTO: LoginUserDTO,
@@ -34,17 +39,21 @@ export class UsersController {
   // }
 
   @Get('auth')
+  @ApiResponse({ status: 200, description: 'Return User Info', type: User })
+  @ApiResponse({ status: 400, description: 'User not found' })
   authUser(@Request() req: Request & { user: any }): Promise<User> {
     const id = req.user.id;
     return this.usersService.findOne(id);
   }
 
   @Get()
+  @ApiResponse({ status: 200, description: 'Return All the Users' })
   findAll(): Promise<User[]> {
     return this.usersService.findAll();
   }
 
   @Patch(':id')
+  @ApiParam({name:"id", description:"Must be a user UUID", example: "0abb36cb-7a5e-428f-bad2-fc326c6a14f6"})
   update(
     @Body()
     updateUserDTO: UpdateUserDTO,

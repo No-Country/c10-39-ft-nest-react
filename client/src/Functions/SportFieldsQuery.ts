@@ -1,16 +1,29 @@
-import axios from "./axios";
+import { type sportData } from '../types/Sport.type';
 
-export async function getSportFieldsWithSport(state: (data: any) => void, sport: string) {
+import axios from './axios';
+
+export async function getSportFieldsWithSport(sport: string, token: string) {
   try {
-    const { data } = await axios.get(`/sportfields/sport/${sport}`,{
+    const { data }: { data: sportData[] } = await axios.get(`/sportfields/sport/${sport}`, {
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("tkn")}`,
+        Authorization: `Bearer ${token}`,
       },
     });
-    state(data);
+    return data;
   } catch (error) {
     console.error(error);
-    throw new Error("Algo salió mal :(");
+  }
+}
+
+export async function getSportDetail(id: string, token: string) {
+  try {
+    const { data }: { data: sportData } = await axios.get(`/sportfields/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error(error);
   }
 }
