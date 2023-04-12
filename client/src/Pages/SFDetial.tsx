@@ -1,24 +1,50 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { useEffect, useState } from 'react';
+import { type sportData } from '../types/Sport.type';
+import { getSportDetail } from '../Functions/SportFieldsQuery';
 
 const SFDetail = () => {
   const navigate = useNavigate();
+  const { id = '' } = useParams();
+
+  const [data, setData] = useState<sportData>({
+    id: '',
+    images: [''],
+    name: '',
+    description: '',
+    sportComplex: {
+      ubication: '',
+      data: {
+        parking: true,
+        grill: true,
+        changing: true,
+        bar: true,
+      },
+    },
+  });
 
   const handleCancel = () => navigate('/reservar/:sport/canchas');
   const handleConfirm = () => {
-    alert('Cancha confirmada');
     navigate('/reservar/:sport/canchas');
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token') ?? '';
+    getSportDetail(id, token)
+      .then((data) => data && setData(data))
+      .catch((err) => console.log(err));
+  }, [id]);
 
   return (
     <Layout title="Detalles de la reserva">
       <div className="flex flex-row w-full justify-center gap-20">
         <div className="flex flex-col gap-5 w-full lg:w-[550px] lg:mt-12">
           <div className="mx-[5%] my-5 flex flex-col bg-[#aaa3] px-5 py-2 rounded-lg">
-            <span className="opacity-70">Titulo</span>
-            <span className="text-lg">Ubicacion</span>
+            <span className="opacity-70">{data?.name}</span>
+            <span className="text-lg">{data?.sportComplex?.ubication}</span>
           </div>
           <div className="flex flex-col gap-5 bg-white pb-2 mb-10 mx-2 shadow-lg rounded-lg">
             <div className="flex flex-row items-center justify-between p-5">
@@ -28,7 +54,7 @@ const SFDetail = () => {
               </span>
             </div>
             <div className="bg-[#aaa2] p-5">
-              <span className="block">Cancha 4 - Polvo y ladrillo</span>
+              <span className="block">{data?.description}</span>
               <span className="block">Dobles</span>
             </div>
             <div className="bg-[#aaa2] p-5">
