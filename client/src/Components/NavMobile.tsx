@@ -27,7 +27,10 @@ const NavMobile: FC<{ title: string }> = ({ title }) => {
     setOpenMenu(false);
     setOpenSecondMenu(false);
   };
-  const handleCloseSecondMenu = () => setOpenSecondMenu(false);
+  const handleCloseSecondMenu = () => {
+    setOpenSecondMenu(false);
+    localStorage.removeItem('token');
+  };
   const handleCloseSportMenu = () => setOpenSportMenu(false);
 
   return (
@@ -52,15 +55,19 @@ const NavMobile: FC<{ title: string }> = ({ title }) => {
           <div onClick={handleClickSecondMenu}>
             <GoKebabVertical />
           </div>
-          <ul
+          <div
             className={`${
               openSecondMenu ? 'flex' : 'hidden'
             }   items-center absolute -left-40 top-10 h-40 w-52 bg-black py-10 rounded-md`}
           >
-            <li onClick={handleCloseSecondMenu} className="pl-5 py-5 active:bg-primary w-full">
+            <Link
+              to={'/'}
+              onClick={handleCloseSecondMenu}
+              className="pl-5 py-5 active:bg-primary w-full"
+            >
               Cerrar sesion
-            </li>
-          </ul>
+            </Link>
+          </div>
         </div>
       </div>
       <div

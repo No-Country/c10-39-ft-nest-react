@@ -18,7 +18,10 @@ const NavDesktop: FC = () => {
     setOpenSportMenu(!openSportMenu);
     setOpenSecondMenu(false);
   };
-  const handleCloseSecondMenu = () => setOpenSecondMenu(false);
+  const handleCloseSecondMenu = () => {
+    setOpenSecondMenu(false);
+    localStorage.removeItem('token');
+  };
   const handleCloseSportMenu = () => setOpenSportMenu(false);
 
   return (
@@ -67,15 +70,19 @@ const NavDesktop: FC = () => {
         <div onClick={handleClickSecondMenu} className="text-2xl cursor-pointer">
           <GoKebabVertical />
         </div>
-        <ul
+        <div
           className={`${
             openSecondMenu ? 'flex' : 'hidden'
           }   items-center absolute text-lg -left-40 top-5 h-32 w-40 bg-black py-10 rounded-md`}
         >
-          <li onClick={handleCloseSecondMenu} className="pl-5 py-5 active:bg-primary w-full">
+          <Link
+            to={'/'}
+            onClick={handleCloseSecondMenu}
+            className="pl-5 py-5 active:bg-primary w-full"
+          >
             Cerrar sesion
-          </li>
-        </ul>
+          </Link>
+        </div>
       </div>
     </nav>
   );
