@@ -2,7 +2,7 @@ import Owner from 'src/owner/entities/owner.entity';
 import { SportField } from 'src/sportfields/entities/sportfield.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('SportsComplex')
+@Entity('sportsComplex')
 export class SportsComplex {
   @PrimaryGeneratedColumn('uuid')
   id: string;
