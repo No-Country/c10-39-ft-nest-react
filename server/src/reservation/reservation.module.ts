@@ -12,6 +12,7 @@ import { AuthMiddleware } from 'src/Core/Middleware/auth-token.middleware';
   imports: [TypeOrmModule.forFeature([Reservation, SportField, User])],
   controllers: [ReservationController],
   providers: [ReservationService],
+  exports: [ReservationService],
 })
 export class ReservationModule {
   configure(consumer: MiddlewareConsumer) {

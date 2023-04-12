@@ -26,8 +26,8 @@ export class SportfieldsController {
   constructor(private readonly sportfieldsService: SportfieldsService) {}
 
   @Get()
-  findAll() {
-    return this.sportfieldsService.findAll();
+  findAll(@GetUser() user: AuthUserDTO) {
+    return this.sportfieldsService.findAll(user);
   }
 
   @Get('sport/:sport')
@@ -46,9 +46,19 @@ export class SportfieldsController {
     return await this.sportfieldsService.search(lat, lng, rHour, date, sport);
   }
 
+  @Get('user/reservations')
+  async findUserReservations(@GetUser() user: AuthUserDTO) {
+    return this.sportfieldsService.findUserReservations(user);
+  }
+
   @Get(':id/availability')
   getAvailability(@Param('id', ParseUUIDPipe) id: string) {
     return this.sportfieldsService.getAvailability(id);
+  }
+
+  @Get(':id/reservations')
+  getReservations(@Param('id', ParseUUIDPipe) id: string) {
+    return this.sportfieldsService.getReservations(id);
   }
 
   @Get(':id')

@@ -9,6 +9,7 @@ import SportField from 'src/sportfields/entities/sportfield.entity';
 import { SportfieldsService } from 'src/sportfields/sportfields.service';
 import { NotFoundError } from 'rxjs';
 import User from 'src/users/entities/user.entity';
+import { AuthUserDTO } from 'src/Core/auth/dto';
 
 @Injectable()
 export class ReservationService {

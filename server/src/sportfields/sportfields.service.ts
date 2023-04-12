@@ -11,27 +11,33 @@ import { Repository } from 'typeorm';
 
 import { CreateSportFieldDto, UpdateSportFieldDto } from './dto';
 import { SportField } from './entities/sportfield.entity';
-import { UserDTO } from 'src/Core/auth/dto';
+import { AuthUserDTO, UserDTO } from 'src/Core/auth/dto';
 import SportsComplex from 'src/sports-complex/entities/sports-complex.entity';
 import { plainToClass } from 'class-transformer';
+import { ReservationService } from 'src/reservation/reservation.service';
 
 @Injectable()
 export class SportfieldsService {
   constructor(
     private readonly sportService: SportsService,
     private readonly sportsComplexService: SportsComplexService,
+    private readonly reservationsService: ReservationService,
     @InjectRepository(SportField)
     private readonly sportFieldRepository: Repository<SportField>,
     @InjectRepository(SportsComplex)
     private readonly sportsComplexRepository: Repository<SportsComplex>,
   ) {}
 
-  async findAll() {
-    const allSportfields = await this.sportFieldRepository.find({
-      relations: {
-        sport: true,
-      },
-    });
+  async findAll(user: AuthUserDTO) {
+    const allSportfields = await this.sportFieldRepository
+      .createQueryBuilder('sportFields')
+      .innerJoinAndSelect('sportFields.sportsComplex', 'sc', 'sc.ownerId = :ownerId', {
+        ownerId: user.ownerId,
+      })
+      .leftJoinAndSelect('sportFields.sport', 'sport')
+      .leftJoinAndSelect('sportFields.reservation', 'res')
+      .getMany();
+
     if (!allSportfields) throw new NotFoundException('SportField not found');
 
     // TODO: Refactor this to use an interceptor
@@ -64,10 +70,29 @@ export class SportfieldsService {
     }));
   }
 
+  async findUserReservations(user: AuthUserDTO) {
+    const reservation = await this.sportFieldRepository
+      .createQueryBuilder('sf')
+      .innerJoinAndSelect('sf.reservation', 'res', 'res.userId = :userId', { userId: user.id })
+      .getMany();
+
+    return reservation;
+  }
+
   async getAvailability(id: string) {
     const sportField = await this.sportFieldRepository.findOneBy({ id });
 
     return sportField.availability;
+  }
+
+  async getReservations(id: string) {
+    const sportField = await this.sportFieldRepository
+      .createQueryBuilder('sportField')
+      .leftJoinAndSelect('sportField.reservation', 'res')
+      .where('sportField.id = :id', { id })
+      .getMany();
+
+    return sportField;
   }
 
   async findOne(id: string) {
