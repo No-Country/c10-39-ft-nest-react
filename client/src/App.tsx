@@ -22,13 +22,9 @@ import SFownerEdit from './Pages/SFOwnerEdit';
 import SportFields from './Pages/SportFields';
 import Turns from './Pages/Turns';
 
-const getUser = async () => {
-  localStorage.getItem('token') && (await authUser());
-};
-
 function App() {
   useEffect(() => {
-    getUser().catch(() => console.log('Auth Failed'));
+    localStorage.getItem('token') && authUser().catch(() => console.log('Auth Failed'));
   }, []);
 
   return (
