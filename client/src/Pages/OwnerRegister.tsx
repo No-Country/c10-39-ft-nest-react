@@ -8,6 +8,7 @@ import Input from '../Components/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
 import { OwnerRegisterQuery } from '../Functions/OwnerQuery';
+import { AppUser } from '../types/App.type';
 
 const OwnerRegister: FC = () => {
   const [state, setState] = useState({
@@ -15,7 +16,7 @@ const OwnerRegister: FC = () => {
     document: '',
   });
 
-  const userId = useSelector<any>((state) => state.user?.user?.id);
+  const userId = useSelector((state: AppUser) => state.user?.user?.id);
 
   const handleChange = (event: BaseSyntheticEvent) => {
     setState((prev) => {

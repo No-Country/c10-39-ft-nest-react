@@ -8,7 +8,7 @@ interface dataType {
   data: unknown[] | { error: string };
 }
 
-export async function OwnerRegisterQuery(props: ownerRegisterProps, token: string, id: any) {
+export async function OwnerRegisterQuery(props: ownerRegisterProps, token: string, id: string) {
   const { phone, document } = props;
   const body = {
     DNI: document,
