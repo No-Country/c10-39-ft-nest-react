@@ -26,6 +26,7 @@ export class UsersController {
   @Post('login')
   @ApiResponse({ status: 200, description: 'User was register', type: User })
   @ApiResponse({ status: 400, description: 'Email already registered' })
+  @ApiBody({ type: LoginUserDTO })
   login(
     @Body()
     loginUserDTO: LoginUserDTO,
