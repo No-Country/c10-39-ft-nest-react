@@ -23,7 +23,8 @@ module.exports = {
       "secondary": "#F5F5F5",
       "gradone": "#E0E0E0",
       "gradtwo": "#72DFC5",
-      "bg": '#E8F5E9'
+      "bg": '#E8F5E9',
+      "grey": "#0000000F"
     }
   },
   plugins: [],

@@ -5,6 +5,7 @@ import { FaBasketballBall } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { GoKebabVertical } from 'react-icons/go';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
+
 import SportMenu from './SportMenu';
 
 const NavMobile: FC<{ title: string }> = ({ title }) => {
