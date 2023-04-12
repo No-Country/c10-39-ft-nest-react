@@ -1,4 +1,5 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType } from '@nestjs/swagger';
+
 import { Length } from 'class-validator';
 
 import { CreateSportsComplexDTO } from './create-sports-complex.dto';
