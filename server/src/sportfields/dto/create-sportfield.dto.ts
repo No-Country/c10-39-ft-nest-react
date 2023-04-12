@@ -1,4 +1,4 @@
-import { IsArray, IsOptional, IsString, MinLength } from 'class-validator';
+import { IsArray, IsOptional, IsString, IsUUID, MinLength } from 'class-validator';
 
 export class CreateSportFieldDto {
   @IsString()
@@ -18,4 +18,7 @@ export class CreateSportFieldDto {
 
   @IsString()
   sport: string;
+
+  @IsUUID()
+  sportsComplexId: string;
 }

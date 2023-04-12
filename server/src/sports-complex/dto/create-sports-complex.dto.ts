@@ -1,5 +1,11 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, Length, Matches, IsOptional, IsBoolean } from 'class-validator';
+
+import { CreateAvailabilityRange } from './create-availability-range.dto';
+import { AvailabilityRange } from '../entities/availability-range.entity';
+
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+
+
 
 export class CreateSportsComplexDTO {
 
@@ -53,7 +59,10 @@ export class CreateSportsComplexDTO {
     example:"https://img.freepik.com/fotos-premium/complejo-deportivo-centro-minsk-canchas-deportivas-al-aire-libre-juegos-bielorrusia_217593-15330.jpg?w=360"
   })
   @IsNotEmpty()
-  image: string[];
+  images: string[];
+
+  @IsArray()
+  availability?: CreateAvailabilityRange[];
 
   @ApiPropertyOptional({ default: false })
   @IsBoolean()

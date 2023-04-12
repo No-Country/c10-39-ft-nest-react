@@ -8,8 +8,9 @@ import { OwnerService } from './owner.service';
 @ApiTags('Owner Enpoints')
 @Controller('owner')
 export class OwnerController {
-  constructor(private readonly ownerService: OwnerService) { }
+  constructor(private readonly ownerService: OwnerService) {}
 
+  // TODO: Should use the user from auth
   @Post()
   create(@Body() createOwnerDto: CreateOwnerDto) {
     return this.ownerService.create(createOwnerDto);

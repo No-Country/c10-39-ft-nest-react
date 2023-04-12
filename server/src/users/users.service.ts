@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import { Role } from 'src/Core/auth/role.enum';
 import { SALT } from 'src/Core/Constants';
 import { EXPIRED_TOKEN } from 'src/Core/Constants/constants';
 import { Repository } from 'typeorm';
@@ -22,7 +23,7 @@ export class UsersService {
   async findOrCreate(body: RegisterUserDTO): Promise<{ user: User; token: string }> {
     let user = await this.findByEmail(body.email);
     if (!user) {
-      user = await this.userRepository.create(body);
+      user = this.userRepository.create(body);
       await this.userRepository.save(user);
     }
     const token = await this.generateToken(user);
@@ -103,12 +104,14 @@ export class UsersService {
   }
 
   async generateToken(user: User) {
+    // TODO: Change user schema
     const token = jwt.sign(
       {
         id: user.id,
         email: user.email,
-        role: user.isOwner ? 'owner' : 'user',
         owner: user.owner,
+        ownerId: user.owner?.id,
+        roles: user.isOwner ? [Role.Owner] : [Role.User],
       },
       this.configService.get<string>('JWT_SECRET'),
       { expiresIn: EXPIRED_TOKEN },

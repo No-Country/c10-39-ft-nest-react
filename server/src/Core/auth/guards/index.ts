@@ -1,1 +1,1 @@
-export { OwnerRoleGuard } from './owner-role.guard';
+export { RoleGuard } from './roles.guard';
