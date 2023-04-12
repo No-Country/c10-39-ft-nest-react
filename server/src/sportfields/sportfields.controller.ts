@@ -9,6 +9,7 @@ import {
   UseGuards,
   Query,
   ParseFloatPipe,
+  Post,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { GetUser } from 'src/Core/auth/decorators';
@@ -51,6 +52,7 @@ export class SportfieldsController {
     return await this.sportfieldsService.search(lat, lng);
   }
 
+  @Post()
   @UseGuards(RoleGuard)
   async create(@Body() createSportFieldDto: CreateSportFieldDto, @GetUser() user: AuthUserDTO) {
     return this.sportfieldsService.create(createSportFieldDto, user.ownerId);

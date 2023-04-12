@@ -50,13 +50,11 @@ export class SportsComplex {
   @Column('boolean', { default: false })
   parking?: boolean;
 
-  @ManyToOne((type) => Owner, (owner) => owner.sportsComplex, {
+  @ManyToOne(() => Owner, (owner) => owner.sportsComplex, {
     eager: true,
   })
   @JoinColumn({ name: 'ownerId' })
   owner: Owner;
-  @Column()
-  ownerId: string;
 
   @OneToMany((type) => SportField, (sportfields) => sportfields.sportsComplex)
   sportfields: SportField[];

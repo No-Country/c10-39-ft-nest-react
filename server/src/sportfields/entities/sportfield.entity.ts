@@ -25,21 +25,14 @@ export class SportField {
   images: string[];
 
   //Relation SportField -> sports
-  @ManyToOne(() => Sport, (sport) => sport.sportfields, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
+  @ManyToOne(() => Sport, (sport) => sport.sportfields)
   @JoinColumn({ name: 'sportId' })
   sport: Sport;
-  @Column({ nullable: true})
-  sportId: string;
 
   //Relation SportField -> sportsComplex
   // TODO: It shouldn't be null
   @ManyToOne(() => SportsComplex, (sportsComplex) => sportsComplex.sportfields, {
     eager: true,
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'sportsComplexId' })
   sportsComplex: SportsComplex;

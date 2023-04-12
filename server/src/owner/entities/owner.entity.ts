@@ -23,12 +23,7 @@ export class Owner {
   @JoinColumn({ name: 'sportsComplexId' })
   sportsComplex: SportsComplex[];
 
-  @OneToOne(() => User, (user) => user.owner, {
-    cascade: true,
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-  @JoinColumn({ name: 'userId' })
+  @OneToOne(() => User, (user) => user.owner)
   user: User;
 }
 export default Owner;

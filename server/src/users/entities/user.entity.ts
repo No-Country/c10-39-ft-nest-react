@@ -19,7 +19,7 @@ export class User {
   @Column('bool', { default: true })
   isActive: boolean;
 
-  @OneToOne((type) => Owner, (owner) => owner.user, { eager: true })
+  @OneToOne(() => Owner, (owner) => owner.user, { eager: true, cascade: true })
   @JoinColumn()
   owner?: Owner;
 

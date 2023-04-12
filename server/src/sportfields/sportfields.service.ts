@@ -76,7 +76,6 @@ export class SportfieldsService {
     return sportfield;
   }
 
-  // TODO: Implement CREATE UPDATE AND DELETE
   async create(createSportFieldDto: CreateSportFieldDto, ownerId: string) {
     const { sport: sportName, sportsComplexId, ...sportFieldAttrs } = createSportFieldDto;
 
