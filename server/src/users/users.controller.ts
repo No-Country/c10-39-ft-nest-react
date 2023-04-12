@@ -12,7 +12,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   @Post('register')
-  @ApiBearerAuth()
+  @ApiBearerAuth("token")
   @ApiCreatedResponse({ description: 'User was register'})
   @ApiResponse({ status: 400, description: 'Email already registered' })
   register(
