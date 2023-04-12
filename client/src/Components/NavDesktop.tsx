@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FaBasketballBall } from 'react-icons/fa';
 import { GoKebabVertical } from 'react-icons/go';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
+import SportMenu from './SportMenu';
 
 const NavDesktop: FC = () => {
   const [openSecondMenu, setOpenSecondMenu] = useState(false);
@@ -59,22 +60,7 @@ const NavDesktop: FC = () => {
               <MdKeyboardArrowLeft />
             </span>
           </button>
-          <ul
-            className={`${
-              openSportMenu ? 'flex' : 'hidden'
-            } text-white text-lg flex-col justify-around absolute -left-44 top-0 w-40 bg-black py-5 rounded-md`}
-          >
-            <li className="pl-5 py-5 active:bg-primary">
-              <Link onClick={handleCloseSportMenu} to={'/reservar/tenis'}>
-                Tenis
-              </Link>
-            </li>
-            <li className="pl-5 py-5 active:bg-primary">
-              <Link onClick={handleCloseSportMenu} to={'/reservar/futbol'}>
-                Futbol
-              </Link>
-            </li>
-          </ul>
+          <SportMenu handleClick={handleCloseSportMenu} state={openSportMenu} />
         </li>
       </ul>
       <div className="text-white absolute top-2 right-2">

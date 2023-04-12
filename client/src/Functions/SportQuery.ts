@@ -1,3 +1,6 @@
+import { setSportNames } from '../App/sportSlice';
+import store from '../App/Store';
+
 import axios from './axios';
 
 interface SportItem {
@@ -29,6 +32,9 @@ export async function getAllSportNames(token: string) {
       },
     });
     const names = data.map((item) => item.name);
+
+    store.dispatch(setSportNames(names));
+
     return names;
   } catch (error) {
     console.error(error);

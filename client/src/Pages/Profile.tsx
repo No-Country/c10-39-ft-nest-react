@@ -8,11 +8,11 @@ import { IoMdMail } from 'react-icons/io';
 import Input from '../Components/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
-import { type AppState } from '../types/App.type';
+import { type AppUser } from '../types/App.type';
 import { updateUser } from '../Functions/UserQuery';
 
 const Profile: FC = () => {
-  const userInfo = useSelector((state: AppState) => state.user.user);
+  const userInfo = useSelector((state: AppUser) => state.user.user);
 
   const [state, setState] = useState({
     email: userInfo?.email || '',
