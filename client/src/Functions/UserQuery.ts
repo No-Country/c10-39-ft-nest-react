@@ -44,6 +44,7 @@ export async function loginUser(body: LoginBody) {
 
     if (query.data.user) store.dispatch(setUser(query.data.user));
     if (query.data.token) localStorage.setItem('token', query.data.token);
+    console.log(query.data.token);
   } catch (error) {
     console.log(error);
   }
