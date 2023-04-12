@@ -5,12 +5,14 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
-import { getSportAvailability, getSportDetail } from '../Functions/SportFieldsQuery';
+import { getSportDetail } from '../Functions/SportFieldsQuery';
 import { type sportData } from '../types/Sport.type';
+import SFDetailMenu from '../Components/SFDetailMenu';
 
 const SFDetail = () => {
   const navigate = useNavigate();
-  const { id = '' } = useParams();
+  const { id = '', sport = '' } = useParams();
+
   const [openMenu, setOpenMenu] = useState(false);
 
   const [data, setData] = useState<sportData>({
@@ -29,9 +31,9 @@ const SFDetail = () => {
     },
   });
 
-  const handleCancel = () => navigate('/reservar/:sport/canchas');
+  const handleCancel = () => navigate(`/reservar/${sport}/canchas`);
   const handleConfirm = () => {
-    navigate('/reservar/:sport/canchas');
+    navigate(`/reservar/${sport}/canchas`);
   };
 
   const handleClick = () => setOpenMenu(!openMenu);
@@ -41,10 +43,6 @@ const SFDetail = () => {
     getSportDetail(id, token)
       .then((data) => data && setData(data))
       .catch((err) => console.log(err));
-
-    // getSportAvailability(id, token)
-    //   .then((data) => data && setData(data))
-    //   .catch((err) => console.log(err));
   }, [id]);
 
   return (
@@ -55,25 +53,14 @@ const SFDetail = () => {
             <span className="opacity-70">{data?.name}</span>
             <span className="text-lg">{data?.sportComplex?.ubication}</span>
           </div>
+
           <div className="flex flex-col gap-5 bg-white pb-2 mb-10 mx-2 shadow-lg rounded-lg">
             <div className="relative flex flex-row items-center justify-between p-5">
               <span className="text-lg">Informacion del partido</span>
               <button onClick={handleClick} className="text-3xl">
                 <AiOutlineInfoCircle />
               </button>
-              <ul
-                className={`${
-                  openMenu ? 'flex' : 'hidden'
-                }   items-center absolute overflow-hidden right-12 top-[50px] h-auto w-52 bg-white shadow-lg rounded-md flex-col`}
-              >
-                <li className="pl-5 py-5 active:bg-primary w-full cursor-pointer">
-                  Cambiar cancha
-                </li>
-                <li className="pl-5 py-5 active:bg-primary w-full cursor-pointer">Cambiar día</li>
-                <li className="pl-5 py-5 active:bg-primary w-full cursor-pointer">
-                  Cambiar horario
-                </li>
-              </ul>
+              <SFDetailMenu openMenu={openMenu} />
             </div>
             <div className="bg-[#aaa2] p-5">
               <span className="block">{data?.description}</span>
@@ -98,11 +85,13 @@ const SFDetail = () => {
               caso de cancelar la reserva, hacerlo con 24 horas de antelacion.
             </span>
           </div>
+
           <div className="flex flex-row justify-evenly w-full lg:hidden">
             <PrimaryButton text="CANCELAR" onClick={handleCancel} alternative={true} />
             <PrimaryButton text="RESERVAR" onClick={handleConfirm} />
           </div>
         </div>
+
         <div className="hidden lg:flex gap-5 flex-col">
           <div className="w-[700px] h-[475px] bg-primary mt-16"></div>
           <div className="flex flex-row justify-evenly w-full ">
