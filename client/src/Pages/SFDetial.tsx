@@ -34,22 +34,17 @@ const SFDetail = () => {
     navigate('/reservar/:sport/canchas');
   };
 
-  const handleClick = () => {
-    setOpenMenu(!openMenu);
-  };
+  const handleClick = () => setOpenMenu(!openMenu);
 
   useEffect(() => {
     const token = localStorage.getItem('token') ?? '';
     getSportDetail(id, token)
       .then((data) => data && setData(data))
       .catch((err) => console.log(err));
-  }, [id]);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token') ?? '';
-    getSportAvailability(id, token)
-      .then((data) => data && setData(data))
-      .catch((err) => console.log(err));
+    // getSportAvailability(id, token)
+    //   .then((data) => data && setData(data))
+    //   .catch((err) => console.log(err));
   }, [id]);
 
   return (
@@ -61,20 +56,24 @@ const SFDetail = () => {
             <span className="text-lg">{data?.sportComplex?.ubication}</span>
           </div>
           <div className="flex flex-col gap-5 bg-white pb-2 mb-10 mx-2 shadow-lg rounded-lg">
-            <div className="flex flex-row items-center justify-between p-5">
+            <div className="relative flex flex-row items-center justify-between p-5">
               <span className="text-lg">Informacion del partido</span>
               <button onClick={handleClick} className="text-3xl">
                 <AiOutlineInfoCircle />
               </button>
-              <div
+              <ul
                 className={`${
                   openMenu ? 'flex' : 'hidden'
-                }   items-center absolute left-40 top-[200px] h-auto w-52 bg-white  rounded-md flex-col`}
+                }   items-center absolute overflow-hidden right-12 top-[50px] h-auto w-52 bg-white shadow-lg rounded-md flex-col`}
               >
-                <div className="pl-5 py-5 active:bg-primary w-full">Cambiar día</div>
-                <div className="pl-5 py-5 active:bg-primary w-full">Cambiar cancha</div>
-                <div className="pl-5 py-5 active:bg-primary w-full">Cambiar horario</div>
-              </div>
+                <li className="pl-5 py-5 active:bg-primary w-full cursor-pointer">
+                  Cambiar cancha
+                </li>
+                <li className="pl-5 py-5 active:bg-primary w-full cursor-pointer">Cambiar día</li>
+                <li className="pl-5 py-5 active:bg-primary w-full cursor-pointer">
+                  Cambiar horario
+                </li>
+              </ul>
             </div>
             <div className="bg-[#aaa2] p-5">
               <span className="block">{data?.description}</span>
@@ -101,14 +100,14 @@ const SFDetail = () => {
           </div>
           <div className="flex flex-row justify-evenly w-full lg:hidden">
             <PrimaryButton text="CANCELAR" onClick={handleCancel} alternative={true} />
-            <PrimaryButton text="CONFIRMAR" onClick={handleConfirm} />
+            <PrimaryButton text="RESERVAR" onClick={handleConfirm} />
           </div>
         </div>
         <div className="hidden lg:flex gap-5 flex-col">
           <div className="w-[700px] h-[475px] bg-primary mt-16"></div>
           <div className="flex flex-row justify-evenly w-full ">
             <PrimaryButton text="CANCELAR" onClick={handleCancel} alternative={true} />
-            <PrimaryButton text="CONFIRMAR" onClick={handleConfirm} />
+            <PrimaryButton text="RESERVAR" onClick={handleConfirm} />
           </div>
         </div>
       </div>
