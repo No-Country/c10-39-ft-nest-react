@@ -38,8 +38,8 @@ export class SportField {
   sportsComplex: SportsComplex;
 
   @OneToMany(() => Reservation, (reservation) => reservation.sportfield, {
+    cascade: true,
     onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
   })
   reservation: Reservation[];
 

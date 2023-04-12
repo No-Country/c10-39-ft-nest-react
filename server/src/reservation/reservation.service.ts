@@ -9,6 +9,7 @@ import SportField from 'src/sportfields/entities/sportfield.entity';
 import { SportfieldsService } from 'src/sportfields/sportfields.service';
 import { NotFoundError } from 'rxjs';
 import User from 'src/users/entities/user.entity';
+import { AuthUserDTO } from 'src/Core/auth/dto';
 
 @Injectable()
 export class ReservationService {
@@ -18,10 +19,8 @@ export class ReservationService {
     @InjectRepository(SportField)
     private readonly sportFieldRepository: Repository<SportField>,
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-  ) // private readonly sportfieldService: SportfieldsService,
-  // private readonly userService: UsersService,
-  {}
+    private readonly userRepository: Repository<User>, // private readonly sportfieldService: SportfieldsService, // private readonly userService: UsersService,
+  ) {}
 
   async create(createReservationDto: CreateReservationDto, userId: string) {
     const sportfield = await this.sportFieldRepository.findOne({
@@ -37,7 +36,7 @@ export class ReservationService {
     if (!user) {
       throw new NotFoundError('User not found');
     }
-    const reservation = await this.reservationRepository.create({
+    const reservation = this.reservationRepository.create({
       ...createReservationDto,
       sportfield,
       user,

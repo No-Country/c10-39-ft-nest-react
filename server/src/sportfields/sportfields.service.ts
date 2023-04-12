@@ -11,27 +11,33 @@ import { Repository } from 'typeorm';
 
 import { CreateSportFieldDto, UpdateSportFieldDto } from './dto';
 import { SportField } from './entities/sportfield.entity';
-import { UserDTO } from 'src/Core/auth/dto';
+import { AuthUserDTO, UserDTO } from 'src/Core/auth/dto';
 import SportsComplex from 'src/sports-complex/entities/sports-complex.entity';
 import { plainToClass } from 'class-transformer';
+import { ReservationService } from 'src/reservation/reservation.service';
 
 @Injectable()
 export class SportfieldsService {
   constructor(
     private readonly sportService: SportsService,
     private readonly sportsComplexService: SportsComplexService,
+    private readonly reservationsService: ReservationService,
     @InjectRepository(SportField)
     private readonly sportFieldRepository: Repository<SportField>,
     @InjectRepository(SportsComplex)
     private readonly sportsComplexRepository: Repository<SportsComplex>,
   ) {}
 
-  async findAll() {
-    const allSportfields = await this.sportFieldRepository.find({
-      relations: {
-        sport: true,
-      },
-    });
+  async findAll(user: AuthUserDTO) {
+    const allSportfields = await this.sportFieldRepository
+      .createQueryBuilder('sportFields')
+      .innerJoinAndSelect('sportFields.sportsComplex', 'sc', 'sc.ownerId = :ownerId', {
+        ownerId: user.ownerId,
+      })
+      .leftJoinAndSelect('sportFields.sport', 'sport')
+      .leftJoinAndSelect('sportFields.reservation', 'res')
+      .getMany();
+
     if (!allSportfields) throw new NotFoundException('SportField not found');
 
     // TODO: Refactor this to use an interceptor
@@ -64,10 +70,29 @@ export class SportfieldsService {
     }));
   }
 
+  async findUserReservations(user: AuthUserDTO) {
+    const reservation = await this.sportFieldRepository
+      .createQueryBuilder('sf')
+      .innerJoinAndSelect('sf.reservation', 'res', 'res.userId = :userId', { userId: user.id })
+      .getMany();
+
+    return reservation;
+  }
+
   async getAvailability(id: string) {
     const sportField = await this.sportFieldRepository.findOneBy({ id });
 
     return sportField.availability;
+  }
+
+  async getReservations(id: string) {
+    const sportField = await this.sportFieldRepository
+      .createQueryBuilder('sportField')
+      .leftJoinAndSelect('sportField.reservation', 'res')
+      .where('sportField.id = :id', { id })
+      .getMany();
+
+    return sportField;
   }
 
   async findOne(id: string) {
@@ -129,7 +154,7 @@ export class SportfieldsService {
     return sportfield;
   }
 
-  async search(lat: number, lng: number): Promise<SportField[]> {
+  async search(lat: number, lng: number, rHour: number, date: string, sport: string): Promise<any> {
     const R = 6371; // Radio de la Tierra en kilómetros
     const limit = 20; // Límite de resultados
 
@@ -142,6 +167,7 @@ export class SportfieldsService {
         'sportField.dimensions',
         'sportField.images',
         'sportField.sportId',
+        'sport.name',
         'sportsComplex.id',
         'sportsComplex.name',
         'sportsComplex.email',
@@ -150,17 +176,30 @@ export class SportfieldsService {
         'sportsComplex.description',
         'sportsComplex.lat',
         'sportsComplex.lng',
-        'sportsComplex.image',
+        'sportsComplex.images',
         `(${R} * acos(cos(radians(:lat)) * cos(radians(:lat)) * cos(radians(:lng) - radians(:lng)) + sin(radians(:lat)) * sin(radians(:lat)))) as distancia`,
       ])
+      .innerJoin('sportField.sport', 'sport', 'sport.name = :sport', { sport })
       .leftJoin('sportField.sportsComplex', 'sportsComplex')
+      .innerJoin(
+        'sportsComplex.availability',
+        'ar',
+        'ar.start_hour <= :rHour AND ar.end_hour >= :rHour',
+        { rHour },
+      )
+      .leftJoinAndSelect('sportField.reservation', 'r', 'r.hour = :rHour AND r.date = :date', {
+        rHour,
+        date,
+      })
       .orderBy('distancia', 'ASC')
       .setParameter('lat', lat)
       .setParameter('lng', lng)
       .limit(limit)
       .getMany();
 
-    const sportFields = plainToClass(SportField, nearbySportFields);
+    const availableSportFields = nearbySportFields.filter((sp) => sp.reservation.length === 0);
+
+    const sportFields = plainToClass(SportField, availableSportFields);
     return sportFields;
   }
 

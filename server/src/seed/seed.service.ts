@@ -68,9 +68,15 @@ export class SeedService {
 
     for (const [index, sportField] of initialData.sportfields.entries()) {
       const idx = index <= sportsComplexsDB.length - 1 ? index : 0;
-      const { sport: sportName, ...sportFieldAttrs } = sportField;
+      const { sport: sportName, reservation, ...sportFieldAttrs } = sportField;
       const sport = sportsDB.find((sport) => sport.name === sportName);
-      const sportFieldInstance = this.SportFieldRepository.create(sportFieldAttrs);
+      const reservations = reservation
+        ? reservation.map((res) => ({ ...res, user: usersDB[0] }))
+        : [];
+      const sportFieldInstance = this.SportFieldRepository.create({
+        ...sportFieldAttrs,
+        reservation: reservations,
+      });
       sportFieldInstance.sport = sport;
       sportFieldInstance.sportsComplex = sportsComplexsDB[idx];
 

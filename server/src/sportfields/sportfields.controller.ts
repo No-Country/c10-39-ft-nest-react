@@ -10,6 +10,7 @@ import {
   Query,
   ParseFloatPipe,
   Post,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiForbiddenResponse, ApiNotFoundResponse, ApiOkResponse, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { GetUser } from 'src/Core/auth/decorators';
@@ -27,7 +28,7 @@ export class SportfieldsController {
 
   @Get()
   @ApiOkResponse({
-    description: "Return all the sportfields",
+    description: "Return all the owner's sportfields",
     schema: {
       example: [{
         "id": "4ff167ae-c194-43de-9953-19c63e4cb31d",
@@ -47,7 +48,7 @@ export class SportfieldsController {
     }
   })
   @ApiNotFoundResponse({ description: "Sportfield not found" })
-  findAll() {
+  findAll(@GetUser() user: AuthUserDTO) {
     return this.sportfieldsService.findAll();
   }
 
@@ -114,10 +115,36 @@ export class SportfieldsController {
   findWithSport(@Param('sport') sport: string) {
     return this.sportfieldsService.findWithSport(sport);
   }
-  // TODO: 
+
+
+  @Get('search')
+  @ApiOkResponse({ description: 'Return all the sportfield that pass the filter ' })
+  @ApiQuery({ name: 'lat' })
+  @ApiQuery({ name: 'lng' })
+  async search(
+    @Query('lat', ParseFloatPipe) lat: number,
+    @Query('lng', ParseFloatPipe) lng: number,
+    @Query('rHour', ParseIntPipe) rHour: number,
+    @Query('date') date: string,
+    @Query('sport') sport: string,
+  ) {
+    return await this.sportfieldsService.search(lat, lng, rHour, date, sport);
+  }
+
+  @Get('user/reservations')
+  async findUserReservations(@GetUser() user: AuthUserDTO) {
+    return this.sportfieldsService.findUserReservations(user);
+  }
+
+
   @Get(':id/availability')
   getAvailability(@Param('id', ParseUUIDPipe) id: string) {
     return this.sportfieldsService.getAvailability(id);
+  }
+
+  @Get(':id/reservations')
+  getReservations(@Param('id', ParseUUIDPipe) id: string) {
+    return this.sportfieldsService.getReservations(id);
   }
 
   @Get(':id')

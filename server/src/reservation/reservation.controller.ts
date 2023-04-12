@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Logger } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { CreateReservationDto } from './dto/create-reservation.dto';
@@ -10,6 +10,7 @@ import { GetUser } from 'src/Core/auth/decorators';
 @ApiTags('Reservations Endpoints')
 @Controller('reservation')
 export class ReservationController {
+  // private logger: Logger = new Logger(ReservationController.name);
   constructor(private readonly reservationService: ReservationService) {}
 
   @Post()

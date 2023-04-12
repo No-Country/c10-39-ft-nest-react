@@ -1,6 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
 import * as bcrypt from 'bcrypt';
 import { SALT } from 'src/Core/Constants';
+import { v4 as uuidv4 } from 'uuid';
 
 interface SeedSport {
   name: string;
@@ -11,6 +11,11 @@ interface SeedSport {
 // interface SeedSportWithUUID extends SeedSport {
 //   id: string;
 // }
+//
+interface SeedReservation {
+  date: string;
+  hour: number;
+}
 
 interface SeedSportField {
   name: string;
@@ -18,6 +23,7 @@ interface SeedSportField {
   dimensions: string;
   images: string[];
   sport: string;
+  reservation?: SeedReservation[];
 }
 
 // interface SeedSportFieldRecord extends SeedSportField {
@@ -38,6 +44,11 @@ interface SeedOwners {
   phone: string;
 }
 
+interface SeedAvailabilityRange {
+  start_hour: number;
+  end_hour: number;
+}
+
 interface SeedSportsComplex {
   email: string;
   address: string;
@@ -53,6 +64,7 @@ interface SeedSportsComplex {
   parking?: boolean;
   lat: number;
   lng: number;
+  availability?: SeedAvailabilityRange[];
 }
 
 interface SeedData {
@@ -64,26 +76,26 @@ interface SeedData {
 
 // DATOS
 // Crear relaciones
-const idRelations = [
-  {
-    idUser: uuidv4(),
-    idOwner: uuidv4(),
-    idSportComplex: uuidv4(),
-    idSportField: uuidv4(),
-  },
-  {
-    idUser: uuidv4(),
-    idOwner: uuidv4(),
-    idSportComplex: uuidv4(),
-    idSportField: uuidv4(),
-  },
-  {
-    idUser: uuidv4(),
-    idOwner: uuidv4(),
-    idSportComplex: uuidv4(),
-    idSportField: uuidv4(),
-  },
-];
+// const idRelations = [
+//   {
+//     idUser: uuidv4(),
+//     idOwner: uuidv4(),
+//     idSportComplex: uuidv4(),
+//     idSportField: uuidv4(),
+//   },
+//   {
+//     idUser: uuidv4(),
+//     idOwner: uuidv4(),
+//     idSportComplex: uuidv4(),
+//     idSportField: uuidv4(),
+//   },
+//   {
+//     idUser: uuidv4(),
+//     idOwner: uuidv4(),
+//     idSportComplex: uuidv4(),
+//     idSportField: uuidv4(),
+//   },
+// ];
 
 const sports: SeedSport[] = [
   {
@@ -122,6 +134,12 @@ const sportfields: SeedSportField[] = [
       'https://www.hoysejuega.com/uploads/Modules/ImagenesComplejos/800_600_la-cancha-f%C3%BAtbol-5-y-6-.-2.jpg',
     ],
     sport: 'football',
+    reservation: [
+      {
+        hour: 12,
+        date: '2023-04-23',
+      },
+    ],
   },
   {
     name: 'El Monumental',
@@ -223,6 +241,16 @@ const sportscomplex: SeedSportsComplex[] = [
     showers: true,
     lat: -32.4201,
     lng: -64.1888,
+    availability: [
+      {
+        start_hour: 7,
+        end_hour: 11,
+      },
+      {
+        start_hour: 16,
+        end_hour: 22,
+      },
+    ],
   },
   {
     name: 'Centro de Alto Rendimiento Deportivo Amadeo Nuccetelli',
@@ -240,6 +268,16 @@ const sportscomplex: SeedSportsComplex[] = [
     showers: true,
     lat: -32.4201,
     lng: -64.1888,
+    availability: [
+      {
+        start_hour: 11,
+        end_hour: 13,
+      },
+      {
+        start_hour: 14,
+        end_hour: 24,
+      },
+    ],
   },
 ];
 
