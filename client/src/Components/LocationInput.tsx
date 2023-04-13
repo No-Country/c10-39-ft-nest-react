@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, BaseSyntheticEvent } from 'react';
 
 type LocationInputProps = {
   onLocationChange: (latitude: number, longitude: number) => void;
@@ -7,7 +7,7 @@ type LocationInputProps = {
 const API_KEY = 'AIzaSyB8rVxLxXlomXkjJ04LRtFHC63AtzSnyw0';
 
 export const LocationInput: React.FC<LocationInputProps> = ({ onLocationChange }) => {
-  const [location, setLocation] = useState('');
+  const [location, setLocation] =useState<string> ('');
   const [autocomplete, setAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
   const autocompleteRef = useRef<HTMLInputElement>(null);
 
@@ -21,6 +21,7 @@ export const LocationInput: React.FC<LocationInputProps> = ({ onLocationChange }
     );
     setAutocomplete(autocompleteInstance);
     autocompleteInstance.addListener('place_changed', handlePlaceChange);
+
   }, []);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,18 +35,26 @@ export const LocationInput: React.FC<LocationInputProps> = ({ onLocationChange }
         lat,
         lng,
       } : any = place.geometry?.location;
+      console.log(place.formatted_address);
+      
+      // setLocation(place.formatted_address as string);
       onLocationChange(lat(), lng());
     }
   };
 
-  const handleSearchClick = async () => {
+  const handleSearchClick = async (e : BaseSyntheticEvent) => {
+    e.preventDefault();
     try {
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${API_KEY}`,
       );
+      
       const data = await response.json();
+      console.log(data);
       const { lat, lng } = data.results[0].geometry?.location;
-      onLocationChange(lat(), lng());
+      console.log(lat, lng);
+      
+      onLocationChange(lat, lng);
     } catch (error) {
       console.error(error);
     }
