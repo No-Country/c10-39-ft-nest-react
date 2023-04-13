@@ -36,7 +36,7 @@ interface hoursType {
 
 export async function getSportAvailability(id: string, token: string) {
   try {
-    const { data }: { data: hoursType } = await axios.get(`/sportfields/${id}/availability`, {
+    const { data }: { data: hoursType[] } = await axios.get(`/sportfields/${id}/availability`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
