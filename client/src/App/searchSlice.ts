@@ -6,13 +6,7 @@ export interface searchDataType {
 }
 
 const initialState: searchDataType = {
-  search: {
-    rHour: 12,
-    date: '4/23/2023',
-    sport: 'basketball',
-    lat: 180,
-    lng: 180,
-  },
+  search: null,
 };
 
 const searchSlice = createSlice({

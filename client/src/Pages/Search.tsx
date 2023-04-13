@@ -62,18 +62,21 @@ export const Search: FC = () => {
   //     navigate('/');
   //   }
   // }, []);
+  const dispatch = useDispatch();
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    // useDispatch(
-    //   setSearch({
-    //     rHour: 5,
-    //     date: state.turn,
-    //     sport: sport,
-    //     lat: 0,
-    //     lng: 0,
-    //   }),
-    // );
+
+    dispatch(
+      setSearch({
+        rHour: 12,
+        date: '5/5/2023',
+        sport,
+        lat: 43,
+        lng: 43,
+      }),
+    );
+
     navigate(`/reservar/${sport}/canchas`);
   };
 

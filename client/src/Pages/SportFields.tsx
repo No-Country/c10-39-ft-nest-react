@@ -9,10 +9,11 @@ import { AppSearch } from '../types/App.type';
 
 const SportFields: FC = () => {
   const searchFilter = useSelector((state: AppSearch) => state.search.search);
-
   const [data, setData] = useState<sportData[]>([]);
 
   useEffect(() => {
+    if (!searchFilter) return;
+
     getSportFieldsWithSport(searchFilter)
       .then((data) => data && setData(data))
       .catch((err) => console.log(err));

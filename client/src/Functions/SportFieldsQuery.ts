@@ -4,9 +4,11 @@ import { ISportField } from '../types/SportField.type';
 
 import axios from './axios';
 
-export async function getSportFieldsWithSport(data: searchType) {
-  const { rHour, date, sport, lat, lng } = data;
+export async function getSportFieldsWithSport(body: searchType) {
   try {
+    if (!body) throw new Error('Error: data is not defined');
+    const { rHour, date, sport, lat, lng } = body;
+
     const { data }: { data: sportData[] } =
       await axios.get(`/sportfields/search?lat=${lat}&lng=${lng}&rHour=${rHour}&date=${date}&sport=${sport}
     `);
