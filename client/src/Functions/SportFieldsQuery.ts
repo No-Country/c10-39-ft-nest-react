@@ -25,6 +25,25 @@ export async function getSportDetail(id: string) {
   }
 }
 
+interface hoursType {
+  end_hour: string;
+  id: string;
+  start_hour: string;
+}
+
+export async function getSportAvailability(id: string, token: string) {
+  try {
+    const { data }: { data: hoursType[] } = await axios.get(`/sportfields/${id}/availability`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error(error);
+}
+}
+    
 export async function getOwnerSportFields() {
   try {
     const { data } = await axios.get<ISportField[]>('/sportfields/');

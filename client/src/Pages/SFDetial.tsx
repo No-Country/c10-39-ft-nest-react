@@ -1,14 +1,19 @@
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+
+import { AiOutlineInfoCircle } from 'react-icons/ai';
+
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { useEffect, useState } from 'react';
-import { type sportData } from '../types/Sport.type';
 import { getSportDetail } from '../Functions/SportFieldsQuery';
+import { type sportData } from '../types/Sport.type';
+import SFDetailMenu from '../Components/SFDetailMenu';
 
 const SFDetail = () => {
   const navigate = useNavigate();
-  const { id = '' } = useParams();
+  const { id = '', sport = '' } = useParams();
+
+  const [openMenu, setOpenMenu] = useState(false);
 
   const [data, setData] = useState<sportData>({
     id: '',
@@ -26,10 +31,12 @@ const SFDetail = () => {
     },
   });
 
-  const handleCancel = () => navigate('/reservar/:sport/canchas');
+  const handleCancel = () => navigate(`/reservar/${sport}/canchas`);
   const handleConfirm = () => {
-    navigate('/reservar/:sport/canchas');
+    navigate(`/reservar/${sport}/canchas`);
   };
+
+  const handleClick = () => setOpenMenu(!openMenu);
 
   useEffect(() => {
     getSportDetail(id)
@@ -45,12 +52,14 @@ const SFDetail = () => {
             <span className='opacity-70'>{data?.name}</span>
             <span className='text-lg'>{data?.sportComplex?.ubication}</span>
           </div>
-          <div className='flex flex-col gap-5 bg-white pb-2 mb-10 mx-2 shadow-lg rounded-lg'>
-            <div className='flex flex-row items-center justify-between p-5'>
-              <span className='text-lg'>Informacion del partido</span>
-              <span className='text-3xl'>
+          <div className="flex flex-col gap-5 bg-white pb-2 mb-10 mx-2 shadow-lg rounded-lg">
+            <div className="relative flex flex-row items-center justify-between p-5">
+              <span className="text-lg">Informacion del partido</span>
+              <button onClick={handleClick} className="text-3xl">
+
                 <AiOutlineInfoCircle />
-              </span>
+              </button>
+              <SFDetailMenu openMenu={openMenu} />
             </div>
             <div className='bg-[#aaa2] p-5'>
               <span className='block'>{data?.description}</span>
@@ -75,16 +84,17 @@ const SFDetail = () => {
               caso de cancelar la reserva, hacerlo con 24 horas de antelacion.
             </span>
           </div>
-          <div className='flex flex-row justify-evenly w-full lg:hidden'>
-            <PrimaryButton text='CANCELAR' onClick={handleCancel} alternative={true} />
-            <PrimaryButton text='CONFIRMAR' onClick={handleConfirm} />
+          <div className="flex flex-row justify-evenly w-full lg:hidden">
+            <PrimaryButton text="CANCELAR" onClick={handleCancel} alternative={true} />
+            <PrimaryButton text="RESERVAR" onClick={handleConfirm} />
           </div>
         </div>
-        <div className='hidden lg:flex gap-5 flex-col'>
-          <div className='w-[700px] h-[475px] bg-primary mt-16'></div>
-          <div className='flex flex-row justify-evenly w-full '>
-            <PrimaryButton text='CANCELAR' onClick={handleCancel} alternative={true} />
-            <PrimaryButton text='CONFIRMAR' onClick={handleConfirm} />
+
+        <div className="hidden lg:flex gap-5 flex-col">
+          <div className="w-[700px] h-[475px] bg-primary mt-16"></div>
+          <div className="flex flex-row justify-evenly w-full ">
+            <PrimaryButton text="CANCELAR" onClick={handleCancel} alternative={true} />
+            <PrimaryButton text="RESERVAR" onClick={handleConfirm} />
           </div>
         </div>
       </div>
