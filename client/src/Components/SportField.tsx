@@ -66,12 +66,13 @@ const SportField: FC<sportFieldType> = ({ complexData, btnText, route, title, co
               </span>
             </span>
             <ul
-              className={`${moreInfo ? 'h-[125px]' : 'h-0'} transition-all text-lg overflow-hidden`}
+              className={`${moreInfo ? 'h-[140px]' : 'h-0'} transition-all text-lg overflow-hidden`}
             >
               <li>Estacionamiento</li>
               <li>Asador</li>
               <li>Vestuario</li>
               <li>Resto-Bar</li>
+              <li>Tienda Deportiva</li>
             </ul>
           </>
         )}
