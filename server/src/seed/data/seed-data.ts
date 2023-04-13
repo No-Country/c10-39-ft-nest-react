@@ -24,6 +24,7 @@ interface SeedSportField {
   dimensions: string;
   images: string[];
   sport: string;
+  capacity?: number;
   reservation?: SeedReservation[];
   fieldType: string;
 }
@@ -141,6 +142,7 @@ const sportfields: SeedSportField[] = [
     ],
     sport: 'football',
     fieldType: 'cesped',
+    capacity: 10,
     reservation: [
       {
         hour: 12,
@@ -155,6 +157,7 @@ const sportfields: SeedSportField[] = [
     images: ['https://asset.cloudinary.com/djvepy9sd/b62994503e9bbaeaa73d1337572382e5'],
     sport: 'football',
     fieldType: 'cesped',
+    capacity: 22,
     reservation: [
       {
         hour: 12,
@@ -168,7 +171,8 @@ const sportfields: SeedSportField[] = [
     dimensions: '90x45',
     images: ['https://asset.cloudinary.com/djvepy9sd/bd699a0ca98c4bc09a1a029da1a5f9c8'],
     sport: 'football',
-    fieldType: 'parquet',
+    fieldType: 'cesped sintentico',
+    capacity: 10,
     reservation: [
       {
         hour: 11,
@@ -187,6 +191,7 @@ const sportfields: SeedSportField[] = [
     images: ['https://asset.cloudinary.com/djvepy9sd/f1806dba33030b2aa20c08c1c675a07a'],
     sport: 'basketball',
     fieldType: 'material',
+    capacity: 10,
     reservation: [
       {
         hour: 11,
@@ -202,6 +207,7 @@ const sportfields: SeedSportField[] = [
     name: 'Madison Center',
     description: 'Cancha de basket cerrada.',
     dimensions: '28x15',
+    capacity: 10,
     images: [
       'https://asset.cloudinary.com/djvepy9sd/69ecea790a85dd22f7b0c09b76773df1',
     ],
@@ -222,16 +228,19 @@ const sportfields: SeedSportField[] = [
     name: 'Quality Sport',
     description: 'Cancha de basket cerrada.',
     dimensions: '28x15',
+    capacity: 10,
     images: [
       'https://asset.cloudinary.com/djvepy9sd/d27ce63b4e35c984586c66112044bd0f',
     ],
     sport: 'basketball',
-    fieldType: 'arena',
+    fieldType: 'parquet',
+
   },
   {
     name: 'United Center',
     description: 'Cancha de basket cerrada.',
     dimensions: '28x15',
+    capacity: 10,
     images: [
       'https://asset.cloudinary.com/djvepy9sd/284c74e4ec4af9d5d1a35ffcc69ade65',
     ],
@@ -242,6 +251,7 @@ const sportfields: SeedSportField[] = [
     name: 'American Airlines Center',
     description: 'Cancha de basket cerrada.',
     dimensions: '28x15',
+    capacity: 10,
     images: [
       'https://asset.cloudinary.com/djvepy9sd/8f35148d1fa2265e4293de2baa40cfea',
     ],
@@ -252,6 +262,7 @@ const sportfields: SeedSportField[] = [
     name: 'American Airlines Center',
     description: 'Cancha de basket cerrada.',
     dimensions: '28x15',
+    capacity: 10,
     images: [
       'https://www.qualitysportinstalacionesdeportivas.com/wp-content/uploads/2022/05/tipos-de-superficies-de-pista-de-basket.png',
     ],
@@ -262,6 +273,7 @@ const sportfields: SeedSportField[] = [
     name: 'Court Nalbandian',
     description: 'Cancha de tenis de polvo de ladrillo.',
     dimensions: '28x15',
+    capacity: 4,
     images: [
       'https://asset.cloudinary.com/djvepy9sd/ca90d4832bf05d5c062281c13aeb3607',
     ],
@@ -272,6 +284,7 @@ const sportfields: SeedSportField[] = [
     name: 'Court Pitt Sampras',
     description: 'Cancha de tenis de cesped.',
     dimensions: '28x15',
+    capacity: 4,
     images: [
       'https://asset.cloudinary.com/djvepy9sd/8f35148d1fa2265e4293de2baa40cfea',
     ],
@@ -282,6 +295,7 @@ const sportfields: SeedSportField[] = [
     name: 'Court Mago Coria',
     description: 'Cancha de tenis cemento.',
     dimensions: '28x15',
+    capacity: 4,
     images: [
       'https://asset.cloudinary.com/djvepy9sd/28a6f07d54b142cb11bd051deb0619e4',
     ],
@@ -292,16 +306,18 @@ const sportfields: SeedSportField[] = [
     name: 'Court Roger Federer',
     description: 'Cancha de tenis cesped sintetico.',
     dimensions: '28x15',
+    capacity: 4,
     images: [
       'https://asset.cloudinary.com/djvepy9sd/57c95b6672c49886bfcef6e0fc67e0b1',
     ],
     sport: 'tennis',
-    fieldType: 'cesped sintetico',
+    fieldType: 'cesped',
   },
   {
     name: 'Court Nadal',
     description: 'Cancha de tenis polvo de ladrillo.',
     dimensions: '28x15',
+    capacity: 4,
     images: [
       'https://asset.cloudinary.com/djvepy9sd/4c846f27399e5ccd51e0479e31785db5',
     ],
@@ -312,16 +328,18 @@ const sportfields: SeedSportField[] = [
     name: 'Cancha de Voley',
     description: 'Cancha de voley de parquet.',
     dimensions: '16x8',
+    capacity: 12,
     images: [
       'https://asset.cloudinary.com/djvepy9sd/bc7ead9880af26c7f0ebdba2872ee385',
     ],
     sport: 'volleyball',
-    fieldType: 'parquet',
+    fieldType: 'material',
   },
   {
     name: 'Cancha de Voley',
     description: 'Cancha de voley de cemento con red.',
     dimensions: '16x8',
+    capacity: 12,
     images: [
       'https://asset.cloudinary.com/djvepy9sd/71a38042cf4c90142f39daadcc491563',
     ],
@@ -332,6 +350,7 @@ const sportfields: SeedSportField[] = [
     name: 'Cancha de Voley Rodman',
     description: 'Cancha de voley de cemento con red.',
     dimensions: '16x8',
+    capacity: 12,
     images: [
       'https://asset.cloudinary.com/djvepy9sd/22c617baeeae39ac1cc215a5f6f184cf',
     ],
@@ -342,6 +361,7 @@ const sportfields: SeedSportField[] = [
     name: 'Cancha de Voley Mariana',
     description: 'Cancha de voley de cemento con red.',
     dimensions: '16x8',
+    capacity: 12,
     images: [
       'https://asset.cloudinary.com/djvepy9sd/9cb7270bfff434b1aca668aafb9a3091',
     ],
@@ -352,6 +372,7 @@ const sportfields: SeedSportField[] = [
     name: 'Cancha de Voley Ramallo',
     description: 'Cancha de voley de cemento con red.',
     dimensions: '16x8',
+    capacity: 12,
     images: [
       'https://asset.cloudinary.com/djvepy9sd/24134b2524cd19aed0419d79d825334c',
     ],
