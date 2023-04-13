@@ -1,5 +1,12 @@
 import { Transform } from 'class-transformer';
-import { IsNotEmpty, IsDate, Validate, ValidationArguments } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsDate,
+  Validate,
+  ValidationArguments,
+  IsEmail,
+  isNotEmpty,
+} from 'class-validator';
 import { ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
 
 @ValidatorConstraint({ name: 'notPastDate', async: false })
@@ -39,4 +46,7 @@ export class CreateReservationDto {
   @IsNotEmpty()
   @Validate(NotPastDateConstraint)
   date: Date;
+
+  @IsEmail()
+  userEmail: string;
 }
