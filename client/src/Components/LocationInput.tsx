@@ -33,7 +33,7 @@ export const LocationInput: React.FC<LocationInputProps> = ({ onLocationChange }
       const {
         lat,
         lng,
-      } : any = place.geometry.location;
+      } : any = place.geometry?.location;
       onLocationChange(lat(), lng());
     }
   };
@@ -44,7 +44,7 @@ export const LocationInput: React.FC<LocationInputProps> = ({ onLocationChange }
         `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${API_KEY}`,
       );
       const data = await response.json();
-      const { lat, lng } = data.results[0].geometry.location;
+      const { lat, lng } = data.results[0].geometry?.location;
       onLocationChange(lat(), lng());
     } catch (error) {
       console.error(error);
