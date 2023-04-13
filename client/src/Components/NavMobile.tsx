@@ -86,23 +86,22 @@ const NavMobile: FC<{ title: string }> = ({ title }) => {
         </div>
         <div className="flex flex-col w-full items-center gap-16 mt-10">
           <div className="w-36 h-36 bg-white rounded-full"></div>
-          <ul className="flex flex-col items-center gap-10 text-2xl">
+          <ul className="flex flex-col items-center gap-10 text-xl">
             <li>
-              <Link to={'/perfil'}>Perfil</Link>
+              <Link to={'/inicio'}>INICIO</Link>
             </li>
             <li>
-              <Link to={'/perfil/reservar'}>Mis reservas</Link>
+              <Link to={'/perfil'}>PERFIL</Link>
+            </li>
+            <li>
+              <Link to={'/perfil/reservar'}>MIS RESERVAS</Link>
+            </li>
+            <li>
+              <Link to={'/ayuda'}>AYUDA</Link>
             </li>
             <li>
               {' '}
-              <Link to={'/propietarios/canchas'}>Mis canchas</Link>
-            </li>
-            <li>
-              {' '}
-              <Link to={'/nosotros'}>Nosotros</Link>
-            </li>
-            <li>
-              <Link to={'/ayuda'}>Ayuda</Link>
+              <Link to={'/nosotros'}>NOSOTROS</Link>
             </li>
           </ul>
         </div>

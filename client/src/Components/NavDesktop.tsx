@@ -25,7 +25,7 @@ const NavDesktop: FC = () => {
   const handleCloseSportMenu = () => setOpenSportMenu(false);
 
   return (
-    <nav className="hidden z-[500] px-20 text-white bg-primary lg:flex flex-row shadow-lg fixed w-full h-28 justify-between items-center">
+    <nav className="hidden z-[500] box-border h-[15vh] px-20 text-white bg-primary lg:flex flex-row shadow-lg fixed w-full justify-between items-center">
       <div className="flex gap-10 items-center">
         <div className="bounce text-6xl">
           <Link to={'/inicio'}>
@@ -39,17 +39,7 @@ const NavDesktop: FC = () => {
       <ul className="flex flex-row gap-5 text-lg">
         <li>
           <Link className="p-5 rounded-full" to={'/inicio'}>
-            HOME
-          </Link>
-        </li>
-        <li>
-          <Link className="p-5 rounded-full" to={'/ayuda'}>
-            AYUDA
-          </Link>
-        </li>
-        <li>
-          <Link className="p-5 rounded-full" to={'/nosotros'}>
-            NOSOTROS
+            INICIO
           </Link>
         </li>
         <li className="relative">
@@ -64,6 +54,21 @@ const NavDesktop: FC = () => {
             </span>
           </button>
           <SportMenu handleClick={handleCloseSportMenu} state={openSportMenu} />
+        </li>
+        <li>
+          <Link className="p-5 rounded-full" to={'/perfil'}>
+            PERFIL
+          </Link>
+        </li>
+        <li>
+          <Link className="p-5 rounded-full" to={'/ayuda'}>
+            AYUDA
+          </Link>
+        </li>
+        <li>
+          <Link className="p-5 rounded-full" to={'/nosotros'}>
+            NOSOTROS
+          </Link>
         </li>
       </ul>
       <div className="text-white absolute top-2 right-2">

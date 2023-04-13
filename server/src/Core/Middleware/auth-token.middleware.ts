@@ -20,6 +20,7 @@ export class AuthMiddleware implements NestMiddleware {
       req.user = decoded;
       next();
     } catch (error) {
+      this.logger.debug('Auth middleware Error');
       return res.status(UNAUTHORIZED).json({ message: 'Invalid token' });
     }
   }

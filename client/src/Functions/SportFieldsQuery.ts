@@ -1,4 +1,5 @@
 import { type sportData } from '../types/Sport.type';
+import { ISportField } from '../types/SportField.type';
 
 import axios from './axios';
 
@@ -15,13 +16,9 @@ export async function getSportFieldsWithSport(sport: string, token: string) {
   }
 }
 
-export async function getSportDetail(id: string, token: string) {
+export async function getSportDetail(id: string) {
   try {
-    const { data }: { data: sportData } = await axios.get(`/sportfields/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const { data }: { data: sportData } = await axios.get(`/sportfields/${id}`);
     return data;
   } catch (error) {
     console.error(error);
@@ -44,5 +41,12 @@ export async function getSportAvailability(id: string, token: string) {
     return data;
   } catch (error) {
     console.error(error);
-  }
 }
+    
+export async function getOwnerSportFields() {
+  try {
+    const { data } = await axios.get<ISportField[]>('/sportfields/');
+    return data;
+  } catch (e) {
+    console.error(e);
+  }
