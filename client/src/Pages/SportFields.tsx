@@ -1,23 +1,23 @@
 import { useState, type FC, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 
 import Layout from '../Components/Layout';
 import SportField from '../Components/SportField';
 import { getSportFieldsWithSport } from '../Functions/SportFieldsQuery';
 import { type sportData } from '../types/Sport.type';
+import { useSelector } from 'react-redux';
+import { AppSearch } from '../types/App.type';
 
 const SportFields: FC = () => {
+  const searchFilter = useSelector((state: AppSearch) => state.search.search);
   const [data, setData] = useState<sportData[]>([]);
 
-  const { sport = '' } = useParams();
-
   useEffect(() => {
-    const token = localStorage.getItem('token') ?? '';
+    if (!searchFilter) return;
 
-    getSportFieldsWithSport(sport, token)
+    getSportFieldsWithSport(searchFilter)
       .then((data) => data && setData(data))
       .catch((err) => console.log(err));
-  }, [sport]);
+  }, [searchFilter]);
 
   return (
     <Layout title="Canchas">
@@ -33,7 +33,7 @@ const SportFields: FC = () => {
                 key={item.id}
                 complexData={true}
                 btnText={'RESERVAR'}
-                route={`/reservar/${sport}/canchas/${item.id}`}
+                route={`/reservar/${'football'}/canchas/${item.id}`}
                 title={item.name}
                 complex={item.sportComplex}
               />
