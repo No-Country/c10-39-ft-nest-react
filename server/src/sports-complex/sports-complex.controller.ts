@@ -52,7 +52,7 @@ export class SportsComplexController {
     return this.sportsComplexService.findAll();
   }
 
-  @Get(':id')
+  @Get('/ownerID/:id')
   @ApiOkResponse({ description: 'Return the Complex with the indicated id' })
   @ApiParam({ name: 'id', description: 'Must be a Complex UUID ' })
   async findOne(@Param('id') id: string): Promise<SportsComplex> {
@@ -60,11 +60,19 @@ export class SportsComplexController {
   }
 
   @Get('/owner')
+  @UseGuards(RoleGuard)
   @ApiOkResponse({ description: 'Returns the complexes of the authenticated owner' })
-  async findAllOfOwner(@Param() req: Request & { user: any }) {
-    const id: string = req.user.id;
-    const user: User = await this.usersService.findOne(id);
+  async findAllOfOwner(
+    @GetUser() user: AuthUserDTO,
+  ) {
+    // const id: string = user.id;
+    // const user: User = await this.usersService.findOne(id);
     const owner = user.owner;
+    if (!owner) {
+      throw new Error('User is not owner');
+    }
+    console.log('owner', owner);
+    
     return this.sportsComplexService.findAllOfOwner(owner);
   }
 

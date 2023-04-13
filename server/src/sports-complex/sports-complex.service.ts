@@ -23,7 +23,7 @@ export class SportsComplexService {
     const newSportComplex: SportsComplex = this.SportsComplexRepository.create(sportsComplexFields);
 
     const availabilityRanges = availability.map(async (availabilityRange) => {
-      const { start_hour, end_hour } = availabilityRange;
+      const { start_hour = 1, end_hour = 3 } = availabilityRange;
       const range = this.availabilityRangeRepository.create({
         start_hour,
         end_hour,
@@ -43,7 +43,7 @@ export class SportsComplexService {
 
   async findAllOfOwner(owner: any): Promise<SportsComplex[]> {
     return await this.SportsComplexRepository.find({
-      where: { owner: owner.id },
+      where: { owner },
     });
   }
 
