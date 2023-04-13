@@ -68,14 +68,14 @@ export class SportfieldsService {
   }
 
   async findUserReservations(user: AuthUserDTO) {
-    const reservation = await this.sportFieldRepository
+    const reservations = await this.sportFieldRepository
       .createQueryBuilder('sf')
       .innerJoinAndSelect('sf.reservation', 'res', 'res.userId = :userId', { userId: user.id })
       .leftJoin('sf.sportsComplex', 'sc')
       .addSelect('sc.address')
       .getMany();
 
-    return reservation;
+    return reservations;
   }
 
   async getAvailability(id: string) {

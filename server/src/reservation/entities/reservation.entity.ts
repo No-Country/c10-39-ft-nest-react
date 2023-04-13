@@ -23,7 +23,9 @@ export class Reservation {
   @Column('date')
   date: Date;
 
-  @ManyToOne(() => SportField, (sportfields) => sportfields.reservation, { onDelete: 'CASCADE' })
+  @ManyToOne(() => SportField, (sportfields) => sportfields.reservation, {
+    onDelete: 'CASCADE',
+  })
   sportfield: SportField;
 
   @ManyToOne(() => User, (user) => user.reservation)

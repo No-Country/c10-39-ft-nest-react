@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Logger } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Logger,
+  ParseUUIDPipe,
+  ForbiddenException,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { CreateReservationDto } from './dto/create-reservation.dto';
@@ -15,12 +26,12 @@ export class ReservationController {
 
   @Post()
   create(@Body() createReservationDto: CreateReservationDto, @GetUser() user: AuthUserDTO) {
-    return this.reservationService.create(createReservationDto, user.id);
+    return this.reservationService.create(createReservationDto);
   }
 
   @Get()
-  findAll() {
-    return this.reservationService.findAll();
+  findAll(@GetUser() user: AuthUserDTO) {
+    return this.reservationService.findAll(user);
   }
 
   @Get(':id')
@@ -29,12 +40,16 @@ export class ReservationController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateReservationDto: UpdateReservationDto) {
-    return this.reservationService.update(+id, updateReservationDto);
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateReservationDto: UpdateReservationDto,
+    @GetUser() user: AuthUserDTO,
+  ) {
+    return this.reservationService.update(id, updateReservationDto, user);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.reservationService.remove(+id);
+  remove(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: AuthUserDTO) {
+    return this.reservationService.remove(id, user);
   }
 }
