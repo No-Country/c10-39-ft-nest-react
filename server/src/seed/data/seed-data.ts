@@ -6,6 +6,7 @@ interface SeedSport {
   name: string;
   images: string[];
   sportfieldsId?: string[];
+  types: string[];
 }
 
 // interface SeedSportWithUUID extends SeedSport {
@@ -24,6 +25,7 @@ interface SeedSportField {
   images: string[];
   sport: string;
   reservation?: SeedReservation[];
+  fieldType: string;
 }
 
 // interface SeedSportFieldRecord extends SeedSportField {
@@ -103,20 +105,24 @@ const sports: SeedSport[] = [
     images: [
       'https://asset.cloudinary.com/djvepy9sd/afcecc340efd37e7305c5d0808ca5e51',
     ],
+    types: ['cesped', 'cesped sintentico'],
   },
   {
     name: 'basketball',
     images: ['https://asset.cloudinary.com/djvepy9sd/70b832d4eaf371a8589fd16589c4a06b'],
+    types: ['material', 'parquet'],
   },
   {
     name: 'tennis',
     images: [
       'https://asset.cloudinary.com/djvepy9sd/e5dd861f1db2c0c1eff4b222c45b9ee4',
     ],
+    types: ['polvo de ladrillo', 'cesped', 'material'],
   },
   {
     name: 'volleyball',
     images: ['https://asset.cloudinary.com/djvepy9sd/89a40da751aac3ac6d1106b41dd79466'],
+    types: ['arena', 'material'],
   },
 ];
 
@@ -134,6 +140,7 @@ const sportfields: SeedSportField[] = [
       'https://asset.cloudinary.com/djvepy9sd/8d4957770879e2ba8e0f545f4c138979',
     ],
     sport: 'football',
+    fieldType: 'cesped',
     reservation: [
       {
         hour: 12,
@@ -147,6 +154,13 @@ const sportfields: SeedSportField[] = [
     dimensions: '90x45',
     images: ['https://asset.cloudinary.com/djvepy9sd/b62994503e9bbaeaa73d1337572382e5'],
     sport: 'football',
+    fieldType: 'cesped',
+    reservation: [
+      {
+        hour: 12,
+        date: '2023-04-23',
+      },
+    ],
   },
   {
     name: 'El Fortin',
@@ -154,6 +168,17 @@ const sportfields: SeedSportField[] = [
     dimensions: '90x45',
     images: ['https://asset.cloudinary.com/djvepy9sd/bd699a0ca98c4bc09a1a029da1a5f9c8'],
     sport: 'football',
+    fieldType: 'parquet',
+    reservation: [
+      {
+        hour: 11,
+        date: '2023-04-23',
+      },
+      {
+        hour: 14,
+        date: '2023-04-23',
+      },
+    ],
   },
   {
     name: 'Staples Center',
@@ -161,6 +186,17 @@ const sportfields: SeedSportField[] = [
     dimensions: '28x15',
     images: ['https://asset.cloudinary.com/djvepy9sd/f1806dba33030b2aa20c08c1c675a07a'],
     sport: 'basketball',
+    fieldType: 'material',
+    reservation: [
+      {
+        hour: 11,
+        date: '2023-04-28',
+      },
+      {
+        hour: 14,
+        date: '2023-04-24',
+      },
+    ],
   },
   {
     name: 'Madison Center',
@@ -170,6 +206,17 @@ const sportfields: SeedSportField[] = [
       'https://asset.cloudinary.com/djvepy9sd/69ecea790a85dd22f7b0c09b76773df1',
     ],
     sport: 'basketball',
+    fieldType: 'parquet',
+    reservation: [
+      {
+        hour: 19,
+        date: '2023-04-18',
+      },
+      {
+        hour: 19,
+        date: '2023-05-22',
+      },
+    ],
   },
   {
     name: 'Quality Sport',
@@ -179,6 +226,7 @@ const sportfields: SeedSportField[] = [
       'https://asset.cloudinary.com/djvepy9sd/d27ce63b4e35c984586c66112044bd0f',
     ],
     sport: 'basketball',
+    fieldType: 'arena',
   },
   {
     name: 'United Center',
@@ -188,6 +236,7 @@ const sportfields: SeedSportField[] = [
       'https://asset.cloudinary.com/djvepy9sd/284c74e4ec4af9d5d1a35ffcc69ade65',
     ],
     sport: 'basketball',
+    fieldType: 'parquet',
   },
   {
     name: 'American Airlines Center',
@@ -197,6 +246,17 @@ const sportfields: SeedSportField[] = [
       'https://asset.cloudinary.com/djvepy9sd/8f35148d1fa2265e4293de2baa40cfea',
     ],
     sport: 'basketball',
+    fieldType: 'material',
+  },
+  {
+    name: 'American Airlines Center',
+    description: 'Cancha de basket cerrada.',
+    dimensions: '28x15',
+    images: [
+      'https://www.qualitysportinstalacionesdeportivas.com/wp-content/uploads/2022/05/tipos-de-superficies-de-pista-de-basket.png',
+    ],
+    sport: 'basketball',
+    fieldType: 'material',
   },
   {
     name: 'Court Nalbandian',
@@ -206,6 +266,7 @@ const sportfields: SeedSportField[] = [
       'https://asset.cloudinary.com/djvepy9sd/ca90d4832bf05d5c062281c13aeb3607',
     ],
     sport: 'tennis',
+    fieldType: 'polvo de ladrillo',
   },
   {
     name: 'Court Pitt Sampras',
@@ -215,6 +276,7 @@ const sportfields: SeedSportField[] = [
       'https://asset.cloudinary.com/djvepy9sd/8f35148d1fa2265e4293de2baa40cfea',
     ],
     sport: 'tennis',
+    fieldType: 'cesped',
   },
   {
     name: 'Court Mago Coria',
@@ -224,6 +286,7 @@ const sportfields: SeedSportField[] = [
       'https://asset.cloudinary.com/djvepy9sd/28a6f07d54b142cb11bd051deb0619e4',
     ],
     sport: 'tennis',
+    fieldType: 'material',
   },
   {
     name: 'Court Roger Federer',
@@ -233,6 +296,7 @@ const sportfields: SeedSportField[] = [
       'https://asset.cloudinary.com/djvepy9sd/57c95b6672c49886bfcef6e0fc67e0b1',
     ],
     sport: 'tennis',
+    fieldType: 'cesped sintetico',
   },
   {
     name: 'Court Nadal',
@@ -242,6 +306,7 @@ const sportfields: SeedSportField[] = [
       'https://asset.cloudinary.com/djvepy9sd/4c846f27399e5ccd51e0479e31785db5',
     ],
     sport: 'tennis',
+    fieldType: 'polvo de ladrillo',
   },
   {
     name: 'Cancha de Voley',
@@ -251,6 +316,7 @@ const sportfields: SeedSportField[] = [
       'https://asset.cloudinary.com/djvepy9sd/bc7ead9880af26c7f0ebdba2872ee385',
     ],
     sport: 'volleyball',
+    fieldType: 'parquet',
   },
   {
     name: 'Cancha de Voley',
@@ -260,6 +326,7 @@ const sportfields: SeedSportField[] = [
       'https://asset.cloudinary.com/djvepy9sd/71a38042cf4c90142f39daadcc491563',
     ],
     sport: 'volleyball',
+    fieldType: 'material',
   },
   {
     name: 'Cancha de Voley Rodman',
@@ -269,6 +336,7 @@ const sportfields: SeedSportField[] = [
       'https://asset.cloudinary.com/djvepy9sd/22c617baeeae39ac1cc215a5f6f184cf',
     ],
     sport: 'volleyball',
+    fieldType: 'material',
   },
   {
     name: 'Cancha de Voley Mariana',
@@ -278,6 +346,7 @@ const sportfields: SeedSportField[] = [
       'https://asset.cloudinary.com/djvepy9sd/9cb7270bfff434b1aca668aafb9a3091',
     ],
     sport: 'volleyball',
+    fieldType: 'material',
   },
   {
     name: 'Cancha de Voley Ramallo',
@@ -287,6 +356,7 @@ const sportfields: SeedSportField[] = [
       'https://asset.cloudinary.com/djvepy9sd/24134b2524cd19aed0419d79d825334c',
     ],
     sport: 'volleyball',
+    fieldType: 'material',
   },
 ];
 
@@ -341,7 +411,7 @@ const sportscomplex: SeedSportsComplex[] = [
     availability: [
       {
         start_hour: 7,
-        end_hour: 11,
+        end_hour: 13,
       },
       {
         start_hour: 16,
@@ -367,7 +437,7 @@ const sportscomplex: SeedSportsComplex[] = [
     lng: -64.1888,
     availability: [
       {
-        start_hour: 11,
+        start_hour: 9,
         end_hour: 13,
       },
       {

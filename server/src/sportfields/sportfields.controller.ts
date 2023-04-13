@@ -129,8 +129,9 @@ export class SportfieldsController {
     @Query('rHour', ParseIntPipe) rHour: number,
     @Query('date') date: string,
     @Query('sport') sport: string,
+    @Query('fieldType') fieldType: string,
   ) {
-    return await this.sportfieldsService.search(lat, lng, rHour, date, sport);
+    return await this.sportfieldsService.search(lat, lng, rHour, date, sport, fieldType);
   }
 
   @Get('user/reservations')

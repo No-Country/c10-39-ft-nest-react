@@ -10,6 +10,8 @@ import Input from '../Components/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
 import Select from '../Components/Select';
+import { useDispatch } from 'react-redux';
+import { setSearch } from '../App/searchSlice';
 // import { getAllSportNames } from '../Functions/SportQuery';
 
 // interface fieldSportType {
@@ -60,9 +62,21 @@ export const Search: FC = () => {
   //     navigate('/');
   //   }
   // }, []);
+  const dispatch = useDispatch();
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
+
+    dispatch(
+      setSearch({
+        rHour: 12,
+        date: '5/5/2023',
+        sport,
+        lat: 43,
+        lng: 43,
+      }),
+    );
+
     navigate(`/reservar/${sport}/canchas`);
   };
 

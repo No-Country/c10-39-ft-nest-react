@@ -1,15 +1,17 @@
+import { searchType } from '../types/Search.type';
 import { type sportData } from '../types/Sport.type';
 import { ISportField } from '../types/SportField.type';
 
 import axios from './axios';
 
-export async function getSportFieldsWithSport(sport: string, token: string) {
+export async function getSportFieldsWithSport(body: searchType) {
   try {
-    const { data }: { data: sportData[] } = await axios.get(`/sportfields/sport/${sport}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    if (!body) throw new Error('Error: data is not defined');
+    const { rHour, date, sport, lat, lng } = body;
+
+    const { data }: { data: sportData[] } =
+      await axios.get(`/sportfields/search?lat=${lat}&lng=${lng}&rHour=${rHour}&date=${date}&sport=${sport}
+    `);
     return data;
   } catch (error) {
     console.error(error);
@@ -41,9 +43,9 @@ export async function getSportAvailability(id: string, token: string) {
     return data;
   } catch (error) {
     console.error(error);
+  }
 }
-}
-    
+
 export async function getOwnerSportFields() {
   try {
     const { data } = await axios.get<ISportField[]>('/sportfields/');

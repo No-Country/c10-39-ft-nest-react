@@ -101,29 +101,37 @@ export class SportfieldsService {
   }
 
   async create(createSportFieldDto: CreateSportFieldDto, ownerId: string) {
-    const { sport: sportName, sportsComplexId, ...sportFieldAttrs } = createSportFieldDto;
+    const {
+      sport: sportName,
+      sportsComplexId,
+      fieldType,
+      ...sportFieldAttrs
+    } = createSportFieldDto;
 
     const newSportField = this.sportFieldRepository.create({
       ...sportFieldAttrs,
     });
 
-    newSportField.sport = await this.getSport(sportName);
+    newSportField.sport = await this.getSport(sportName, fieldType);
+    newSportField.fieldType = fieldType;
 
     const sportsComplex = await this.sportsComplexService.findOneWithOwner(sportsComplexId);
+    console.log(sportsComplex);
 
-    if (sportsComplex.owner.id !== ownerId) throw new ForbiddenException('Insuficient Permissions');
+    if (sportsComplex.owner?.id !== ownerId)
+      throw new ForbiddenException('Insuficient Permissions');
 
     newSportField.sportsComplex = sportsComplex;
 
     await this.sportFieldRepository.save(newSportField);
 
-    return { ...newSportField, sport: sportName };
+    return { ...newSportField, fieldType, sport: sportName };
   }
 
   async update(id: string, updateSportFieldDto: UpdateSportFieldDto, ownerId: string) {
     await this.checkOwner(ownerId, id);
 
-    const { sport: sportName, ...updatedAttrs } = updateSportFieldDto;
+    const { sport: sportName, fieldType, ...updatedAttrs } = updateSportFieldDto;
 
     const updatedSportField = await this.sportFieldRepository.preload({
       id,
@@ -133,7 +141,9 @@ export class SportfieldsService {
     if (!updatedSportField) throw new NotFoundException('SportField not found');
 
     if (sportName) {
-      updatedSportField.sport = await this.getSport(sportName);
+      const newFieldType = fieldType || updatedSportField.fieldType;
+      updatedSportField.sport = await this.getSport(sportName, newFieldType);
+      updatedSportField.fieldType = newFieldType;
     }
 
     // TODO: this is not the most performant way to update
@@ -153,7 +163,14 @@ export class SportfieldsService {
     return sportfield;
   }
 
-  async search(lat: number, lng: number, rHour: number, date: string, sport: string): Promise<any> {
+  async search(
+    lat: number,
+    lng: number,
+    rHour: number,
+    date: string,
+    sport: string,
+    fieldType: string,
+  ): Promise<any> {
     const R = 6371; // Radio de la Tierra en kilómetros
     const limit = 20; // Límite de resultados
 
@@ -178,7 +195,12 @@ export class SportfieldsService {
         'sportsComplex.images',
         `(${R} * acos(cos(radians(:lat)) * cos(radians(:lat)) * cos(radians(:lng) - radians(:lng)) + sin(radians(:lat)) * sin(radians(:lat)))) as distancia`,
       ])
-      .innerJoin('sportField.sport', 'sport', 'sport.name = :sport', { sport })
+      .innerJoin(
+        'sportField.sport',
+        'sport',
+        'sport.name = :sport AND sportField.fieldType = :fieldType',
+        { sport, fieldType },
+      )
       .leftJoin('sportField.sportsComplex', 'sportsComplex')
       .innerJoin(
         'sportsComplex.availability',
@@ -218,14 +240,18 @@ export class SportfieldsService {
     return realOwner.id;
   }
 
-  private async getSport(sportName: string) {
+  private async getSport(sportName: string, fieldType: string) {
     try {
       const sport = await this.sportService.findOneByName(sportName);
+      if (!sport.types.includes(fieldType))
+        throw new BadRequestException("FieldType doesn't exists");
 
       return sport;
     } catch (e: any) {
       if (e.constructor === NotFoundException)
         throw new BadRequestException("Sport doesn't exists");
+
+      throw e;
     }
   }
 }
