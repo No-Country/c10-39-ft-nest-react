@@ -1,4 +1,3 @@
-import { Expose } from 'class-transformer';
 import { Reservation } from 'src/reservation/entities/reservation.entity';
 import { Sport } from 'src/sports/entities/sport.entity';
 import { SportsComplex } from 'src/sports-complex/entities/sports-complex.entity';
@@ -24,6 +23,9 @@ export class SportField {
   })
   images: string[];
 
+  @Column('int', { default: 2 })
+  capacity: number;
+
   //Relation SportField -> sports
   @ManyToOne(() => Sport, (sport) => sport.sportfields)
   @JoinColumn({ name: 'sportId' })
@@ -42,6 +44,9 @@ export class SportField {
     onDelete: 'CASCADE',
   })
   reservation: Reservation[];
+
+  @Column('text')
+  fieldType: string;
 
   get availability() {
     return this.sportsComplex.availability;

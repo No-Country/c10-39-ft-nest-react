@@ -6,6 +6,7 @@ interface SeedSport {
   name: string;
   images: string[];
   sportfieldsId?: string[];
+  types: string[];
 }
 
 // interface SeedSportWithUUID extends SeedSport {
@@ -24,6 +25,7 @@ interface SeedSportField {
   images: string[];
   sport: string;
   reservation?: SeedReservation[];
+  fieldType: string;
 }
 
 // interface SeedSportFieldRecord extends SeedSportField {
@@ -103,20 +105,24 @@ const sports: SeedSport[] = [
     images: [
       'https://img.freepik.com/fotos-premium/cerca-delantero-futbol-listo-patear-pelota-fuego-estadio_207634-7.jpg?w=2000',
     ],
+    types: ['cesped', 'cesped sintentico'],
   },
   {
     name: 'basketball',
     images: ['https://img.freepik.com/foto-gratis/aro-baloncesto_1127-3376.jpg'],
+    types: ['material', 'parquet'],
   },
   {
     name: 'tennis',
     images: [
       'https://images.sportscity.it/1920x1080/Schermata_2023-01-02_alle_13_1215142572691672663113.jpg',
     ],
+    types: ['polvo de ladrillo', 'cesped', 'material'],
   },
   {
     name: 'volleyball',
     images: ['https://img.freepik.com/foto-gratis/pelota-golpeando-red_23-2149450951.jpg'],
+    types: ['arena', 'material'],
   },
 ];
 
@@ -134,6 +140,7 @@ const sportfields: SeedSportField[] = [
       'https://www.hoysejuega.com/uploads/Modules/ImagenesComplejos/800_600_la-cancha-f%C3%BAtbol-5-y-6-.-2.jpg',
     ],
     sport: 'football',
+    fieldType: 'cesped',
     reservation: [
       {
         hour: 12,
@@ -147,6 +154,17 @@ const sportfields: SeedSportField[] = [
     dimensions: '90x45',
     images: ['https://donpotrero.com/img/posts/2/medidas_sm.jpg'],
     sport: 'basketball',
+    fieldType: 'parquet',
+    reservation: [
+      {
+        hour: 11,
+        date: '2023-04-23',
+      },
+      {
+        hour: 14,
+        date: '2023-04-23',
+      },
+    ],
   },
   {
     name: 'Staples Center',
@@ -154,6 +172,17 @@ const sportfields: SeedSportField[] = [
     dimensions: '28x15',
     images: ['https://integralspor.com/uploads/blog/detail/162445d5fbd2b893161.jpg'],
     sport: 'basketball',
+    fieldType: 'material',
+    reservation: [
+      {
+        hour: 11,
+        date: '2023-04-28',
+      },
+      {
+        hour: 14,
+        date: '2023-04-24',
+      },
+    ],
   },
   {
     name: 'Madison Center',
@@ -163,6 +192,17 @@ const sportfields: SeedSportField[] = [
       'https://www.geoplastglobal.com/wp-content/uploads/2016/09/basket_indoor_gripper_geoplast-3.jpg',
     ],
     sport: 'basketball',
+    fieldType: 'parquet',
+    reservation: [
+      {
+        hour: 19,
+        date: '2023-04-18',
+      },
+      {
+        hour: 19,
+        date: '2023-05-22',
+      },
+    ],
   },
   {
     name: 'Quality Sport',
@@ -171,7 +211,8 @@ const sportfields: SeedSportField[] = [
     images: [
       'https://www.qualitysportinstalacionesdeportivas.com/wp-content/uploads/2022/05/tipos-de-superficies-de-pista-de-basket.png',
     ],
-    sport: 'basketball',
+    sport: 'volleyball',
+    fieldType: 'arena',
   },
   {
     name: 'United Center',
@@ -180,7 +221,8 @@ const sportfields: SeedSportField[] = [
     images: [
       'https://www.revistaelabasto.com.ar/wp-content/uploads/2021/03/156221395_4205449606134895_5504940228789878318_o.jpg',
     ],
-    sport: 'basketball',
+    sport: 'tennis',
+    fieldType: 'polvo de ladrillo',
   },
   {
     name: 'American Airlines Center',
@@ -189,7 +231,18 @@ const sportfields: SeedSportField[] = [
     images: [
       'https://www.qualitysportinstalacionesdeportivas.com/wp-content/uploads/2022/05/tipos-de-superficies-de-pista-de-basket.png',
     ],
-    sport: 'basketball',
+    sport: 'tennis',
+    fieldType: 'material',
+  },
+  {
+    name: 'American Airlines Center',
+    description: 'Cancha de basket cerrada.',
+    dimensions: '28x15',
+    images: [
+      'https://www.qualitysportinstalacionesdeportivas.com/wp-content/uploads/2022/05/tipos-de-superficies-de-pista-de-basket.png',
+    ],
+    sport: 'football',
+    fieldType: 'cesped sintentico',
   },
 ];
 
@@ -244,7 +297,7 @@ const sportscomplex: SeedSportsComplex[] = [
     availability: [
       {
         start_hour: 7,
-        end_hour: 11,
+        end_hour: 13,
       },
       {
         start_hour: 16,
@@ -270,7 +323,7 @@ const sportscomplex: SeedSportsComplex[] = [
     lng: -64.1888,
     availability: [
       {
-        start_hour: 11,
+        start_hour: 9,
         end_hour: 13,
       },
       {
