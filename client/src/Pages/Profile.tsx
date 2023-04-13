@@ -1,4 +1,4 @@
-import { type FC, useState, type BaseSyntheticEvent } from 'react';
+import { type FC, useState, type BaseSyntheticEvent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { AiFillEye } from 'react-icons/ai';
@@ -45,12 +45,18 @@ const Profile: FC = () => {
       password: '',
     });
 
+  useEffect(() => {
+    setState({
+      email: userInfo?.email || '',
+      firstName: userInfo?.firstName || '',
+      lastName: userInfo?.lastName || '',
+      password: '',
+    });
+  }, [userInfo]);
+
   return (
     <Layout title="Perfil">
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col items-center w-full relative min-h-[85vh]"
-      >
+      <form onSubmit={handleSubmit} className="flex flex-col items-center w-full">
         <div className="bg-black w-36 h-36 rounded-full m-10 lg:m-20 lg:w-40 lg:h-40"></div>
         <div className="w-full flex flex-col items-center gap-5 lg:w-5/12">
           <Input

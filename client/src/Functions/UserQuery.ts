@@ -53,10 +53,7 @@ export async function loginUser(body: LoginBody) {
 export async function authUser(): Promise<void> {
   const token = localStorage.getItem('token') ?? false;
 
-  if (!token) {
-    window.location.pathname = '/';
-    return;
-  }
+  if (!token) return;
 
   try {
     const query = await axios.get('/users/auth', {
