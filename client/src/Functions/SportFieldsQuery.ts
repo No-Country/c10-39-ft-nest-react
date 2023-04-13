@@ -42,6 +42,7 @@ export async function getSportAvailability(id: string, token: string) {
   } catch (error) {
     console.error(error);
 }
+}
     
 export async function getOwnerSportFields() {
   try {
