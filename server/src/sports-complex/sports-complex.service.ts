@@ -41,8 +41,8 @@ export class SportsComplexService {
     return await this.SportsComplexRepository.find();
   }
 
-  async findAllOfOwner(owner: any): Promise<SportsComplex[]> {
-    return await this.SportsComplexRepository.find({
+  async findAllOfOwner(owner: any): Promise<SportsComplex> {
+    return await this.SportsComplexRepository.findOne({
       where: { owner },
     });
   }

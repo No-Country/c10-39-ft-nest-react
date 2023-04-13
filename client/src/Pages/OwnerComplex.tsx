@@ -11,10 +11,10 @@ const OwnerComplex = () => {
   const complexInfo = useSelector((state: AppComplex) => state.complex.complex);
 
   const [state, setState] = useState({
-    id: complexInfo.id || '',
-    name: complexInfo.name || '',
-    ubication: complexInfo.ubication || '',
-    day: complexInfo.day || '',
+    id: '',
+    name: '',
+    ubication: '',
+    day: '',
   });
 
   const handleChange = (event: BaseSyntheticEvent) => {
@@ -42,14 +42,8 @@ const OwnerComplex = () => {
     });
 
   useEffect(() => {
-    GetComplexQuery().catch((err) => console.log(err));
-    setState({
-      id: complexInfo.id || '',
-      name: complexInfo.name || '',
-      ubication: complexInfo.ubication || '',
-      day: complexInfo.day || '',
-    });
-  }, [complexInfo]);
+    GetComplexQuery(setState).catch((err) => console.log(err));
+  }, []);
 
   return (
     <Layout title="Complejo">
