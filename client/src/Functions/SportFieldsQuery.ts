@@ -50,3 +50,4 @@ export async function getOwnerSportFields() {
   } catch (e) {
     console.error(e);
   }
+}
