@@ -1,4 +1,4 @@
-import { setSportNames } from '../App/sportSlice';
+import { setSport } from '../App/sportSlice';
 import store from '../App/Store';
 
 import axios from './axios';
@@ -7,6 +7,7 @@ interface SportItem {
   id: string;
   name: string;
   images: string[];
+  types: string[];
 }
 
 export async function getAllSports(token: string) {
@@ -23,19 +24,18 @@ export async function getAllSports(token: string) {
   }
 }
 
-export async function getAllSportNames(token: string) {
+export async function getAllSport() {
   try {
-    const { data }: { data: SportItem[] } = await axios.get('/sports', {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
+    const { data }: { data: SportItem[] } = await axios.get('/sports');
+    const sportData = data.map((item) => {
+      return {
+        name: item.name,
+        types: item.types,
+      };
     });
-    const names = data.map((item) => item.name);
+    store.dispatch(setSport(sportData));
 
-    store.dispatch(setSportNames(names));
-
-    return names;
+    return sportData;
   } catch (error) {
     console.error(error);
   }

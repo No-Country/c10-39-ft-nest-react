@@ -1,12 +1,12 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
 import complexReducer from './complexSlice';
-import sportNamesReducer from './sportSlice';
+import sportReducer from './sportSlice';
 import userReducer from './userSlice';
 
 const rootReducer = combineReducers({
   user: userReducer,
-  sportNames: sportNamesReducer,
+  sport: sportReducer,
   complex: complexReducer,
 });
 

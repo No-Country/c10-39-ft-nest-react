@@ -1,23 +1,27 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-export interface sportNameState {
-  sportNames: string[] | null;
+export interface sportInfo {
+  name: string;
+  types: string[];
+}
+export interface sportType {
+  sport: sportInfo[] | null;
 }
 
-const initialState: sportNameState = {
-  sportNames: null,
+const initialState: sportType = {
+  sport: null,
 };
 
-const sportNamesSlice = createSlice({
-  name: 'sportNames',
+const sportSlice = createSlice({
+  name: 'sport',
   initialState,
   reducers: {
-    setSportNames: (state, { payload }: PayloadAction<string[] | null>) => {
-      state.sportNames = payload;
+    setSport: (state, { payload }: PayloadAction<sportInfo[] | null>) => {
+      state.sport = payload;
     },
   },
 });
 
-export const { setSportNames } = sportNamesSlice.actions;
+export const { setSport } = sportSlice.actions;
 
-export default sportNamesSlice.reducer;
+export default sportSlice.reducer;

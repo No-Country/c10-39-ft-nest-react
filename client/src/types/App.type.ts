@@ -1,3 +1,4 @@
+import { sportInfo } from '../App/sportSlice';
 import ComplexType from './Complex.type';
 import type User from './User.type';
 
@@ -7,9 +8,9 @@ export interface AppUser {
   };
 }
 
-export interface AppSportNames {
-  sportNames: {
-    sportNames: string[];
+export interface appSport {
+  sport: {
+    sport: sportInfo[];
   };
 }
 export interface AppComplex {

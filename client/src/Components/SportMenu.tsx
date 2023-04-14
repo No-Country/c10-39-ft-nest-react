@@ -2,8 +2,8 @@ import { type FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { getAllSportNames } from '../Functions/SportQuery';
-import { type AppSportNames } from '../types/App.type';
+import { getAllSport } from '../Functions/SportQuery';
+import { type appSport } from '../types/App.type';
 
 interface sportProps {
   handleClick: () => void;
@@ -11,11 +11,10 @@ interface sportProps {
 }
 
 const SportMenu: FC<sportProps> = ({ handleClick, state }) => {
-  const sportNames = useSelector((state: AppSportNames) => state.sportNames.sportNames);
+  const sportNames = useSelector((state: appSport) => state.sport.sport.map((item) => item.name));
 
   useEffect(() => {
-    const token = localStorage.getItem('token') ?? '';
-    getAllSportNames(token).catch((err) => console.log(err));
+    getAllSport().catch((err) => console.log(err));
   }, []);
 
   return (

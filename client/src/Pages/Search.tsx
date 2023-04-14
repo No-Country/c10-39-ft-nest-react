@@ -10,7 +10,6 @@ import Input from '../Components/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
 import Select from '../Components/Select';
-import { getAllSportNames } from '../Functions/SportQuery';
 
 // interface fieldSportType {
 //   tenis: string[];
@@ -49,18 +48,13 @@ export const Search: FC = () => {
   // };
 
   useEffect(() => {
-    const token = localStorage.getItem('token') ?? '';
-    getAllSportNames(token)
-      .then((data) => {
-        if (sport && data && data.includes(sport)) {
-          // const keySport = sport as fieldSportKeyType;
-          // setFieldSportList(fieldSportLists[keySport]);
-          setLoader(true);
-        } else {
-          navigate('/reservar');
-        }
-      })
-      .catch((err) => console.log(err));
+    // if (sport && data && data.includes(sport)) {
+    // const keySport = sport as fieldSportKeyType;
+    // setFieldSportList(fieldSportLists[keySport]);
+    setLoader(true);
+    // } else {
+    //   navigate('/reservar');
+    // }
   }, [navigate, sport]);
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
