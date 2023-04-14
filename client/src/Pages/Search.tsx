@@ -10,16 +10,16 @@ import Input from '../Components/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
 import Select from '../Components/Select';
-
-// interface fieldSportType {
-//   tenis: string[];
-//   futbol: string[];
-// }
-// type fieldSportKeyType = keyof fieldSportType;
+import { useSelector } from 'react-redux';
+import { appSport } from '../types/App.type';
 
 export const Search: FC = () => {
   const navigate = useNavigate();
   const { sport = '' } = useParams();
+  const sportInfo = useSelector((state: appSport) => state.sport.sport);
+
+  const sportNames = sportInfo?.map((item) => item.name);
+  const sportFields = sportInfo?.find((item) => item.name === sport);
 
   const [state, setState] = useState({
     ubication: '',
@@ -40,22 +40,13 @@ export const Search: FC = () => {
     });
   };
 
-  // const [fieldSportList, setFieldSportList] = useState(['']);
-
-  // const fieldSportLists: fieldSportType = {
-  //   tenis: ['Polvo y Ladrillo', 'Cesped', 'Sintetica'],
-  //   futbol: ['Piso madera', 'Cesped', 'sintetica'],
-  // };
-
   useEffect(() => {
-    // if (sport && data && data.includes(sport)) {
-    // const keySport = sport as fieldSportKeyType;
-    // setFieldSportList(fieldSportLists[keySport]);
-    setLoader(true);
-    // } else {
-    //   navigate('/reservar');
-    // }
-  }, [navigate, sport]);
+    if (sport && sportNames && sportNames.includes(sport)) {
+      setLoader(true);
+    } else {
+      navigate('/reservar');
+    }
+  }, [navigate, sport, sportNames]);
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
@@ -77,24 +68,17 @@ export const Search: FC = () => {
               value={state.ubication}
               icon={<MdLocationOn />}
             />
-            <Select
-              array={['tenis']}
-              type={'sportField'}
-              label="Tipo de Cancha"
-              value={state.field}
-              handleChange={handleChange}
-              name="field"
-              icon={<GiSoccerField />}
-            />
-            {/* <Select
-              array={fieldSportList}
-              type={'sportField'}
-              label="Tipo de Cancha"
-              value={state.field}
-              handleChange={handleChange}
-              name="field"
-              icon={<GiSoccerField />}
-            /> */}
+            {sportFields?.types && (
+              <Select
+                array={sportFields?.types}
+                type={'sportField'}
+                label="Tipo de Cancha"
+                value={state.field}
+                handleChange={handleChange}
+                name="field"
+                icon={<GiSoccerField />}
+              />
+            )}
             <Input
               type="text"
               label="Turno"

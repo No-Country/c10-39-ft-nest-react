@@ -11,7 +11,7 @@ interface sportProps {
 }
 
 const SportMenu: FC<sportProps> = ({ handleClick, state }) => {
-  const sportNames = useSelector((state: appSport) => state.sport.sport.map((item) => item.name));
+  const sportNames = useSelector((state: appSport) => state.sport?.sport?.map((item) => item.name));
 
   useEffect(() => {
     getAllSport().catch((err) => console.log(err));
