@@ -27,7 +27,7 @@ const SFDetailMenu: FC<{ openMenu: boolean }> = ({ openMenu }) => {
           Cambiar horario
         </li>
         {openCalendar && <MyCalendar handleClick={handleOpenCalendar} />}
-        {openHours && <HoursList handleClick={handleOpenHours} />}
+        {openHours && <HoursList handleClick={handleOpenHours} getAllHours={false} />}
       </ul>
     </>
   );

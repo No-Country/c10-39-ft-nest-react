@@ -33,13 +33,9 @@ interface hoursType {
   start_hour: string;
 }
 
-export async function getSportAvailability(id: string, token: string) {
+export async function getSportAvailability(id: string) {
   try {
-    const { data }: { data: hoursType[] } = await axios.get(`/sportfields/${id}/availability`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const { data }: { data: hoursType[] } = await axios.get(`/sportfields/${id}/availability`);
     return data;
   } catch (error) {
     console.error(error);
