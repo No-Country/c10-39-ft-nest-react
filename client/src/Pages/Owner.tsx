@@ -13,7 +13,7 @@ const Owner = () => {
         <>
           <Layout title="Popietarios">
             <div className="w-full pb-12 h-full  fixed bg-tenis-desktop bg-cover bg-[30%] ">
-              <div className="overflow-y-scroll flex flex-col pb-12 gap-16 mx-1 h-full pt-24 relative lg:flex-row lg:mx-20 lg:pt-0 lg:items-center lg:bottom-20 lg:justify-between">
+              <div className="overflow-y-scroll lg:overflow-y-hidden flex flex-col pb-12 gap-16 mx-1 h-full pt-24 relative lg:flex-row lg:mx-20 lg:pt-0 lg:items-center lg:bottom-20 lg:justify-between">
                 {' '}
                 <Card route="/propietarios/canchas" title="Mis canchas" />
                 <Card route="/propietarios/agregar-cancha" title="Agregar cancha" />

@@ -6,6 +6,8 @@ import { GetComplexQuery, PostComplexQuery } from '../Functions/ComplexQuery';
 
 import { useSelector } from 'react-redux';
 import { AppComplex } from '../types/App.type';
+import { MdLocationOn, MdTitle } from 'react-icons/md';
+import { BsCalendar2Event } from 'react-icons/bs';
 
 const OwnerComplex = () => {
   const complexInfo = useSelector((state: AppComplex) => state.complex.complex);
@@ -56,6 +58,7 @@ const OwnerComplex = () => {
               value={state.name}
               name={'name'}
               handleChange={handleChange}
+              icon={<MdTitle />}
             />
             <Input
               type="text"
@@ -63,6 +66,7 @@ const OwnerComplex = () => {
               value={state.ubication}
               name={'ubication'}
               handleChange={handleChange}
+              icon={<MdLocationOn />}
             />
             <Input
               type="text"
@@ -70,6 +74,7 @@ const OwnerComplex = () => {
               value={state.day}
               name={'day'}
               handleChange={handleChange}
+              icon={<BsCalendar2Event />}
             />
           </div>
           <ul className="w-10/12 mt-5 flex flex-col gap-3 text-lg lg:w-2/6 lg:relative lg:top-8">
