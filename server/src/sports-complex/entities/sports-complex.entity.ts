@@ -34,7 +34,7 @@ export class SportsComplex {
   @Column({ type: 'double precision', nullable: true })
   lng: number;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   images: string[];
 
   @Column('boolean', { default: false })

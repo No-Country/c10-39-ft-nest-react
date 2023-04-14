@@ -1,4 +1,5 @@
 import axios from './axios';
+import { refreshToken } from './utils';
 
 interface ownerRegisterProps {
   phone: string;
@@ -8,23 +9,20 @@ interface dataType {
   data: unknown[] | { error: string };
 }
 
-export async function OwnerRegisterQuery(props: ownerRegisterProps, token: string, id: string) {
+export async function OwnerRegisterQuery(props: ownerRegisterProps) {
   const { phone, document } = props;
   const body = {
     DNI: document,
     phone,
-    userId: id,
     address: 'hola',
   };
 
   try {
-    const { data }: dataType = await axios.post('/owner', body, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const { data }: dataType = await axios.post('/owner', body);
 
     if (!Array.isArray(data) && data.error) throw new Error(`Error: data.error = ${data.error}`);
+
+    await refreshToken();
 
     return data;
   } catch (error) {

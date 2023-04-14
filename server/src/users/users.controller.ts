@@ -1,5 +1,12 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Request } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiCreatedResponse,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { LoginUserDTO, RegisterUserDTO } from './dto/register-dto';
 import { UpdateUserDTO } from './dto/update-user.dto';
@@ -9,10 +16,10 @@ import { UsersService } from './users.service';
 @ApiTags('Users Enpoints')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor(private readonly usersService: UsersService) {}
 
   @Post('register')
-  @ApiBearerAuth("token")
+  @ApiBearerAuth('token')
   @ApiCreatedResponse({ description: 'User was register' })
   @ApiResponse({ status: 400, description: 'Email already registered' })
   @ApiBody({ type: RegisterUserDTO })
@@ -55,13 +62,17 @@ export class UsersController {
   }
 
   @Patch(':id')
-  @ApiParam({ name: "id", description: "Must be a user UUID", example: "0abb36cb-7a5e-428f-bad2-fc326c6a14f6" })
+  @ApiParam({
+    name: 'id',
+    description: 'Must be a user UUID',
+    example: '0abb36cb-7a5e-428f-bad2-fc326c6a14f6',
+  })
   update(
     @Body()
     updateUserDTO: UpdateUserDTO,
     @Param('id') id: string,
   ): // Promise<User>
-    any {
+  any {
     return this.usersService.update(id, updateUserDTO);
   }
 }
