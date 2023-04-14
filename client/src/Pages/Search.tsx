@@ -10,9 +10,7 @@ import Input from '../Components/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
 import Select from '../Components/Select';
-import { useDispatch } from 'react-redux';
-import { setSearch } from '../App/searchSlice';
-// import { getAllSportNames } from '../Functions/SportQuery';
+import { getAllSportNames } from '../Functions/SportQuery';
 
 // interface fieldSportType {
 //   tenis: string[];
@@ -31,6 +29,8 @@ export const Search: FC = () => {
     time: '',
   });
 
+  const [loader, setLoader] = useState(false);
+
   const handleChange = (event: BaseSyntheticEvent) => {
     setState((prev) => {
       const target = event.target;
@@ -42,46 +42,34 @@ export const Search: FC = () => {
   };
 
   // const [fieldSportList, setFieldSportList] = useState(['']);
-  // const [sportFieldsNames, setSportFieldsNames] = useState<string[]>([]);
 
   // const fieldSportLists: fieldSportType = {
   //   tenis: ['Polvo y Ladrillo', 'Cesped', 'Sintetica'],
   //   futbol: ['Piso madera', 'Cesped', 'sintetica'],
   // };
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token') ?? '';
-  //   getAllSportNames(token)
-  //     .then((data) => data && setSportFieldsNames(data))
-  //     .catch((err) => console.log(err));
-
-  //   if (sport && sportFieldsNames.includes(sport)) {
-  //     const keySport = sport as fieldSportKeyType;
-  //     setFieldSportList(fieldSportLists[keySport]);
-  //   } else {
-  //     navigate('/');
-  //   }
-  // }, []);
-  const dispatch = useDispatch();
+  useEffect(() => {
+    const token = localStorage.getItem('token') ?? '';
+    getAllSportNames(token)
+      .then((data) => {
+        if (sport && data && data.includes(sport)) {
+          // const keySport = sport as fieldSportKeyType;
+          // setFieldSportList(fieldSportLists[keySport]);
+          setLoader(true);
+        } else {
+          navigate('/reservar');
+        }
+      })
+      .catch((err) => console.log(err));
+  }, [navigate, sport]);
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
-
-    dispatch(
-      setSearch({
-        rHour: 12,
-        date: '5/5/2023',
-        sport,
-        lat: 43,
-        lng: 43,
-      }),
-    );
-
-    navigate(`/reservar/${sport}/canchas`);
+    navigate(`/reservar/${sport}/canchas?lat=${43}&lng=${43}&rHour=${12}&date=${'5/5/2023'}`);
   };
 
   return (
-    <Layout title={`${sport}`}>
+    <Layout title={`${loader ? sport : ''}`}>
       <div className="w-full flex justify-center items-center h-[70vh]">
         <form onSubmit={handleSubmit} className="flex w-full flex-col items-center lg:mx-[30%]">
           <div className="flex flex-col gap-5 w-full items-center pt-12 lg:gap-10">

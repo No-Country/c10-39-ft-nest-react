@@ -1,34 +1,43 @@
 import { useState, type FC, useEffect } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 
 import Layout from '../Components/Layout';
 import SportField from '../Components/SportField';
 import { getSportFieldsWithSport } from '../Functions/SportFieldsQuery';
 import { type sportData } from '../types/Sport.type';
-import { useSelector } from 'react-redux';
-import { AppSearch } from '../types/App.type';
 
 const SportFields: FC = () => {
-  const searchFilter = useSelector((state: AppSearch) => state.search.search);
   const [data, setData] = useState<sportData[]>([]);
 
-  useEffect(() => {
-    if (!searchFilter) return;
+  const location = useLocation();
 
-    getSportFieldsWithSport(searchFilter)
-      .then((data) => data && setData(data))
-      .catch((err) => console.log(err));
-  }, [searchFilter]);
+  const { sport } = useParams();
+  const queryParams = new URLSearchParams(location.search);
+  const lat = queryParams.get('lat');
+  const lng = queryParams.get('lng');
+  const rHour = queryParams.get('rHour');
+  const date = queryParams.get('date');
+
+  useEffect(() => {
+    if (lat && lng && rHour && date && sport) {
+      getSportFieldsWithSport({
+        lat: Number(lat),
+        lng: Number(lng),
+        rHour: Number(rHour),
+        date,
+        sport,
+      })
+        .then((data) => data && setData(data))
+        .catch((err) => console.log(err));
+    }
+  }, [lat, lng, rHour, date, sport]);
 
   return (
     <Layout title="Canchas">
-      <div className="flex flex-row w-full justify-center gap-20 overflow-hidden max-h-[90vh]">
-        <div
-          className={`${
-            data.length > 1 ? 'scrollbarSF overflow-y-scroll' : ''
-          } flex flex-col gap-5 my-5 w-full max-w-[450px]  lg:mt-10 lg:max-h-[525px] px-5`}
-        >
-          {data.length ? (
-            data.map((item) => (
+      {data.length ? (
+        <>
+          <div className="flex flex-row w-full justify-center gap-20 overflow-hidden max-h-[90vh]">
+            {data.map((item) => (
               <SportField
                 key={item.id}
                 complexData={true}
@@ -37,13 +46,15 @@ const SportFields: FC = () => {
                 title={item.name}
                 complex={item.sportComplex}
               />
-            ))
-          ) : (
-            <span>No hay coincidencias</span>
-          )}
-        </div>
-        <div className="hidden rounded-lg lg:block w-[700px] h-[475px] bg-primary mt-20"></div>
-      </div>
+            ))}
+          </div>
+          <div className="hidden rounded-lg lg:block w-[700px] h-[475px] bg-primary mt-20"></div>
+        </>
+      ) : (
+        <span className="text-2xl flex h-[50vh] justify-center items-center">
+          No hay coincidencias
+        </span>
+      )}
     </Layout>
   );
 };
