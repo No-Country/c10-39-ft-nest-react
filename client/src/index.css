@@ -189,3 +189,12 @@ abbr[title] {
   background: #6f48eb;
   color: white;
 }
+
+.hoursScrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.hoursScrollbar::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 20px;
+}
