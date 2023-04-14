@@ -30,7 +30,7 @@ const HoursList: FC<{ handleClick: () => void }> = ({ handleClick }) => {
   return (
     <>
       {hours.length ? (
-        <ul className="bg-white absolute top-0 -left-full py-5 rounded-md shadow-lg">
+        <ul className="bg-white absolute top-32 -left-24 lg:top-0 lg:-left-full py-5 rounded-md shadow-lg">
           <li className="mb-5 divide-black border-b-[1px] mx-5 text-center">
             Horarios disponibles
           </li>
