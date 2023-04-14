@@ -25,7 +25,7 @@ export class SportsComplex {
   @Column('text')
   name: string;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   description: string;
 
   @Column({ type: 'double precision', nullable: true })

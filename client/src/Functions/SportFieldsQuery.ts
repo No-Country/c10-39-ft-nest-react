@@ -10,7 +10,7 @@ export async function getSportFieldsWithSport(body: searchType) {
     const { rHour, date, sport, lat, lng } = body;
 
     const { data }: { data: sportData[] } =
-      await axios.get(`/sportfields/search?lat=${lat}&lng=${lng}&rHour=${rHour}&date=${date}&sport=${sport}
+      await axios.get(`/sportfields/search?lat=${lat}&lng=${lng}&rHour=${rHour}&date=${date}&sport=${sport}&fieldType=material
     `);
     return data;
   } catch (error) {
