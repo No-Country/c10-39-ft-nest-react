@@ -17,26 +17,32 @@ const SportFields: FC = () => {
   const lng = queryParams.get('lng');
   const rHour = queryParams.get('rHour');
   const date = queryParams.get('date');
+  const fieldType = queryParams.get('fieldType');
 
   useEffect(() => {
-    if (lat && lng && rHour && date && sport) {
+    if (lat && lng && rHour && date && sport && fieldType) {
       getSportFieldsWithSport({
         lat: Number(lat),
         lng: Number(lng),
         rHour: Number(rHour),
         date,
         sport,
+        fieldType,
       })
         .then((data) => data && setData(data))
         .catch((err) => console.log(err));
     }
-  }, [lat, lng, rHour, date, sport]);
+  }, [lat, lng, rHour, date, sport, fieldType]);
 
   return (
     <Layout title="Canchas">
       {data.length ? (
-        <>
-          <div className="flex flex-row w-full justify-center gap-20 overflow-hidden max-h-[90vh]">
+        <div className="flex flex-row w-full justify-center gap-20 overflow-hidden max-h-[90vh]">
+          <div
+            className={`${
+              data.length > 1 ? 'scrollbarSF overflow-y-scroll' : ''
+            } flex flex-col gap-5 my-5 w-full max-w-[450px]  lg:mt-10 lg:max-h-[525px] px-5`}
+          >
             {data.map((item) => (
               <SportField
                 key={item.id}
@@ -49,9 +55,9 @@ const SportFields: FC = () => {
             ))}
           </div>
           <div className="hidden rounded-lg lg:block w-[700px] h-[475px] bg-primary mt-20"></div>
-        </>
+        </div>
       ) : (
-        <span className="text-2xl flex h-[50vh] justify-center items-center">
+        <span className="h-[50vh] flex justify-center items-center text-2xl">
           No hay coincidencias
         </span>
       )}

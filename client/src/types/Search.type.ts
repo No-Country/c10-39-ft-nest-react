@@ -1,7 +1,8 @@
 export interface searchType {
-  rHour: number;
-  date: string;
   sport: string;
+  fieldType: string;
+  date: string;
+  rHour: number;
   lat: number;
   lng: number;
 }

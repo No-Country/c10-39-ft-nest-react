@@ -65,7 +65,9 @@ export const Search: FC = () => {
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    navigate(`/reservar/${sport}/canchas?lat=${43}&lng=${43}&rHour=${12}&date=${'5/5/2023'}`);
+    navigate(
+      `/reservar/${sport}/canchas?lat=${43}&lng=${43}&rHour=${12}&date=${'5/5/2023'}&fieldType=${'parquet'}`,
+    );
   };
 
   return (
