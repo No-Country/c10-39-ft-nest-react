@@ -1,4 +1,5 @@
 import { type BaseSyntheticEvent, type FC, useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { BsCalendar2Event } from 'react-icons/bs';
@@ -10,8 +11,8 @@ import Input from '../Components/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
 import Select from '../Components/Select';
-import { useSelector } from 'react-redux';
-import { appSport } from '../types/App.type';
+import { type appSport } from '../types/App.type';
+import SelectHour from '../Components/SelectHour';
 
 export const Search: FC = () => {
   const navigate = useNavigate();
@@ -21,39 +22,32 @@ export const Search: FC = () => {
   const sportNames = sportInfo?.map((item) => item.name);
   const sportFields = sportInfo?.find((item) => item.name === sport);
 
-  const [state, setState] = useState({
-    ubication: '',
-    turn: '',
-    field: '',
-    time: '',
-  });
+  const [ubication, setUbication] = useState('');
+  const [field, setField] = useState('');
+  const [turn, setTurn] = useState('');
+  const [time, setTime] = useState('');
 
   const [loader, setLoader] = useState(false);
 
-  const handleChange = (event: BaseSyntheticEvent) => {
-    setState((prev) => {
-      const target = event.target;
-      return {
-        ...prev,
-        [target.name]: target.value,
-      };
-    });
+  const handleUbication = (event: BaseSyntheticEvent) => setUbication(event.target.value);
+  const handleField = (option: string) => setField(option);
+  const handleTurn = (option: string) => setTurn(option);
+  const handleTime = (option: string) => setTime(option);
+
+  const handleSubmit = (e: BaseSyntheticEvent) => {
+    e.preventDefault();
+    navigate(
+      `/reservar/${sport}/canchas?lat=${43}&lng=${43}&rHour=${time}&date=${turn}&fieldType=${field}`,
+    );
   };
 
   useEffect(() => {
     if (sport && sportNames && sportNames.includes(sport)) {
       setLoader(true);
-    } else {
+    } else if (sport && sportNames) {
       navigate('/reservar');
     }
   }, [navigate, sport, sportNames]);
-
-  const handleSubmit = (e: BaseSyntheticEvent) => {
-    e.preventDefault();
-    navigate(
-      `/reservar/${sport}/canchas?lat=${43}&lng=${43}&rHour=${12}&date=${'5/5/2023'}&fieldType=${'parquet'}`,
-    );
-  };
 
   return (
     <Layout title={`${loader ? sport : ''}`}>
@@ -63,38 +57,29 @@ export const Search: FC = () => {
             <Input
               type="text"
               label="Ubicacion"
-              handleChange={handleChange}
+              handleChange={handleUbication}
               name="ubication"
-              value={state.ubication}
+              value={ubication}
               icon={<MdLocationOn />}
             />
             {sportFields?.types && (
               <Select
                 array={sportFields?.types}
-                type={'sportField'}
                 label="Tipo de Cancha"
-                value={state.field}
-                handleChange={handleChange}
-                name="field"
+                value={field}
+                handleClick={handleField}
                 icon={<GiSoccerField />}
               />
             )}
-            <Input
+            {/* <Input
               type="text"
               label="Turno"
               handleChange={handleChange}
               name="turn"
               value={state.turn}
               icon={<BsCalendar2Event />}
-            />
-            <Input
-              type="text"
-              label="Horario"
-              handleChange={handleChange}
-              name="time"
-              value={state.time}
-              icon={<TfiTime />}
-            />
+            /> */}
+            <SelectHour label="Horario" value={time} handleClick={handleTime} icon={<TfiTime />} />
           </div>
           <div className="absolute bottom-10 right-10 lg:right-[33%]">
             <PrimaryButton text="BUSCAR" />
