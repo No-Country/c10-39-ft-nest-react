@@ -8,6 +8,8 @@ import { useSelector } from 'react-redux';
 import { AppComplex } from '../types/App.type';
 import { Checkbox, ImageUploader } from '../Components/ui';
 import ComplexType from '../types/Complex.type';
+import store from '../App/Store';
+import { setComplex } from '../App/complexSlice';
 
 const handleAmmeniesChangeFactory =
   (setState: Dispatch<SetStateAction<ComplexType>>, key: keyof ComplexType) => () => {
@@ -18,7 +20,7 @@ const handleAmmeniesChangeFactory =
   };
 
 const OwnerComplex = () => {
-  const complexInfo = useSelector((state: AppComplex) => state.complex.complex);
+  const { hasComplex, complex: complexInfo } = useSelector((state: AppComplex) => state.complex);
 
   const [state, setState] = useState<ComplexType>({
     id: '',
@@ -35,8 +37,19 @@ const OwnerComplex = () => {
   });
 
   useEffect(() => {
-    GetComplexQuery(setState).catch((err) => console.log(err));
-  }, []);
+    if (!hasComplex) {
+      GetComplexQuery()
+        .then((value) => {
+          if (value) {
+            store.dispatch(setComplex(value));
+          }
+        })
+        .catch((err) => console.log(err));
+
+      return;
+    }
+    setState(complexInfo);
+  }, [hasComplex]);
 
   const handleChange = (event: BaseSyntheticEvent) => {
     setState((prev) => {
@@ -56,7 +69,9 @@ const OwnerComplex = () => {
       return;
     }
 
-    CreateComplexQuery(data).catch((err) => console.error(err));
+    CreateComplexQuery(data)
+      .then((value) => value && store.dispatch(setComplex(value)))
+      .catch((err) => console.error(err));
   };
 
   const handleCancel = () =>
@@ -140,7 +155,7 @@ const OwnerComplex = () => {
         </div>
         <div className='flex w-10/12 justify-between lg:relative lg:w-4/12 lg:m-10'>
           <PrimaryButton text='CANCELAR' alternative={true} onClick={handleCancel} />
-          <PrimaryButton text={state.id ? 'GUARDAR' : 'CREAR'} />
+          <PrimaryButton text={hasComplex ? 'GUARDAR' : 'CREAR'} />
         </div>
       </form>
     </Layout>

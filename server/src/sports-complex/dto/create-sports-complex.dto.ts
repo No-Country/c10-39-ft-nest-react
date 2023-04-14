@@ -6,6 +6,7 @@ import {
   Matches,
   IsOptional,
   IsBoolean,
+  IsNumber,
 } from 'class-validator';
 
 import { CreateAvailabilityRange } from './create-availability-range.dto';
@@ -57,7 +58,12 @@ export class CreateSportsComplexDTO {
   description: string;
 
   /// TODO: Add validation for lat and lng
+  @IsNumber()
+  @IsOptional()
   lat: number;
+
+  @IsNumber()
+  @IsOptional()
   lng: number;
 
   @ApiProperty({

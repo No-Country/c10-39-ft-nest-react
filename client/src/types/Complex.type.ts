@@ -9,5 +9,6 @@ export default interface ComplexType {
   showers: boolean;
   restobar: boolean;
   parking: boolean;
+  owner?: any;
   availability: any[];
 }

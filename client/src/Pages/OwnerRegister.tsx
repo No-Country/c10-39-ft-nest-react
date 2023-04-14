@@ -16,8 +16,6 @@ const OwnerRegister: FC = () => {
     document: '',
   });
 
-  const userId = useSelector((state: AppUser) => state.user?.user?.id);
-
   const handleChange = (event: BaseSyntheticEvent) => {
     setState((prev) => {
       const target = event.target;
@@ -30,38 +28,37 @@ const OwnerRegister: FC = () => {
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    const token = localStorage.getItem('token') ?? '';
-    OwnerRegisterQuery(state, token, userId)
+    OwnerRegisterQuery(state)
       .then(() => window.location.reload())
       .catch((err) => console.log(err));
   };
 
   return (
-    <Layout title="Registro de propietario">
-      <form onSubmit={handleSubmit} className="relative min-h-[100vh] flex flex-col items-center">
-        <div className="bg-[#D9D9D9] rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[800px] text-center ">
+    <Layout title='Registro de propietario'>
+      <form onSubmit={handleSubmit} className='relative min-h-[100vh] flex flex-col items-center'>
+        <div className='bg-[#D9D9D9] rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[800px] text-center '>
           +
         </div>
-        <div className="flex flex-col w-full items-center gap-10 lg:w-[700px]">
+        <div className='flex flex-col w-full items-center gap-10 lg:w-[700px]'>
           <Input
-            type="text"
-            label="Documento"
+            type='text'
+            label='Documento'
             icon={<HiOutlineIdentification />}
             handleChange={handleChange}
             value={state.document}
             name={'document'}
           />
           <Input
-            type="text"
-            label="Numero de telefono"
+            type='text'
+            label='Numero de telefono'
             icon={<AiOutlinePhone />}
             handleChange={handleChange}
             value={state.phone}
             name={'phone'}
           />
         </div>
-        <div className="absolute bottom-0 right-10 lg:relative lg:my-10 lg:w-[675px] lg:flex lg:justify-end">
-          <PrimaryButton text="AGREGAR" />
+        <div className='absolute bottom-0 right-10 lg:relative lg:my-10 lg:w-[675px] lg:flex lg:justify-end'>
+          <PrimaryButton text='AGREGAR' />
         </div>
       </form>
     </Layout>

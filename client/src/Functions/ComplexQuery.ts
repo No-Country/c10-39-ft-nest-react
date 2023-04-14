@@ -4,27 +4,16 @@ import store from '../App/Store';
 import { setComplex } from '../App/complexSlice';
 import ComplexType from '../types/Complex.type';
 
-export async function GetComplexQuery(state: (state: any) => any) {
+export async function GetComplexQuery() {
   try {
-    const { data } = await axios.get<ComplexType>('/sports-complex/owner');
-    console.log(data);
+    let { data } = await axios.get<ComplexType>('/sports-complex/owner');
 
-    store.dispatch(setComplex(data));
-    state({
-      id: data.id || '',
-      name: data.name || '',
-      address: data.address || '',
-      email: data.email || '',
-      phone: data.phone || '',
-      // day: data.day || '',
-      grills: !!data.grills,
-      locker: !!data.locker,
-      showers: !!data.showers,
-      restobar: !!data.restobar,
-      parking: !!data.parking,
-      availability: [],
-    });
-    return data;
+    if (data.owner) {
+      const { owner, ...filteredData } = data;
+      data = filteredData;
+    }
+
+    return { ...data };
   } catch (err) {
     console.log(err);
   }
@@ -36,7 +25,12 @@ interface complexDataType extends Omit<ComplexType, 'id'> {
 
 export async function CreateComplexQuery(body: complexDataType) {
   try {
-    const { data } = await axios.post('/sports-complex', body);
+    let { data } = await axios.post<ComplexType>('/sports-complex', body);
+
+    if (data.owner) {
+      const { owner, ...filteredData } = data;
+      data = filteredData;
+    }
 
     return data;
   } catch (err) {
@@ -46,6 +40,7 @@ export async function CreateComplexQuery(body: complexDataType) {
 
 export async function UpdateComplexQuery(body: complexDataType, id: string) {
   try {
+    console.log(body);
     const { data } = await axios.patch(`/sports-complex/${id}`, body);
 
     return data;
