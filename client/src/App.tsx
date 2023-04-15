@@ -6,13 +6,12 @@ import 'react-calendar/dist/Calendar.css';
 import { authUser } from './Functions/UserQuery';
 import About from './Pages/About';
 import AddSFOwner from './Pages/AddSFOwner';
-import AAAA from './Pages/googleMapExample';
-import GoogleMapExample from './Pages/googleMapExample';
 import Help from './Pages/Help';
 import Home from './Pages/Home';
 import Login from './Pages/Login';
 import MainPage from './Pages/MainPage';
 import Owner from './Pages/Owner';
+import OwnerComplex from './Pages/OwnerComplex';
 import Profile from './Pages/Profile';
 import ProfileReservation from './Pages/ProfileReservation';
 import Register from './Pages/Register';
@@ -23,7 +22,6 @@ import SFOwner from './Pages/SFOwner';
 import SFownerEdit from './Pages/SFOwnerEdit';
 import SportFields from './Pages/SportFields';
 import Turns from './Pages/Turns';
-import OwnerComplex from './Pages/OwnerComplex';
 
 function App() {
   useEffect(() => {
@@ -56,8 +54,6 @@ function App() {
 
         <Route path="/ingresar" element={<Login />}></Route>
         <Route path="/registro" element={<Register />}></Route>
-
-        <Route path="/dani" element={<AAAA />}></Route>
 
         <Route path="*" element={<Navigate to="/" />}></Route>
       </Routes>

@@ -9,11 +9,12 @@ import { TfiTime } from 'react-icons/tfi';
 
 import Input from '../Components/Input';
 import Layout from '../Components/Layout';
+import { LocationInput } from '../Components/LocationInput';
 import PrimaryButton from '../Components/PrimaryButton';
 import Select from '../Components/Select';
-import { type appSport } from '../types/App.type';
-import SelectHour from '../Components/SelectHour';
 import SelectCalendar from '../Components/SelectCalendar';
+import SelectHour from '../Components/SelectHour';
+import { type appSport } from '../types/App.type';
 
 export const Search: FC = () => {
   const navigate = useNavigate();
@@ -50,11 +51,21 @@ export const Search: FC = () => {
     }
   }, [navigate, sport, sportNames]);
 
+  const [latitude, setLatitude] = useState<number | null>(null);
+  const [longitude, setLongitude] = useState<number | null>(null);
+
+  const handleLocationChange = (latitude: any, longitude: any) => {
+    setLatitude(latitude);
+    setLongitude(longitude);
+  };
+  console.log(latitude, longitude);
+
   return (
     <Layout title={`${loader ? sport : ''}`}>
       <div className="w-full flex justify-center items-center h-[70vh]">
         <form onSubmit={handleSubmit} className="flex w-full flex-col items-center lg:mx-[30%]">
           <div className="flex flex-col gap-5 w-full items-center pt-12 lg:gap-10">
+            <LocationInput onLocationChange={handleLocationChange} />
             <Input
               type="text"
               label="Ubicacion"
