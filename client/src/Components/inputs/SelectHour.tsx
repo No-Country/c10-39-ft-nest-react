@@ -18,14 +18,10 @@ const SelectHour: FC<selectType> = ({ handleClick, value, label, icon }) => {
   const handleOption = (item: string) => {
     handleClick(item);
     handleOpen();
-    selectValue();
-  };
-
-  const selectValue = () => {
-    if (value !== '') {
-      let nextNum = Number(value) + 1;
+    if (item !== '') {
+      let nextNum = Number(item) + 1;
       if (nextNum === 24) nextNum = 0;
-      setCurrentValue(`${value}:00 - ${nextNum}:00`);
+      setCurrentValue(`${item}:00 - ${nextNum}:00`);
     }
   };
 

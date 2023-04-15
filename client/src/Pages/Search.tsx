@@ -26,8 +26,6 @@ export const Search: FC = () => {
   const sportNames = sportInfo?.map((item) => item.name);
   const sportFields = sportInfo?.find((item) => item.name === sport);
 
-  const [latitude, setLatitude] = useState<number | null>(null);
-  const [longitude, setLongitude] = useState<number | null>(null);
   const [location, setLocation] = useState<string>('');
   const [field, setField] = useState('');
   const [turn, setTurn] = useState('');
@@ -38,10 +36,6 @@ export const Search: FC = () => {
   const handleField = (option: string) => setField(option);
   const handleTurn = (option: string) => setTurn(option);
   const handleTime = (option: string) => setTime(option);
-  const handleLocationChange = (latitude: any, longitude: any) => {
-    setLatitude(latitude);
-    setLongitude(longitude);
-  };
   const handleLocationName = (event: ChangeEvent<HTMLInputElement>) => {
     setLocation(event.target.value);
   };
@@ -54,9 +48,9 @@ export const Search: FC = () => {
       if (!data.results[0]) {
         throw new Error('Por favor complete la ubicacion con mas informacion');
       }
-      const { lat, lng } = data.results[0].geometry?.location;
+      const { lat, lng }: { lat: number; lng: number } = data.results[0].geometry?.location;
 
-      handleLocationChange(lat, lng);
+      return { lat, lng };
     } catch (error) {
       alert(error);
     }
@@ -64,12 +58,15 @@ export const Search: FC = () => {
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    handleSearch().catch((err) => console.log(err));
-    if (latitude && longitude) {
-      navigate(
-        `/reservar/${sport}/canchas?lat=${latitude}&lng=${longitude}&rHour=${time}&date=${turn}&fieldType=${field}`,
-      );
-    }
+    handleSearch()
+      .then((data) => {
+        if (data && data.lat && data.lng) {
+          navigate(
+            `/reservar/${sport}/canchas?lat=${data.lat}&lng=${data.lng}&rHour=${time}&date=${turn}&fieldType=${field}`,
+          );
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -88,7 +85,6 @@ export const Search: FC = () => {
             <InputLocation
               label="Ubicacion"
               icon={<MdLocationOn />}
-              onLocationChange={handleLocationChange}
               handleLocationName={handleLocationName}
               location={location}
             />
