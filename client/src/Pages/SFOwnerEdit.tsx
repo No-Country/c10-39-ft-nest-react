@@ -5,7 +5,7 @@ import { GiSoccerField } from 'react-icons/gi';
 import { GrGroup } from 'react-icons/gr';
 import { MdTitle } from 'react-icons/md';
 
-import Input from '../Components/Input';
+import Input from '../Components/inputs/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
 import { OwnerEditSFQuery } from '../Functions/OwnerQuery';

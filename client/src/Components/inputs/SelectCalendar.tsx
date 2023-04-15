@@ -1,6 +1,6 @@
 import { type FC, useState } from 'react';
-import HoursList from './HoursList';
-import MyCalendar from './MyCalendar';
+import HoursList from '../HoursList';
+import MyCalendar from '../MyCalendar';
 
 interface selectType {
   label: string;
