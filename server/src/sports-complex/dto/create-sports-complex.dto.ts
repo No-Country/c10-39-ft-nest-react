@@ -6,6 +6,7 @@ import {
   Matches,
   IsOptional,
   IsBoolean,
+  IsNumber,
 } from 'class-validator';
 
 import { CreateAvailabilityRange } from './create-availability-range.dto';
@@ -53,10 +54,16 @@ export class CreateSportsComplexDTO {
     example: 'Un lugar con todas las comodidades para el deportista amateur.',
   })
   @Length(10, 500)
+  @IsOptional()
   description: string;
 
   /// TODO: Add validation for lat and lng
+  @IsNumber()
+  @IsOptional()
   lat: number;
+
+  @IsNumber()
+  @IsOptional()
   lng: number;
 
   @ApiProperty({
@@ -64,7 +71,6 @@ export class CreateSportsComplexDTO {
     example:
       'https://img.freepik.com/fotos-premium/complejo-deportivo-centro-minsk-canchas-deportivas-al-aire-libre-juegos-bielorrusia_217593-15330.jpg?w=360',
   })
-  @IsNotEmpty()
   images: string[];
 
   @IsArray()

@@ -1,6 +1,14 @@
 export default interface ComplexType {
   id: string;
   name: string;
-  ubication: string;
-  day: string;
+  address: string;
+  email: string;
+  phone: string;
+  grills: boolean;
+  locker: boolean;
+  showers: boolean;
+  restobar: boolean;
+  parking: boolean;
+  owner?: any;
+  availability: any[];
 }

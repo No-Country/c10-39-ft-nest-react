@@ -62,17 +62,14 @@ export class SportsComplexController {
   @Get('/owner')
   @UseGuards(RoleGuard)
   @ApiOkResponse({ description: 'Returns the complexes of the authenticated owner' })
-  async findAllOfOwner(
-    @GetUser() user: AuthUserDTO,
-  ) {
+  async findAllOfOwner(@GetUser() user: AuthUserDTO) {
     // const id: string = user.id;
     // const user: User = await this.usersService.findOne(id);
     const owner = user.owner;
     if (!owner) {
       throw new Error('User is not owner');
     }
-    console.log('owner', owner);
-    
+
     return this.sportsComplexService.findAllOfOwner(owner);
   }
 

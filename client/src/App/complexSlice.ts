@@ -3,10 +3,12 @@ import ComplexType from '../types/Complex.type';
 
 export interface complexDataType {
   complex: ComplexType | null;
+  hasComplex: boolean | null;
 }
 
 const initialState: complexDataType = {
   complex: null,
+  hasComplex: null,
 };
 
 const complexSlice = createSlice({
@@ -15,6 +17,7 @@ const complexSlice = createSlice({
   reducers: {
     setComplex: (state, { payload }: PayloadAction<ComplexType | null>) => {
       state.complex = payload;
+      state.hasComplex = (payload && Object.keys(payload).length > 0) ?? false;
     },
   },
 });

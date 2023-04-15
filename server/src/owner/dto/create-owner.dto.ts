@@ -3,9 +3,9 @@ import { IsString, IsUUID, MinLength } from 'class-validator';
 
 export class CreateOwnerDto {
   @ApiProperty({
-    description: "DNI of the owner",
-    example: "3544677234",
-    minLength: 5
+    description: 'DNI of the owner',
+    example: '3544677234',
+    minLength: 5,
   })
   @IsString()
   @MinLength(5)
@@ -19,7 +19,7 @@ export class CreateOwnerDto {
   @IsString()
   phone: string;
 
-  @ApiProperty()
-  @IsUUID()
-  userId: string;
+  // @ApiProperty()
+  // @IsUUID()
+  // userId: string;
 }

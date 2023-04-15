@@ -16,5 +16,6 @@ export interface appSport {
 export interface AppComplex {
   complex: {
     complex: ComplexType;
+    hasComplex: boolean;
   };
 }
