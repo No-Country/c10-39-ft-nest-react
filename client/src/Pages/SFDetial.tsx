@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
-import Layout from '../Components/Layout';
+import Layout from '../Components/layout/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
 import { getSportDetail } from '../Functions/SportFieldsQuery';
 import { type sportData } from '../types/Sport.type';

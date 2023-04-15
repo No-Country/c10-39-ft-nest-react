@@ -6,7 +6,7 @@ import { GrGroup } from 'react-icons/gr';
 import { MdTitle } from 'react-icons/md';
 
 import Input from '../Components/inputs/Input';
-import Layout from '../Components/Layout';
+import Layout from '../Components/layout/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
 import { OwnerEditSFQuery } from '../Functions/OwnerQuery';
 import { AppUser } from '../types/App.type';

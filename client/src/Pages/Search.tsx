@@ -12,7 +12,7 @@ import InputLocation from '../Components/inputs/InputLocation';
 import Select from '../Components/inputs/Select';
 import SelectCalendar from '../Components/inputs/SelectCalendar';
 import SelectHour from '../Components/inputs/SelectHour';
-import Layout from '../Components/Layout';
+import Layout from '../Components/layout/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
 import { type appSport } from '../types/App.type';
 

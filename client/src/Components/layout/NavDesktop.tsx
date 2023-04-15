@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { FaBasketballBall } from 'react-icons/fa';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
 
-import SportMenu from './SportMenu';
+import SportMenu from '../SportMenu';
 
 const NavDesktop: FC = () => {
   const [openSecondMenu, setOpenSecondMenu] = useState(false);

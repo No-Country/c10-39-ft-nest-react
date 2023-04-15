@@ -1,7 +1,7 @@
 import { useState, type FC, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
-import Layout from '../Components/Layout';
+import Layout from '../Components/layout/Layout';
 import SportField from '../Components/SportField';
 import { getSportFieldsWithSport } from '../Functions/SportFieldsQuery';
 import { type sportData } from '../types/Sport.type';

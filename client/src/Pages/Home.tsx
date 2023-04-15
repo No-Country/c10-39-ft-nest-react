@@ -1,5 +1,5 @@
 import Card from '../Components/Card';
-import Layout from '../Components/Layout';
+import Layout from '../Components/layout/Layout';
 
 const Home = () => {
   return (

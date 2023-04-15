@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import Layout from '../Components/Layout';
+import Layout from '../Components/layout/Layout';
 import SportCard from '../Components/SportCard';
 import { getAllSports } from '../Functions/SportQuery';
 
