@@ -40,7 +40,7 @@ const SelectCalendar: FC<selectType> = ({ handleClick, value, label, icon }) => 
       </label>
       {open && (
         <div className="absolute z-[500] -bottom-20 -left-1 lg:-left-[450px]">
-          <MyCalendar handleSelect={handleOption} />
+          <MyCalendar handleClick={handleOption} />
         </div>
       )}
       {icon && (

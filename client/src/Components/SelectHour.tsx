@@ -1,4 +1,5 @@
-import { type FC, useState } from 'react';
+import { type FC, useState, type BaseSyntheticEvent } from 'react';
+
 import HoursList from './HoursList';
 
 interface selectType {
@@ -17,6 +18,14 @@ const SelectHour: FC<selectType> = ({ handleClick, value, label, icon }) => {
     handleOpen();
   };
 
+  const selectValue = () => {
+    if (value !== '') {
+      let nextNum = Number(value) + 1;
+      if (nextNum === 24) nextNum = 0;
+      return `${value}:00 - ${nextNum}:00`;
+    }
+  };
+
   return (
     <div className="w-10/12 flex flex-col relative">
       <input
@@ -26,7 +35,7 @@ const SelectHour: FC<selectType> = ({ handleClick, value, label, icon }) => {
         }
         readOnly
         type={'text'}
-        value={value !== '' ? `${value}:00 - ${Number(value) + 1}:00` : ''}
+        value={selectValue()}
         onClick={handleOpen}
       />
       <label
@@ -38,7 +47,7 @@ const SelectHour: FC<selectType> = ({ handleClick, value, label, icon }) => {
         {label}
       </label>
       {open && (
-        <div className="absolute top-[58px] -left-0 z-[500] lg:top-0 lg:-left-full">
+        <div className="absolute top-[58px] -left-0 z-[500] lg:-top-10 lg:-left-[245px]">
           <HoursList handleClick={handleOpen} getAllHours={true} handleSelect={handleOption} />
         </div>
       )}

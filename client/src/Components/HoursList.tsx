@@ -21,8 +21,8 @@ const HoursList: FC<hoursProps> = ({ handleClick, getAllHours, handleSelect }) =
   const [hours, setHours] = useState<hoursType[]>([]);
 
   const allHours: hoursType[] = [];
-  for (let i = 7; i <= 24; i++) {
-    const end_hour = i === 24 ? 0 : i + 1;
+  for (let i = 7; i <= 23; i++) {
+    const end_hour = i === 23 ? 0 : i + 1;
     const addedHour = {
       end_hour: end_hour.toString(),
       id: i.toString(),
