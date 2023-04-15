@@ -8,13 +8,13 @@ import { GiSoccerField } from 'react-icons/gi';
 import { MdLocationOn } from 'react-icons/md';
 import { TfiTime } from 'react-icons/tfi';
 
-import InputLocation from '../Components/inputs/InputLocation';
-import Select from '../Components/inputs/Select';
-import SelectCalendar from '../Components/inputs/SelectCalendar';
-import SelectHour from '../Components/inputs/SelectHour';
-import Layout from '../Components/layout/Layout';
-import PrimaryButton from '../Components/PrimaryButton';
-import { type appSport } from '../types/App.type';
+import InputLocation from '../../Components/inputs/InputLocation';
+import Select from '../../Components/inputs/Select';
+import SelectCalendar from '../../Components/inputs/SelectCalendar';
+import SelectHour from '../../Components/inputs/SelectHour';
+import Layout from '../../Components/layout/Layout';
+import PrimaryButton from '../../Components/PrimaryButton';
+import { type appSport } from '../../types/App.type';
 
 const API_KEY = 'AIzaSyB8rVxLxXlomXkjJ04LRtFHC63AtzSnyw0';
 

@@ -3,7 +3,7 @@ import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
 
-import PrimaryButton from '../Components/PrimaryButton';
+import PrimaryButton from '../PrimaryButton';
 
 interface sportFieldType {
   complexData: boolean;

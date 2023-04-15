@@ -1,7 +1,7 @@
 import { useEffect, type FC, useState } from 'react';
 
 import Layout from '../../Components/layout/Layout';
-import SportField from '../../Components/SportField';
+import SportField from '../../Components/cards/SportField';
 import { getOwnerSportFields } from '../../Functions/SportFieldsQuery';
 import { type ISportField } from '../../types/SportField.type';
 

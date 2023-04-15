@@ -3,8 +3,8 @@ import { type FC } from 'react';
 import { useSelector } from 'react-redux';
 import { AppComplex } from '../types/App.type';
 
-import Card from './Card';
-import OwnerCard from './OwnerCard';
+import Card from './cards/Card';
+import OwnerCard from './cards/OwnerCard';
 
 export const OwnerMenu: FC = () => {
   const hasComplex = useSelector((state: AppComplex) => state.complex?.hasComplex);

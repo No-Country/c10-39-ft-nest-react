@@ -1,7 +1,7 @@
 import { type FC, useState, useEffect } from 'react';
 
 import Layout from '../Components/layout/Layout';
-import ReservationCard from '../Components/ReservationCard';
+import ReservationCard from '../Components/cards/ReservationCard';
 import { GetReservations } from '../Functions/ReservationsQuery';
 import PrimaryButton from '../Components/PrimaryButton';
 
