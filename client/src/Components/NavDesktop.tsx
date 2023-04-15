@@ -1,9 +1,9 @@
-import { FC, useState } from 'react';
+import { type FC, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { FaBasketballBall } from 'react-icons/fa';
-import { GoKebabVertical } from 'react-icons/go';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
+
 import SportMenu from './SportMenu';
 
 const NavDesktop: FC = () => {
@@ -25,71 +25,86 @@ const NavDesktop: FC = () => {
   const handleCloseSportMenu = () => setOpenSportMenu(false);
 
   return (
-    <nav className="hidden z-[500] box-border h-[15vh] px-20 text-white bg-primary lg:flex flex-row shadow-lg fixed w-full justify-between items-center">
-      <div className="flex gap-10 items-center">
-        <div className="bounce text-6xl">
-          <Link to={'/inicio'}>
-            <FaBasketballBall />
-          </Link>
+    <div className="relative hidden lg:block">
+      <nav className="z-[500] box-border h-[15vh] px-20 text-white bg-primary flex flex-row shadow-lg fixed w-full justify-between items-center">
+        <div className="flex gap-10 items-center">
+          <div className="bounce text-6xl">
+            <Link to={'/inicio'}>
+              <FaBasketballBall />
+            </Link>
+          </div>
+          <div className="text-4xl">
+            <Link to={'/inicio'}>ALL SPORT</Link>
+          </div>
         </div>
-        <div className="text-4xl">
-          <Link to={'/inicio'}>ALL SPORT</Link>
+        <ul className="flex flex-row gap-4 text-lg mr-2">
+          <li>
+            <Link className="p-5 rounded-full" to={'/inicio'}>
+              INICIO
+            </Link>
+          </li>
+          <li className="relative">
+            <button className="flex items-center gap-2" onClick={handleClickSportsMenu}>
+              RESERVAR
+              <span
+                className={`${
+                  openSportMenu ? 'rotate-90' : '-rotate-90'
+                } text-white align-middle text-2xl transition-transform`}
+              >
+                <MdKeyboardArrowLeft />
+              </span>
+            </button>
+            <SportMenu handleClick={handleCloseSportMenu} state={openSportMenu} />
+          </li>
+          <li>
+            <Link className="p-5 rounded-full" to={'/propietarios'}>
+              PROPIETARIOS
+            </Link>
+          </li>
+          <li>
+            <Link className="p-5 rounded-full" to={'/ayuda'}>
+              AYUDA
+            </Link>
+          </li>
+          <li>
+            <Link className="p-5 rounded-full" to={'/nosotros'}>
+              NOSOTROS
+            </Link>
+          </li>
+        </ul>
+        <div className="absolute right-3 flex flex-row items-center">
+          <div className="bg-black w-10 h-10  rounded-full"></div>
+          <div
+            onClick={handleClickSecondMenu}
+            className={`${
+              openSecondMenu ? 'rotate-90' : '-rotate-90'
+            } transition-transform cursor-pointer p-1 text-2xl`}
+          >
+            <MdKeyboardArrowLeft />
+          </div>
         </div>
-      </div>
-      <ul className="flex flex-row gap-5 text-lg">
+      </nav>
+      <ul
+        className={`absolute rounded-bl-lg z-[200] right-0 transition-transform text-white -top-24 bg-black p-5 flex flex-col gap-5 ${
+          openSecondMenu ? 'translate-y-full' : 'translate-y-0'
+        }`}
+      >
         <li>
-          <Link className="p-5 rounded-full" to={'/inicio'}>
-            INICIO
-          </Link>
-        </li>
-        <li className="relative">
-          <button className="flex items-center gap-2" onClick={handleClickSportsMenu}>
-            DEPORTES
-            <span
-              className={`${
-                openSportMenu ? 'rotate-90' : '-rotate-90'
-              } text-white align-middle text-2xl transition-transform`}
-            >
-              <MdKeyboardArrowLeft />
-            </span>
-          </button>
-          <SportMenu handleClick={handleCloseSportMenu} state={openSportMenu} />
+          <Link to={'/perfil'}>PERFIL</Link>
         </li>
         <li>
-          <Link className="p-5 rounded-full" to={'/perfil'}>
-            PERFIL
-          </Link>
+          <Link to={'/perfil/reservar'}>MIS RESERVAS</Link>
         </li>
         <li>
-          <Link className="p-5 rounded-full" to={'/ayuda'}>
-            AYUDA
-          </Link>
+          <Link to={'/propietarios/canchas'}>MIS CANCHAS</Link>
         </li>
-        <li>
-          <Link className="p-5 rounded-full" to={'/nosotros'}>
-            NOSOTROS
+        <li className="cursor-pointer border-t-[1px] divide-white">
+          <Link onClick={handleCloseSecondMenu} to={'/'}>
+            CERRAR SESION
           </Link>
         </li>
       </ul>
-      <div className="text-white absolute top-2 right-2">
-        <div onClick={handleClickSecondMenu} className="text-2xl cursor-pointer">
-          <GoKebabVertical />
-        </div>
-        <div
-          className={`${
-            openSecondMenu ? 'flex' : 'hidden'
-          }   items-center absolute text-lg -left-40 top-5 h-32 w-40 bg-black py-10 rounded-md`}
-        >
-          <Link
-            to={'/'}
-            onClick={handleCloseSecondMenu}
-            className="pl-5 py-5 active:bg-primary w-full"
-          >
-            Cerrar sesion
-          </Link>
-        </div>
-      </div>
-    </nav>
+    </div>
   );
 };
 
