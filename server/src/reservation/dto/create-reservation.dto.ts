@@ -1,5 +1,12 @@
 import { Transform } from 'class-transformer';
-import { IsNotEmpty, IsDate, Validate } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsDate,
+  Validate,
+  ValidationArguments,
+  IsEmail,
+  isNotEmpty,
+} from 'class-validator';
 import { ValidatorConstraint, ValidatorConstraintInterface } from 'class-validator';
 
 @ValidatorConstraint({ name: 'notPastDate', async: false })
@@ -20,6 +27,10 @@ export class NotPastHourConstraint implements ValidatorConstraintInterface {
     const now = new Date();
     return hour >= now.getHours();
   }
+
+  defaultMessage(): string {
+    return 'test';
+  }
 }
 
 export class CreateReservationDto {
@@ -27,7 +38,7 @@ export class CreateReservationDto {
   sportfieldId: string;
 
   @IsNotEmpty()
-  @Validate(NotPastHourConstraint)
+  // @Validate(NotPastHourConstraint)
   hour: number;
 
   @Transform(({ value }) => new Date(value))
@@ -35,5 +46,7 @@ export class CreateReservationDto {
   @IsNotEmpty()
   @Validate(NotPastDateConstraint)
   date: Date;
-}
 
+  @IsEmail()
+  userEmail: string;
+}

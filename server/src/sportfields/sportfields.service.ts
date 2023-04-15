@@ -1,41 +1,60 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SportsService } from 'src/sports/sports.service';
+import { SportsComplexService } from 'src/sports-complex/sports-complex.service';
 import { Repository } from 'typeorm';
 
 import { CreateSportFieldDto, UpdateSportFieldDto } from './dto';
 import { SportField } from './entities/sportfield.entity';
+import { AuthUserDTO, UserDTO } from 'src/Core/auth/dto';
+import SportsComplex from 'src/sports-complex/entities/sports-complex.entity';
+import { plainToClass } from 'class-transformer';
+import { ReservationService } from 'src/reservation/reservation.service';
 
 @Injectable()
 export class SportfieldsService {
   constructor(
+    private readonly sportService: SportsService,
+    private readonly sportsComplexService: SportsComplexService,
+    private readonly reservationsService: ReservationService,
     @InjectRepository(SportField)
     private readonly sportFieldRepository: Repository<SportField>,
-    private readonly sportService: SportsService,
+    @InjectRepository(SportsComplex)
+    private readonly sportsComplexRepository: Repository<SportsComplex>,
   ) {}
 
-  async findAll() {
-    const allSportfields = await this.sportFieldRepository.find({
-      relations: {
-        sport: true,
-      },
-    });
+  async findAll(user: AuthUserDTO) {
+    const allSportfields = await this.sportFieldRepository
+      .createQueryBuilder('sportFields')
+      .innerJoinAndSelect('sportFields.sportsComplex', 'sc', 'sc.ownerId = :ownerId', {
+        ownerId: user.ownerId,
+      })
+      .leftJoinAndSelect('sportFields.sport', 'sport')
+      .leftJoinAndSelect('sportFields.reservation', 'res')
+      .getMany();
+
     if (!allSportfields) throw new NotFoundException('SportField not found');
-    return allSportfields.map((sf) => ({
-      ...sf,
-      sport: sf.sport.name,
+
+    // TODO: Refactor this to use an interceptor
+    return allSportfields.map(({ sportsComplex, sport, ...field }) => ({
+      ...field,
+      sportsComplex,
+      availability: sportsComplex?.availability,
+      sport: sport.name,
     }));
   }
+
   async findWithSport(sport: string) {
     const allSportfields = await this.sportFieldRepository.find({
-      where:{
+      where: {
         sport: {
-          name: sport
-        }
+          name: sport,
+        },
       },
       relations: {
         sport: true,
@@ -48,29 +67,71 @@ export class SportfieldsService {
     }));
   }
 
+  async findUserReservations(user: AuthUserDTO) {
+    const reservations = await this.sportFieldRepository
+      .createQueryBuilder('sf')
+      .innerJoinAndSelect('sf.reservation', 'res', 'res.userId = :userId', { userId: user.id })
+      .leftJoin('sf.sportsComplex', 'sc')
+      .addSelect('sc.address')
+      .getMany();
+
+    return reservations;
+  }
+
+  async getAvailability(id: string) {
+    const sportField = await this.sportFieldRepository.findOneBy({ id });
+
+    return sportField.availability;
+  }
+
+  async getReservations(id: string) {
+    const sportField = await this.sportFieldRepository
+      .createQueryBuilder('sportField')
+      .leftJoinAndSelect('sportField.reservation', 'res')
+      .where('sportField.id = :id', { id })
+      .getMany();
+
+    return sportField;
+  }
+
   async findOne(id: string) {
     const sportfield = await this.sportFieldRepository.findOneBy({ id });
     if (!sportfield) throw new NotFoundException('SportField not found');
     return sportfield;
   }
 
-  // TODO: Implement CREATE UPDATE AND DELETE
-  async create(createSportFieldDto: CreateSportFieldDto) {
-    const { sport: sportName, ...sportFieldAttrs } = createSportFieldDto;
+  async create(createSportFieldDto: CreateSportFieldDto, ownerId: string) {
+    const {
+      sport: sportName,
+      sportsComplexId,
+      fieldType,
+      ...sportFieldAttrs
+    } = createSportFieldDto;
 
     const newSportField = this.sportFieldRepository.create({
       ...sportFieldAttrs,
     });
 
-    await this.bindSport(newSportField, sportName);
+    newSportField.sport = await this.getSport(sportName, fieldType);
+    newSportField.fieldType = fieldType;
+
+    const sportsComplex = await this.sportsComplexService.findOneWithOwner(sportsComplexId);
+    console.log(sportsComplex);
+
+    if (sportsComplex.owner?.id !== ownerId)
+      throw new ForbiddenException('Insuficient Permissions');
+
+    newSportField.sportsComplex = sportsComplex;
 
     await this.sportFieldRepository.save(newSportField);
 
-    return { ...newSportField, sport: sportName };
+    return { ...newSportField, fieldType, sport: sportName };
   }
 
-  async update(id: string, updateSportFieldDto: UpdateSportFieldDto) {
-    const { sport: sportName, ...updatedAttrs } = updateSportFieldDto;
+  async update(id: string, updateSportFieldDto: UpdateSportFieldDto, ownerId: string) {
+    await this.checkOwner(ownerId, id);
+
+    const { sport: sportName, fieldType, ...updatedAttrs } = updateSportFieldDto;
 
     const updatedSportField = await this.sportFieldRepository.preload({
       id,
@@ -80,16 +141,19 @@ export class SportfieldsService {
     if (!updatedSportField) throw new NotFoundException('SportField not found');
 
     if (sportName) {
-      await this.bindSport(updatedSportField, sportName);
+      const newFieldType = fieldType || updatedSportField.fieldType;
+      updatedSportField.sport = await this.getSport(sportName, newFieldType);
+      updatedSportField.fieldType = newFieldType;
     }
 
-    // TODO: this is not the most performant way of update
+    // TODO: this is not the most performant way to update
     await this.sportFieldRepository.save(updatedSportField);
 
     return { ...updatedSportField, sport: sportName };
   }
 
-  async remove(id: string) {
+  async remove(id: string, ownerId: string) {
+    await this.checkOwner(ownerId, id);
     const sportfield = await this.sportFieldRepository.findOneBy({ id });
 
     if (!sportfield) throw new NotFoundException('SportField not found');
@@ -99,34 +163,95 @@ export class SportfieldsService {
     return sportfield;
   }
 
-  async search(lat: number, lng: number): Promise<SportField[]> {
-    const query = this.sportFieldRepository.createQueryBuilder('Sportfield');
-    query.select(`Sportfield.*, ST_Distance(SportsComplex.location, ST_SetSRID(ST_MakePoint(:lng, :lat), 4326)) as distance`);
-    query.innerJoin('SportField.SportsComplex', 'SportsComplex');
-    query.where('SportsComplex.location IS NOT NULL');
-    query.orderBy('distance', 'ASC');
-    query.limit(20);
-    query.setParameters({ lat, lng });
-    return await query.getMany();
+  async search(
+    lat: number,
+    lng: number,
+    rHour: number,
+    date: string,
+    sport: string,
+    fieldType: string,
+  ): Promise<any> {
+    const R = 6371; // Radio de la Tierra en kilómetros
+    const limit = 20; // Límite de resultados
+
+    const nearbySportFields = await this.sportFieldRepository
+      .createQueryBuilder('sportField')
+      .select([
+        'sportField.id',
+        'sportField.name',
+        'sportField.description',
+        'sportField.dimensions',
+        'sportField.images',
+        'sportField.sportId',
+        'sport.name',
+        'sportsComplex.id',
+        'sportsComplex.name',
+        'sportsComplex.email',
+        'sportsComplex.address',
+        'sportsComplex.phone',
+        'sportsComplex.description',
+        'sportsComplex.lat',
+        'sportsComplex.lng',
+        'sportsComplex.images',
+        `(${R} * acos(cos(radians(:lat)) * cos(radians(:lat)) * cos(radians(:lng) - radians(:lng)) + sin(radians(:lat)) * sin(radians(:lat)))) as distancia`,
+      ])
+      .innerJoin(
+        'sportField.sport',
+        'sport',
+        'sport.name = :sport AND sportField.fieldType = :fieldType',
+        { sport, fieldType },
+      )
+      .leftJoin('sportField.sportsComplex', 'sportsComplex')
+      .innerJoin(
+        'sportsComplex.availability',
+        'ar',
+        'ar.start_hour <= :rHour AND ar.end_hour >= :rHour',
+        { rHour },
+      )
+      .leftJoinAndSelect('sportField.reservation', 'r', 'r.hour = :rHour AND r.date = :date', {
+        rHour,
+        date,
+      })
+      .orderBy('distancia', 'ASC')
+      .setParameter('lat', lat)
+      .setParameter('lng', lng)
+      .limit(limit)
+      .getMany();
+
+    const availableSportFields = nearbySportFields.filter((sp) => sp.reservation.length === 0);
+
+    const sportFields = plainToClass(SportField, availableSportFields);
+    return sportFields;
   }
 
+  private async checkOwner(ownerId: string, sportFieldId: string) {
+    const realOwner = await this.sportFieldRepository
+      .createQueryBuilder('sportfields')
+      .select('owner.*')
+      .where('sportfields.id = :sportFieldId', { sportFieldId })
+      .innerJoin('sportfields.sportsComplex', 'sportsComplex')
+      .innerJoin('sportsComplex.owner', 'owner')
+      .getRawOne();
 
-  private async bindSport(sportField: SportField, sportName: string) {
+    if (!realOwner) throw new NotFoundException("Sport field doesn't exists");
+
+    if (realOwner.id !== ownerId) throw new ForbiddenException('Insuficient premissions');
+
+    return realOwner.id;
+  }
+
+  private async getSport(sportName: string, fieldType: string) {
     try {
-      const { id: sportId } = await this.sportService.findOneByName(sportName, {
-        id: true,
-      });
+      const sport = await this.sportService.findOneByName(sportName);
+      if (!sport.types.includes(fieldType))
+        throw new BadRequestException("FieldType doesn't exists");
 
-      const queryBuilder = this.sportFieldRepository.createQueryBuilder();
-      await queryBuilder
-        .relation(SportField, 'sport')
-        .of(sportField)
-        .set(sportId);
-
-      return sportField;
+      return sport;
     } catch (e: any) {
       if (e.constructor === NotFoundException)
         throw new BadRequestException("Sport doesn't exists");
+
+      throw e;
     }
   }
 }

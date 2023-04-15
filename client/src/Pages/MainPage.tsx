@@ -39,12 +39,12 @@ const MainPage = () => {
           .catch((e) => console.log('Auth failed', e));
       }
     }, 50);
-  }, []);
+  }, [navigate]);
 
   return (
-    <div className="relative min-h-screen min-w-screen overflow-hidden flex flex-col justify-center items-center gap-10">
-      <span className="absolute  -top-20 -left-20 lg:-top-[120px] lg:-left-[120px] w-52 bg-primary h-52 lg:w-[500px] lg:h-[500px] rounded-full"></span>
-      <span className="absolute -bottom-20 -right-20 lg:-bottom-[120px] lg:-right-[120px] w-52 bg-primary h-52 lg:w-[500px] lg:h-[500px]  rounded-full"></span>
+    <div className="bg-bg relative min-h-screen min-w-screen overflow-hidden flex flex-col justify-center items-center gap-10">
+      <span className="absolute  -top-16 -left-16 lg:-top-[120px] lg:-left-[120px] w-64 bg-primary h-64 lg:w-[500px] lg:h-[500px] rounded-full"></span>
+      <span className="absolute -bottom-16 -right-16 lg:-bottom-[120px] lg:-right-[120px] w-64 bg-primary h-64 lg:w-[500px] lg:h-[500px]  rounded-full"></span>
       <div>
         <FaBasketballBall className="lg:w-[272px] lg:h-[248px]   w-[128px] h-[128px] text-primary"></FaBasketballBall>
       </div>
@@ -65,7 +65,7 @@ const MainPage = () => {
           onClick={() => {
             window.location.href = `${BACKEND_URL}/auth/google`;
           }}
-          className="bg-gradone px-20 py-2 rounded-full"
+          className="bg-white px-20 py-2 rounded-full"
         >
           Google
         </div>

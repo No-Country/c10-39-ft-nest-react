@@ -1,17 +1,34 @@
-import Card from '../Components/Card';
+import { useSelector } from 'react-redux';
+
 import Layout from '../Components/Layout';
 
+import OwnerRegister from './OwnerRegister';
+import { OwnerMenu } from '../Components/OwnerMenu';
+import { useEffect } from 'react';
+import { GetComplexQuery } from '../Functions/ComplexQuery';
+import store from '../App/Store';
+import { setComplex } from '../App/complexSlice';
+
 const Owner = () => {
+  const isOwner = useSelector<any>((state) => state.user?.user?.owner);
+  useEffect(() => {
+    GetComplexQuery()
+      .then((value) => value && store.dispatch(setComplex(value)))
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
-    <Layout title="Popietarios">
-      <div className="w-full h-full overflow-scroll fixed bg-tenis-desktop bg-cover bg-[30%]">
-        <div className="flex flex-col gap-16 mx-1 h-full pt-24 relative lg:flex-row lg:mx-20 lg:pt-0 lg:items-center lg:bottom-20 lg:justify-between">
-          {' '}
-          <Card route="/propietarios/canchas" title="Mis canchas" />
-          <Card route="/propietarios/agregar-cancha" title="Agregar cancha" />
-        </div>
-      </div>
-    </Layout>
+    <>
+      {isOwner ? (
+        <>
+          <Layout title='Popietarios'>
+            <OwnerMenu />
+          </Layout>
+        </>
+      ) : (
+        <OwnerRegister />
+      )}
+    </>
   );
 };
 

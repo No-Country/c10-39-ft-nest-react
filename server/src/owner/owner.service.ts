@@ -6,6 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { AuthUserDTO } from 'src/Core/auth/dto';
 import User from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 
@@ -23,20 +24,20 @@ export class OwnerService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async create(createOwnerDto: CreateOwnerDto) {
+  async create(createOwnerDto: CreateOwnerDto, user: AuthUserDTO) {
     try {
-      const { userId, ...ownerData } = createOwnerDto;
-      const user = await this.userRepository.findOneBy({ id: userId });
-      if (!user) throw new NotFoundException('The user not exist');
+      const { ...ownerData } = createOwnerDto;
+      const userDB = await this.userRepository.findOneBy({ id: user.id });
+      if (!userDB) throw new NotFoundException('The user not exist');
       const owner = this.ownerRepository.create({
-        userId,
+        user,
         ...ownerData,
       });
       await this.ownerRepository.save(owner);
 
-      user.owner = owner;
+      userDB.owner = owner;
 
-      await this.userRepository.save(user);
+      await this.userRepository.save(userDB);
 
       return { ...owner };
     } catch (error) {

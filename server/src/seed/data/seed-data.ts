@@ -1,27 +1,32 @@
+import * as bcrypt from 'bcrypt';
+import { SALT } from 'src/Core/Constants';
 import { v4 as uuidv4 } from 'uuid';
-import * as bcrypt from "bcrypt";
-import { SALT } from "src/Core/Constants";
 
 interface SeedSport {
-  id: string;
   name: string;
   images: string[];
   sportfieldsId?: string[];
+  types: string[];
 }
 
 // interface SeedSportWithUUID extends SeedSport {
 //   id: string;
 // }
+//
+interface SeedReservation {
+  date: string;
+  hour: number;
+}
 
 interface SeedSportField {
-  id: string;
   name: string;
   description: string;
   dimensions: string;
   images: string[];
-  sportId?: string;
-  sportComplexId?: string;
-  reservationId?: string[]
+  sport: string;
+  capacity?: number;
+  reservation?: SeedReservation[];
+  fieldType: string;
 }
 
 // interface SeedSportFieldRecord extends SeedSportField {
@@ -29,95 +34,96 @@ interface SeedSportField {
 // }
 
 interface SeedUsers {
-  id: string;
   email: string;
   password: string;
   firstName: string;
   lastName: string;
-  ownerId?: string;
+  owner?: SeedOwners;
 }
+
 interface SeedOwners {
-  id?: string;
   DNI: string;
   address: string;
   phone: string;
-  userId?: any;
-  sportsComplexId?: string;
 }
+
+interface SeedAvailabilityRange {
+  start_hour: number;
+  end_hour: number;
+}
+
 interface SeedSportsComplex {
-  id: string;
   email: string;
   address: string;
   phone: string;
   name: string;
   description: string;
-  image: string[];
+  images: string[];
   grills?: boolean;
   locker?: boolean;
   showers?: boolean;
   bathrooms?: boolean;
   restobar?: boolean;
   parking?: boolean;
-  ownerId?: string;
-  sportfieldsId?: string[];
+  lat: number;
+  lng: number;
+  availability?: SeedAvailabilityRange[];
 }
 
 interface SeedData {
   users: SeedUsers[];
-  owners: SeedOwners[];
   sportscomplex: SeedSportsComplex[];
   sports: SeedSport[];
-  sportfields: SeedSportField[]
-  // sports: SeedSportWithUUID[];
-  // sportfields: SeedSportFieldRecord[]
+  sportfields: SeedSportField[];
 }
+
 // DATOS
 // Crear relaciones
-const idRelations = [
-  {
-    idUser: uuidv4(),
-    idOwner: uuidv4(),
-    idSportComplex: uuidv4(),
-    idSportField: uuidv4(),
-  },
-  {
-    idUser: uuidv4(),
-    idOwner: uuidv4(),
-    idSportComplex: uuidv4(),
-    idSportField: uuidv4(),
-  },
-  {
-    idUser: uuidv4(),
-    idOwner: uuidv4(),
-    idSportComplex: uuidv4(),
-    idSportField: uuidv4(),
-  },
-]
+// const idRelations = [
+//   {
+//     idUser: uuidv4(),
+//     idOwner: uuidv4(),
+//     idSportComplex: uuidv4(),
+//     idSportField: uuidv4(),
+//   },
+//   {
+//     idUser: uuidv4(),
+//     idOwner: uuidv4(),
+//     idSportComplex: uuidv4(),
+//     idSportField: uuidv4(),
+//   },
+//   {
+//     idUser: uuidv4(),
+//     idOwner: uuidv4(),
+//     idSportComplex: uuidv4(),
+//     idSportField: uuidv4(),
+//   },
+// ];
 
 const sports: SeedSport[] = [
   {
-    id: uuidv4(),
     name: 'football',
     images: [
-      'https://img.freepik.com/fotos-premium/cerca-delantero-futbol-listo-patear-pelota-fuego-estadio_207634-7.jpg?w=2000',
+      'https://asset.cloudinary.com/djvepy9sd/afcecc340efd37e7305c5d0808ca5e51',
     ],
+    types: ['cesped', 'cesped sintentico'],
   },
   {
-    id: uuidv4(),
     name: 'basketball',
-    images: ['https://img.freepik.com/foto-gratis/aro-baloncesto_1127-3376.jpg'],
+    images: ['https://asset.cloudinary.com/djvepy9sd/70b832d4eaf371a8589fd16589c4a06b'],
+    types: ['material', 'parquet'],
   },
   {
-    id: uuidv4(),
     name: 'tennis',
     images: [
-      'https://images.sportscity.it/1920x1080/Schermata_2023-01-02_alle_13_1215142572691672663113.jpg',
+      'https://asset.cloudinary.com/djvepy9sd/e5dd861f1db2c0c1eff4b222c45b9ee4',
     ],
+    types: ['polvo de ladrillo', 'cesped', 'material'],
   },
   {
-    id: uuidv4(),
     name: 'volleyball',
-    images: ['https://img.freepik.com/foto-gratis/pelota-golpeando-red_23-2149450951.jpg'],
+    images: ['https://asset.cloudinary.com/djvepy9sd/89a40da751aac3ac6d1106b41dd79466'],
+    types: ['arena', 'material'],
   },
 ];
 
@@ -128,168 +134,346 @@ const sports: SeedSport[] = [
 
 const sportfields: SeedSportField[] = [
   {
-    id: uuidv4(),
     name: 'La Bombonerita',
     description: 'Cancha de futbol 5 de pasto sintetico y cerrado.',
     dimensions: '30x16',
     images: [
-      'https://www.hoysejuega.com/uploads/Modules/ImagenesComplejos/800_600_la-cancha-f%C3%BAtbol-5-y-6-.-2.jpg',
+      'https://asset.cloudinary.com/djvepy9sd/8d4957770879e2ba8e0f545f4c138979',
     ],
-    sportId: sports[0].id,
-    sportComplexId: idRelations[0].idSportComplex
+    sport: 'football',
+    fieldType: 'cesped',
+    capacity: 10,
+    reservation: [
+      {
+        hour: 12,
+        date: '2023-04-23',
+      },
+    ],
   },
   {
-    id: uuidv4(),
     name: 'El Monumental',
     description: 'Cancha de futbol 11 de pasto natural.',
     dimensions: '90x45',
-    images: ['https://donpotrero.com/img/posts/2/medidas_sm.jpg'],
-    sportId: sports[0].id,
-    sportComplexId: idRelations[0].idSportComplex
+    images: ['https://asset.cloudinary.com/djvepy9sd/b62994503e9bbaeaa73d1337572382e5'],
+    sport: 'football',
+    fieldType: 'cesped',
+    capacity: 22,
+    reservation: [
+      {
+        hour: 12,
+        date: '2023-04-23',
+      },
+    ],
   },
   {
-    id: uuidv4(),
+    name: 'El Fortin',
+    description: 'Cancha de futbol 5.',
+    dimensions: '90x45',
+    images: ['https://asset.cloudinary.com/djvepy9sd/bd699a0ca98c4bc09a1a029da1a5f9c8'],
+    sport: 'football',
+    fieldType: 'cesped sintentico',
+    capacity: 10,
+    reservation: [
+      {
+        hour: 11,
+        date: '2023-04-23',
+      },
+      {
+        hour: 14,
+        date: '2023-04-23',
+      },
+    ],
+  },
+  {
     name: 'Staples Center',
     description: 'Cancha de basket cerrada.',
     dimensions: '28x15',
-    images: ['https://integralspor.com/uploads/blog/detail/162445d5fbd2b893161.jpg'],
-    sportId: sports[1].id,
-    sportComplexId: idRelations[0].idSportComplex
+    images: ['https://asset.cloudinary.com/djvepy9sd/f1806dba33030b2aa20c08c1c675a07a'],
+    sport: 'basketball',
+    fieldType: 'material',
+    capacity: 10,
+    reservation: [
+      {
+        hour: 11,
+        date: '2023-04-28',
+      },
+      {
+        hour: 14,
+        date: '2023-04-24',
+      },
+    ],
   },
   {
-    id: uuidv4(),
     name: 'Madison Center',
     description: 'Cancha de basket cerrada.',
     dimensions: '28x15',
+    capacity: 10,
     images: [
-      'https://www.geoplastglobal.com/wp-content/uploads/2016/09/basket_indoor_gripper_geoplast-3.jpg',
+      'https://asset.cloudinary.com/djvepy9sd/69ecea790a85dd22f7b0c09b76773df1',
     ],
-    sportId: sports[1].id,
-    sportComplexId: idRelations[0].idSportComplex
+    sport: 'basketball',
+    fieldType: 'parquet',
+    reservation: [
+      {
+        hour: 19,
+        date: '2023-04-18',
+      },
+      {
+        hour: 19,
+        date: '2023-05-22',
+      },
+    ],
   },
   {
-    id: uuidv4(),
     name: 'Quality Sport',
     description: 'Cancha de basket cerrada.',
     dimensions: '28x15',
+    capacity: 10,
     images: [
-      'https://www.qualitysportinstalacionesdeportivas.com/wp-content/uploads/2022/05/tipos-de-superficies-de-pista-de-basket.png',
+      'https://asset.cloudinary.com/djvepy9sd/d27ce63b4e35c984586c66112044bd0f',
     ],
-    sportId: sports[1].id,
-    sportComplexId: idRelations[1].idSportComplex
+    sport: 'basketball',
+    fieldType: 'parquet',
+
   },
   {
-    id: uuidv4(),
     name: 'United Center',
     description: 'Cancha de basket cerrada.',
     dimensions: '28x15',
+    capacity: 10,
     images: [
-      'https://www.revistaelabasto.com.ar/wp-content/uploads/2021/03/156221395_4205449606134895_5504940228789878318_o.jpg',
+      'https://asset.cloudinary.com/djvepy9sd/284c74e4ec4af9d5d1a35ffcc69ade65',
     ],
-    sportId: sports[1].id,
-    sportComplexId: idRelations[1].idSportComplex
+    sport: 'basketball',
+    fieldType: 'parquet',
   },
   {
-    id: uuidv4(),
     name: 'American Airlines Center',
     description: 'Cancha de basket cerrada.',
     dimensions: '28x15',
+    capacity: 10,
+    images: [
+      'https://asset.cloudinary.com/djvepy9sd/8f35148d1fa2265e4293de2baa40cfea',
+    ],
+    sport: 'basketball',
+    fieldType: 'material',
+  },
+  {
+    name: 'American Airlines Center',
+    description: 'Cancha de basket cerrada.',
+    dimensions: '28x15',
+    capacity: 10,
     images: [
       'https://www.qualitysportinstalacionesdeportivas.com/wp-content/uploads/2022/05/tipos-de-superficies-de-pista-de-basket.png',
     ],
-    sportId: sports[1].id,
-    sportComplexId: idRelations[1].idSportComplex
+    sport: 'basketball',
+    fieldType: 'material',
+  },
+  {
+    name: 'Court Nalbandian',
+    description: 'Cancha de tenis de polvo de ladrillo.',
+    dimensions: '28x15',
+    capacity: 4,
+    images: [
+      'https://asset.cloudinary.com/djvepy9sd/ca90d4832bf05d5c062281c13aeb3607',
+    ],
+    sport: 'tennis',
+    fieldType: 'polvo de ladrillo',
+  },
+  {
+    name: 'Court Pitt Sampras',
+    description: 'Cancha de tenis de cesped.',
+    dimensions: '28x15',
+    capacity: 4,
+    images: [
+      'https://asset.cloudinary.com/djvepy9sd/8f35148d1fa2265e4293de2baa40cfea',
+    ],
+    sport: 'tennis',
+    fieldType: 'cesped',
+  },
+  {
+    name: 'Court Mago Coria',
+    description: 'Cancha de tenis cemento.',
+    dimensions: '28x15',
+    capacity: 4,
+    images: [
+      'https://asset.cloudinary.com/djvepy9sd/28a6f07d54b142cb11bd051deb0619e4',
+    ],
+    sport: 'tennis',
+    fieldType: 'material',
+  },
+  {
+    name: 'Court Roger Federer',
+    description: 'Cancha de tenis cesped sintetico.',
+    dimensions: '28x15',
+    capacity: 4,
+    images: [
+      'https://asset.cloudinary.com/djvepy9sd/57c95b6672c49886bfcef6e0fc67e0b1',
+    ],
+    sport: 'tennis',
+    fieldType: 'cesped',
+  },
+  {
+    name: 'Court Nadal',
+    description: 'Cancha de tenis polvo de ladrillo.',
+    dimensions: '28x15',
+    capacity: 4,
+    images: [
+      'https://asset.cloudinary.com/djvepy9sd/4c846f27399e5ccd51e0479e31785db5',
+    ],
+    sport: 'tennis',
+    fieldType: 'polvo de ladrillo',
+  },
+  {
+    name: 'Cancha de Voley',
+    description: 'Cancha de voley de parquet.',
+    dimensions: '16x8',
+    capacity: 12,
+    images: [
+      'https://asset.cloudinary.com/djvepy9sd/bc7ead9880af26c7f0ebdba2872ee385',
+    ],
+    sport: 'volleyball',
+    fieldType: 'material',
+  },
+  {
+    name: 'Cancha de Voley',
+    description: 'Cancha de voley de cemento con red.',
+    dimensions: '16x8',
+    capacity: 12,
+    images: [
+      'https://asset.cloudinary.com/djvepy9sd/71a38042cf4c90142f39daadcc491563',
+    ],
+    sport: 'volleyball',
+    fieldType: 'material',
+  },
+  {
+    name: 'Cancha de Voley Rodman',
+    description: 'Cancha de voley de cemento con red.',
+    dimensions: '16x8',
+    capacity: 12,
+    images: [
+      'https://asset.cloudinary.com/djvepy9sd/22c617baeeae39ac1cc215a5f6f184cf',
+    ],
+    sport: 'volleyball',
+    fieldType: 'material',
+  },
+  {
+    name: 'Cancha de Voley Mariana',
+    description: 'Cancha de voley de cemento con red.',
+    dimensions: '16x8',
+    capacity: 12,
+    images: [
+      'https://asset.cloudinary.com/djvepy9sd/9cb7270bfff434b1aca668aafb9a3091',
+    ],
+    sport: 'volleyball',
+    fieldType: 'material',
+  },
+  {
+    name: 'Cancha de Voley Ramallo',
+    description: 'Cancha de voley de cemento con red.',
+    dimensions: '16x8',
+    capacity: 12,
+    images: [
+      'https://asset.cloudinary.com/djvepy9sd/24134b2524cd19aed0419d79d825334c',
+    ],
+    sport: 'volleyball',
+    fieldType: 'material',
   },
 ];
-
-
 
 const users: SeedUsers[] = [
   {
-    id: idRelations[0].idUser,
-    email: "test1@gmail.com",
-    firstName: "test1",
-    lastName: "test1",
-    password: bcrypt.hashSync("12345Test", SALT),
-    ownerId: idRelations[0].idOwner,
+    email: 'test1@gmail.com',
+    firstName: 'test1',
+    lastName: 'test1',
+    password: bcrypt.hashSync('12345Test', SALT),
   },
   {
-    id: idRelations[1].idUser,
-    email: "test2@gmail.com",
-    firstName: "test2",
-    lastName: "test2",
-    password: bcrypt.hashSync("12345Test", SALT),
-    ownerId: idRelations[1].idOwner,
+    email: 'test2@gmail.com',
+    firstName: 'test2',
+    lastName: 'test2',
+    password: bcrypt.hashSync('12345Test', SALT),
+    owner: {
+      address: 'calle 1',
+      DNI: '111222333',
+      phone: '123123123',
+    },
   },
   {
-    id: uuidv4(),
-    email: "test3@gmail.com",
-    firstName: "test3",
-    lastName: "test3",
-    password: bcrypt.hashSync("12345Test", SALT),
+    email: 'test3@gmail.com',
+    firstName: 'test3',
+    lastName: 'test3',
+    password: bcrypt.hashSync('12345Test', SALT),
+    owner: {
+      address: 'calle 2',
+      DNI: '231434123',
+      phone: '3123122343',
+    },
   },
 ];
+
 const sportscomplex: SeedSportsComplex[] = [
   {
-    id: idRelations[0].idSportComplex,
     name: 'Quality',
     email: 'quality1@gmail.com',
     address: 'Calle Fuerza Aerea 1234',
-    phone: "+54 9 3512268833",
-    description: 'Complejo Deportivo de primer nivel con toda la equipacion disponible para el deporte amateur',
-    image: ['https://inuba.com/wp-content/uploads/2022/03/que-es-un-complejo-deportivo.webp'],
+    phone: '+54 9 3512268833',
+    description:
+      'Complejo Deportivo de primer nivel con toda la equipacion disponible para el deporte amateur',
+    images: ['https://asset.cloudinary.com/djvepy9sd/d49f9604602a2cefcd6af1fd93f2c31e'],
     bathrooms: true,
     grills: true,
     locker: true,
     parking: true,
     restobar: true,
     showers: true,
-    ownerId: idRelations[0].idOwner,
-    sportfieldsId: [sportfields[0].id, sportfields[1].id, sportfields[2].id, sportfields[3].id]
+    lat: -32.4201,
+    lng: -64.1888,
+    availability: [
+      {
+        start_hour: 7,
+        end_hour: 13,
+      },
+      {
+        start_hour: 16,
+        end_hour: 22,
+      },
+    ],
   },
   {
-    id: idRelations[1].idSportComplex,
     name: 'Centro de Alto Rendimiento Deportivo Amadeo Nuccetelli',
     email: 'card_amadeo@gmail.com',
     address: 'Calle Rosario de Sante Fe 15',
-    phone: "+54 9 3512268833",
-    description: 'Complejo Deportivo de primer nivel con toda la equipacion disponible para el deporte amateur',
-    image: ['https://inuba.com/wp-content/uploads/2022/03/que-es-un-complejo-deportivo.webp'],
+    phone: '+54 9 3512268833',
+    description:
+      'Complejo Deportivo de primer nivel con toda la equipacion disponible para el deporte amateur',
+    images: ['https://asset.cloudinary.com/djvepy9sd/8787789bd6ef1a24146a2d7798037bde'],
     bathrooms: true,
     grills: true,
     locker: true,
     parking: true,
     restobar: true,
     showers: true,
-    ownerId: idRelations[1].idOwner,
-    sportfieldsId: [sportfields[5].id, sportfields[6].id, sportfields[4].id]
+    lat: -32.4201,
+    lng: -64.1888,
+    availability: [
+      {
+        start_hour: 9,
+        end_hour: 13,
+      },
+      {
+        start_hour: 14,
+        end_hour: 24,
+      },
+    ],
   },
-]
-const owners: SeedOwners[] = [
-  {
-    id: idRelations[0].idOwner,
-    address: 'calle 1',
-    DNI: "111222333",
-    phone: "123123123",
-    userId: idRelations[0].idUser,
-    sportsComplexId: idRelations[0].idSportComplex
-  },
-  {
-    id: idRelations[1].idOwner,
-    address: 'calle 2',
-    DNI: "231434123",
-    phone: "3123122343",
-    userId: idRelations[1].idUser,
-    sportsComplexId: idRelations[1].idSportComplex
-  }
-]
+];
 
 export const initialData: SeedData = {
   users,
-  owners,
   sportscomplex,
   sportfields,
-  sports
+  sports,
   // sports: sportsWithUUIDS,
   // sportfields: sportFields.map((field) => {
   //   const idx = field.sportId ? field.sportId - 1 : 0;

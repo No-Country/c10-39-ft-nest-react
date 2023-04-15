@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import { Sport } from 'src/sports/entities/sport.entity';
 import { SportField } from 'src/sportfields/entities/sportfield.entity';
@@ -23,75 +23,76 @@ export class SeedService {
     private readonly ownerRespository: Repository<Owner>,
     @InjectRepository(SportsComplex)
     private readonly sportcomplexRespository: Repository<SportsComplex>,
-  ) { }
+  ) {}
 
   async runSeed() {
     await this.deleteAll();
-    await this.sportRepository
-      .createQueryBuilder('sport')
-      .insert()
-      .values(initialData.sports)
-      .execute();
 
-    await this.SportFieldRepository
-      .createQueryBuilder('sportfield')
-      .insert()
-      .values(initialData.sportfields)
-      .execute();
+    // Add users and owners
+    const usersDB: User[] = [];
+    const ownersDB: User[] = [];
+    for (const user of initialData.users) {
+      const { owner, ...userFields } = user;
+      const instance = this.userRepository.create(userFields);
 
-    await this.userRepository
-      .createQueryBuilder('user')
-      .insert()
-      .values(initialData.users)
-      .execute();
+      if (!owner) {
+        const userDB = await this.userRepository.save(instance);
+        usersDB.push(userDB);
+      } else {
+        const ownerInstance = this.ownerRespository.create(owner);
+        instance.owner = ownerInstance;
+        const userDB = await this.userRepository.save(instance);
+        ownersDB.push(userDB);
+      }
+    }
 
-    await this.ownerRespository
-      .createQueryBuilder('owner')
-      .insert()
-      .values(initialData.owners)
-      .execute();
+    // Add sportsComplex
+    const sportsComplexsDB = await Promise.all(
+      initialData.sportscomplex.map(async (sp, index) => {
+        const idx = index <= ownersDB.length - 1 ? index : 0;
+        const spInstance = this.sportcomplexRespository.create({
+          ...sp,
+        });
 
-    await this.sportcomplexRespository
-      .createQueryBuilder('sportsComplex')
-      .insert()
-      .values(initialData.sportscomplex)
-      .execute();
+        spInstance.owner = ownersDB[idx].owner;
+        return await this.sportcomplexRespository.save(spInstance);
+      }),
+    );
 
-    // await this.userRepository
-    //   .createQueryBuilder()
-    //   .relation(User, 'owner')
-    //   .of(initialData.users[0].id)
-    //   .set(initialData.owners[0])
+    const sportsDB = await Promise.all(
+      initialData.sports.map(async (sport) => {
+        const sportInstance = this.sportRepository.create(sport);
+        return await this.sportRepository.save(sportInstance);
+      }),
+    );
 
-    // await this.ownerRespository
-    //   .createQueryBuilder()
-    //   .relation(Owner, 'sportsComplex')
-    //   .of(initialData.owners[0].id)
-    //   .add(initialData.sportscomplex[0].id)
+    for (const [index, sportField] of initialData.sportfields.entries()) {
+      const idx = index <= sportsComplexsDB.length - 1 ? index : 0;
+      const { sport: sportName, reservation, ...sportFieldAttrs } = sportField;
+      const sport = sportsDB.find((sport) => sport.name === sportName);
+      const reservations = reservation
+        ? reservation.map((res) => ({ ...res, user: usersDB[0] }))
+        : [];
+      const sportFieldInstance = this.SportFieldRepository.create({
+        ...sportFieldAttrs,
+        reservation: reservations,
+      });
+      sportFieldInstance.sport = sport;
+      sportFieldInstance.sportsComplex = sportsComplexsDB[idx];
+
+      const sportFieldDB = await this.SportFieldRepository.save(sportFieldInstance);
+    }
   }
 
   async deleteAll() {
-    await this.sportRepository.createQueryBuilder('sport')
+    await this.SportFieldRepository.createQueryBuilder('sportfield').delete().where({}).execute();
+    await this.sportRepository.createQueryBuilder('sport').delete().where({}).execute();
+    await this.sportcomplexRespository
+      .createQueryBuilder('sportsComplex')
       .delete()
       .where({})
       .execute();
-    await this.SportFieldRepository.createQueryBuilder('sportfield')
-      .delete()
-      .where({})
-      .execute();
-    await this.sportcomplexRespository.createQueryBuilder('sportsComplex')
-      .delete()
-      .where({})
-      .execute();
-    await this.ownerRespository.createQueryBuilder('owner')
-      .delete()
-      .where({})
-      .execute();
-    await this.userRepository.createQueryBuilder('user')
-      .delete()
-      .where({})
-      .execute();
-
+    await this.userRepository.createQueryBuilder('user').delete().where({}).execute();
+    await this.ownerRespository.createQueryBuilder('owner').delete().where({}).execute();
   }
 }
-

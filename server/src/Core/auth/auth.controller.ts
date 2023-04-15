@@ -1,15 +1,17 @@
 import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { UsersService } from 'src/users/users.service';
+import { GetUser } from './decorators';
+import { AuthUserDTO } from './dto';
 
 import { GoogleAuthGuard } from './utils/Guards';
 
 @ApiTags('Auth endpoints')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor(private readonly usersService: UsersService) {}
   @Get('google')
   @UseGuards(GoogleAuthGuard)
   handleLogin() {
@@ -27,13 +29,9 @@ export class AuthController {
     return res.redirect(`${process.env.FRONT_URL}?token=${token}`);
   }
 
-  @Get('status')
-  user(@Req() request: Request, @Res() response: Response) {
-    console.log(request.user);
-    if (request.user) {
-      return { msg: 'Authenticated' };
-    } else {
-      return { msg: 'Not Authenticated' };
-    }
+  @Get('refresh')
+  async refresh(@GetUser() user: AuthUserDTO) {
+    const userDB = await this.usersService.findOne(user.id);
+    return await this.usersService.generateToken(userDB);
   }
 }

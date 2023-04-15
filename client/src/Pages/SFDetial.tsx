@@ -1,34 +1,67 @@
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { AiOutlineInfoCircle } from 'react-icons/ai';
+
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { getSportDetail } from '../Functions/SportFieldsQuery';
+import { type sportData } from '../types/Sport.type';
+import SFDetailMenu from '../Components/SFDetailMenu';
 
 const SFDetail = () => {
   const navigate = useNavigate();
+  const { id = '', sport = '' } = useParams();
 
-  const handleCancel = () => navigate('/reservar/:sport/canchas');
+  const [openMenu, setOpenMenu] = useState(false);
+
+  const [data, setData] = useState<sportData>({
+    id: '',
+    images: [''],
+    name: '',
+    description: '',
+    sportComplex: {
+      ubication: '',
+      data: {
+        parking: true,
+        grill: true,
+        changing: true,
+        bar: true,
+      },
+    },
+  });
+
+  const handleCancel = () => navigate(`/reservar/${sport}/canchas`);
   const handleConfirm = () => {
-    alert('Cancha confirmada');
-    navigate('/reservar/:sport/canchas');
+    navigate(`/reservar/${sport}/canchas`);
   };
+
+  const handleClick = () => setOpenMenu(!openMenu);
+
+  useEffect(() => {
+    getSportDetail(id)
+      .then((data) => data && setData(data))
+      .catch((err) => console.log(err));
+  }, [id]);
 
   return (
     <Layout title="Detalles de la reserva">
       <div className="flex flex-row w-full justify-center gap-20">
         <div className="flex flex-col gap-5 w-full lg:w-[550px] lg:mt-12">
           <div className="mx-[5%] my-5 flex flex-col bg-[#aaa3] px-5 py-2 rounded-lg">
-            <span className="opacity-70">Titulo</span>
-            <span className="text-lg">Ubicacion</span>
+            <span className="opacity-70">{data?.name}</span>
+            <span className="text-lg">{data?.sportComplex?.ubication}</span>
           </div>
           <div className="flex flex-col gap-5 bg-white pb-2 mb-10 mx-2 shadow-lg rounded-lg">
-            <div className="flex flex-row items-center justify-between p-5">
+            <div className="relative flex flex-row items-center justify-between p-5">
               <span className="text-lg">Informacion del partido</span>
-              <span className="text-3xl">
+              <button onClick={handleClick} className="text-3xl">
                 <AiOutlineInfoCircle />
-              </span>
+              </button>
+              <SFDetailMenu openMenu={openMenu} />
             </div>
             <div className="bg-[#aaa2] p-5">
-              <span className="block">Cancha 4 - Polvo y ladrillo</span>
+              <span className="block">{data?.description}</span>
               <span className="block">Dobles</span>
             </div>
             <div className="bg-[#aaa2] p-5">
@@ -52,14 +85,15 @@ const SFDetail = () => {
           </div>
           <div className="flex flex-row justify-evenly w-full lg:hidden">
             <PrimaryButton text="CANCELAR" onClick={handleCancel} alternative={true} />
-            <PrimaryButton text="CONFIRMAR" onClick={handleConfirm} />
+            <PrimaryButton text="RESERVAR" onClick={handleConfirm} />
           </div>
         </div>
+
         <div className="hidden lg:flex gap-5 flex-col">
           <div className="w-[700px] h-[475px] bg-primary mt-16"></div>
           <div className="flex flex-row justify-evenly w-full ">
             <PrimaryButton text="CANCELAR" onClick={handleCancel} alternative={true} />
-            <PrimaryButton text="CONFIRMAR" onClick={handleConfirm} />
+            <PrimaryButton text="RESERVAR" onClick={handleConfirm} />
           </div>
         </div>
       </div>

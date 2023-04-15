@@ -20,4 +20,7 @@ export class Sport {
     cascade: true,
   })
   sportfields?: SportField[];
+
+  @Column('text', { array: true, default: [] })
+  types: string[];
 }

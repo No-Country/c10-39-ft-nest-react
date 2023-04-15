@@ -1,26 +1,37 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Logger,
+  ParseUUIDPipe,
+  ForbiddenException,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { ReservationService } from './reservation.service';
-import { UserDTO } from 'src/Core/auth/dto';
+import { AuthUserDTO } from 'src/Core/auth/dto';
 import { GetUser } from 'src/Core/auth/decorators';
 
 @ApiTags('Reservations Endpoints')
 @Controller('reservation')
 export class ReservationController {
+  // private logger: Logger = new Logger(ReservationController.name);
   constructor(private readonly reservationService: ReservationService) {}
 
   @Post()
-  create(@Body() createReservationDto: CreateReservationDto, @GetUser() user: UserDTO) {
-
-    return this.reservationService.create(createReservationDto, user.id);
+  create(@Body() createReservationDto: CreateReservationDto, @GetUser() user: AuthUserDTO) {
+    return this.reservationService.create(createReservationDto);
   }
 
   @Get()
-  findAll() {
-    return this.reservationService.findAll();
+  findAll(@GetUser() user: AuthUserDTO) {
+    return this.reservationService.findAll(user);
   }
 
   @Get(':id')
@@ -29,12 +40,16 @@ export class ReservationController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateReservationDto: UpdateReservationDto) {
-    return this.reservationService.update(+id, updateReservationDto);
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateReservationDto: UpdateReservationDto,
+    @GetUser() user: AuthUserDTO,
+  ) {
+    return this.reservationService.update(id, updateReservationDto, user);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.reservationService.remove(+id);
+  remove(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: AuthUserDTO) {
+    return this.reservationService.remove(id, user);
   }
 }

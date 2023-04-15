@@ -1,39 +1,49 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { CreateSportsComplexDTO } from './dto/create-sports-complex.dto';
 import { UpdateSportsComplexDTO } from './dto/update-sports-complex.dto';
+import { AvailabilityRange } from './entities/availability-range.entity';
 import SportsComplex from './entities/sports-complex.entity';
 
-import { Point } from 'geojson';
 @Injectable()
 export class SportsComplexService {
+  private readonly logger: Logger = new Logger(SportsComplexService.name);
+
   constructor(
     @InjectRepository(SportsComplex)
     private readonly SportsComplexRepository: Repository<SportsComplex>,
+    @InjectRepository(AvailabilityRange)
+    private readonly availabilityRangeRepository: Repository<AvailabilityRange>,
   ) {}
 
-  create(createSportsComplexDTO: CreateSportsComplexDTO, owner: any) {
+  async create(createSportsComplexDTO: CreateSportsComplexDTO, owner: any) {
+    const { availability, ...sportsComplexFields } = createSportsComplexDTO;
+    const newSportComplex: SportsComplex = this.SportsComplexRepository.create(sportsComplexFields);
 
-    const location = {
-      type: 'Point',
-      coordinates: [createSportsComplexDTO.lng, createSportsComplexDTO.lat],
-    } as Point;
-    const newSportComplex: SportsComplex =
-      this.SportsComplexRepository.create(createSportsComplexDTO);
+    const availabilityRanges = availability.map(async (availabilityRange) => {
+      const { start_hour = 1, end_hour = 3 } = availabilityRange;
+      const range = this.availabilityRangeRepository.create({
+        start_hour,
+        end_hour,
+      });
+
+      return await this.availabilityRangeRepository.save(range);
+    });
+
     newSportComplex.owner = owner;
-    newSportComplex.location = location;
-    return this.SportsComplexRepository.save(newSportComplex);
+    newSportComplex.availability = await Promise.all(availabilityRanges);
+    return await this.SportsComplexRepository.save(newSportComplex);
   }
 
   async findAll(): Promise<SportsComplex[]> {
     return await this.SportsComplexRepository.find();
   }
 
-  async findAllOfOwner(owner: any): Promise<SportsComplex[]> {
-    return await this.SportsComplexRepository.find({
-      where: { owner: owner.id },
+  async findAllOfOwner(owner: any): Promise<SportsComplex> {
+    return await this.SportsComplexRepository.findOne({
+      where: { owner },
     });
   }
 
@@ -43,11 +53,21 @@ export class SportsComplexService {
     });
   }
 
+  findOneWithOwner(id: string) {
+    return this.SportsComplexRepository.findOne({
+      where: { id },
+      relations: {
+        owner: true,
+      },
+    });
+  }
+
   async update(ownerId: string, id: string, updateSportsComplexDTO: UpdateSportsComplexDTO) {
     const sportsComplex = await this.SportsComplexRepository.createQueryBuilder('sportsComplex')
       .leftJoinAndSelect('sportsComplex.owner', 'owner')
       .where('sportsComplex.id = :id AND owner.id = :ownerId', { id, ownerId })
       .getOne();
+
     if (!sportsComplex) {
       throw new NotFoundException(`Sports complex with id ${id} not found`);
     }

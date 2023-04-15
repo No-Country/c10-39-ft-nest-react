@@ -1,7 +1,9 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { PartialType } from '@nestjs/swagger';
+
 import { IsEmail, IsNotEmpty, Length, Matches } from 'class-validator';
 
 import { RegisterUserDTO } from './register-dto';
+import { BeforeUpdate } from 'typeorm';
 
 export class UpdateUserDTO extends PartialType(RegisterUserDTO) {
   @IsEmail()
@@ -12,5 +14,9 @@ export class UpdateUserDTO extends PartialType(RegisterUserDTO) {
   password: string;
 
   @Length(3, 40)
-  fullName?: string;
+  firstName?: string;
+
+  @Length(3, 40)
+  lastName?: string;
+
 }

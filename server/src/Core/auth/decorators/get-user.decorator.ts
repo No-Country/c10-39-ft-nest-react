@@ -1,5 +1,6 @@
 import {
   ExecutionContext,
+  ForbiddenException,
   InternalServerErrorException,
   createParamDecorator,
 } from '@nestjs/common';
@@ -9,7 +10,7 @@ export const GetUser = createParamDecorator((data, ctx: ExecutionContext) => {
   const user = req.user;
 
   if (!user) {
-    throw new InternalServerErrorException('User not found');
+    throw new ForbiddenException('Access Denied: Authorization Required');
   }
 
   return user;

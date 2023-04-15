@@ -6,6 +6,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -22,8 +23,9 @@ export class Reservation {
   @Column('date')
   date: Date;
 
-  @ManyToOne(() => SportField, (sportfields) => sportfields.reservation)
-  @JoinColumn({ name: 'sportfieldId' })
+  @ManyToOne(() => SportField, (sportfields) => sportfields.reservation, {
+    onDelete: 'CASCADE',
+  })
   sportfield: SportField;
 
   @ManyToOne(() => User, (user) => user.reservation)

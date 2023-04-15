@@ -1,11 +1,12 @@
-import { FC, useState } from 'react';
-
+import { type FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { FaBasketballBall } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { GoKebabVertical } from 'react-icons/go';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
+
+import SportMenu from './SportMenu';
 
 const NavMobile: FC<{ title: string }> = ({ title }) => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -27,7 +28,10 @@ const NavMobile: FC<{ title: string }> = ({ title }) => {
     setOpenMenu(false);
     setOpenSecondMenu(false);
   };
-  const handleCloseSecondMenu = () => setOpenSecondMenu(false);
+  const handleCloseSecondMenu = () => {
+    setOpenSecondMenu(false);
+    localStorage.removeItem('token');
+  };
   const handleCloseSportMenu = () => setOpenSportMenu(false);
 
   return (
@@ -47,35 +51,24 @@ const NavMobile: FC<{ title: string }> = ({ title }) => {
         >
           <MdKeyboardArrowLeft />
         </button>
-        <ul
-          className={`${
-            openSportMenu ? 'flex' : 'hidden'
-          } text-white text-2xl flex-col justify-around absolute -left-56 top-10 w-52 bg-black py-10 rounded-md`}
-        >
-          <li className="pl-5 py-5 active:bg-primary">
-            <Link onClick={handleCloseSportMenu} to={'/reservar/tenis'}>
-              Tenis
-            </Link>
-          </li>
-          <li className="pl-5 py-5 active:bg-primary">
-            <Link onClick={handleCloseSportMenu} to={'/reservar/futbol'}>
-              Futbol
-            </Link>
-          </li>
-        </ul>
+        <SportMenu handleClick={handleCloseSportMenu} state={openSportMenu} />
         <div className="text-white text-2xl">
           <div onClick={handleClickSecondMenu}>
             <GoKebabVertical />
           </div>
-          <ul
+          <div
             className={`${
               openSecondMenu ? 'flex' : 'hidden'
             }   items-center absolute -left-40 top-10 h-40 w-52 bg-black py-10 rounded-md`}
           >
-            <li onClick={handleCloseSecondMenu} className="pl-5 py-5 active:bg-primary w-full">
+            <Link
+              to={'/'}
+              onClick={handleCloseSecondMenu}
+              className="pl-5 py-5 active:bg-primary w-full"
+            >
               Cerrar sesion
-            </li>
-          </ul>
+            </Link>
+          </div>
         </div>
       </div>
       <div
@@ -93,23 +86,22 @@ const NavMobile: FC<{ title: string }> = ({ title }) => {
         </div>
         <div className="flex flex-col w-full items-center gap-16 mt-10">
           <div className="w-36 h-36 bg-white rounded-full"></div>
-          <ul className="flex flex-col items-center gap-10 text-2xl">
+          <ul className="flex flex-col items-center gap-10 text-xl">
             <li>
-              <Link to={'/perfil'}>Perfil</Link>
+              <Link to={'/inicio'}>INICIO</Link>
             </li>
             <li>
-              <Link to={'/perfil/reservar'}>Mis reservas</Link>
+              <Link to={'/perfil'}>PERFIL</Link>
+            </li>
+            <li>
+              <Link to={'/perfil/reservar'}>MIS RESERVAS</Link>
+            </li>
+            <li>
+              <Link to={'/ayuda'}>AYUDA</Link>
             </li>
             <li>
               {' '}
-              <Link to={'/propietarios/canchas'}>Mis canchas</Link>
-            </li>
-            <li>
-              {' '}
-              <Link to={'/nosotros'}>Nosotros</Link>
-            </li>
-            <li>
-              <Link to={'/ayuda'}>Ayuda</Link>
+              <Link to={'/nosotros'}>NOSOTROS</Link>
             </li>
           </ul>
         </div>

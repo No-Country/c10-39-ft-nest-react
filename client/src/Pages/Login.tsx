@@ -6,14 +6,14 @@ import { FaBasketballBall } from 'react-icons/fa';
 import { loginUser } from '../Functions/UserQuery';
 
 const Login: FC = () => {
-  const [mail, setMail] = useState('');
+  const [email, setMail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
 
-    loginUser({ mail, password })
+    loginUser({ email, password })
       .then(() => navigate('/inicio'))
       .catch((err) => console.log(err));
   };
@@ -29,7 +29,7 @@ const Login: FC = () => {
             className="py-3 px-5 rounded-2xl focus:outline-none w-10/12"
             type="mail"
             placeholder="Mail"
-            value={mail}
+            value={email}
             onChange={(event) => {
               setMail(event.target.value);
             }}

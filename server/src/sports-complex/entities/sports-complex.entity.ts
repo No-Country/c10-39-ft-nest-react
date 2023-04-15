@@ -1,9 +1,10 @@
-import { Point } from 'geojson';
 import Owner from 'src/owner/entities/owner.entity';
 import { SportField } from 'src/sportfields/entities/sportfield.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('SportsComplex')
+import { AvailabilityRange } from './availability-range.entity';
+
+@Entity('sportsComplex')
 export class SportsComplex {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -24,19 +25,17 @@ export class SportsComplex {
   @Column('text')
   name: string;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   description: string;
 
-  @Column({
-    type: 'geography',
-    nullable: true,
-    spatialFeatureType: 'Point',
-    srid: 4326,
-  })
-  location: Point;
+  @Column({ type: 'double precision', nullable: true })
+  lat: number;
 
-  @Column('text')
-  image: string[];
+  @Column({ type: 'double precision', nullable: true })
+  lng: number;
+
+  @Column('text', { nullable: true })
+  images: string[];
 
   @Column('boolean', { default: false })
   grills?: boolean;
@@ -51,15 +50,19 @@ export class SportsComplex {
   @Column('boolean', { default: false })
   parking?: boolean;
 
-  @ManyToOne((type) => Owner, (owner) => owner.sportsComplex, {
+  @ManyToOne(() => Owner, (owner) => owner.sportsComplex, {
     eager: true,
   })
-  @JoinColumn({ name: "ownerId" })
+  @JoinColumn({ name: 'ownerId' })
   owner: Owner;
-  @Column()
-  ownerId: string; 
 
   @OneToMany((type) => SportField, (sportfields) => sportfields.sportsComplex)
   sportfields: SportField[];
+
+  @OneToMany(() => AvailabilityRange, (availabilityRanges) => availabilityRanges.sportsComplex, {
+    eager: true,
+    cascade: true,
+  })
+  availability: AvailabilityRange[];
 }
 export default SportsComplex;

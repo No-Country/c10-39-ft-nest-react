@@ -16,6 +16,7 @@ import { Sport } from './sports/entities/sport.entity';
 import { SportsModule } from './sports/sports.module';
 import SportsComplex from './sports-complex/entities/sports-complex.entity';
 import { SportsComplexModule } from './sports-complex/sports-complex.module';
+import { AvailabilityRange } from './sports-complex/entities/availability-range.entity';
 import User from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
 
@@ -30,9 +31,10 @@ import { UsersModule } from './users/users.module';
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
-        entities: [User, Sport, SportField, Owner, SportsComplex, Reservation],
+        entities: [User, Sport, SportField, Owner, SportsComplex, Reservation, AvailabilityRange],
         // autoLoadEntities: true,
         synchronize: true,
+        // dropSchema: true,
       }),
       inject: [ConfigService],
     }),

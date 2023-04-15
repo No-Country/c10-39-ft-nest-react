@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import { Role } from 'src/Core/auth/role.enum';
 import { SALT } from 'src/Core/Constants';
 import { EXPIRED_TOKEN } from 'src/Core/Constants/constants';
 import { Repository } from 'typeorm';
@@ -17,12 +18,12 @@ export class UsersService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private readonly configService: ConfigService,
-  ) {}
+  ) { }
 
   async findOrCreate(body: RegisterUserDTO): Promise<{ user: User; token: string }> {
     let user = await this.findByEmail(body.email);
     if (!user) {
-      user = await this.userRepository.create(body);
+      user = this.userRepository.create(body);
       await this.userRepository.save(user);
     }
     const token = await this.generateToken(user);
@@ -81,17 +82,24 @@ export class UsersService {
   }
 
   /// aca falta terminar el update
-  async update(id: string, updateUserDTO: UpdateUserDTO): Promise<User> {
+  async update(id: string, updateUserDTO: UpdateUserDTO)
+    : Promise<{ user: User; token: string; isOwner: boolean }> {
     // Promise<{user:User, token:string}>
     const hashedPassword = bcrypt.hashSync(updateUserDTO.password, SALT);
     console.log(id);
 
-    const user = await this.userRepository.update(id, updateUserDTO);
-    // await this.userRepository.save(user);
-    // const token : string = await this.generateToken(user);
-    console.log(user);
 
-    return new User();
+    const userUpdate = await this.userRepository.save({
+      id,
+      ...updateUserDTO,
+      password: hashedPassword
+    });
+    const user = await this.findOne(id);
+    // await this.userRepository.save(user);
+    const token: string = await this.generateToken(user);
+    // console.log(user);
+
+    return { user, token, isOwner: user.isOwner };
   }
 
   async delete(id: string) {
@@ -103,11 +111,14 @@ export class UsersService {
   }
 
   async generateToken(user: User) {
+    // TODO: Change user schema
     const token = jwt.sign(
       {
         id: user.id,
         email: user.email,
-        role: user.isOwner ? 'owner' : 'user',
+        owner: user.owner,
+        ownerId: user.owner?.id,
+        roles: user.isOwner ? [Role.Owner] : [Role.User],
       },
       this.configService.get<string>('JWT_SECRET'),
       { expiresIn: EXPIRED_TOKEN },
