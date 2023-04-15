@@ -1,7 +1,7 @@
 import { type FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import PrimaryButton from './PrimaryButton';
+import PrimaryButton from '../PrimaryButton';
 
 interface props {
   title: string;

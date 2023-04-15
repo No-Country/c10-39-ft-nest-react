@@ -1,17 +1,17 @@
-import { type FC, useState, type BaseSyntheticEvent } from 'react';
+import { useState, type FC, type BaseSyntheticEvent } from 'react';
 import { useSelector } from 'react-redux';
 
 import { GiSoccerField } from 'react-icons/gi';
 import { GrGroup } from 'react-icons/gr';
 import { MdTitle } from 'react-icons/md';
 
-import Input from '../Components/inputs/Input';
-import Layout from '../Components/Layout';
-import PrimaryButton from '../Components/PrimaryButton';
-import { OwnerAddSFQuery } from '../Functions/OwnerQuery';
-import { AppUser } from '../types/App.type';
+import Input from '../../Components/inputs/Input';
+import Layout from '../../Components/layout/Layout';
+import PrimaryButton from '../../Components/PrimaryButton';
+import { OwnerEditSFQuery } from '../../Functions/OwnerQuery';
+import { AppUser } from '../../types/App.type';
 
-const AddSFOwner: FC = () => {
+const SFownerEdit: FC = () => {
   const [state, setState] = useState({
     title: '',
     sportField: '',
@@ -33,11 +33,11 @@ const AddSFOwner: FC = () => {
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
     const token = localStorage.getItem('token') ?? '';
-    OwnerAddSFQuery(state, token, userId).catch((err) => console.log(err));
+    OwnerEditSFQuery(state, token, userId).catch((err) => console.log(err));
   };
 
   return (
-    <Layout title="Agregar cancha">
+    <Layout title="Editar cancha">
       <form onSubmit={handleSubmit} className="relative min-h-[100vh] flex flex-col items-center">
         <div className="bg-[#D9D9D9] rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[800px] text-center ">
           +
@@ -45,35 +45,35 @@ const AddSFOwner: FC = () => {
         <div className="flex flex-col w-full items-center gap-10 lg:w-[700px]">
           <Input
             type="text"
-            label="Nombre"
+            label="Titulo"
             icon={<MdTitle />}
             handleChange={handleChange}
+            name="title"
             value={state.title}
-            name={'title'}
           />
           <Input
             type="text"
             label="Tipo de cancha"
             icon={<GiSoccerField />}
-            value={state.sportField}
             handleChange={handleChange}
-            name={'sportField'}
+            name="sportField"
+            value={state.sportField}
           />
           <Input
             type="text"
             label="Capacidad"
             icon={<GrGroup />}
-            value={state.capacity}
             handleChange={handleChange}
-            name={'capacity'}
+            name="capacity"
+            value={state.capacity}
           />
         </div>
         <div className="absolute bottom-0 right-10 lg:relative lg:my-10 lg:w-[675px] lg:flex lg:justify-end">
-          <PrimaryButton text="AGREGAR" />
+          <PrimaryButton text="EDITAR" />
         </div>
       </form>
     </Layout>
   );
 };
 
-export default AddSFOwner;
+export default SFownerEdit;

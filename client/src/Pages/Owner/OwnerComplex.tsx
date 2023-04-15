@@ -1,17 +1,21 @@
 import { BaseSyntheticEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
-import Input from '../Components/inputs/Input';
-import Layout from '../Components/Layout';
-import PrimaryButton from '../Components/PrimaryButton';
-import { CreateComplexQuery, GetComplexQuery, UpdateComplexQuery } from '../Functions/ComplexQuery';
+import Input from '../../Components/inputs/Input';
+import Layout from '../../Components/layout/Layout';
+import PrimaryButton from '../../Components/PrimaryButton';
+import {
+  CreateComplexQuery,
+  GetComplexQuery,
+  UpdateComplexQuery,
+} from '../../Functions/ComplexQuery';
 
 import { useSelector } from 'react-redux';
-import { AppComplex } from '../types/App.type';
+import { AppComplex } from '../../types/App.type';
 import { MdLocationOn, MdTitle } from 'react-icons/md';
 import { BsCalendar2Event } from 'react-icons/bs';
-import { Checkbox, ImageUploader } from '../Components/ui';
-import ComplexType from '../types/Complex.type';
-import store from '../App/Store';
-import { setComplex } from '../App/complexSlice';
+import { Checkbox, ImageUploader } from '../../Components/ui';
+import ComplexType from '../../types/Complex.type';
+import store from '../../App/Store';
+import { setComplex } from '../../App/complexSlice';
 
 const handleAmmeniesChangeFactory =
   (setState: Dispatch<SetStateAction<ComplexType>>, key: keyof ComplexType) => () => {

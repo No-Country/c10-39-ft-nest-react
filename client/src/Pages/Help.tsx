@@ -2,7 +2,7 @@ import { type FC } from 'react';
 
 import { questions } from '../assets/Faq/Question';
 import DropdownFaq from '../Components/DropdownFaq';
-import Layout from '../Components/Layout';
+import Layout from '../Components/layout/Layout';
 
 const Help: FC = () => {
   return (

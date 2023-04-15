@@ -5,23 +5,23 @@ import 'react-calendar/dist/Calendar.css';
 
 import { authUser } from './Functions/UserQuery';
 import About from './Pages/About';
-import AddSFOwner from './Pages/AddSFOwner';
+import AddSFOwner from './Pages/Owner/AddSFOwner';
 import Help from './Pages/Help';
 import Home from './Pages/Home';
-import Login from './Pages/Login';
-import MainPage from './Pages/MainPage';
-import Owner from './Pages/Owner';
-import OwnerComplex from './Pages/OwnerComplex';
+import Login from './Pages/Auth/Login';
+import MainPage from './Pages/Auth/MainPage';
+import Owner from './Pages/Owner/Owner';
+import OwnerComplex from './Pages/Owner/OwnerComplex';
 import Profile from './Pages/Profile';
 import ProfileReservation from './Pages/ProfileReservation';
-import Register from './Pages/Register';
-import Reservation from './Pages/Reservation';
-import Search from './Pages/Search';
-import SFDetail from './Pages/SFDetial';
-import SFOwner from './Pages/SFOwner';
-import SFownerEdit from './Pages/SFOwnerEdit';
-import SportFields from './Pages/SportFields';
-import Turns from './Pages/Turns';
+import Register from './Pages/Auth/Register';
+import Reservation from './Pages/Sports/Reservation';
+import Search from './Pages/Sports/Search';
+import SFDetail from './Pages/Sports/SFDetial';
+import SFOwner from './Pages/Owner/SFOwner';
+import SFownerEdit from './Pages/Owner/SFOwnerEdit';
+import SportFields from './Pages/Sports/SportFields';
+import Turns from './Pages/Owner/Turns';
 
 function App() {
   useEffect(() => {

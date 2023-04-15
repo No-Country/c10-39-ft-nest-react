@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 import { AiOutlinePhone } from 'react-icons/ai';
 import { HiOutlineIdentification } from 'react-icons/hi';
 
-import Input from '../Components/inputs/Input';
-import Layout from '../Components/Layout';
-import PrimaryButton from '../Components/PrimaryButton';
-import { OwnerRegisterQuery } from '../Functions/OwnerQuery';
-import { type AppUser } from '../types/App.type';
+import Input from '../../Components/inputs/Input';
+import Layout from '../../Components/layout/Layout';
+import PrimaryButton from '../../Components/PrimaryButton';
+import { OwnerRegisterQuery } from '../../Functions/OwnerQuery';
+import { type AppUser } from '../../types/App.type';
 
 const OwnerRegister: FC = () => {
   const [state, setState] = useState({

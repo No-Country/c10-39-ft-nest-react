@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { FaBasketballBall } from 'react-icons/fa';
 
-import { authUser } from '../Functions/UserQuery';
+import { authUser } from '../../Functions/UserQuery';
 
 // TODO: Move this to a constants file
 const BACKEND_URL: string = import.meta.env.VITE_BACKEND_URL;

@@ -16,8 +16,8 @@ const Layout: FC<PropsWithChildren<props>> = ({ children, title }) => {
             <NavDesktop />
             <NavMobile title={title} />
           </header>
-          <div className='z-10 pt-[80px] bg-bg max-h-screen overflow-y-scroll'>
-            <div className='min-h-[88vh]'>{children}</div>
+          <div className="z-10 pt-[80px] bg-bg max-h-screen overflow-y-scroll">
+            <div className="min-h-[88vh]">{children}</div>
           </div>
         </>
       ) : (
