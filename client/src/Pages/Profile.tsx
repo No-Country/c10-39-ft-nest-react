@@ -5,7 +5,7 @@ import { AiFillEye } from 'react-icons/ai';
 import { HiOutlineUser, HiUser } from 'react-icons/hi';
 import { IoMdMail } from 'react-icons/io';
 
-import Input from '../Components/Input';
+import Input from '../Components/inputs/Input';
 import Layout from '../Components/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
 import { type AppUser } from '../types/App.type';

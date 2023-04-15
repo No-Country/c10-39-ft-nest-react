@@ -1,20 +1,22 @@
-import { type BaseSyntheticEvent, type FC, useState, useEffect } from 'react';
+import { type BaseSyntheticEvent, type ChangeEvent, type FC, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import axios from 'axios';
 import { BsCalendar2Event } from 'react-icons/bs';
 import { GiSoccerField } from 'react-icons/gi';
 import { MdLocationOn } from 'react-icons/md';
 import { TfiTime } from 'react-icons/tfi';
 
-import Input from '../Components/Input';
+import InputLocation from '../Components/inputs/InputLocation';
+import Select from '../Components/inputs/Select';
+import SelectCalendar from '../Components/inputs/SelectCalendar';
+import SelectHour from '../Components/inputs/SelectHour';
 import Layout from '../Components/Layout';
-import { LocationInput } from '../Components/LocationInput';
 import PrimaryButton from '../Components/PrimaryButton';
-import Select from '../Components/Select';
-import SelectCalendar from '../Components/SelectCalendar';
-import SelectHour from '../Components/SelectHour';
 import { type appSport } from '../types/App.type';
+
+const API_KEY = 'AIzaSyB8rVxLxXlomXkjJ04LRtFHC63AtzSnyw0';
 
 export const Search: FC = () => {
   const navigate = useNavigate();
@@ -24,23 +26,50 @@ export const Search: FC = () => {
   const sportNames = sportInfo?.map((item) => item.name);
   const sportFields = sportInfo?.find((item) => item.name === sport);
 
-  const [ubication, setUbication] = useState('');
+  const [latitude, setLatitude] = useState<number | null>(null);
+  const [longitude, setLongitude] = useState<number | null>(null);
+  const [location, setLocation] = useState<string>('');
   const [field, setField] = useState('');
   const [turn, setTurn] = useState('');
   const [time, setTime] = useState('');
 
   const [loader, setLoader] = useState(false);
 
-  const handleUbication = (event: BaseSyntheticEvent) => setUbication(event.target.value);
   const handleField = (option: string) => setField(option);
   const handleTurn = (option: string) => setTurn(option);
   const handleTime = (option: string) => setTime(option);
+  const handleLocationChange = (latitude: any, longitude: any) => {
+    setLatitude(latitude);
+    setLongitude(longitude);
+  };
+  const handleLocationName = (event: ChangeEvent<HTMLInputElement>) => {
+    setLocation(event.target.value);
+  };
+
+  const handleSearch = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${API_KEY}`,
+      );
+      if (!data.results[0]) {
+        throw new Error('Por favor complete la ubicacion con mas informacion');
+      }
+      const { lat, lng } = data.results[0].geometry?.location;
+
+      handleLocationChange(lat, lng);
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    navigate(
-      `/reservar/${sport}/canchas?lat=${43}&lng=${43}&rHour=${time}&date=${turn}&fieldType=${field}`,
-    );
+    handleSearch().catch((err) => console.log(err));
+    if (latitude && longitude) {
+      navigate(
+        `/reservar/${sport}/canchas?lat=${latitude}&lng=${longitude}&rHour=${time}&date=${turn}&fieldType=${field}`,
+      );
+    }
   };
 
   useEffect(() => {
@@ -51,28 +80,17 @@ export const Search: FC = () => {
     }
   }, [navigate, sport, sportNames]);
 
-  const [latitude, setLatitude] = useState<number | null>(null);
-  const [longitude, setLongitude] = useState<number | null>(null);
-
-  const handleLocationChange = (latitude: any, longitude: any) => {
-    setLatitude(latitude);
-    setLongitude(longitude);
-  };
-  console.log(latitude, longitude);
-
   return (
     <Layout title={`${loader ? sport : ''}`}>
       <div className="w-full flex justify-center items-center h-[70vh]">
         <form onSubmit={handleSubmit} className="flex w-full flex-col items-center lg:mx-[30%]">
           <div className="flex flex-col gap-5 w-full items-center pt-12 lg:gap-10">
-            <LocationInput onLocationChange={handleLocationChange} />
-            <Input
-              type="text"
+            <InputLocation
               label="Ubicacion"
-              handleChange={handleUbication}
-              name="ubication"
-              value={ubication}
               icon={<MdLocationOn />}
+              onLocationChange={handleLocationChange}
+              handleLocationName={handleLocationName}
+              location={location}
             />
             {sportFields?.types && (
               <Select
