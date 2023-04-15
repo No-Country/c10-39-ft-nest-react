@@ -6,6 +6,8 @@ import { CreateComplexQuery, GetComplexQuery, UpdateComplexQuery } from '../Func
 
 import { useSelector } from 'react-redux';
 import { AppComplex } from '../types/App.type';
+import { MdLocationOn, MdTitle } from 'react-icons/md';
+import { BsCalendar2Event } from 'react-icons/bs';
 import { Checkbox, ImageUploader } from '../Components/ui';
 import ComplexType from '../types/Complex.type';
 import store from '../App/Store';
@@ -91,6 +93,7 @@ const OwnerComplex = () => {
               value={state.name}
               name={'name'}
               handleChange={handleChange}
+              icon={<MdTitle />}
             />
             <Input
               type='text'
@@ -105,6 +108,7 @@ const OwnerComplex = () => {
               value={state.phone}
               name={'phone'}
               handleChange={handleChange}
+              icon={<MdLocationOn />}
             />
             <Input
               type='text'
@@ -112,6 +116,7 @@ const OwnerComplex = () => {
               value={state.address}
               name={'address'}
               handleChange={handleChange}
+              icon={<BsCalendar2Event />}
             />
             <Input type='text' label='Turno' value={''} name={'day'} handleChange={handleChange} />
           </div>

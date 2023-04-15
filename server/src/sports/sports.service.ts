@@ -20,7 +20,7 @@ export class SportsService {
       },
     });
     if (!sports) throw new NotFoundException('Sports not found');
-    return sports.map((s) => ({ name: s.name, images: s.images, id: s.id }));
+    return sports.map((s) => ({ name: s.name, images: s.images, id: s.id, types: s.types }));
   }
 
   async findOne(name: string) {
