@@ -13,6 +13,7 @@ import PrimaryButton from '../Components/PrimaryButton';
 import Select from '../Components/Select';
 import { type appSport } from '../types/App.type';
 import SelectHour from '../Components/SelectHour';
+import SelectCalendar from '../Components/SelectCalendar';
 
 export const Search: FC = () => {
   const navigate = useNavigate();
@@ -71,14 +72,12 @@ export const Search: FC = () => {
                 icon={<GiSoccerField />}
               />
             )}
-            {/* <Input
-              type="text"
-              label="Turno"
-              handleChange={handleChange}
-              name="turn"
-              value={state.turn}
+            <SelectCalendar
+              label="Dia"
+              value={turn}
+              handleClick={handleTurn}
               icon={<BsCalendar2Event />}
-            /> */}
+            />
             <SelectHour label="Horario" value={time} handleClick={handleTime} icon={<TfiTime />} />
           </div>
           <div className="absolute bottom-10 right-10 lg:right-[33%]">

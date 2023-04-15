@@ -1,5 +1,6 @@
 import { type FC, useState } from 'react';
 import HoursList from './HoursList';
+import MyCalendar from './MyCalendar';
 
 interface selectType {
   label: string;
@@ -8,7 +9,7 @@ interface selectType {
   icon?: any;
 }
 
-const SelectHour: FC<selectType> = ({ handleClick, value, label, icon }) => {
+const SelectCalendar: FC<selectType> = ({ handleClick, value, label, icon }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
 
@@ -26,7 +27,7 @@ const SelectHour: FC<selectType> = ({ handleClick, value, label, icon }) => {
         }
         readOnly
         type={'text'}
-        value={value !== '' ? `${value}:00 - ${Number(value) + 1}:00` : ''}
+        value={value}
         onClick={handleOpen}
       />
       <label
@@ -38,8 +39,8 @@ const SelectHour: FC<selectType> = ({ handleClick, value, label, icon }) => {
         {label}
       </label>
       {open && (
-        <div className="absolute top-[58px] -left-0 z-[500] lg:top-0 lg:-left-full">
-          <HoursList handleClick={handleOpen} getAllHours={true} handleSelect={handleOption} />
+        <div className="absolute z-[500] -bottom-20 -left-1 lg:-left-[450px]">
+          <MyCalendar handleSelect={handleOption} />
         </div>
       )}
       {icon && (
@@ -51,4 +52,4 @@ const SelectHour: FC<selectType> = ({ handleClick, value, label, icon }) => {
   );
 };
 
-export default SelectHour;
+export default SelectCalendar;

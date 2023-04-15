@@ -30,7 +30,11 @@ const SFDetailMenu: FC<{ openMenu: boolean }> = ({ openMenu }) => {
         <li className="pl-5 py-5 hover:bg-primary w-full cursor-pointer" onClick={handleOpenHours}>
           Cambiar horario
         </li>
-        {openCalendar && <MyCalendar handleClick={handleOpenCalendar} />}
+        {openCalendar && (
+          <div className="absolute top-16 lg:top-0 -right-5 lg:-right-[425px]">
+            <MyCalendar handleClick={handleOpenCalendar} />
+          </div>
+        )}
         {openHours && (
           <div className="absolute top-32 -left-24 lg:top-0 lg:-left-full">
             <HoursList
