@@ -5,7 +5,7 @@ import PrimaryButton from './PrimaryButton';
 
 interface props {
   title: string;
-  bgImage: string;
+  bgImage?: string;
   href: string;
 }
 
@@ -13,11 +13,12 @@ const SportCard: FC<props> = ({ title, bgImage, href }) => {
   const navigate = useNavigate();
   console.log(bgImage);
   const handleClick = () => navigate(href);
-
+  // style="background-image:linear-gradient(rgba(135, 80, 156, 0.9), rgba(135, 80, 156, 0.9)), url(img/hero-bg.jpg)"
   return (
     <div
-      className={`mx-1 relative rounded h-[220px] max-w-[700px]
-      bg-[url(${bgImage})] flex items-center justify-center lg:h-[350px]`}
+      style={{ backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.3)), url(${bgImage})` }}
+      // style={{ backgroundImage: `url(${bgImage})` }}
+      className={`mx-1 relative rounded h-[220px] max-w-[700px] flex items-center justify-center lg:h-[350px] bg-cover bg-center`}
     >
       <div className='font-segoeScript  bg-opacity-10 font-bold text-6xl text-center'>{title}</div>
       <div className='absolute bottom-4 right-4'>

@@ -104,25 +104,27 @@ const sports: SeedSport[] = [
   {
     name: 'football',
     images: [
-      'https://asset.cloudinary.com/djvepy9sd/afcecc340efd37e7305c5d0808ca5e51',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681323530/descarga_1_n0vczv.jpg',
     ],
     types: ['cesped', 'cesped sintentico'],
   },
   {
     name: 'basketball',
-    images: ['https://asset.cloudinary.com/djvepy9sd/70b832d4eaf371a8589fd16589c4a06b'],
+    images: [
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681419508/basketball2_tqbsgv.jpg'
+    ],
     types: ['material', 'parquet'],
   },
   {
     name: 'tennis',
     images: [
-      'https://asset.cloudinary.com/djvepy9sd/e5dd861f1db2c0c1eff4b222c45b9ee4',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681323533/photo-1627314387807-df615e8567de_ocmygv.avif',
     ],
     types: ['polvo de ladrillo', 'cesped', 'material'],
   },
   {
     name: 'volleyball',
-    images: ['https://asset.cloudinary.com/djvepy9sd/89a40da751aac3ac6d1106b41dd79466'],
+    images: ['https://res.cloudinary.com/djvepy9sd/image/upload/v1681420180/volley1_q7tv9t.jpg'],
     types: ['arena', 'material'],
   },
 ];
@@ -138,7 +140,7 @@ const sportfields: SeedSportField[] = [
     description: 'Cancha de futbol 5 de pasto sintetico y cerrado.',
     dimensions: '30x16',
     images: [
-      'https://asset.cloudinary.com/djvepy9sd/8d4957770879e2ba8e0f545f4c138979',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681420438/futbol52_l07lry.jpg',
     ],
     sport: 'football',
     fieldType: 'cesped',
@@ -154,7 +156,7 @@ const sportfields: SeedSportField[] = [
     name: 'El Monumental',
     description: 'Cancha de futbol 11 de pasto natural.',
     dimensions: '90x45',
-    images: ['https://asset.cloudinary.com/djvepy9sd/b62994503e9bbaeaa73d1337572382e5'],
+    images: ['https://res.cloudinary.com/djvepy9sd/image/upload/v1681323530/descarga_7_mipvur.jpg'],
     sport: 'football',
     fieldType: 'cesped',
     capacity: 22,
@@ -169,7 +171,7 @@ const sportfields: SeedSportField[] = [
     name: 'El Fortin',
     description: 'Cancha de futbol 5.',
     dimensions: '90x45',
-    images: ['https://asset.cloudinary.com/djvepy9sd/bd699a0ca98c4bc09a1a029da1a5f9c8'],
+    images: ['https://res.cloudinary.com/djvepy9sd/image/upload/v1681420365/futbol51_d8bzlv.jpg'],
     sport: 'football',
     fieldType: 'cesped sintentico',
     capacity: 10,
@@ -188,7 +190,7 @@ const sportfields: SeedSportField[] = [
     name: 'Staples Center',
     description: 'Cancha de basket cerrada.',
     dimensions: '28x15',
-    images: ['https://asset.cloudinary.com/djvepy9sd/f1806dba33030b2aa20c08c1c675a07a'],
+    images: ['https://res.cloudinary.com/djvepy9sd/image/upload/v1681420734/basketcourt3_rhedky.jpg'],
     sport: 'basketball',
     fieldType: 'material',
     capacity: 10,
@@ -209,7 +211,7 @@ const sportfields: SeedSportField[] = [
     dimensions: '28x15',
     capacity: 10,
     images: [
-      'https://asset.cloudinary.com/djvepy9sd/69ecea790a85dd22f7b0c09b76773df1',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681420818/basketcourt4_s0rui0.jpg',
     ],
     sport: 'basketball',
     fieldType: 'parquet',
@@ -230,7 +232,7 @@ const sportfields: SeedSportField[] = [
     dimensions: '28x15',
     capacity: 10,
     images: [
-      'https://asset.cloudinary.com/djvepy9sd/d27ce63b4e35c984586c66112044bd0f',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681420902/basketcourt5_s8crqb.jpg',
     ],
     sport: 'basketball',
     fieldType: 'parquet',
@@ -238,22 +240,22 @@ const sportfields: SeedSportField[] = [
   },
   {
     name: 'United Center',
-    description: 'Cancha de basket cerrada.',
+    description: 'Cancha de basket al aire libre.',
     dimensions: '28x15',
     capacity: 10,
     images: [
-      'https://asset.cloudinary.com/djvepy9sd/284c74e4ec4af9d5d1a35ffcc69ade65',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681420551/basketcourt1_ggcsx8.jpg',
     ],
     sport: 'basketball',
     fieldType: 'parquet',
   },
   {
     name: 'American Airlines Center',
-    description: 'Cancha de basket cerrada.',
+    description: 'Cancha de basket al aire libre.',
     dimensions: '28x15',
     capacity: 10,
     images: [
-      'https://asset.cloudinary.com/djvepy9sd/8f35148d1fa2265e4293de2baa40cfea',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681420698/basketcourt2_imh2ry.jpg',
     ],
     sport: 'basketball',
     fieldType: 'material',
@@ -264,7 +266,7 @@ const sportfields: SeedSportField[] = [
     dimensions: '28x15',
     capacity: 10,
     images: [
-      'https://www.qualitysportinstalacionesdeportivas.com/wp-content/uploads/2022/05/tipos-de-superficies-de-pista-de-basket.png',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681602101/basketcourt8_xiv2hv.jpg',
     ],
     sport: 'basketball',
     fieldType: 'material',
@@ -275,7 +277,7 @@ const sportfields: SeedSportField[] = [
     dimensions: '28x15',
     capacity: 4,
     images: [
-      'https://asset.cloudinary.com/djvepy9sd/ca90d4832bf05d5c062281c13aeb3607',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681421749/teniscourt1_mjyy0i.jpg',
     ],
     sport: 'tennis',
     fieldType: 'polvo de ladrillo',
@@ -286,7 +288,7 @@ const sportfields: SeedSportField[] = [
     dimensions: '28x15',
     capacity: 4,
     images: [
-      'https://asset.cloudinary.com/djvepy9sd/8f35148d1fa2265e4293de2baa40cfea',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681422283/teniscourt5_qfjsgp.jpg',
     ],
     sport: 'tennis',
     fieldType: 'cesped',
@@ -297,7 +299,7 @@ const sportfields: SeedSportField[] = [
     dimensions: '28x15',
     capacity: 4,
     images: [
-      'https://asset.cloudinary.com/djvepy9sd/28a6f07d54b142cb11bd051deb0619e4',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681422082/teniscourt3_aeaci8.png',
     ],
     sport: 'tennis',
     fieldType: 'material',
@@ -308,7 +310,7 @@ const sportfields: SeedSportField[] = [
     dimensions: '28x15',
     capacity: 4,
     images: [
-      'https://asset.cloudinary.com/djvepy9sd/57c95b6672c49886bfcef6e0fc67e0b1',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681422166/teniscourt4_o4qtxz.jpg',
     ],
     sport: 'tennis',
     fieldType: 'cesped',
@@ -319,7 +321,7 @@ const sportfields: SeedSportField[] = [
     dimensions: '28x15',
     capacity: 4,
     images: [
-      'https://asset.cloudinary.com/djvepy9sd/4c846f27399e5ccd51e0479e31785db5',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681422392/teniscourt6_mb0loe.jpg',
     ],
     sport: 'tennis',
     fieldType: 'polvo de ladrillo',
@@ -330,7 +332,7 @@ const sportfields: SeedSportField[] = [
     dimensions: '16x8',
     capacity: 12,
     images: [
-      'https://asset.cloudinary.com/djvepy9sd/bc7ead9880af26c7f0ebdba2872ee385',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681422579/voley1_kgkmzh.jpg',
     ],
     sport: 'volleyball',
     fieldType: 'material',
@@ -341,7 +343,7 @@ const sportfields: SeedSportField[] = [
     dimensions: '16x8',
     capacity: 12,
     images: [
-      'https://asset.cloudinary.com/djvepy9sd/71a38042cf4c90142f39daadcc491563',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681422668/voley2_axbdug.jpg',
     ],
     sport: 'volleyball',
     fieldType: 'material',
@@ -352,7 +354,7 @@ const sportfields: SeedSportField[] = [
     dimensions: '16x8',
     capacity: 12,
     images: [
-      'https://asset.cloudinary.com/djvepy9sd/22c617baeeae39ac1cc215a5f6f184cf',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681422770/voley3_qzzv6k.jpg',
     ],
     sport: 'volleyball',
     fieldType: 'material',
@@ -363,7 +365,7 @@ const sportfields: SeedSportField[] = [
     dimensions: '16x8',
     capacity: 12,
     images: [
-      'https://asset.cloudinary.com/djvepy9sd/9cb7270bfff434b1aca668aafb9a3091',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681422833/voley4_n0ejw3.jpg',
     ],
     sport: 'volleyball',
     fieldType: 'material',
@@ -374,7 +376,7 @@ const sportfields: SeedSportField[] = [
     dimensions: '16x8',
     capacity: 12,
     images: [
-      'https://asset.cloudinary.com/djvepy9sd/24134b2524cd19aed0419d79d825334c',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681422907/voley5_qq23ma.jpg',
     ],
     sport: 'volleyball',
     fieldType: 'material',
@@ -420,7 +422,7 @@ const sportscomplex: SeedSportsComplex[] = [
     phone: '+54 9 3512268833',
     description:
       'Complejo Deportivo de primer nivel con toda la equipacion disponible para el deporte amateur',
-    images: ['https://asset.cloudinary.com/djvepy9sd/d49f9604602a2cefcd6af1fd93f2c31e'],
+    images: ['https://res.cloudinary.com/djvepy9sd/image/upload/v1681421310/complejo2_kkk4i5.jpg'],
     bathrooms: true,
     grills: true,
     locker: true,
@@ -447,7 +449,7 @@ const sportscomplex: SeedSportsComplex[] = [
     phone: '+54 9 3512268833',
     description:
       'Complejo Deportivo de primer nivel con toda la equipacion disponible para el deporte amateur',
-    images: ['https://asset.cloudinary.com/djvepy9sd/8787789bd6ef1a24146a2d7798037bde'],
+    images: ['https://res.cloudinary.com/djvepy9sd/image/upload/v1681421281/complejo1_xz5lwb.jpg'],
     bathrooms: true,
     grills: true,
     locker: true,
