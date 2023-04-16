@@ -5,7 +5,7 @@ import PrimaryButton from './PrimaryButton';
 
 interface props {
   title: string;
-  bgImage?: string;
+  bgImage: string;
   href: string;
 }
 
