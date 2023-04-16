@@ -24,7 +24,6 @@ interface sportFieldType {
 
 const SportField: FC<sportFieldType> = ({ complexData, btnText, route, title, complex, image }) => {
   const [moreInfo, setMoreInfo] = useState(false);
-
   const navigate = useNavigate();
 
   const handleClick = () => setMoreInfo(!moreInfo);
