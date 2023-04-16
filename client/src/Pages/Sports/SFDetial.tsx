@@ -51,9 +51,9 @@ const SFDetail = () => {
   const [selectedDate, setSelectedDate] = useState(`${date}`);
   const handleSelectCalendar = (option: string) => setSelectedDate(option);
 
-  const handleCancel = () => navigate(`/reservar/${sport}/canchas`);
+  const handleCancel = () => window.history.back();
   const handleConfirm = () => {
-    navigate(`/reservar/${sport}/canchas`);
+    alert('Cancha reservada');
   };
 
   const handleClick = () => setOpenMenu(!openMenu);
@@ -68,7 +68,7 @@ const SFDetail = () => {
     <Layout title="Detalles de la reserva">
       <div className="flex flex-row w-full justify-center gap-20">
         <div className="flex flex-col gap-5 w-full lg:w-[550px] lg:mt-12">
-          <div className="mx-[5%] my-5 flex flex-col bg-[#aaa3] px-5 py-2 rounded-lg">
+          <div className="mx-[5%] h-10 my-5 flex flex-col bg-[#aaa3] px-5 py-2 rounded-lg">
             <span className="opacity-70">{data?.name}</span>
             <span className="text-lg">{data?.sportComplex?.ubication}</span>
           </div>

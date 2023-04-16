@@ -36,8 +36,8 @@ export const Search: FC = () => {
   const handleField = (option: string) => setField(option);
   const handleTurn = (option: string) => setTurn(option);
   const handleTime = (option: string) => setTime(option);
-  const handleLocationName = (event: ChangeEvent<HTMLInputElement>) => {
-    setLocation(event.target.value);
+  const handleLocationName = (string: string) => {
+    setLocation(string);
   };
 
   const handleSearch = async () => {
