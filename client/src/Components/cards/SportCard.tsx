@@ -16,8 +16,10 @@ const SportCard: FC<props> = ({ title, bgImage, href }) => {
 
   return (
     <div
-      className={`mx-1 relative rounded h-[220px] max-w-[700px]
-      bg-[url(${bgImage})] flex items-center justify-center lg:h-[350px]`}
+      //Opacity
+      // style={{ backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.3)), url(${bgImage})` }}
+      style={{ backgroundImage: `url(${bgImage})` }}
+      className={`mx-1 relative rounded h-[220px] max-w-[700px] flex items-center justify-center lg:h-[350px] bg-cover bg-center`}
     >
       <div className="font-segoeScript  bg-opacity-10 font-bold text-6xl text-center">{title}</div>
       <div className="absolute bottom-4 right-4">
