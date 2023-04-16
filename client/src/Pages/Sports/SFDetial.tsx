@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
@@ -8,10 +8,14 @@ import PrimaryButton from '../../Components/PrimaryButton';
 import { getSportDetail } from '../../Functions/SportFieldsQuery';
 import { type sportData } from '../../types/Sport.type';
 import SFDetailMenu from '../../Components/SFDetailMenu';
+import { PostReservations } from '../../Functions/ReservationsQuery';
+import SelectHour from '../../Components/inputs/SelectHour';
+import { useSelector } from 'react-redux';
+import { AppUser } from '../../types/App.type';
 
 const SFDetail = () => {
-  const navigate = useNavigate();
-  const { id = '', sport = '' } = useParams();
+  const { id = '' } = useParams();
+  const userEmail = useSelector((state: AppUser) => state.user?.user?.email);
 
   const queryParams = new URLSearchParams(location.search);
   const rHour = queryParams.get('rHour') ?? '';
@@ -45,7 +49,7 @@ const SFDetail = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const handleCloseMenu = () => setOpenMenu(false);
 
-  const [selectedHour, setSelectedHour] = useState(`${rHour}`);
+  const [selectedHour, setSelectedHour] = useState<string>(rHour);
   const handleSelectHour = (option: string) => setSelectedHour(option);
 
   const [selectedDate, setSelectedDate] = useState(`${date}`);
@@ -53,7 +57,14 @@ const SFDetail = () => {
 
   const handleCancel = () => window.history.back();
   const handleConfirm = () => {
-    alert('Cancha reservada');
+    PostReservations({
+      hour: Number(selectedHour),
+      date: selectedDate,
+      sportfieldId: id,
+      userEmail,
+    })
+      .then(() => alert('Cancha reservada'))
+      .catch((err) => console.log(err));
   };
 
   const handleClick = () => setOpenMenu(!openMenu);
