@@ -15,10 +15,10 @@ const SportCard: FC<props> = ({ title, bgImage, href }) => {
 
   return (
     <div
+      // style={{ backgroundImage: `url(${bgImage})` }}
       style={{
         backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.3)), url(${bgImage})`,
       }}
-      // style={{ backgroundImage: `url(${bgImage})` }}
       className={`group mx-1 relative rounded h-[220px] max-w-[700px] flex items-center justify-center lg:h-[350px] bg-cover bg-center`}
     >
       <span className="absolute w-full h-full backdrop-blur-sm group-hover:backdrop-blur-0 transition-all"></span>
