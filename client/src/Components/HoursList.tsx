@@ -2,20 +2,14 @@ import { type FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { getSportAvailability } from '../Functions/SportFieldsQuery';
-
-interface hoursType {
-  end_hour: string;
-  id: string;
-  start_hour: string;
-}
+import { hoursType } from '../types/Sport.type';
 
 interface hoursProps {
-  handleClick: () => void;
   getAllHours: boolean;
   handleSelect: (option: string) => void;
 }
 
-const HoursList: FC<hoursProps> = ({ handleClick, getAllHours, handleSelect }) => {
+const HoursList: FC<hoursProps> = ({ getAllHours, handleSelect }) => {
   const { id = '' } = useParams();
 
   const [hours, setHours] = useState<hoursType[]>([]);

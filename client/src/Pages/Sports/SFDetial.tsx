@@ -13,23 +13,43 @@ const SFDetail = () => {
   const navigate = useNavigate();
   const { id = '', sport = '' } = useParams();
 
-  const [openMenu, setOpenMenu] = useState(false);
+  const queryParams = new URLSearchParams(location.search);
+  const rHour = queryParams.get('rHour') ?? '';
+  const date = queryParams.get('date') ?? '';
 
   const [data, setData] = useState<sportData>({
     id: '',
     images: [''],
     name: '',
     description: '',
+    capacity: 0,
+    dimensions: '',
+    fieldType: '',
     sportComplex: {
       ubication: '',
-      data: {
-        parking: true,
-        grill: true,
-        changing: true,
-        bar: true,
-      },
+      parking: false,
+      grill: false,
+      locker: false,
+      bathrooms: false,
+      restobar: false,
+      showers: false,
+      availability: [
+        {
+          end_hour: '',
+          id: '',
+          start_hour: '',
+        },
+      ],
     },
   });
+  const [openMenu, setOpenMenu] = useState(false);
+  const handleCloseMenu = () => setOpenMenu(false);
+
+  const [selectedHour, setSelectedHour] = useState(`${rHour}`);
+  const handleSelectHour = (option: string) => setSelectedHour(option);
+
+  const [selectedDate, setSelectedDate] = useState(`${date}`);
+  const handleSelectCalendar = (option: string) => setSelectedDate(option);
 
   const handleCancel = () => navigate(`/reservar/${sport}/canchas`);
   const handleConfirm = () => {
@@ -58,20 +78,27 @@ const SFDetail = () => {
               <button onClick={handleClick} className="text-3xl">
                 <AiOutlineInfoCircle />
               </button>
-              <SFDetailMenu openMenu={openMenu} />
+              <SFDetailMenu
+                openMenu={openMenu}
+                handleSelectHour={handleSelectHour}
+                handleSelectCalendar={handleSelectCalendar}
+                handleCloseMenu={handleCloseMenu}
+              />
             </div>
             <div className="bg-[#aaa2] p-5">
               <span className="block">{data?.description}</span>
-              <span className="block">Dobles</span>
+              <span className="block">
+                Capacidad: {data?.capacity} personas - {data?.dimensions} m²
+              </span>
             </div>
             <div className="bg-[#aaa2] p-5">
               <div className="flex flex-row justify-between w-full">
                 <span>Dia</span>
-                <span>Miercoles 30/3</span>
+                <span>Miercoles {selectedDate}</span>
               </div>
               <div className="flex flex-row justify-between w-full">
                 <span>Hora</span>
-                <span>17:00 hs</span>
+                <span>{selectedHour}:00 hs</span>
               </div>
               <div className="flex flex-row justify-between w-full">
                 <span>Duracion</span>
