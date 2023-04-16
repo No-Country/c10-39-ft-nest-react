@@ -1,6 +1,5 @@
 import { searchType } from '../types/Search.type';
 import { type sportData } from '../types/Sport.type';
-import { ISportField } from '../types/SportField.type';
 
 import axios from './axios';
 
@@ -44,7 +43,7 @@ export async function getSportAvailability(id: string) {
 
 export async function getOwnerSportFields() {
   try {
-    const { data } = await axios.get<ISportField[]>('/sportfields/');
+    const { data } = await axios.get<sportData[]>('/sportfields/');
     return data;
   } catch (e) {
     console.error(e);

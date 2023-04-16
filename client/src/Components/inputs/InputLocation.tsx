@@ -1,9 +1,9 @@
-import { type FC, useRef, useEffect, type ChangeEvent } from 'react';
+import { type FC, useRef, useEffect } from 'react';
 
 interface props {
   label: string;
   // onLocationChange: (latitude: number, longitude: number) => void;
-  handleLocationName: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleLocationName: (string: string) => void;
   location: string;
   icon?: any;
 }
@@ -15,24 +15,29 @@ const InputLocation: FC<props> = (props) => {
 
   // const [autocomplete, setAutocomplete] = useState<google.maps.places.Autocomplete | null>(null);
 
-  // const handlePlaceChange = () => {
-  //   const place = autocomplete?.getPlace();
-  //   if (place && place.geometry) {
-  //     const { lat, lng }: any = place.geometry?.location;
-  // setLocation(place.formatted_address as string);
-  //     onLocationChange(lat(), lng());
-  //   }
-  // };
+  const handlePlaceChange = () => {
+    //   const place = autocomplete?.getPlace();
+    //   if (place && place.geometry) {
+    //     const { lat, lng }: any = place.geometry?.location;
+    // setLocation(place.formatted_address as string);
+    //     onLocationChange(lat(), lng());
+    //   }
+    const inputLocation = autocompleteRef.current;
+    if (inputLocation) {
+      handleLocationName(inputLocation.value);
+    }
+  };
 
   useEffect(() => {
-    // const autocompleteInstance =
-    // eslint-disable-next-line no-new
-    new google.maps.places.Autocomplete(autocompleteRef.current as HTMLInputElement, {
-      types: ['geocode'],
-      componentRestrictions: { country: 'ARG' },
-    });
+    const autocompleteInstance = new google.maps.places.Autocomplete(
+      autocompleteRef.current as HTMLInputElement,
+      {
+        types: ['geocode'],
+        componentRestrictions: { country: 'ARG' },
+      },
+    );
     // setAutocomplete(autocompleteInstance);
-    // autocompleteInstance.addListener('place_changed', handlePlaceChange);
+    autocompleteInstance.addListener('place_changed', handlePlaceChange);
   }, []);
 
   return (
@@ -44,7 +49,7 @@ const InputLocation: FC<props> = (props) => {
         }
         type="text"
         value={location}
-        onChange={handleLocationName}
+        onChange={(e) => handleLocationName(e.target.value)}
         ref={autocompleteRef}
         placeholder=""
       />

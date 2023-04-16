@@ -1,15 +1,25 @@
+export interface hoursType {
+  end_hour: string;
+  id: string;
+  start_hour: string;
+}
+
 export interface sportData {
   id: string;
   images: string[];
   name: string;
   description: string;
+  capacity: number;
+  dimensions: string;
+  fieldType: string;
   sportComplex: {
     ubication: string;
-    data: {
-      parking: true;
-      grill: true;
-      changing: true;
-      bar: true;
-    };
+    parking: boolean;
+    grill: boolean;
+    locker: boolean;
+    bathrooms: boolean;
+    restobar: boolean;
+    showers: boolean;
+    availability: hoursType[];
   };
 }

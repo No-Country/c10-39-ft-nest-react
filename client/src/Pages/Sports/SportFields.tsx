@@ -43,17 +43,17 @@ const SportFields: FC = () => {
               data.length > 1 ? 'scrollbarSF overflow-y-scroll' : ''
             } flex flex-col gap-5 my-5 w-full max-w-[450px]  lg:mt-10 lg:max-h-[525px] px-5`}
           >
-            {data.map((item) => (
-              <SportField
-                key={item.id}
-                complexData={true}
-                btnText={'RESERVAR'}
-                route={`/reservar/${'football'}/canchas/${item.id}`}
-                title={item.name}
-                complex={item.sportComplex}
-                image={item.images[0]}
-              />
-            ))}
+            {rHour &&
+              date &&
+              data.map((item) => (
+                <SportField
+                  key={item.id}
+                  complexData={true}
+                  btnText={'RESERVAR'}
+                  route={`/reservar/${'football'}/canchas/${item.id}?rHour=${rHour}&date=${date}`}
+                  item={item}
+                />
+              ))}
           </div>
           <div className="hidden rounded-lg lg:block w-[700px] h-[475px] bg-primary mt-20"></div>
         </div>
