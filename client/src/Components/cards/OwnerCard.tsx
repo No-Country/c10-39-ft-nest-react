@@ -12,8 +12,8 @@ const OwnerCard: FC<props> = ({ exists }) => {
 
   const handleClick = () => navigate('/propietarios/complejo');
   return (
-    <div className="w-full lg:max-w-[700px]">
-      <div className="relative rounded-t-lg bg-primary bg-opacity-80 w-full h-[150px] lg:h-64">
+    <div className="w-full lg:max-w-[700px] group">
+      <div className="group-hover:backdrop-blur-sm transition-all relative rounded-t-lg bg-primary bg-opacity-80 w-full h-[150px] lg:h-64">
         <h2 className=" absolute bottom-7 left-10 text-white text-xl w-10/12 text-left font-semibold lg:text-3xl">
           Mi Complejo
         </h2>
