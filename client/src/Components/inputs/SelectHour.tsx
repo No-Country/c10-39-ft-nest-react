@@ -47,7 +47,7 @@ const SelectHour: FC<selectType> = ({ handleClick, value, label, icon }) => {
       </label>
       {open && (
         <div className="absolute top-[58px] -left-0 z-[500] lg:-top-10 lg:-left-[245px]">
-          <HoursList handleClick={handleOpen} getAllHours={true} handleSelect={handleOption} />
+          <HoursList getAllHours={true} handleSelect={handleOption} />
         </div>
       )}
       {icon && (
