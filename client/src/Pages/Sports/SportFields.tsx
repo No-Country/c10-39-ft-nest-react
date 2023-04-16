@@ -51,6 +51,7 @@ const SportFields: FC = () => {
                 route={`/reservar/${'football'}/canchas/${item.id}`}
                 title={item.name}
                 complex={item.sportComplex}
+                image={item.images[0]}
               />
             ))}
           </div>
