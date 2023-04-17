@@ -29,7 +29,9 @@ const SFDetail = () => {
     capacity: 0,
     dimensions: '',
     fieldType: '',
-    sportComplex: {
+    sportsComplex: {
+      lat: 0,
+      lng: 0,
       ubication: '',
       parking: false,
       grill: false,
