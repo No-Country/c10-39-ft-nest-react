@@ -6,8 +6,8 @@ export default interface ComplexType {
   phone: string;
   grills: boolean;
   locker: boolean;
-  lat: 0;
-  lng: 0;
+  lat: number;
+  lng: number;
   showers: boolean;
   restobar: boolean;
   parking: boolean;

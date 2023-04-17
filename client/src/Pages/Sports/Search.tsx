@@ -34,7 +34,10 @@ export const Search: FC = () => {
   const [loader, setLoader] = useState(false);
 
   const handleField = (option: string) => setField(option);
-  const handleTurn = (option: string) => setTurn(option);
+  const handleTurn = (option: string) => {
+    console.log(option);
+    setTurn(option);
+  };
   const handleTime = (option: string) => setTime(option);
   const handleLocationName = (string: string) => {
     setLocation(string);
@@ -79,11 +82,11 @@ export const Search: FC = () => {
 
   return (
     <Layout title={`${loader ? sport : ''}`}>
-      <div className="w-full flex justify-center items-center h-[70vh]">
-        <form onSubmit={handleSubmit} className="flex w-full flex-col items-center lg:mx-[30%]">
-          <div className="flex flex-col gap-5 w-full items-center pt-12 lg:gap-10">
+      <div className='w-full flex justify-center items-center h-[70vh]'>
+        <form onSubmit={handleSubmit} className='flex w-full flex-col items-center lg:mx-[30%]'>
+          <div className='flex flex-col gap-5 w-full items-center pt-12 lg:gap-10'>
             <InputLocation
-              label="Ubicacion"
+              label='Ubicacion'
               icon={<MdLocationOn />}
               handleLocationName={handleLocationName}
               location={location}
@@ -91,22 +94,22 @@ export const Search: FC = () => {
             {sportFields?.types && (
               <Select
                 array={sportFields?.types}
-                label="Tipo de Cancha"
+                label='Tipo de Cancha'
                 value={field}
                 handleClick={handleField}
                 icon={<GiSoccerField />}
               />
             )}
             <SelectCalendar
-              label="Dia"
+              label='Dia'
               value={turn}
               handleClick={handleTurn}
               icon={<BsCalendar2Event />}
             />
-            <SelectHour label="Horario" value={time} handleClick={handleTime} icon={<TfiTime />} />
+            <SelectHour label='Horario' value={time} handleClick={handleTime} icon={<TfiTime />} />
           </div>
-          <div className="absolute bottom-10 right-10 lg:right-[33%]">
-            <PrimaryButton text="BUSCAR" />
+          <div className='absolute bottom-10 right-10 lg:right-[33%]'>
+            <PrimaryButton text='BUSCAR' />
           </div>
         </form>
       </div>

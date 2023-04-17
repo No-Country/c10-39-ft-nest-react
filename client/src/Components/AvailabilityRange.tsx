@@ -43,7 +43,7 @@ const AvailabilityRange: FC<Props> = ({ hours, changeAvailability }) => {
 
   return (
     <div className='w-10/12 relative'>
-      <div className='flex justify-between  divide-black divide-solid border-b-2'>
+      <div className='flex justify-between pr-2 divide-black divide-solid border-b-2'>
         <p>Disponibilidad</p>
         <button
           type='button'
@@ -54,7 +54,7 @@ const AvailabilityRange: FC<Props> = ({ hours, changeAvailability }) => {
         </button>
       </div>
       {open && (
-        <div className='w-full absolute bg-white rounded-md px-1 shadow-lg'>
+        <div className='z-10 w-full absolute bg-white rounded-md px-1 shadow-lg'>
           <ul className='hoursScrollbar py-3 overflow-y-scroll max-h-[160px] relative left-1'>
             {hours.length > 0 &&
               hours.map((range, idx) => {

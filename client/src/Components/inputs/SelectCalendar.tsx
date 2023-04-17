@@ -14,12 +14,13 @@ const SelectCalendar: FC<selectType> = ({ handleClick, value, label, icon }) => 
   const handleOpen = () => setOpen(!open);
 
   const handleOption = (item: string) => {
+    console.log(item);
     handleClick(item);
     handleOpen();
   };
 
   return (
-    <div className="w-10/12 flex flex-col relative">
+    <div className='w-10/12 flex flex-col relative'>
       <input
         id={label}
         className={
@@ -39,12 +40,12 @@ const SelectCalendar: FC<selectType> = ({ handleClick, value, label, icon }) => 
         {label}
       </label>
       {open && (
-        <div className="absolute z-[500] -bottom-20 -left-1 lg:-left-[450px]">
+        <div className='absolute z-[500] -bottom-20 -left-1 lg:-left-[450px]'>
           <MyCalendar handleClick={handleOption} />
         </div>
       )}
       {icon && (
-        <div className="[&>svg]:absolute [&>svg]:top-7 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none">
+        <div className='[&>svg]:absolute [&>svg]:top-7 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none'>
           {icon}
         </div>
       )}

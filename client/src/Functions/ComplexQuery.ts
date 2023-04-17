@@ -2,45 +2,41 @@ import type ComplexType from '../types/Complex.type';
 
 import axios from './axios';
 
+// TODO: owner should not be api response
+const filterResponse = (data: ComplexType) => {
+  const { owner, ...filteredData } = data;
+  return filteredData;
+};
+
 export async function GetComplexQuery() {
   try {
-    let { data } = await axios.get<ComplexType>('/sports-complex/owner');
+    const { data } = await axios.get<ComplexType>('/sports-complex/owner');
 
-    if (data.owner) {
-      const { owner, ...filteredData } = data;
-      data = filteredData;
-    }
-
-    return { ...data };
+    return filterResponse(data);
   } catch (err) {
     console.log(err);
   }
 }
 
-interface complexDataType extends Omit<ComplexType, 'id'> {
+interface ComplexDataType extends Omit<ComplexType, 'id'> {
   id?: string;
 }
 
-export async function CreateComplexQuery(body: complexDataType) {
+export async function CreateComplexQuery(body: ComplexDataType) {
   try {
-    let { data } = await axios.post<ComplexType>('/sports-complex', body);
+    const { data } = await axios.post<ComplexType>('/sports-complex', body);
 
-    if (data.owner) {
-      const { owner, ...filteredData } = data;
-      data = filteredData;
-    }
-
-    return data;
+    return filterResponse(data);
   } catch (err) {
     console.log(err);
   }
 }
 
-export async function UpdateComplexQuery(body: complexDataType, id: string) {
+export async function UpdateComplexQuery(body: ComplexType, id: string) {
   try {
-    const { data } = await axios.patch(`/sports-complex/${id}`, body);
+    const { data } = await axios.patch(`/sports-complex/${id}`, filterResponse(body));
 
-    return data;
+    return filterResponse(data);
   } catch (err) {
     console.log(err);
   }
