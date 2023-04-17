@@ -38,3 +38,12 @@ export async function DeleteReservation(id: string) {
     console.log(err);
   }
 }
+
+export async function ReservationUser() {
+  try {
+    const { data }: DataType = await axios.get('/reservation');
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}

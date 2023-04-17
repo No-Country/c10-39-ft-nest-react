@@ -5,19 +5,19 @@ export interface IReservation {
 }
 
 export interface GetReservationType {
-  capacity: number;
-  description: string;
-  dimensions: string;
-  fieldType: string;
   id: string;
-  images: string[];
-  name: string;
-  reservation: {
+  hour: number;
+  date: string;
+  sportfield: {
+    capacity: number;
     id: string;
-    hour: number;
-    data: string;
-  };
-  sportsComplex: {
-    address: string;
+    description: string;
+    dimensions: string;
+    fieldType: string;
+    images: string[];
+    name: string;
+    sportsComplex: {
+      address: string;
+    };
   };
 }

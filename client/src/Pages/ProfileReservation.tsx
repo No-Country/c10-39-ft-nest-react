@@ -2,7 +2,7 @@ import { type FC, useState, useEffect } from 'react';
 
 import Layout from '../Components/layout/Layout';
 import ReservationCard from '../Components/cards/ReservationCard';
-import { GetReservations } from '../Functions/ReservationsQuery';
+import { ReservationUser } from '../Functions/ReservationsQuery';
 import PrimaryButton from '../Components/PrimaryButton';
 
 import { useNavigate } from 'react-router-dom';
@@ -12,16 +12,16 @@ const ProfileReservation: FC = () => {
   const [reservations, setReservations] = useState<GetReservationType[]>([]);
 
   const deleteReservations = (deletedId: string) => {
-    const newReservations = reservations.filter((item) => item.reservation.id !== deletedId);
+    const newReservations = reservations.filter((item) => item.id !== deletedId);
     setReservations(newReservations);
-    return newReservations.some((item) => item.reservation.id === deletedId);
+    return newReservations.some((item) => item.id === deletedId);
   };
 
   const navigate = useNavigate();
   const handleClick = () => navigate('/reservar');
 
   useEffect(() => {
-    GetReservations()
+    ReservationUser()
       .then((data) => data && setReservations(data))
       .catch((err) => console.log(err));
   }, []);
