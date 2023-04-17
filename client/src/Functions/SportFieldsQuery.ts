@@ -34,10 +34,12 @@ interface hoursType {
   start_hour: string;
 }
 
-export async function getSportAvailability(id: string) {
+export async function getSportAvailability(body: string, id: string) {
   try {
-    const { data }: { data: hoursType[] } = await axios.get(`/sportfields/${id}/availability`);
-    return data;
+    const { data } = await axios.post<{ turns: hoursType[] }>(`/sportfields/${id}/availability`, {
+      date: body,
+    });
+    return data.turns;
   } catch (error) {
     console.error(error);
   }

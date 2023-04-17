@@ -8,14 +8,11 @@ interface props {
   handleSelectHour: (option: string) => void;
   handleSelectCalendar: (option: string) => void;
   handleCloseMenu: () => void;
+  selectedDate: string;
 }
 
-const SFDetailMenu: FC<props> = ({
-  openMenu,
-  handleSelectHour,
-  handleSelectCalendar,
-  handleCloseMenu,
-}) => {
+const SFDetailMenu: FC<props> = (props) => {
+  const { openMenu, handleSelectHour, handleSelectCalendar, handleCloseMenu, selectedDate } = props;
   const [openHours, setOpenHours] = useState(false);
   const [openCalendar, setOpenCalendar] = useState(false);
 
@@ -57,7 +54,11 @@ const SFDetailMenu: FC<props> = ({
         )}
         {openHours && (
           <div className="absolute top-32 -left-24 lg:top-0 lg:-left-full">
-            <HoursList getAllHours={false} handleSelect={handleOpenHours} />
+            <HoursList
+              getAllHours={false}
+              handleSelect={handleOpenHours}
+              selectedDate={selectedDate}
+            />
           </div>
         )}
       </ul>

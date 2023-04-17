@@ -94,6 +94,7 @@ const SFDetail = () => {
                 handleSelectHour={handleSelectHour}
                 handleSelectCalendar={handleSelectCalendar}
                 handleCloseMenu={handleCloseMenu}
+                selectedDate={selectedDate}
               />
             </div>
             <div className="bg-[#aaa2] p-5">
