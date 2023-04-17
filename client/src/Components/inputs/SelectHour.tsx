@@ -1,6 +1,6 @@
-import { type FC, useState, type BaseSyntheticEvent } from 'react';
+import { type FC, useState, useEffect } from 'react';
 
-import HoursList from './HoursList';
+import HoursList from '../HoursList';
 
 interface selectType {
   label: string;
@@ -11,18 +11,17 @@ interface selectType {
 
 const SelectHour: FC<selectType> = ({ handleClick, value, label, icon }) => {
   const [open, setOpen] = useState(false);
+  const [currentValue, setCurrentValue] = useState('');
+
   const handleOpen = () => setOpen(!open);
 
   const handleOption = (item: string) => {
     handleClick(item);
     handleOpen();
-  };
-
-  const selectValue = () => {
-    if (value !== '') {
-      let nextNum = Number(value) + 1;
+    if (item !== '') {
+      let nextNum = Number(item) + 1;
       if (nextNum === 24) nextNum = 0;
-      return `${value}:00 - ${nextNum}:00`;
+      setCurrentValue(`${item}:00 - ${nextNum}:00`);
     }
   };
 
@@ -35,7 +34,7 @@ const SelectHour: FC<selectType> = ({ handleClick, value, label, icon }) => {
         }
         readOnly
         type={'text'}
-        value={selectValue()}
+        value={currentValue}
         onClick={handleOpen}
       />
       <label
@@ -48,7 +47,7 @@ const SelectHour: FC<selectType> = ({ handleClick, value, label, icon }) => {
       </label>
       {open && (
         <div className="absolute top-[58px] -left-0 z-[500] lg:-top-10 lg:-left-[245px]">
-          <HoursList handleClick={handleOpen} getAllHours={true} handleSelect={handleOption} />
+          <HoursList getAllHours={true} handleSelect={handleOption} />
         </div>
       )}
       {icon && (

@@ -173,6 +173,10 @@ export class SportfieldsService {
   ): Promise<any> {
     const R = 6371; // Radio de la Tierra en kilómetros
     const limit = 20; // Límite de resultados
+    // console.log(date);
+    // const splittedDate = date.split('/');
+    // const fDate = `${splittedDate[1]}/${splittedDate[0]}/${splittedDate[2]}`;
+    // console.log(fDate);
 
     const nearbySportFields = await this.sportFieldRepository
       .createQueryBuilder('sportField')

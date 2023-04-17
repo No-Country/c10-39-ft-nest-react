@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
 
-import Layout from '../Components/Layout';
+import Layout from '../../Components/layout/Layout';
 
 import OwnerRegister from './OwnerRegister';
-import { OwnerMenu } from '../Components/OwnerMenu';
+import { OwnerMenu } from '../../Components/OwnerMenu';
 import { useEffect } from 'react';
-import { GetComplexQuery } from '../Functions/ComplexQuery';
-import store from '../App/Store';
-import { setComplex } from '../App/complexSlice';
+import { GetComplexQuery } from '../../Functions/ComplexQuery';
+import store from '../../App/Store';
+import { setComplex } from '../../App/complexSlice';
 
 const Owner = () => {
   const isOwner = useSelector<any>((state) => state.user?.user?.owner);
@@ -21,7 +21,7 @@ const Owner = () => {
     <>
       {isOwner ? (
         <>
-          <Layout title='Popietarios'>
+          <Layout title="Popietarios">
             <OwnerMenu />
           </Layout>
         </>

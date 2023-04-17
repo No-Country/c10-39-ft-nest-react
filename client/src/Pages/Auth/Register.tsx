@@ -5,11 +5,11 @@ import { AiFillEye } from 'react-icons/ai';
 import { HiOutlineUser, HiUser } from 'react-icons/hi';
 import { IoMdMail } from 'react-icons/io';
 
-import Input from '../Components/Input';
-import Layout from '../Components/Layout';
-import { registerUser } from '../Functions/UserQuery';
-import NavDesktop from '../Components/NavDesktop';
-import NavMobile from '../Components/NavMobile';
+import Input from '../../Components/inputs/Input';
+import Layout from '../../Components/layout/Layout';
+import { registerUser } from '../../Functions/UserQuery';
+import NavDesktop from '../../Components/layout/NavDesktop';
+import NavMobile from '../../Components/layout/NavMobile';
 
 const Register: FC = () => {
   const navigate = useNavigate();

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { FaBasketballBall } from 'react-icons/fa';
 
-import { loginUser } from '../Functions/UserQuery';
+import { loginUser } from '../../Functions/UserQuery';
 
 const Login: FC = () => {
   const [email, setMail] = useState('');

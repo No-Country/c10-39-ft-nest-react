@@ -131,7 +131,9 @@ export class SportfieldsController {
     @Query('sport') sport: string,
     @Query('fieldType') fieldType: string,
   ) {
-    return await this.sportfieldsService.search(lat, lng, rHour, date, sport, fieldType);
+    const splittedDate = date.split('/');
+    const fDate = `${splittedDate[1]}/${splittedDate[0]}/${splittedDate[2]}`;
+    return await this.sportfieldsService.search(lat, lng, rHour, fDate, sport, fieldType);
   }
 
   @Get('user/reservations')

@@ -1,10 +1,10 @@
 import { useState, type FC, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
-import Layout from '../Components/Layout';
-import SportField from '../Components/SportField';
-import { getSportFieldsWithSport } from '../Functions/SportFieldsQuery';
-import { type sportData } from '../types/Sport.type';
+import Layout from '../../Components/layout/Layout';
+import SportField from '../../Components/cards/SportField';
+import { getSportFieldsWithSport } from '../../Functions/SportFieldsQuery';
+import { type sportData } from '../../types/Sport.type';
 
 const SportFields: FC = () => {
   const [data, setData] = useState<sportData[]>([]);
@@ -43,16 +43,17 @@ const SportFields: FC = () => {
               data.length > 1 ? 'scrollbarSF overflow-y-scroll' : ''
             } flex flex-col gap-5 my-5 w-full max-w-[450px]  lg:mt-10 lg:max-h-[525px] px-5`}
           >
-            {data.map((item) => (
-              <SportField
-                key={item.id}
-                complexData={true}
-                btnText={'RESERVAR'}
-                route={`/reservar/${'football'}/canchas/${item.id}`}
-                title={item.name}
-                complex={item.sportComplex}
-              />
-            ))}
+            {rHour &&
+              date &&
+              data.map((item) => (
+                <SportField
+                  key={item.id}
+                  complexData={true}
+                  btnText={'RESERVAR'}
+                  route={`/reservar/${'football'}/canchas/${item.id}?rHour=${rHour}&date=${date}`}
+                  item={item}
+                />
+              ))}
           </div>
           <div className="hidden rounded-lg lg:block w-[700px] h-[475px] bg-primary mt-20"></div>
         </div>

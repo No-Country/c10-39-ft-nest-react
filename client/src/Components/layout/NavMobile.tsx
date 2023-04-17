@@ -6,7 +6,7 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { GoKebabVertical } from 'react-icons/go';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
 
-import SportMenu from './SportMenu';
+import SportMenu from '../SportMenu';
 
 const NavMobile: FC<{ title: string }> = ({ title }) => {
   const [openMenu, setOpenMenu] = useState(false);
