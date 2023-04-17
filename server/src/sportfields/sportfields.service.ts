@@ -9,7 +9,7 @@ import { SportsService } from 'src/sports/sports.service';
 import { SportsComplexService } from 'src/sports-complex/sports-complex.service';
 import { Repository } from 'typeorm';
 
-import { CreateSportFieldDto, UpdateSportFieldDto } from './dto';
+import { CreateSportFieldDto, GetDayAvailabilityDto, UpdateSportFieldDto } from './dto';
 import { SportField } from './entities/sportfield.entity';
 import { AuthUserDTO, UserDTO } from 'src/Core/auth/dto';
 import SportsComplex from 'src/sports-complex/entities/sports-complex.entity';
@@ -84,6 +84,32 @@ export class SportfieldsService {
     return sportField.availability;
   }
 
+  async getDayAvailability(id: string, getDayAvailabilityDto: GetDayAvailabilityDto) {
+    const { date } = getDayAvailabilityDto;
+    const sportField = await this.sportFieldRepository
+      .createQueryBuilder('sf')
+      .innerJoinAndSelect('sf.sportsComplex', 'sp', 'sf.id = :id', { id })
+      .leftJoinAndSelect('sp.availability', 'av')
+      .leftJoinAndSelect('sf.reservation', 'res', 'res.date = :date', { date })
+      .getOne();
+
+    const reservations = sportField.reservation.map((res) => res.hour);
+    return {
+      turns: sportField.availability.reduce((acc, range) => {
+        let { start_hour, end_hour } = range;
+        start_hour = typeof start_hour === 'string' ? parseInt(start_hour) : start_hour;
+        end_hour = typeof end_hour === 'string' ? parseInt(end_hour) : end_hour;
+
+        const turns = [];
+        for (let i = start_hour; i < end_hour; i++) {
+          if (reservations.includes(i)) continue;
+          turns.push({ start_hour: i, end_hour: i + 1 });
+        }
+        return [...acc, ...turns];
+      }, []),
+    };
+  }
+
   async getReservations(id: string) {
     const sportField = await this.sportFieldRepository
       .createQueryBuilder('sportField')
@@ -116,7 +142,6 @@ export class SportfieldsService {
     newSportField.fieldType = fieldType;
 
     const sportsComplex = await this.sportsComplexService.findOneWithOwner(sportsComplexId);
-    console.log(sportsComplex);
 
     if (sportsComplex.owner?.id !== ownerId)
       throw new ForbiddenException('Insuficient Permissions');

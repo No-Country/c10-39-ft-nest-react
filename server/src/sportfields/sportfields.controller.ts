@@ -26,7 +26,7 @@ import { GetUser } from 'src/Core/auth/decorators';
 import { AuthUserDTO } from 'src/Core/auth/dto';
 import { RoleGuard } from 'src/Core/auth/guards';
 
-import { CreateSportFieldDto, UpdateSportFieldDto } from './dto';
+import { CreateSportFieldDto, GetDayAvailabilityDto, UpdateSportFieldDto } from './dto';
 import { SportfieldsService } from './sportfields.service';
 import SportField from './entities/sportfield.entity';
 
@@ -144,6 +144,14 @@ export class SportfieldsController {
   @Get(':id/availability')
   getAvailability(@Param('id', ParseUUIDPipe) id: string) {
     return this.sportfieldsService.getAvailability(id);
+  }
+
+  @Post(':id/availability')
+  getDateAvailability(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() getDayAvailabilityDto: GetDayAvailabilityDto,
+  ) {
+    return this.sportfieldsService.getDayAvailability(id, getDayAvailabilityDto);
   }
 
   @Get(':id/reservations')
