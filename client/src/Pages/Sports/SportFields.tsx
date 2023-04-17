@@ -4,10 +4,12 @@ import { useLocation, useParams } from 'react-router-dom';
 import Layout from '../../Components/layout/Layout';
 import SportField from '../../Components/cards/SportField';
 import { getSportFieldsWithSport } from '../../Functions/SportFieldsQuery';
-import { type sportData } from '../../types/Sport.type';
+import { coordsType, type sportData } from '../../types/Sport.type';
+import Maps from '../../Components/Maps';
 
 const SportFields: FC = () => {
   const [data, setData] = useState<sportData[]>([]);
+  const [coords, setCoord] = useState<coordsType[]>([]);
 
   const location = useLocation();
 
@@ -29,7 +31,13 @@ const SportFields: FC = () => {
         sport,
         fieldType,
       })
-        .then((data) => data && setData(data))
+      .then((data) => data && (setData(data), setCoord(data.map((item) =>{
+        return {
+          lat: item.sportsComplex.lat,
+          lng: item.sportsComplex.lng,
+        }
+      }))
+      ))
         .catch((err) => console.log(err));
     }
   }, [lat, lng, rHour, date, sport, fieldType]);
@@ -55,7 +63,18 @@ const SportFields: FC = () => {
                 />
               ))}
           </div>
-          <div className="hidden rounded-lg lg:block w-[700px] h-[475px] bg-primary mt-20"></div>
+          <div className="hidden rounded-lg lg:block w-[700px] h-[475px] bg-primary mt-20">
+          {
+              data.length && (
+            <Maps initialCoords={
+              {
+                lat: Number(lat),
+                lng: Number(lng),
+              }
+
+            } Coords={coords} /> 
+            )}
+          </div>
         </div>
       ) : (
         <span className="h-[50vh] flex justify-center items-center text-2xl">

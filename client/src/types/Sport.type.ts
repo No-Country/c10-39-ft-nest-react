@@ -25,3 +25,7 @@ export interface sportData {
     availability: hoursType[];
   };
 }
+export interface coordsType {
+  lat: number;
+  lng: number;
+}
