@@ -430,7 +430,7 @@ const sportscomplex: SeedSportsComplex[] = [
     restobar: true,
     showers: true,
     lat: -32.4201,
-    lng: -64.1888,
+    lng: -61.1888,
     availability: [
       {
         start_hour: 7,
