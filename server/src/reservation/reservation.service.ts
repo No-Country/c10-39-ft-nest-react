@@ -44,8 +44,9 @@ export class ReservationService {
       throw new NotFoundException('User not found');
     }
 
-    // TODO: Check if reservation is within availability of sportfield
-    if (!this.turnIsAvailable(hour, date, sportfieldId)) {
+    // TODO: Check if reservation is within availability of sportfieldres.
+    const turnIsAvailable = await this.turnIsAvailable(hour, date, sportfieldId);
+    if (!turnIsAvailable) {
       throw new BadRequestException('Turn is already taken');
     }
     const reservation = this.reservationRepository.create({
@@ -58,9 +59,9 @@ export class ReservationService {
   }
 
   async findAll(user: AuthUserDTO) {
-    const reservations = await this.sportFieldRepository
-      .createQueryBuilder('sf')
-      .innerJoinAndSelect('sf.reservation', 'res', 'res.userId = :userId', { userId: user.id })
+    const reservations = await this.reservationRepository
+      .createQueryBuilder('res')
+      .innerJoinAndSelect('res.sportfield', 'sf', 'res.userId = :userId', { userId: user.id })
       .leftJoin('sf.sportsComplex', 'sc')
       .addSelect('sc.address')
       .getMany();
@@ -68,7 +69,7 @@ export class ReservationService {
     return reservations;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} reservation`;
   }
 
@@ -83,39 +84,27 @@ export class ReservationService {
   }
 
   async remove(id: string, user: AuthUserDTO) {
-    const reservation = await this.reservationRepository.findOne({
-      select: {
-        id: true,
-        user: {
-          id: true,
-        },
-        sportfield: {
-          id: true,
-          sportsComplex: {
-            id: true,
-            owner: {
-              id: true,
-            },
-          },
-        },
-      },
-      where: {
-        id,
-      },
+    const reservation = await this.reservationRepository
+      .createQueryBuilder('res')
+      .innerJoin('res.sportfield', 'sf', 'res.userId = :userId', { userId: user.id })
+      .addSelect('sf.id')
+      .leftJoinAndSelect('res.user', 'user')
+      .getOne();
+
+    if (!reservation) {
+      throw new NotFoundException('Reservation not exists!');
+    }
+
+    const sportfield = await this.sportFieldRepository.findOne({
+      where: { id: reservation.sportfield.id },
       relations: {
-        user: true,
-        sportfield: {
-          sportsComplex: {
-            owner: true,
-          },
+        sportsComplex: {
+          owner: true,
         },
       },
     });
 
-    if (
-      reservation.sportfield.sportsComplex.owner.id !== user.ownerId &&
-      reservation.user.id !== user.id
-    )
+    if (sportfield.sportsComplex.owner.id !== user.ownerId && reservation.user.id !== user.id)
       throw new ForbiddenException('Permission denied');
 
     return await this.reservationRepository.remove(reservation);
@@ -126,7 +115,7 @@ export class ReservationService {
     return (
       (await this.reservationRepository
         .createQueryBuilder('res')
-        .where('hour = :hour AND date = :date AND sportfieldId = :sportfieldId', {
+        .where('res.hour = :hour AND res.date = :date AND res.sportfieldId = :sportfieldId', {
           hour,
           date,
           sportfieldId,

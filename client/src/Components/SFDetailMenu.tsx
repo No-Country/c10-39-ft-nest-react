@@ -3,16 +3,33 @@ import { type FC, useState } from 'react';
 import HoursList from './HoursList';
 import MyCalendar from './MyCalendar';
 
-const SFDetailMenu: FC<{ openMenu: boolean }> = ({ openMenu }) => {
-  const [openHours, setOpenHours] = useState(false);
-  const [selectedHour, setSelectedHour] = useState('');
+interface props {
+  openMenu: boolean;
+  handleSelectHour: (option: string) => void;
+  handleSelectCalendar: (option: string) => void;
+  handleCloseMenu: () => void;
+}
 
+const SFDetailMenu: FC<props> = ({
+  openMenu,
+  handleSelectHour,
+  handleSelectCalendar,
+  handleCloseMenu,
+}) => {
+  const [openHours, setOpenHours] = useState(false);
   const [openCalendar, setOpenCalendar] = useState(false);
 
-  const handleOpenHours = () => setOpenHours(!openHours);
-  const handleSelect = (option: string) => setSelectedHour(option);
+  const handleOpenHours = (option: string | null) => {
+    setOpenHours(!openHours);
+    option && handleSelectHour(option);
+    handleCloseMenu();
+  };
 
-  const handleOpenCalendar = () => setOpenCalendar(!openCalendar);
+  const handleOpenCalendar = (option: string | null) => {
+    setOpenCalendar(!openCalendar);
+    option && handleSelectCalendar(option);
+    handleCloseMenu();
+  };
 
   return (
     <>
@@ -22,12 +39,15 @@ const SFDetailMenu: FC<{ openMenu: boolean }> = ({ openMenu }) => {
         }   items-center absolute right-12 top-[50px] h-auto w-52 bg-white shadow-2xl rounded-md flex-col`}
       >
         <li
-          onClick={handleOpenCalendar}
+          onClick={() => setOpenCalendar(!openCalendar)}
           className="pl-5 py-5 hover:bg-primary w-full cursor-pointer"
         >
           Cambiar día
         </li>
-        <li className="pl-5 py-5 hover:bg-primary w-full cursor-pointer" onClick={handleOpenHours}>
+        <li
+          className="pl-5 py-5 hover:bg-primary w-full cursor-pointer"
+          onClick={() => setOpenHours(!openHours)}
+        >
           Cambiar horario
         </li>
         {openCalendar && (
@@ -37,11 +57,7 @@ const SFDetailMenu: FC<{ openMenu: boolean }> = ({ openMenu }) => {
         )}
         {openHours && (
           <div className="absolute top-32 -left-24 lg:top-0 lg:-left-full">
-            <HoursList
-              handleClick={handleOpenHours}
-              getAllHours={false}
-              handleSelect={handleSelect}
-            />
+            <HoursList getAllHours={false} handleSelect={handleOpenHours} />
           </div>
         )}
       </ul>

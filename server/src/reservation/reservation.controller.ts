@@ -35,8 +35,8 @@ export class ReservationController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.reservationService.findOne(+id);
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return this.reservationService.findOne(id);
   }
 
   @Patch(':id')
