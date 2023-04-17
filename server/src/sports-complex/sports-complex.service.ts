@@ -47,19 +47,25 @@ export class SportsComplexService {
     });
   }
 
-  findOne(id: string) {
-    return this.SportsComplexRepository.findOne({
+  async findOne(id: string) {
+    return await this.SportsComplexRepository.findOne({
       where: { id },
     });
   }
 
-  findOneWithOwner(id: string) {
-    return this.SportsComplexRepository.findOne({
+  async findOneWithOwner(id: string) {
+    return await this.SportsComplexRepository.findOne({
       where: { id },
       relations: {
         owner: true,
       },
     });
+  }
+
+  async findOneByOwnerId(ownerId: string) {
+    return await this.SportsComplexRepository.createQueryBuilder('sc')
+      .innerJoinAndSelect('sc.owner', 'owner', 'owner.id = :ownerId', { ownerId })
+      .getOne();
   }
 
   async update(ownerId: string, id: string, updateSportsComplexDTO: UpdateSportsComplexDTO) {

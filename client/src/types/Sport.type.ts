@@ -12,7 +12,8 @@ export interface sportData {
   capacity: number;
   dimensions: string;
   fieldType: string;
-  sportsComplex: {
+  sport: any;
+  sportComplex: {
     lat: number;
     lng: number;
     ubication: string;

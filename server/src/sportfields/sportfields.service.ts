@@ -122,18 +122,16 @@ export class SportfieldsService {
   }
 
   async findOne(id: string) {
-    const sportfield = await this.sportFieldRepository.findOneBy({ id });
+    const sportfield = await this.sportFieldRepository.findOne({
+      where: { id },
+      relations: { sport: true },
+    });
     if (!sportfield) throw new NotFoundException('SportField not found');
     return sportfield;
   }
 
   async create(createSportFieldDto: CreateSportFieldDto, ownerId: string) {
-    const {
-      sport: sportName,
-      sportsComplexId,
-      fieldType,
-      ...sportFieldAttrs
-    } = createSportFieldDto;
+    const { sport: sportName, fieldType, ...sportFieldAttrs } = createSportFieldDto;
 
     const newSportField = this.sportFieldRepository.create({
       ...sportFieldAttrs,
@@ -142,9 +140,10 @@ export class SportfieldsService {
     newSportField.sport = await this.getSport(sportName, fieldType);
     newSportField.fieldType = fieldType;
 
-    const sportsComplex = await this.sportsComplexService.findOneWithOwner(sportsComplexId);
+    const sportsComplex = await this.sportsComplexService.findOneByOwnerId(ownerId);
+    console.log(sportsComplex, ownerId);
 
-    if (sportsComplex.owner?.id !== ownerId)
+    if (!sportsComplex || sportsComplex.owner?.id !== ownerId)
       throw new ForbiddenException('Insuficient Permissions');
 
     newSportField.sportsComplex = sportsComplex;
