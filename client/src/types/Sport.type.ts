@@ -12,6 +12,7 @@ export interface sportData {
   capacity: number;
   dimensions: string;
   fieldType: string;
+  sport?: any;
   sportsComplex: {
     lat: number;
     lng: number;
@@ -25,6 +26,7 @@ export interface sportData {
     availability: hoursType[];
   };
 }
+
 export interface coordsType {
   lat: number;
   lng: number;
