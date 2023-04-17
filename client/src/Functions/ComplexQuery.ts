@@ -1,8 +1,6 @@
-import axios from './axios';
+import type ComplexType from '../types/Complex.type';
 
-import store from '../App/Store';
-import { setComplex } from '../App/complexSlice';
-import ComplexType from '../types/Complex.type';
+import axios from './axios';
 
 export async function GetComplexQuery() {
   try {
@@ -40,7 +38,6 @@ export async function CreateComplexQuery(body: complexDataType) {
 
 export async function UpdateComplexQuery(body: complexDataType, id: string) {
   try {
-    console.log(body);
     const { data } = await axios.patch(`/sports-complex/${id}`, body);
 
     return data;
