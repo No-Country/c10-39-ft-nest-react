@@ -6,17 +6,17 @@ import { GetReservations } from '../Functions/ReservationsQuery';
 import PrimaryButton from '../Components/PrimaryButton';
 
 import { useNavigate } from 'react-router-dom';
+import { GetReservationType } from '../types/Reservation.type';
 
 const ProfileReservation: FC = () => {
-  const [reservations, setReservations] = useState<any>([]);
+  const [reservations, setReservations] = useState<GetReservationType[]>([]);
 
   const navigate = useNavigate();
   const handleClick = () => navigate('/reservar');
 
   useEffect(() => {
-    // TODO: Add interface of response
     GetReservations()
-      .then((data) => setReservations(data))
+      .then((data) => data && setReservations(data))
       .catch((err) => console.log(err));
   }, []);
 
@@ -26,8 +26,8 @@ const ProfileReservation: FC = () => {
         {' '}
         <div className="bg-white rounded-lg shadow-lg mx-2 mt-20 max-h-[500px] min-h-[500px] flex flex-col gap-2 overflow-y-scroll w-[700px]">
           {reservations.length ? (
-            reservations.map((item: any, index: number) => (
-              <ReservationCard key={index} title={item.name} address={item.sportsComplex.address} />
+            reservations.map((item: GetReservationType) => (
+              <ReservationCard key={item.id} reservation={item} />
             ))
           ) : (
             <div className="h-full flex justify-center items-center flex-col gap-5">

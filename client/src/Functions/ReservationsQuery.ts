@@ -1,8 +1,13 @@
+import { GetReservationType } from '../types/Reservation.type';
 import axios from './axios';
+
+interface DataType {
+  data: GetReservationType[];
+}
 
 export async function GetReservations() {
   try {
-    const { data } = await axios.get('/sportfields/user/reservations');
+    const { data }: DataType = await axios.get('/sportfields/user/reservations');
     return data;
   } catch (err) {
     console.log(err);
