@@ -18,7 +18,6 @@ const ReservationCard: FC<Props> = ({ reservation, deleteReservations }) => {
     const id = reservation.id;
     DeleteReservation(id)
       .then(() => {
-        console.log(id);
         if (deleteReservations(id)) throw new Error('No se pudo cancelar la reserva');
       })
       .then(() => alert('Reserva cancelada exitosamente!'))

@@ -8,8 +8,6 @@ export async function getSportFieldsWithSport(body: searchType) {
     if (!body) throw new Error('Error: data is not defined');
     const { rHour, date, sport, lat, lng, fieldType } = body;
 
-    console.log(date);
-
     const { data }: { data: sportData[] } = await axios.get(
       `/sportfields/search?lat=${lat}&lng=${lng}&rHour=${rHour}&date=${date}&sport=${sport}&fieldType=${fieldType}`,
     );
