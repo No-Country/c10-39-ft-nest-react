@@ -29,3 +29,12 @@ export async function PostReservations(body: reservationData) {
     console.log(err);
   }
 }
+
+export async function DeleteReservation(id: string) {
+  try {
+    const { data } = await axios.delete(`/reservation/${id}`);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}

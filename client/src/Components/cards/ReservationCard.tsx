@@ -3,18 +3,28 @@ import { type FC, useState } from 'react';
 import { MdClose, MdEdit } from 'react-icons/md';
 import { GetReservationType } from '../../types/Reservation.type';
 import PrimaryButton from '../PrimaryButton';
-// import { BsFillShareFill } from 'react-icons/bs';
+import { DeleteReservation } from '../../Functions/ReservationsQuery';
 
 interface Props {
   reservation: GetReservationType;
+  deleteReservations: (deletedId: string) => boolean;
 }
 
-const ReservationCard: FC<Props> = ({ reservation }) => {
-  const [open, setOpen] = useState<any>('');
+const ReservationCard: FC<Props> = ({ reservation, deleteReservations }) => {
+  const [open, setOpen] = useState<boolean>(false);
 
-  const handleClick = () => {
-    setOpen(!open);
+  const handleClick = () => setOpen(!open);
+  const handleCancel = () => {
+    const id = reservation.reservation.id;
+    console.log(id);
+    DeleteReservation(id)
+      .then(({ id }) => {
+        if (deleteReservations(id)) throw new Error('No se pudo cancelar la reserva');
+      })
+      .then(() => alert('Reserva cancelada exitosamente!'))
+      .catch((err) => console.log(err));
   };
+
   return (
     <div className="flex flex-col w-full bg-secondary px-5 py-2">
       <span className="opacity-70">{reservation?.name}</span>
@@ -26,8 +36,8 @@ const ReservationCard: FC<Props> = ({ reservation }) => {
           </button>
           {open && (
             <>
-              <span className="backdrop-blur-sm w-full h-full absolute top-2 left-0"></span>
-              <div className="absolute left-0 w-full h-full top-16 text-xl  flex justify-center items-center">
+              <span className="backdrop-blur-sm w-full h-full absolute top-2 left-0 z-[200]"></span>
+              <div className="absolute left-0 w-full h-full top-16 text-xl  flex z-[300] justify-center items-center">
                 <div className="w-full bg-white shadow-lg h-auto rounded-lg lg:w-[600px]">
                   <span
                     onClick={handleClick}
@@ -52,11 +62,11 @@ const ReservationCard: FC<Props> = ({ reservation }) => {
                     <div className="bg-[#aaa2] p-2">
                       <div className="flex flex-row justify-between w-full">
                         <span>Dia</span>
-                        <span>Miercoles {reservation.reservation[0].data}</span>
+                        <span>Miercoles {reservation.reservation.data}</span>
                       </div>
                       <div className="flex flex-row justify-between w-full">
                         <span>Hora</span>
-                        <span>{reservation.reservation[0].hour}:00 hs</span>
+                        <span>{reservation.reservation.hour}:00 hs</span>
                       </div>
                       <div className="flex flex-row justify-between w-full">
                         <span>Duracion</span>
@@ -68,7 +78,7 @@ const ReservationCard: FC<Props> = ({ reservation }) => {
                       solicita en caso de cancelar la reserva, hacerlo con 24 horas de antelacion.
                     </span>
                     <div className="flex justify-center">
-                      <PrimaryButton text="CANCELAR" alternative={true} />
+                      <PrimaryButton text="CANCELAR" alternative={true} onClick={handleCancel} />
                     </div>
                   </div>
                 </div>

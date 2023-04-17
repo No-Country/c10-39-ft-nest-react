@@ -12,13 +12,11 @@ export interface GetReservationType {
   id: string;
   images: string[];
   name: string;
-  reservation: [
-    {
-      id: string;
-      hour: number;
-      data: string;
-    },
-  ];
+  reservation: {
+    id: string;
+    hour: number;
+    data: string;
+  };
   sportsComplex: {
     address: string;
   };
