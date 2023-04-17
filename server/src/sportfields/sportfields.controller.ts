@@ -136,9 +136,9 @@ export class SportfieldsController {
     return await this.sportfieldsService.search(lat, lng, rHour, fDate, sport, fieldType);
   }
 
-  @Get('user/reservations')
-  async findUserReservations(@GetUser() user: AuthUserDTO) {
-    return this.sportfieldsService.findUserReservations(user);
+  @Get('owner/reservations')
+  async findOwnerReservations(@GetUser() user: AuthUserDTO) {
+    return this.sportfieldsService.findOwnerReservations(user);
   }
 
   @Get(':id/availability')
@@ -156,7 +156,7 @@ export class SportfieldsController {
 
   @Get(':id/reservations')
   getReservations(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: AuthUserDTO) {
-    return this.sportfieldsService.getReservations(id, user);
+    return this.sportfieldsService.getReservations(id);
   }
 
   @Get(':id')

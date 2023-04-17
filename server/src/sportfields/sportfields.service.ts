@@ -70,9 +70,10 @@ export class SportfieldsService {
   async findOwnerReservations(user: AuthUserDTO) {
     const reservations = await this.sportFieldRepository
       .createQueryBuilder('sf')
-      .innerJoinAndSelect('sf.reservation', 'res', 'res.userId = :userId', { userId: user.id })
-      .leftJoin('sf.sportsComplex', 'sc')
-      .addSelect('sc.address')
+      .leftJoinAndSelect('sf.reservation', 'res')
+      .innerJoinAndSelect('sf.sportsComplex', 'sc', 'sc.ownerId = :ownerId', {
+        ownerId: user.ownerId,
+      })
       .getMany();
 
     return reservations;
