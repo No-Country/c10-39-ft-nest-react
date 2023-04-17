@@ -15,21 +15,19 @@ const ReservationCard: FC<Props> = ({ reservation, deleteReservations }) => {
 
   const handleClick = () => setOpen(!open);
   const handleCancel = () => {
-    const id = reservation.reservation.id;
-    console.log(id);
+    const id = reservation.id;
     DeleteReservation(id)
-      .then(({ id }) => {
+      .then(() => {
         if (deleteReservations(id)) throw new Error('No se pudo cancelar la reserva');
       })
       .then(() => alert('Reserva cancelada exitosamente!'))
       .catch((err) => console.log(err));
   };
-
   return (
     <div className="flex flex-col w-full bg-secondary px-5 py-2">
-      <span className="opacity-70">{reservation?.name}</span>
+      <span className="opacity-70">{reservation?.sportfield?.name}</span>
       <div className="flex flex-row w-full justify-between items-center">
-        <span className="text-lg">{reservation?.sportsComplex?.address}</span>
+        <span className="text-lg">{reservation?.sportfield?.sportsComplex?.address}</span>
         <div className="flex flex-row gap-5 text-2xl">
           <button onClick={handleClick}>
             <MdEdit />
@@ -46,27 +44,30 @@ const ReservationCard: FC<Props> = ({ reservation, deleteReservations }) => {
                     <MdClose />
                   </span>
                   <div className="mx-[5%] my-5 flex flex-col bg-[#aaa3] px-5 py-2 rounded-lg">
-                    <span className="opacity-70">{reservation?.name}</span>
-                    <span className="text-lg">{reservation?.sportsComplex?.address}</span>
+                    <span className="opacity-70">{reservation?.sportfield?.name}</span>
+                    <span className="text-lg">
+                      {reservation?.sportfield?.sportsComplex?.address}
+                    </span>
                   </div>
                   <div className="flex flex-col gap-5 pb-2 mb-2 mx-2">
                     <div className="relative flex flex-row items-center justify-between p-2">
                       <span className="text-lg">Informacion del partido</span>
                     </div>
                     <div className="bg-[#aaa2] p-2">
-                      <span className="block">{reservation?.description}</span>
+                      <span className="block">{reservation?.sportfield?.description}</span>
                       <span className="block">
-                        Capacidad: {reservation?.capacity} personas - {reservation?.dimensions} m²
+                        Capacidad: {reservation?.sportfield?.capacity} personas -{' '}
+                        {reservation?.sportfield?.dimensions} m²
                       </span>
                     </div>
                     <div className="bg-[#aaa2] p-2">
                       <div className="flex flex-row justify-between w-full">
                         <span>Dia</span>
-                        <span>Miercoles {reservation.reservation.data}</span>
+                        <span>Miercoles {reservation.date}</span>
                       </div>
                       <div className="flex flex-row justify-between w-full">
                         <span>Hora</span>
-                        <span>{reservation.reservation.hour}:00 hs</span>
+                        <span>{reservation.hour}:00 hs</span>
                       </div>
                       <div className="flex flex-row justify-between w-full">
                         <span>Duracion</span>

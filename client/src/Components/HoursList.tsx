@@ -14,9 +14,10 @@ interface HoursType {
 interface hoursProps {
   getAllHours: boolean;
   handleSelect: (option: string) => void;
+  selectedDate?: string;
 }
 
-const HoursList: FC<hoursProps> = ({ getAllHours, handleSelect }) => {
+const HoursList: FC<hoursProps> = ({ getAllHours, handleSelect, selectedDate }) => {
   const { id = '' } = useParams();
 
   const [hours, setHours] = useState<HoursType[]>([]);
@@ -25,12 +26,13 @@ const HoursList: FC<hoursProps> = ({ getAllHours, handleSelect }) => {
     if (getAllHours) {
       setHours(allHours);
     } else {
-      getSportAvailability(id)
-        .then((data) => data && setHours(data))
-        .catch((err) => console.log(err));
+      selectedDate &&
+        getSportAvailability(selectedDate, id)
+          .then((data) => data && setHours(data))
+          .catch((err) => console.log(err));
     }
   }, [id, getAllHours]);
-
+  console.log(hours);
   const allHours: HoursType[] = [];
   for (let i = 7; i <= 23; i++) {
     const endHour = i === 23 ? 0 : i + 1;
@@ -44,8 +46,8 @@ const HoursList: FC<hoursProps> = ({ getAllHours, handleSelect }) => {
 
   return (
     <>
-      <div className='bg-white py-5 rounded-md px-1 shadow-lg'>
-        <span className='mb-2 divide-black border-b-[1px] mx-2 px-1 text-center block w-[90%]'>
+      <div className="bg-white py-5 rounded-md px-1 shadow-lg">
+        <span className="mb-2 divide-black border-b-[1px] mx-2 px-1 text-center block w-[90%]">
           {hours.length
             ? getAllHours
               ? 'Horarios'

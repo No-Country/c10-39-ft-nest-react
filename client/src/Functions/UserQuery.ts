@@ -70,7 +70,15 @@ export async function authUser(): Promise<void> {
   }
 }
 
-export async function updateUser(body: RegisterBody, token: string, id: string) {
+interface updateUserBody {
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  image: string;
+}
+
+export async function updateUser(body: updateUserBody, id: string) {
   try {
     const query: QueryResponse = await axios.patch(`/users/${id}`, body);
 

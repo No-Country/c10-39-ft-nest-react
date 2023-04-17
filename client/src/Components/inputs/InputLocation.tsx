@@ -23,7 +23,6 @@ const InputLocation: FC<props> = (props) => {
     //     onLocationChange(lat(), lng());
     //   }
     const inputLocation = autocompleteRef.current;
-    console.log(inputLocation);
     if (inputLocation) {
       handleLocationName(inputLocation.value);
     }
@@ -42,17 +41,17 @@ const InputLocation: FC<props> = (props) => {
   }, []);
 
   return (
-    <div className='w-10/12 flex flex-col relative'>
+    <div className="w-10/12 flex flex-col relative">
       <input
         id={label}
         className={
           'inputFocus pr-10 bg-bg order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none'
         }
-        type='text'
+        type="text"
         value={location}
         onChange={(e) => handleLocationName(e.target.value)}
         ref={autocompleteRef}
-        placeholder=''
+        placeholder=""
       />
       <label
         htmlFor={label}
@@ -63,7 +62,7 @@ const InputLocation: FC<props> = (props) => {
         {label}
       </label>
       {icon && (
-        <div className='[&>svg]:absolute [&>svg]:bottom-2 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none'>
+        <div className="[&>svg]:absolute [&>svg]:bottom-2 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none">
           {icon}
         </div>
       )}

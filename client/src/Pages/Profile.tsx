@@ -10,6 +10,7 @@ import Layout from '../Components/layout/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
 import { type AppUser } from '../types/App.type';
 import { updateUser } from '../Functions/UserQuery';
+import { PostFile } from '../Functions/FileQuery';
 
 const Profile: FC = () => {
   const userInfo = useSelector((state: AppUser) => state.user.user);
@@ -31,19 +32,32 @@ const Profile: FC = () => {
     });
   };
 
-  const handleSubmit = (e: BaseSyntheticEvent) => {
+  const [file, setFile] = useState<null | File>(null);
+
+  const handleFile = (e: BaseSyntheticEvent) => setFile(e.target.files[0]);
+
+  const handleSubmit = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    const token = localStorage.getItem('token') ?? '';
-    updateUser(state, token, userInfo.id).catch((err) => console.log(err));
+    try {
+      if (!file) throw new Error(`Error: file es null`);
+      const image = await PostFile(file);
+
+      if (!image) throw new Error('No se pudo guardar la imagen');
+      await updateUser({ ...state, image: image?.data }, userInfo.id);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const handleCancel = () =>
+  const handleCancel = () => {
     setState({
       email: userInfo?.email,
       firstName: userInfo?.firstName,
       lastName: userInfo?.lastName,
       password: '',
     });
+    setFile(null);
+  };
 
   useEffect(() => {
     setState({
@@ -57,7 +71,14 @@ const Profile: FC = () => {
   return (
     <Layout title="Perfil">
       <form onSubmit={handleSubmit} className="flex flex-col items-center w-full">
-        <div className="bg-black w-36 h-36 rounded-full m-10 lg:m-20 lg:w-40 lg:h-40"></div>
+        <input type="file" hidden id="fileId" onChange={handleFile} />
+        <label
+          style={{
+            backgroundImage: `url(${userInfo?.image ? userInfo?.image : ''})`,
+          }}
+          htmlFor="fileId"
+          className="border-2 bg cursor-pointer w-36 h-36 rounded-full m-10 lg:m-20 lg:w-40 lg:h-40"
+        ></label>
         <div className="w-full flex flex-col items-center gap-5 lg:w-5/12">
           <Input
             type="text"

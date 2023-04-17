@@ -9,6 +9,9 @@ interface calendarProps {
 
 export const MyCalendar: FC<calendarProps> = ({ handleClick }) => {
   const handleDay = (day: Date) => {
+    if (day.getDay() === 6 || day.getDay() === 0) {
+      return;
+    }
     const dayPicked: string = dateToString(day);
     handleClick(dayPicked);
   };
