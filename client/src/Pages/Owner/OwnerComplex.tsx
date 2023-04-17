@@ -1,23 +1,31 @@
-import { BaseSyntheticEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
+import {
+  type BaseSyntheticEvent,
+  type Dispatch,
+  type SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
+import { useSelector } from 'react-redux';
+
+import { MdLocationOn, MdTitle } from 'react-icons/md';
+
+import { setComplex } from '../../App/complexSlice';
+import store from '../../App/Store';
+import AvailabilityRange from '../../Components/AvailabilityRange';
 import Input from '../../Components/inputs/Input';
 import Layout from '../../Components/layout/Layout';
 import PrimaryButton from '../../Components/PrimaryButton';
+import { Checkbox } from '../../Components/ui';
 import {
   CreateComplexQuery,
   GetComplexQuery,
   UpdateComplexQuery,
 } from '../../Functions/ComplexQuery';
+import { type AppComplex } from '../../types/App.type';
+import type ComplexType from '../../types/Complex.type';
+import { type HoursType } from '../../types/Hour.type';
 
-import { useSelector } from 'react-redux';
-import { AppComplex } from '../../types/App.type';
-import { MdLocationOn, MdTitle } from 'react-icons/md';
-import { BsCalendar2Event } from 'react-icons/bs';
-import { Checkbox, ImageUploader } from '../Components/ui';
-import ComplexType from '../types/Complex.type';
-import store from '../App/Store';
-import { setComplex } from '../App/complexSlice';
-import AvailabilityRange from '../Components/AvailabilityRange';
-import { HoursType } from '../types/Hour.type';
+import InputLocation from '../../Components/inputs/InputLocation';
 
 const handleAmmeniesChangeFactory =
   (setState: Dispatch<SetStateAction<ComplexType>>, key: keyof ComplexType) => () => {
@@ -36,6 +44,8 @@ const OwnerComplex = () => {
     address: '',
     email: '',
     phone: '',
+    lat: 0,
+    lng: 0,
     grills: false,
     locker: false,
     showers: false,
@@ -118,7 +128,11 @@ const OwnerComplex = () => {
               value={state.phone}
               name={'phone'}
               handleChange={handleChange}
-              icon={<MdLocationOn />}
+            />
+            <InputLocation
+              label='Direccion'
+              location={state.address}
+              handleLocationName={(r) => console.log(r.target.value)}
             />
             <Input
               type='text'
@@ -126,7 +140,7 @@ const OwnerComplex = () => {
               value={state.address}
               name={'address'}
               handleChange={handleChange}
-              icon={<BsCalendar2Event />}
+              icon={<MdLocationOn />}
             />
             {/* <Input type='text' label='Turno' value={''} name={'day'} handleChange={handleChange} /> */}
             <AvailabilityRange
