@@ -44,8 +44,9 @@ export class ReservationService {
       throw new NotFoundException('User not found');
     }
 
-    // TODO: Check if reservation is within availability of sportfield
-    if (!this.turnIsAvailable(hour, date, sportfieldId)) {
+    // TODO: Check if reservation is within availability of sportfieldres.
+    const turnIsAvailable = await this.turnIsAvailable(hour, date, sportfieldId);
+    if (!turnIsAvailable) {
       throw new BadRequestException('Turn is already taken');
     }
     const reservation = this.reservationRepository.create({
@@ -68,7 +69,7 @@ export class ReservationService {
     return reservations;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} reservation`;
   }
 
@@ -126,7 +127,7 @@ export class ReservationService {
     return (
       (await this.reservationRepository
         .createQueryBuilder('res')
-        .where('hour = :hour AND date = :date AND sportfieldId = :sportfieldId', {
+        .where('res.hour = :hour AND res.date = :date AND res.sportfieldId = :sportfieldId', {
           hour,
           date,
           sportfieldId,

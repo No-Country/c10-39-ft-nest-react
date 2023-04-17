@@ -41,7 +41,10 @@ export class CreateReservationDto {
   // @Validate(NotPastHourConstraint)
   hour: number;
 
-  @Transform(({ value }) => new Date(value))
+  @Transform(({ value }: { value: string }) => {
+    const dateString = value.split('/');
+    return new Date(`${dateString[1]}/${dateString[0]}/${dateString[2]}`);
+  })
   @IsDate()
   @IsNotEmpty()
   @Validate(NotPastDateConstraint)
