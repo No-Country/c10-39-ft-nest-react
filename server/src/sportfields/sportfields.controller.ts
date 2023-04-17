@@ -26,7 +26,7 @@ import { GetUser } from 'src/Core/auth/decorators';
 import { AuthUserDTO } from 'src/Core/auth/dto';
 import { RoleGuard } from 'src/Core/auth/guards';
 
-import { CreateSportFieldDto, UpdateSportFieldDto } from './dto';
+import { CreateSportFieldDto, GetDayAvailabilityDto, UpdateSportFieldDto } from './dto';
 import { SportfieldsService } from './sportfields.service';
 import SportField from './entities/sportfield.entity';
 
@@ -136,9 +136,9 @@ export class SportfieldsController {
     return await this.sportfieldsService.search(lat, lng, rHour, fDate, sport, fieldType);
   }
 
-  @Get('user/reservations')
-  async findUserReservations(@GetUser() user: AuthUserDTO) {
-    return this.sportfieldsService.findUserReservations(user);
+  @Get('owner/reservations')
+  async findOwnerReservations(@GetUser() user: AuthUserDTO) {
+    return this.sportfieldsService.findOwnerReservations(user);
   }
 
   @Get(':id/availability')
@@ -146,8 +146,16 @@ export class SportfieldsController {
     return this.sportfieldsService.getAvailability(id);
   }
 
+  @Post(':id/availability')
+  getDateAvailability(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() getDayAvailabilityDto: GetDayAvailabilityDto,
+  ) {
+    return this.sportfieldsService.getDayAvailability(id, getDayAvailabilityDto);
+  }
+
   @Get(':id/reservations')
-  getReservations(@Param('id', ParseUUIDPipe) id: string) {
+  getReservations(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: AuthUserDTO) {
     return this.sportfieldsService.getReservations(id);
   }
 
