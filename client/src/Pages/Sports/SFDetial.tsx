@@ -83,7 +83,7 @@ const SFDetail = () => {
         <div className="flex flex-col gap-5 w-full lg:w-[550px] lg:mt-12">
           <div className="mx-[5%] h-10 my-5 flex flex-col bg-[#aaa3] px-5 py-2 rounded-lg">
             <span className="opacity-70">{data?.name}</span>
-            <span className="text-lg">{data?.sportComplex?.ubication}</span>
+            <span className="text-lg">{data?.sportsComplex?.ubication}</span>
           </div>
           <div className="flex flex-col gap-5 bg-white pb-2 mb-10 mx-2 shadow-lg rounded-lg">
             <div className="relative flex flex-row items-center justify-between p-5">
