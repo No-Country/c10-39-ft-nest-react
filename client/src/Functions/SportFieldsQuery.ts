@@ -22,6 +22,7 @@ export async function getSportFieldsWithSport(body: searchType) {
 export async function getSportDetail(id: string) {
   try {
     const { data }: { data: sportData } = await axios.get(`/sportfields/${id}`);
+    console.log(data);
     return data;
   } catch (error) {
     console.error(error);

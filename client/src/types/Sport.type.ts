@@ -12,6 +12,7 @@ export interface sportData {
   capacity: number;
   dimensions: string;
   fieldType: string;
+  sport: any;
   sportComplex: {
     ubication: string;
     parking: boolean;

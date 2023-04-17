@@ -5,10 +5,11 @@ interface selectType {
   label: string;
   value: string;
   handleClick: (option: string) => void;
+  anyOption?: boolean;
   icon?: any;
 }
 
-const Select: FC<selectType> = ({ handleClick, array, value, label, icon }) => {
+const Select: FC<selectType> = ({ handleClick, array, value, label, icon, anyOption = true }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
 
@@ -18,7 +19,7 @@ const Select: FC<selectType> = ({ handleClick, array, value, label, icon }) => {
   };
 
   return (
-    <div className="w-10/12 flex flex-col relative">
+    <div className='w-10/12 flex flex-col relative'>
       <input
         id={label}
         className={
@@ -39,19 +40,21 @@ const Select: FC<selectType> = ({ handleClick, array, value, label, icon }) => {
       </label>
       {open && (
         <>
-          <ul className="flex order-3 z-[500] gap-2 flex-col w-max bg-white py-5 absolute top-[58px] rounded-lg">
-            <li
-              onClick={() => handleOption('Cualquier tipo')}
-              className="active:bg-primary px-10 py-2 cursor-pointer"
-            >
-              Cualquier tipo
-            </li>
+          <ul className='flex order-3 z-[500] gap-2 flex-col w-max bg-white py-5 absolute top-[58px] rounded-lg'>
+            {anyOption && (
+              <li
+                onClick={() => handleOption('Cualquier tipo')}
+                className='active:bg-primary px-10 py-2 cursor-pointer'
+              >
+                Cualquier tipo
+              </li>
+            )}
             {array.map((item) => {
               return (
                 <li
                   key={item}
                   onClick={() => handleOption(item)}
-                  className="active:bg-primary px-10 py-2 cursor-pointer"
+                  className='active:bg-primary px-10 py-2 cursor-pointer'
                 >
                   {item}
                 </li>
@@ -61,7 +64,7 @@ const Select: FC<selectType> = ({ handleClick, array, value, label, icon }) => {
         </>
       )}
       {icon && (
-        <div className="[&>svg]:absolute [&>svg]:top-7 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none">
+        <div className='[&>svg]:absolute [&>svg]:top-7 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none'>
           {icon}
         </div>
       )}

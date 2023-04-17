@@ -22,6 +22,7 @@ export class CreateSportFieldDto {
     example: 'Cancha sintetica, cerrada con redes de futbol 5',
   })
   @IsString()
+  @IsOptional()
   description: string;
 
   @ApiProperty({
@@ -48,13 +49,6 @@ export class CreateSportFieldDto {
   })
   @IsString()
   sport: string;
-
-  @ApiProperty({
-    description: 'SportComplex UUID',
-    example: '91733ad7-2102-45a0-89ac-a6f7266c7b63',
-  })
-  @IsUUID()
-  sportsComplexId: string;
 
   @ApiProperty({
     description: 'sportfield Type',
