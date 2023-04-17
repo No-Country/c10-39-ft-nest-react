@@ -16,6 +16,8 @@ export class User {
   firstName: string;
   @Column('text', { nullable: true })
   lastName: string;
+  @Column('text', { nullable: true })
+  image: string;
   @Column('bool', { default: true })
   isActive: boolean;
 

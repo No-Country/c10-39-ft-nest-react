@@ -14,6 +14,7 @@ import Owner from './Pages/Owner/Owner';
 import OwnerComplex from './Pages/Owner/OwnerComplex';
 import Profile from './Pages/Profile';
 import ProfileReservation from './Pages/ProfileReservation';
+
 import Register from './Pages/Auth/Register';
 import Reservation from './Pages/Sports/Reservation';
 import Search from './Pages/Sports/Search';
@@ -22,6 +23,9 @@ import SFOwner from './Pages/Owner/SFOwner';
 import SFownerEdit from './Pages/Owner/SFOwnerEdit';
 import SportFields from './Pages/Sports/SportFields';
 import Turns from './Pages/Owner/Turns';
+
+import Dani from './Pages/Dani';
+
 
 function App() {
   useEffect(() => {
@@ -54,6 +58,8 @@ function App() {
 
         <Route path="/ingresar" element={<Login />}></Route>
         <Route path="/registro" element={<Register />}></Route>
+
+        <Route path= "dani" element={<Dani />}></Route>
 
         <Route path="*" element={<Navigate to="/" />}></Route>
       </Routes>
