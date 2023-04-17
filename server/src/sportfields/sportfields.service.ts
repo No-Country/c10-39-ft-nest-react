@@ -67,7 +67,7 @@ export class SportfieldsService {
     }));
   }
 
-  async findUserReservations(user: AuthUserDTO) {
+  async findOwnerReservations(user: AuthUserDTO) {
     const reservations = await this.sportFieldRepository
       .createQueryBuilder('sf')
       .innerJoinAndSelect('sf.reservation', 'res', 'res.userId = :userId', { userId: user.id })

@@ -155,8 +155,8 @@ export class SportfieldsController {
   }
 
   @Get(':id/reservations')
-  getReservations(@Param('id', ParseUUIDPipe) id: string) {
-    return this.sportfieldsService.getReservations(id);
+  getReservations(@Param('id', ParseUUIDPipe) id: string, @GetUser() user: AuthUserDTO) {
+    return this.sportfieldsService.getReservations(id, user);
   }
 
   @Get(':id')

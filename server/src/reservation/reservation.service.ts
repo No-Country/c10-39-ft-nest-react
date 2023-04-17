@@ -84,12 +84,27 @@ export class ReservationService {
   }
 
   async remove(id: string, user: AuthUserDTO) {
-    const reservation = await this.reservationRepository.findOneBy({ id });
+    const reservation = await this.reservationRepository
+      .createQueryBuilder('res')
+      .innerJoin('res.sportfield', 'sf', 'res.userId = :userId', { userId: user.id })
+      .addSelect('sf.id')
+      .leftJoinAndSelect('res.user', 'user')
+      .getOne();
 
-    if (
-      reservation.sportfield.sportsComplex.owner.id !== user.ownerId &&
-      reservation.user.id !== user.id
-    )
+    if (!reservation) {
+      throw new NotFoundException('Reservation not exists!');
+    }
+
+    const sportfield = await this.sportFieldRepository.findOne({
+      where: { id: reservation.sportfield.id },
+      relations: {
+        sportsComplex: {
+          owner: true,
+        },
+      },
+    });
+
+    if (sportfield.sportsComplex.owner.id !== user.ownerId && reservation.user.id !== user.id)
       throw new ForbiddenException('Permission denied');
 
     return await this.reservationRepository.remove(reservation);
