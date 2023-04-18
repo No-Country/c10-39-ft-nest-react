@@ -74,7 +74,6 @@ interface updateUserBody {
   email: string;
   firstName: string;
   lastName: string;
-  password: string;
   image: string;
 }
 
