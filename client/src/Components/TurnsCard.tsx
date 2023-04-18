@@ -15,8 +15,7 @@ const TurnsCard: FC<QuestionType> = ({ question }) => {
   const handleClick = () => setOpenQuestion(!openQuestion);
 
   return (
-    <div key={question.id} className="bg-grey relative p-5 shadow-md text-center">
-      <span>{question.question}</span>
+    <div key={question.id} className=" bg-grey relative p-5 shadow-md ">
       <button
         onClick={handleClick}
         className={`ml-12 text-xl transition-transform ${
@@ -25,7 +24,13 @@ const TurnsCard: FC<QuestionType> = ({ question }) => {
       >
         <MdKeyboardArrowLeft />
       </button>
-      <p className={`${openQuestion ? 'h-auto p-6' : 'h-0'} overflow-hidden`}>{question.answer}</p>
+      <div className="text-center text-[#6C6C6C]">Todo pelota</div>
+      <div>Todo pelota</div>
+
+      <div className={`${openQuestion ? 'h-auto ' : 'h-0'} mt-3 overflow-hidden`}>
+        <div className=" bg-white w-full"> Nombre: Joaquin</div>
+        <div className=" bg-white"> Nombre: Joaquin</div>
+      </div>
     </div>
   );
 };
