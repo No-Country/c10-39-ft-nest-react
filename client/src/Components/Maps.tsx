@@ -8,8 +8,7 @@ interface Props {
 }
 
 const Maps = ({ initialCoords, Coords }: Props) => {
-  console.log(Coords);
-  const [coords, setCoords] = React.useState<coordsType[] | null >(null);
+  const [coords, setCoords] = React.useState<coordsType[] | null>(null);
 
   React.useEffect(() => {
     setCoords(Coords);
@@ -33,11 +32,9 @@ const Maps = ({ initialCoords, Coords }: Props) => {
         }}
       /> */}
 
-      { coords &&
+      {coords &&
         coords.map((item, index) => {
-          return (
-              <Marker key={index} position={item} />
-          );
+          return <Marker key={index} position={item} />;
         })}
     </GoogleMap>
   );
