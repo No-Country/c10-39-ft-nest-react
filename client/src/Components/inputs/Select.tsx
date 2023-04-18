@@ -19,11 +19,11 @@ const Select: FC<selectType> = ({ handleClick, array, value, label, icon, anyOpt
   };
 
   return (
-    <div className='w-10/12 flex flex-col relative'>
+    <div className="w-10/12 flex flex-col relative">
       <input
         id={label}
         className={
-          'inputFocus bg-bg cursor-pointer order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none'
+          'inputFocus bg-[transparent] cursor-pointer order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none'
         }
         readOnly
         type={'text'}
@@ -40,11 +40,11 @@ const Select: FC<selectType> = ({ handleClick, array, value, label, icon, anyOpt
       </label>
       {open && (
         <>
-          <ul className='flex order-3 z-[500] gap-2 flex-col w-max bg-white py-5 absolute top-[58px] rounded-lg'>
+          <ul className="flex order-3 z-[500] gap-2 flex-col w-max bg-white py-5 absolute top-[58px] rounded-lg">
             {anyOption && (
               <li
                 onClick={() => handleOption('Cualquier tipo')}
-                className='active:bg-primary px-10 py-2 cursor-pointer'
+                className="active:bg-primary px-10 py-2 cursor-pointer"
               >
                 Cualquier tipo
               </li>
@@ -54,7 +54,7 @@ const Select: FC<selectType> = ({ handleClick, array, value, label, icon, anyOpt
                 <li
                   key={item}
                   onClick={() => handleOption(item)}
-                  className='active:bg-primary px-10 py-2 cursor-pointer'
+                  className="active:bg-primary px-10 py-2 cursor-pointer"
                 >
                   {item}
                 </li>
@@ -64,7 +64,7 @@ const Select: FC<selectType> = ({ handleClick, array, value, label, icon, anyOpt
         </>
       )}
       {icon && (
-        <div className='[&>svg]:absolute [&>svg]:top-7 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none'>
+        <div className="[&>svg]:absolute [&>svg]:top-7 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none">
           {icon}
         </div>
       )}

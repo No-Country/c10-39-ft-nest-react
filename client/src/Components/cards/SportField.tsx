@@ -64,14 +64,33 @@ const SportField: FC<sportFieldType> = ({ complexData, btnText, route, item }) =
               </span>
             </div>
             <ul
-              className={`${moreInfo ? 'h-[140px]' : 'h-0'} transition-all text-lg overflow-hidden`}
+              className={`${moreInfo ? 'h-[240px]' : 'h-0'} transition-all text-lg overflow-hidden`}
             >
-              <li>Estacionamiento</li>
-              <li>Parrilla</li>
-              <li>Casillero</li>
-              <li>Baños</li>
-              <li>Duchas</li>
-              <li>Resto Bar</li>
+              <li className="flex flex-row justify-between w-6/12 my-3">
+                <span>Estacionamiento</span>
+                <input type="checkbox" />
+              </li>
+              <li className="flex flex-row justify-between w-6/12 my-3">
+                <span>Parrilla</span>
+                <input type="checkbox" />
+              </li>
+              <li className="flex flex-row justify-between w-6/12 my-3">
+                <span>Casillero</span>
+                <input type="checkbox" />
+              </li>
+              <li className="flex flex-row justify-between w-6/12 my-3">
+                <span>Baños</span>
+                <input type="checkbox" />
+              </li>
+              <li className="flex flex-row justify-between w-6/12 my-3">
+                <span>Duchas</span>
+                <input type="checkbox" />
+              </li>
+              <li className="flex flex-row justify-between w-6/12 my-3">
+                {' '}
+                <span>Resto Bar</span>
+                <input type="checkbox" />
+              </li>
             </ul>
           </>
         )}

@@ -14,8 +14,7 @@ const Reservation = () => {
   const [sports, setSports] = useState<SportItem[] | []>([]);
 
   useEffect(() => {
-    const token = localStorage.getItem('token') ?? '';
-    getAllSports(token)
+    getAllSports()
       .then((data) => data && setSports(data))
       .catch((err) => console.log(err));
   }, []);

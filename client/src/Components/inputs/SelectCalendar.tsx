@@ -23,7 +23,7 @@ const SelectCalendar: FC<selectType> = ({ handleClick, value, label, icon }) => 
       <input
         id={label}
         className={
-          'inputFocus bg-bg cursor-pointer order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none'
+          'inputFocus bg-[transparent] cursor-pointer order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none'
         }
         readOnly
         type={'text'}

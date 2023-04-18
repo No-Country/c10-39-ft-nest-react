@@ -32,7 +32,7 @@ const HoursList: FC<hoursProps> = ({ getAllHours, handleSelect, selectedDate }) 
           .catch((err) => console.log(err));
     }
   }, [id, getAllHours]);
-  console.log(hours);
+
   const allHours: HoursType[] = [];
   for (let i = 7; i <= 23; i++) {
     const endHour = i === 23 ? 0 : i + 1;

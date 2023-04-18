@@ -11,11 +11,11 @@ interface props {
 
 const Input: FC<props> = ({ type, label, icon, value, handleChange, name }) => {
   return (
-    <div className='w-10/12 flex flex-col relative'>
+    <div className="w-10/12 flex flex-col relative">
       <input
         id={label}
         className={
-          'inputFocus bg-bg order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none'
+          'inputFocus bg-[transparent] order-2 transition-colors divide-black divide-solid border-b-2 pb-2 pl-2 pr-10 focus:outline-none'
         }
         type={type}
         value={value}
@@ -31,7 +31,7 @@ const Input: FC<props> = ({ type, label, icon, value, handleChange, name }) => {
         {label}
       </label>
       {icon && (
-        <div className='[&>svg]:absolute [&>svg]:bottom-2 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none'>
+        <div className="[&>svg]:absolute [&>svg]:bottom-2 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none">
           {icon}
         </div>
       )}

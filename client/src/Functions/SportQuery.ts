@@ -10,12 +10,11 @@ interface SportItem {
   types: string[];
 }
 
-export async function getAllSports(token: string) {
+export async function getAllSports() {
   try {
     const { data }: { data: SportItem[] } = await axios.get('/sports', {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
       },
     });
     return data;

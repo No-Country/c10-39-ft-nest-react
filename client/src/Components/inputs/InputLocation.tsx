@@ -45,7 +45,7 @@ const InputLocation: FC<props> = (props) => {
       <input
         id={label}
         className={
-          'inputFocus pr-10 bg-bg order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none'
+          'inputFocus pr-10 bg-[transparent] order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none'
         }
         type="text"
         value={location}
