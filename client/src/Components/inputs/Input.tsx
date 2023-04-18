@@ -15,7 +15,7 @@ const Input: FC<props> = ({ type, label, icon, value, handleChange, name }) => {
       <input
         id={label}
         className={
-          'inputFocus bg-bg order-2 transition-colors divide-black divide-solid border-b-2 pb-2 pl-2 pr-10 focus:outline-none'
+          'inputFocus bg-[transparent] order-2 transition-colors divide-black divide-solid border-b-2 pb-2 pl-2 pr-10 focus:outline-none'
         }
         type={type}
         value={value}
