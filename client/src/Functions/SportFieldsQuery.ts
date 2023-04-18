@@ -8,8 +8,6 @@ export async function getSportFieldsWithSport(body: searchType) {
     if (!body) throw new Error('Error: data is not defined');
     const { rHour, date, sport, lat, lng, fieldType } = body;
 
-    console.log(date);
-
     const { data }: { data: sportData[] } = await axios.get(
       `/sportfields/search?lat=${lat}&lng=${lng}&rHour=${rHour}&date=${date}&sport=${sport}&fieldType=${fieldType}`,
     );
@@ -22,6 +20,7 @@ export async function getSportFieldsWithSport(body: searchType) {
 export async function getSportDetail(id: string) {
   try {
     const { data }: { data: sportData } = await axios.get(`/sportfields/${id}`);
+    console.log(data);
     return data;
   } catch (error) {
     console.error(error);
@@ -34,10 +33,12 @@ interface hoursType {
   start_hour: string;
 }
 
-export async function getSportAvailability(id: string) {
+export async function getSportAvailability(body: string, id: string) {
   try {
-    const { data }: { data: hoursType[] } = await axios.get(`/sportfields/${id}/availability`);
-    return data;
+    const { data } = await axios.post<{ turns: hoursType[] }>(`/sportfields/${id}/availability`, {
+      date: body,
+    });
+    return data.turns;
   } catch (error) {
     console.error(error);
   }

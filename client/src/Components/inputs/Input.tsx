@@ -3,7 +3,7 @@ import { type FC, type BaseSyntheticEvent } from 'react';
 interface props {
   type: string;
   label: string;
-  value: string;
+  value: string | number;
   name: string;
   handleChange: (event: BaseSyntheticEvent) => void;
   icon?: any;
@@ -11,7 +11,7 @@ interface props {
 
 const Input: FC<props> = ({ type, label, icon, value, handleChange, name }) => {
   return (
-    <div className="w-10/12 flex flex-col relative">
+    <div className='w-10/12 flex flex-col relative'>
       <input
         id={label}
         className={
@@ -25,13 +25,13 @@ const Input: FC<props> = ({ type, label, icon, value, handleChange, name }) => {
       <label
         htmlFor={label}
         className={`${
-          value.length === 0 ? 'translate-y-7 translate-x-2' : 'inputWritten'
+          `${value}`.length === 0 ? 'translate-y-7 translate-x-2' : 'inputWritten'
         } w-max cursor-pointer transition-transform order-1 z-[300]`}
       >
         {label}
       </label>
       {icon && (
-        <div className="[&>svg]:absolute [&>svg]:bottom-2 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none">
+        <div className='[&>svg]:absolute [&>svg]:bottom-2 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none'>
           {icon}
         </div>
       )}

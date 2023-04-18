@@ -12,7 +12,10 @@ export interface sportData {
   capacity: number;
   dimensions: string;
   fieldType: string;
-  sportComplex: {
+  sport?: any;
+  sportsComplex: {
+    lat: number;
+    lng: number;
     ubication: string;
     parking: boolean;
     grill: boolean;
@@ -22,4 +25,9 @@ export interface sportData {
     showers: boolean;
     availability: hoursType[];
   };
+}
+
+export interface coordsType {
+  lat: number;
+  lng: number;
 }

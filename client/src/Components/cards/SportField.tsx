@@ -30,7 +30,7 @@ const SportField: FC<sportFieldType> = ({ complexData, btnText, route, item }) =
           <span className="block text-3xl ">{item?.name}</span>
           {complexData && (
             <span className="block opacity-70 relative bottom-2 text-lg">
-              {item?.sportComplex?.ubication}
+              {item?.sportsComplex?.ubication}
             </span>
           )}
         </div>
