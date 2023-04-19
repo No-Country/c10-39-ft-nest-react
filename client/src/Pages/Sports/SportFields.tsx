@@ -47,11 +47,13 @@ const SportFields: FC = () => {
         .catch((err) => console.log(err));
     }
   }, [lat, lng, rHour, date, sport, fieldType]);
+
   console.log(data);
+
   return (
-    <Layout title="Canchas">
+    <Layout title='Canchas'>
       {data.length ? (
-        <div className="flex flex-row w-full justify-center gap-20 overflow-hidden max-h-[90vh]">
+        <div className='flex flex-row w-full justify-center gap-20 overflow-hidden max-h-[90vh]'>
           <div
             className={`${
               data.length > 1 ? 'scrollbarSF overflow-y-scroll' : ''
@@ -69,7 +71,7 @@ const SportFields: FC = () => {
                 />
               ))}
           </div>
-          <div className="hidden rounded-lg lg:block w-[700px] h-[475px] bg-primary mt-20">
+          <div className='hidden rounded-lg lg:block w-[700px] h-[475px] bg-primary mt-20'>
             {data.length && (
               <Maps
                 initialCoords={{
@@ -82,7 +84,7 @@ const SportFields: FC = () => {
           </div>
         </div>
       ) : (
-        <span className="h-[50vh] flex justify-center items-center text-2xl">
+        <span className='h-[50vh] flex justify-center items-center text-2xl'>
           No hay coincidencias
         </span>
       )}

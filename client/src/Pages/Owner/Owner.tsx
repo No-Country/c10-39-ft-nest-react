@@ -21,7 +21,7 @@ const Owner = () => {
     <>
       {isOwner ? (
         <>
-          <Layout title="Popietarios">
+          <Layout title='Popietarios' bg='bg-tenis-desktop bg-cover bg-[30%]'>
             <OwnerMenu />
           </Layout>
         </>

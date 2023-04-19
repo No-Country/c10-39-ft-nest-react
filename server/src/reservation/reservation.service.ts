@@ -84,12 +84,17 @@ export class ReservationService {
   }
 
   async remove(id: string, user: AuthUserDTO) {
+    console.log(user);
     const reservation = await this.reservationRepository
       .createQueryBuilder('res')
-      .innerJoin('res.sportfield', 'sf', 'res.userId = :userId', { userId: user.id })
+      .innerJoin('res.sportfield', 'sf', 'res.id = :id', {
+        id,
+      })
       .addSelect('sf.id')
       .leftJoinAndSelect('res.user', 'user')
       .getOne();
+
+    console.log(reservation);
 
     if (!reservation) {
       throw new NotFoundException('Reservation not exists!');

@@ -204,6 +204,7 @@ export class SportfieldsService {
     // const splittedDate = date.split('/');
     // const fDate = `${splittedDate[1]}/${splittedDate[0]}/${splittedDate[2]}`;
     // console.log(fDate);
+    //
 
     const nearbySportFields = await this.sportFieldRepository
       .createQueryBuilder('sportField')
@@ -229,10 +230,12 @@ export class SportfieldsService {
       .innerJoin(
         'sportField.sport',
         'sport',
-        'sport.name = :sport AND sportField.fieldType = :fieldType',
+        `sport.name = :sport ${
+          fieldType === 'Cualquier tipo' ? '' : ' AND sportField.fieldType = :fieldType'
+        }`,
         { sport, fieldType },
       )
-      .leftJoin('sportField.sportsComplex', 'sportsComplex')
+      .leftJoinAndSelect('sportField.sportsComplex', 'sportsComplex')
       .innerJoin(
         'sportsComplex.availability',
         'ar',
@@ -252,7 +255,10 @@ export class SportfieldsService {
     const availableSportFields = nearbySportFields.filter((sp) => sp.reservation.length === 0);
 
     const sportFields = plainToClass(SportField, availableSportFields);
-    return sportFields;
+    return sportFields.map((sportField) => {
+      const { reservation: _, ...sf } = sportField;
+      return sf;
+    });
   }
 
   private async checkOwner(ownerId: string, sportFieldId: string) {

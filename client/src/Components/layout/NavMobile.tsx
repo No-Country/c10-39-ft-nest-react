@@ -35,7 +35,7 @@ const NavMobile: FC<{ title: string }> = ({ title }) => {
   const handleCloseSportMenu = () => setOpenSportMenu(false);
 
   return (
-    <nav className='z-[500] px-5 bg-primary flex justify-center shadow-lg fixed w-full h-[80px] lg:hidden'>
+    <nav className='sticky z-10 px-5 bg-primary flex justify-center shadow-lg w-full h-[12vh] lg:hidden'>
       <div className=' gap-7 justify-start flex w-full items-center pb-5 pt-10'>
         <button className='text-white text-2xl' onClick={handleClickMenu}>
           <GiHamburgerMenu />

@@ -17,8 +17,8 @@ const SFOwner: FC = () => {
   }, []);
 
   return (
-    <Layout title="Mis canchas">
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 px-1 py-20 lg:px-10">
+    <Layout title='Mis canchas'>
+      <div className='grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 px-1 py-20 lg:px-10 lg:h-full'>
         {sportFields.map((sportField) => (
           <SportField
             key={sportField.id}
