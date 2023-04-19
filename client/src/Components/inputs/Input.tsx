@@ -5,26 +5,19 @@ interface props {
   label: string;
   value: string | number;
   name: string;
+  validation: boolean | undefined;
   handleChange: (event: BaseSyntheticEvent) => void;
   icon?: any;
-  validationError?: boolean;
 }
 
-const Input: FC<props> = ({
-  type,
-  label,
-  icon,
-  value,
-  handleChange,
-  name,
-  validationError = true,
-}) => {
+const Input: FC<props> = (props) => {
+  const { type, label, icon, value, handleChange, name, validation = true } = props;
   return (
-    <div className="w-10/12 flex flex-col relative h-[60px]">
+    <div className="w-10/12 flex flex-col relative h-[70px]">
       <input
         id={label}
         className={`${
-          validationError ? 'divide-red' : 'divide-black'
+          validation ? 'divide-black' : 'divide-red'
         } inputFocus bg-[transparent] order-2 transition-colors  border-b-2 pb-2 pl-2 pr-10 focus:outline-none`}
         type={type}
         value={value}
@@ -40,11 +33,11 @@ const Input: FC<props> = ({
         {label}
       </label>
       {icon && (
-        <div className="[&>svg]:absolute [&>svg]:bottom-2 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none">
+        <div className="[&>svg]:absolute [&>svg]:top-6 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none">
           {icon}
         </div>
       )}
-      {validationError && (
+      {validation || (
         <span className="order-3 text-red">Error el campo debe tener al menos 5 caracteres</span>
       )}
     </div>

@@ -11,22 +11,31 @@ import PrimaryButton from '../Components/PrimaryButton';
 import { PostFile } from '../Functions/FileQuery';
 import { updateUser } from '../Functions/UserQuery';
 import { type AppUser } from '../types/App.type';
+import { inputData, objectProp, validationInputs } from '../utils/validationInputs';
+import { modifyObj } from '../utils/modifyObj';
+
+interface stateType {
+  [key: string]: inputData;
+  email: inputData;
+  firstName: inputData;
+  lastName: inputData;
+}
 
 const Profile: FC = () => {
   const userInfo = useSelector((state: AppUser) => state.user.user);
-
-  const [state, setState] = useState({
-    email: userInfo?.email || '',
-    firstName: userInfo?.firstName || '',
-    lastName: userInfo?.lastName || '',
-  });
+  const defaultState: stateType = {
+    email: { value: userInfo?.email || '', validation: false },
+    firstName: { value: userInfo?.firstName || '', validation: false },
+    lastName: { value: userInfo?.lastName || '', validation: false },
+  };
+  const [state, setState] = useState<stateType | objectProp>(defaultState);
 
   const handleChange = (event: BaseSyntheticEvent) => {
     setState((prev) => {
       const target = event.target;
       return {
         ...prev,
-        [target.name]: target.value,
+        [target.name]: { value: target.value, validation: false },
       };
     });
   };
@@ -34,10 +43,18 @@ const Profile: FC = () => {
   const [image, setImage] = useState('');
   const [file, setFile] = useState<null | File>(null);
 
+  const [verifyInputs, setVerifyInputs] = useState<boolean>(false);
+
   const handleFile = (e: BaseSyntheticEvent) => setFile(e.target.files[0]);
 
   const handleSubmit = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
+
+    setVerifyInputs(true);
+    const { newState, pass } = validationInputs({ ...state }, 5);
+    setState(newState);
+    if (!pass) return;
+
     try {
       if (!userInfo) throw new Error('Error: userInfo is undefined');
 
@@ -45,27 +62,21 @@ const Profile: FC = () => {
       const image: undefined | string = file ? await PostFile(file) : userInfo.image;
 
       if (!image) throw new Error('No se pudo guardar la imagen');
-      await updateUser({ ...state, image }, userInfo.id);
+      const newObj = modifyObj({ ...state });
+      await updateUser({ ...newObj, image }, userInfo.id);
     } catch (err) {
       console.log(err);
     }
   };
 
   const handleCancel = () => {
-    setState({
-      email: userInfo?.email,
-      firstName: userInfo?.firstName,
-      lastName: userInfo?.lastName,
-    });
+    setState(defaultState);
+    setVerifyInputs(false);
     setFile(null);
   };
 
   useEffect(() => {
-    setState({
-      email: userInfo?.email || '',
-      firstName: userInfo?.firstName || '',
-      lastName: userInfo?.lastName || '',
-    });
+    setState(defaultState);
     setImage(userInfo?.image ?? '');
   }, [userInfo]);
 
@@ -88,16 +99,18 @@ const Profile: FC = () => {
             label="Nombre"
             handleChange={handleChange}
             name="firstName"
-            value={state.firstName}
+            value={state.firstName.value}
             icon={<HiOutlineUser />}
+            validation={verifyInputs ? state.firstName.validation : undefined}
           />
           <Input
             type="text"
             label="Apellido"
             icon={<HiUser />}
             name="lastName"
-            value={state.lastName}
+            value={state.lastName.value}
             handleChange={handleChange}
+            validation={verifyInputs ? state.lastName.validation : undefined}
           />
           <Input
             type="mail"
@@ -105,7 +118,8 @@ const Profile: FC = () => {
             icon={<IoMdMail />}
             handleChange={handleChange}
             name="email"
-            value={state.email}
+            value={state.email.value}
+            validation={verifyInputs ? state.email.validation : undefined}
           />
         </div>
         <div className="flex w-10/12 justify-between absolute bottom-0 lg:relative lg:w-4/12 lg:m-10">
