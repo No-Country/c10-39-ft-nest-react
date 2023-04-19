@@ -97,15 +97,13 @@ const onSubmit = (state: ComplexType, navTo: (param: string) => void) => {
         cancelButtonText: "Completar Campos",
       })
 
-
-
     })
     .catch((err) => console.error(err));
 };
 
 export const ComplexForm: FC = () => {
   const { hasComplex, complex: complexInfo } = useSelector((state: AppComplex) => state.complex);
-  const initialAddressRef = useRef('');
+  // const initialAddressRef = useRef("");
   const [locationLoading, setLocationLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -130,8 +128,8 @@ export const ComplexForm: FC = () => {
       GetComplexQuery()
         .then((value) => {
           if (value) {
+            // initialAddressRef.current = value.address;
             store.dispatch(setComplex(value));
-            initialAddressRef.current = value.address;
           }
         })
         .catch((err) => console.log(err));
@@ -157,13 +155,14 @@ export const ComplexForm: FC = () => {
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
-
-    if (state.address !== initialAddressRef.current) {
+    // console.log(initialAddressRef.current)
+    if (state.address !== complexInfo.address) {
       getLatLng(state.address)
         .then((res) => {
           if (res) {
             const { lat, lng } = res;
             onSubmit({ ...state, lat, lng }, navigate);
+            return
           }
         })
         .catch((e) => {
@@ -172,6 +171,7 @@ export const ComplexForm: FC = () => {
     }
 
     onSubmit(state, navigate);
+    return
   };
 
   const handleCancel = () => {
