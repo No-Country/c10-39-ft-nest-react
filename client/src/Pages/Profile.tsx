@@ -24,9 +24,9 @@ interface stateType {
 const Profile: FC = () => {
   const userInfo = useSelector((state: AppUser) => state.user.user);
   const defaultState: stateType = {
-    email: { value: userInfo?.email || '', validation: false },
-    firstName: { value: userInfo?.firstName || '', validation: false },
-    lastName: { value: userInfo?.lastName || '', validation: false },
+    email: { value: userInfo?.email || '', validation: true },
+    firstName: { value: userInfo?.firstName || '', validation: true },
+    lastName: { value: userInfo?.lastName || '', validation: true },
   };
   const [state, setState] = useState<stateType | objectProp>(defaultState);
 
@@ -35,7 +35,7 @@ const Profile: FC = () => {
       const target = event.target;
       return {
         ...prev,
-        [target.name]: { value: target.value, validation: false },
+        [target.name]: { value: target.value, validation: true },
       };
     });
   };
@@ -43,19 +43,16 @@ const Profile: FC = () => {
   const [image, setImage] = useState('');
   const [file, setFile] = useState<null | File>(null);
 
-  const [verifyInputs, setVerifyInputs] = useState<boolean>(false);
-
   const handleFile = (e: BaseSyntheticEvent) => setFile(e.target.files[0]);
 
   const handleSubmit = async (e: BaseSyntheticEvent) => {
-    e.preventDefault();
-
-    setVerifyInputs(true);
-    const { newState, pass } = validationInputs({ ...state }, 5);
-    setState(newState);
-    if (!pass) return;
-
     try {
+      e.preventDefault();
+
+      const { newState, pass } = validationInputs({ ...state }, 5);
+      setState(newState);
+      if (!pass) return;
+
       if (!userInfo) throw new Error('Error: userInfo is undefined');
 
       if (!file && !userInfo.image) throw new Error(`Error: file es null y no hay imagen guardada`);
@@ -71,7 +68,6 @@ const Profile: FC = () => {
 
   const handleCancel = () => {
     setState(defaultState);
-    setVerifyInputs(false);
     setFile(null);
   };
 
@@ -101,7 +97,7 @@ const Profile: FC = () => {
             name="firstName"
             value={state.firstName.value}
             icon={<HiOutlineUser />}
-            validation={verifyInputs ? state.firstName.validation : undefined}
+            validation={state.firstName.validation}
           />
           <Input
             type="text"
@@ -110,7 +106,7 @@ const Profile: FC = () => {
             name="lastName"
             value={state.lastName.value}
             handleChange={handleChange}
-            validation={verifyInputs ? state.lastName.validation : undefined}
+            validation={state.lastName.validation}
           />
           <Input
             type="mail"
@@ -119,7 +115,7 @@ const Profile: FC = () => {
             handleChange={handleChange}
             name="email"
             value={state.email.value}
-            validation={verifyInputs ? state.email.validation : undefined}
+            validation={state.email.validation}
           />
         </div>
         <div className="flex w-10/12 justify-between absolute bottom-0 lg:relative lg:w-4/12 lg:m-10">
