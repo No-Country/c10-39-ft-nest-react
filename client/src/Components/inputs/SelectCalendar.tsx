@@ -1,5 +1,4 @@
 import { type FC, useState } from 'react';
-import HoursList from '../HoursList';
 import MyCalendar from '../MyCalendar';
 
 interface selectType {
@@ -7,9 +6,16 @@ interface selectType {
   value: string;
   handleClick: (option: string) => void;
   icon?: any;
+  validationError?: boolean;
 }
 
-const SelectCalendar: FC<selectType> = ({ handleClick, value, label, icon }) => {
+const SelectCalendar: FC<selectType> = ({
+  handleClick,
+  value,
+  label,
+  icon,
+  validationError = true,
+}) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
 
@@ -19,12 +25,12 @@ const SelectCalendar: FC<selectType> = ({ handleClick, value, label, icon }) => 
   };
 
   return (
-    <div className="w-10/12 flex flex-col relative">
+    <div className="w-10/12 flex flex-col relative h-[60px]">
       <input
         id={label}
-        className={
-          'inputFocus bg-[transparent] cursor-pointer order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none'
-        }
+        className={`${
+          validationError ? 'divide-red' : 'divide-black'
+        } inputFocus bg-[transparent] order-2 transition-colors  border-b-2 pb-2 pl-2 pr-10 focus:outline-none`}
         readOnly
         type={'text'}
         value={value}
@@ -47,6 +53,9 @@ const SelectCalendar: FC<selectType> = ({ handleClick, value, label, icon }) => 
         <div className="[&>svg]:absolute [&>svg]:top-7 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none">
           {icon}
         </div>
+      )}
+      {validationError && (
+        <span className="order-3 text-red">Error: debes seleccionar una fecha</span>
       )}
     </div>
   );

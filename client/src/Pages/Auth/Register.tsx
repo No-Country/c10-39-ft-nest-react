@@ -6,10 +6,7 @@ import { HiOutlineUser, HiUser } from 'react-icons/hi';
 import { IoMdMail } from 'react-icons/io';
 
 import Input from '../../Components/inputs/Input';
-import Layout from '../../Components/layout/Layout';
 import { registerUser } from '../../Functions/UserQuery';
-import NavDesktop from '../../Components/layout/NavDesktop';
-import NavMobile from '../../Components/layout/NavMobile';
 
 const Register: FC = () => {
   const navigate = useNavigate();
@@ -96,7 +93,7 @@ const Register: FC = () => {
               />
             </div>
             <input
-              className="mt-5 w-10/12 lg:w-2/3 py-2 rounded-full font-bold bg-gradient-to-tr from-gradone to-gradtwo"
+              className="cursor-pointer mt-5 w-10/12 lg:w-2/3 py-2 rounded-full font-bold bg-gradient-to-tr from-gradone to-gradtwo"
               type="submit"
               value="REGISTRARSE"
             />

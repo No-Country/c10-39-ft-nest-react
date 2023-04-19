@@ -24,7 +24,7 @@ const Login: FC = () => {
         <FaBasketballBall className="lg:w-[272px] lg:h-[248px]   w-[128px] h-[128px] text-gradone" />
       </div>
       <form onSubmit={handleSubmit} className="flex flex-col w-full items-center gap-5">
-        <div className="lg:w-1/3 w-full flex justify-center text-lg">
+        <div className="lg:w-1/3 w-full flex text-lg flex-col items-center h-[80px]">
           <input
             className="py-3 px-5 rounded-2xl focus:outline-none w-10/12"
             type="mail"
@@ -34,8 +34,9 @@ const Login: FC = () => {
               setMail(event.target.value);
             }}
           />
+          <span className="order-3 text-red">Error el campo debe tener al menos 5 caracteres</span>
         </div>
-        <div className="lg:w-1/3  w-full flex justify-center text-lg">
+        <div className="lg:w-1/3  w-full flex text-lg flex-col items-center h-[80px]">
           <input
             className="py-3 px-5 rounded-2xl focus:outline-none w-10/12"
             type="password"
@@ -43,6 +44,7 @@ const Login: FC = () => {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
+          <span className="order-3 text-red">Error el campo debe tener al menos 5 caracteres</span>
         </div>
         <input
           className="mt-5 font-semibold w-28 py-3 text-lg rounded-full bg-[#CAE0DB]"
