@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 
-import { HoursType } from '../types/Hour.type';
+import { type HoursType } from '../types/Hour.type';
 
 interface Props {
   hours: HoursType[];

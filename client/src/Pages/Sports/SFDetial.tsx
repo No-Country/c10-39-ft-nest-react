@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
+import SelectHour from '../../Components/inputs/SelectHour';
 import Layout from '../../Components/layout/Layout';
 import PrimaryButton from '../../Components/PrimaryButton';
-import { getSportDetail } from '../../Functions/SportFieldsQuery';
-import { type sportData } from '../../types/Sport.type';
 import SFDetailMenu from '../../Components/SFDetailMenu';
 import { PostReservations } from '../../Functions/ReservationsQuery';
-import SelectHour from '../../Components/inputs/SelectHour';
-import { useSelector } from 'react-redux';
-import { AppUser } from '../../types/App.type';
+import { getSportDetail } from '../../Functions/SportFieldsQuery';
+import { type AppUser } from '../../types/App.type';
+import { type sportData } from '../../types/Sport.type';
 
 const SFDetail = () => {
   const { id = '' } = useParams();

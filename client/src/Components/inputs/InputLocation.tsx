@@ -6,10 +6,11 @@ interface props {
   handleLocationName: (string: string) => void;
   location: string;
   icon?: any;
+  validationError?: boolean;
 }
 
 const InputLocation: FC<props> = (props) => {
-  const { label, icon, handleLocationName, location } = props;
+  const { label, icon, handleLocationName, location, validationError = true } = props;
 
   const autocompleteRef = useRef<HTMLInputElement>(null);
 
@@ -41,12 +42,12 @@ const InputLocation: FC<props> = (props) => {
   }, []);
 
   return (
-    <div className="w-10/12 flex flex-col relative">
+    <div className="w-10/12 flex flex-col relative h-[60px]">
       <input
         id={label}
-        className={
-          'inputFocus pr-10 bg-bg order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none'
-        }
+        className={`${
+          validationError ? 'divide-red' : 'divide-black'
+        } inputFocus bg-[transparent] order-2 transition-colors border-b-2 pb-2 pl-2 pr-10 focus:outline-none`}
         type="text"
         value={location}
         onChange={(e) => handleLocationName(e.target.value)}
@@ -62,9 +63,12 @@ const InputLocation: FC<props> = (props) => {
         {label}
       </label>
       {icon && (
-        <div className="[&>svg]:absolute [&>svg]:bottom-2 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none">
+        <div className="[&>svg]:absolute [&>svg]:top-7 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none">
           {icon}
         </div>
+      )}
+      {validationError && (
+        <span className="order-3 text-red text-md">Error: debes escribir una ubicacion</span>
       )}
     </div>
   );

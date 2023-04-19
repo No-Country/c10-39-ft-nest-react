@@ -81,9 +81,12 @@ export const Search: FC = () => {
 
   return (
     <Layout title={`${loader ? sport : ''}`}>
-      <div className="w-full flex justify-center items-center h-[70vh]">
-        <form onSubmit={handleSubmit} className="flex w-full flex-col items-center lg:mx-[30%]">
-          <div className="flex flex-col gap-5 w-full items-center pt-12 lg:gap-10">
+      <div className="w-full flex justify-center items-center">
+        <form
+          onSubmit={handleSubmit}
+          className="flex w-full flex-col items-center lg:mx-[30%] lg:h-[600px] bg-lightWhite rounded-lg h-[500px] mt-20 lg:my-12 relative"
+        >
+          <div className="flex flex-col gap-10 w-full items-center mt-10">
             <InputLocation
               label="Ubicacion"
               icon={<MdLocationOn />}
@@ -107,7 +110,7 @@ export const Search: FC = () => {
             />
             <SelectHour label="Horario" value={time} handleClick={handleTime} icon={<TfiTime />} />
           </div>
-          <div className="absolute bottom-10 right-10 lg:right-[33%]">
+          <div className="absolute bottom-10 right-10">
             <PrimaryButton text="BUSCAR" />
           </div>
         </form>

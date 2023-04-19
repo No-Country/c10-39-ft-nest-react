@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
-import Layout from '../../Components/layout/Layout';
 import SportCard from '../../Components/cards/SportCard';
+import Layout from '../../Components/layout/Layout';
 import { getAllSports } from '../../Functions/SportQuery';
 
 interface SportItem {
@@ -14,8 +14,7 @@ const Reservation = () => {
   const [sports, setSports] = useState<SportItem[] | []>([]);
 
   useEffect(() => {
-    const token = localStorage.getItem('token') ?? '';
-    getAllSports(token)
+    getAllSports()
       .then((data) => data && setSports(data))
       .catch((err) => console.log(err));
   }, []);

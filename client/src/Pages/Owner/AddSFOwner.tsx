@@ -1,18 +1,18 @@
 import { type FC, useState, type BaseSyntheticEvent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { GiSoccerField } from 'react-icons/gi';
 import { GrGroup } from 'react-icons/gr';
 import { MdTitle } from 'react-icons/md';
 
 import Input from '../../Components/inputs/Input';
+import Select from '../../Components/inputs/Select';
 import Layout from '../../Components/layout/Layout';
 import PrimaryButton from '../../Components/PrimaryButton';
 import { OwnerAddSFQuery, OwnerEditSFQuery } from '../../Functions/OwnerQuery';
-import { appSport, AppUser } from '../../types/App.type';
-import Select from '../../Components/inputs/Select';
-import { useParams } from 'react-router-dom';
 import { getSportDetail } from '../../Functions/SportFieldsQuery';
+import { type appSport, AppUser } from '../../types/App.type';
 
 interface Props {
   edit?: boolean;

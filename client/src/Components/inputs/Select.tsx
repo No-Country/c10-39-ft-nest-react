@@ -7,9 +7,18 @@ interface selectType {
   handleClick: (option: string) => void;
   anyOption?: boolean;
   icon?: any;
+  validationError?: boolean;
 }
 
-const Select: FC<selectType> = ({ handleClick, array, value, label, icon, anyOption = true }) => {
+const Select: FC<selectType> = ({
+  handleClick,
+  array,
+  value,
+  label,
+  icon,
+  anyOption = true,
+  validationError = true,
+}) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
 
@@ -19,12 +28,12 @@ const Select: FC<selectType> = ({ handleClick, array, value, label, icon, anyOpt
   };
 
   return (
-    <div className='w-10/12 flex flex-col relative'>
+    <div className="w-10/12 flex flex-col relative h-[60px]">
       <input
         id={label}
-        className={
-          'inputFocus bg-bg cursor-pointer order-2 transition-colors divide-black divide-solid border-b-2 pb-2 px-2 focus:outline-none'
-        }
+        className={`${
+          validationError ? 'divide-red' : 'divide-black'
+        } inputFocus bg-[transparent] order-2 transition-colors  border-b-2 pb-2 pl-2 pr-10 focus:outline-none`}
         readOnly
         type={'text'}
         value={value}
@@ -40,11 +49,11 @@ const Select: FC<selectType> = ({ handleClick, array, value, label, icon, anyOpt
       </label>
       {open && (
         <>
-          <ul className='flex order-3 z-[500] gap-2 flex-col w-max bg-white py-5 absolute top-[58px] rounded-lg'>
+          <ul className="flex order-3 z-[500] gap-2 flex-col w-max bg-white py-5 absolute top-[58px] rounded-lg">
             {anyOption && (
               <li
                 onClick={() => handleOption('Cualquier tipo')}
-                className='active:bg-primary px-10 py-2 cursor-pointer'
+                className="active:bg-primary px-10 py-2 cursor-pointer"
               >
                 Cualquier tipo
               </li>
@@ -54,7 +63,7 @@ const Select: FC<selectType> = ({ handleClick, array, value, label, icon, anyOpt
                 <li
                   key={item}
                   onClick={() => handleOption(item)}
-                  className='active:bg-primary px-10 py-2 cursor-pointer'
+                  className="active:bg-primary px-10 py-2 cursor-pointer"
                 >
                   {item}
                 </li>
@@ -64,9 +73,12 @@ const Select: FC<selectType> = ({ handleClick, array, value, label, icon, anyOpt
         </>
       )}
       {icon && (
-        <div className='[&>svg]:absolute [&>svg]:top-7 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none'>
+        <div className="[&>svg]:absolute [&>svg]:top-7 [&>svg]:right-2 [&>svg]:w-6 [&>svg]:h-6 pointer-events-none">
           {icon}
         </div>
+      )}
+      {validationError && (
+        <span className="order-3 text-red">Error: debes seleccionar un tipo de cancha</span>
       )}
     </div>
   );

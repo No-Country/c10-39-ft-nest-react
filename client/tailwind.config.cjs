@@ -18,13 +18,15 @@ module.exports = {
     },
     colors: {
       "white": "#fff",
+      "lightWhite": '#fff8',
       "black": '#000',
       "primary": "#4CAF50",
       "secondary": "#F5F5F5",
       "gradone": "#E0E0E0",
       "gradtwo": "#72DFC5",
       "bg": '#E8F5E9',
-      "grey": "#0000000F"
+      "grey": "#0000000F",
+      "red": '#f00',
     }
   },
   plugins: [],

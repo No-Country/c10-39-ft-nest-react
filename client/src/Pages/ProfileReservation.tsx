@@ -1,12 +1,11 @@
 import { type FC, useState, useEffect } from 'react';
-
-import Layout from '../Components/layout/Layout';
-import ReservationCard from '../Components/cards/ReservationCard';
-import { ReservationUser } from '../Functions/ReservationsQuery';
-import PrimaryButton from '../Components/PrimaryButton';
-
 import { useNavigate } from 'react-router-dom';
-import { GetReservationType } from '../types/Reservation.type';
+
+import ReservationCard from '../Components/cards/ReservationCard';
+import Layout from '../Components/layout/Layout';
+import PrimaryButton from '../Components/PrimaryButton';
+import { ReservationUser } from '../Functions/ReservationsQuery';
+import { type GetReservationType } from '../types/Reservation.type';
 
 const ProfileReservation: FC = () => {
   const [reservations, setReservations] = useState<GetReservationType[]>([]);

@@ -1,11 +1,11 @@
 import { useState, type FC, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
-import Layout from '../../Components/layout/Layout';
 import SportField from '../../Components/cards/SportField';
-import { getSportFieldsWithSport } from '../../Functions/SportFieldsQuery';
-import { coordsType, type sportData } from '../../types/Sport.type';
+import Layout from '../../Components/layout/Layout';
 import Maps from '../../Components/Maps';
+import { getSportFieldsWithSport } from '../../Functions/SportFieldsQuery';
+import { type coordsType, type sportData } from '../../types/Sport.type';
 
 const SportFields: FC = () => {
   const [data, setData] = useState<sportData[]>([]);
@@ -31,17 +31,23 @@ const SportFields: FC = () => {
         sport,
         fieldType,
       })
-      .then((data) => data && (setData(data), setCoord(data.map((item) =>{
-        return {
-          lat: item.sportsComplex.lat,
-          lng: item.sportsComplex.lng,
-        }
-      }))
-      ))
+        .then(
+          (data) =>
+            data &&
+            (setData(data),
+            setCoord(
+              data.map((item) => {
+                return {
+                  lat: item.sportsComplex.lat,
+                  lng: item.sportsComplex.lng,
+                };
+              }),
+            )),
+        )
         .catch((err) => console.log(err));
     }
   }, [lat, lng, rHour, date, sport, fieldType]);
-
+  console.log(data);
   return (
     <Layout title="Canchas">
       {data.length ? (
@@ -64,15 +70,14 @@ const SportFields: FC = () => {
               ))}
           </div>
           <div className="hidden rounded-lg lg:block w-[700px] h-[475px] bg-primary mt-20">
-          {
-              data.length && (
-            <Maps initialCoords={
-              {
-                lat: Number(lat),
-                lng: Number(lng),
-              }
-
-            } Coords={coords} /> 
+            {data.length && (
+              <Maps
+                initialCoords={{
+                  lat: Number(lat),
+                  lng: Number(lng),
+                }}
+                Coords={coords}
+              />
             )}
           </div>
         </div>
