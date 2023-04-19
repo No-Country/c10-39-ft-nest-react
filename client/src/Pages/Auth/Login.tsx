@@ -1,5 +1,7 @@
 import { type BaseSyntheticEvent, type FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import toast, { Toaster } from 'react-hot-toast';
 
 import { FaBasketballBall } from 'react-icons/fa';
 
@@ -14,12 +16,35 @@ const Login: FC = () => {
     e.preventDefault();
 
     loginUser({ email, password })
-      .then(() => navigate('/inicio'))
+      .then((query) => {
+        if (query?.data.user) {
+          toast.success(`Bienvenido ${query.data.user.firstName}!`)
+          return setTimeout(() => navigate('/inicio'), 2000)
+        };
+        Swal.fire({
+          title: 'Error!',
+          text: 'Email o Contraseña no validos',
+          footer: "<b>Tip: </b> Recuerde activar o desactivar las mayusculas.",
+          icon: 'error',
+          confirmButtonText: "Registrarse",
+          showCancelButton: true,
+          cancelButtonText: "Intentar otra vez",
+          cancelButtonColor: '#4CAF50'
+        }).then((result) => {
+          if (result.isConfirmed) return navigate('/registro')
+          setMail('')
+          setPassword('')
+        })
+      }
+      )
       .catch((err) => console.log(err));
   };
 
   return (
     <div className="relative h-screen w-screen flex flex-col justify-center items-center gap-10 bg-primary">
+      <Toaster
+        position='top-center'
+      />
       <div>
         <FaBasketballBall className="lg:w-[272px] lg:h-[248px]   w-[128px] h-[128px] text-gradone" />
       </div>
