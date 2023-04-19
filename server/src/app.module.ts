@@ -35,7 +35,7 @@ import { ImageModule } from './image/image.module';
         entities: [User, Sport, SportField, Owner, SportsComplex, Reservation, AvailabilityRange],
         // autoLoadEntities: true,
         synchronize: true,
-        dropSchema: true,
+        // dropSchema: true,
       }),
       inject: [ConfigService],
     }),
