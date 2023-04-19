@@ -18,7 +18,12 @@ const Login: FC = () => {
     loginUser({ email, password })
       .then((query) => {
         if (query?.data.user) {
-          toast.success(`Bienvenido ${query.data.user.firstName}!`)
+          toast.success(`Bienvenido ${query.data.user.firstName}!`, {
+            style: {
+              background: "#F5F5F5",
+              color: '#4CAF50'
+            }
+          })
           return setTimeout(() => navigate('/inicio'), 2000)
         };
         Swal.fire({
@@ -42,6 +47,7 @@ const Login: FC = () => {
 
   return (
     <div className="relative h-screen w-screen flex flex-col justify-center items-center gap-10 bg-primary">
+      {/* TOASTER */}
       <Toaster
         position='top-center'
       />
