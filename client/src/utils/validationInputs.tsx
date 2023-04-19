@@ -5,7 +5,10 @@ export interface inputData {
 
 export type objectProp = Record<string, inputData>;
 
-type validationType = (inputs: objectProp, wLength: number) => objectProp;
+type validationType = (
+  inputs: objectProp,
+  wLength: number,
+) => { newState: objectProp; pass: boolean };
 
 export const validationInputs: validationType = (inputs, wLength) => {
   const data = Object.entries(inputs);
