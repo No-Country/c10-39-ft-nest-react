@@ -1,5 +1,7 @@
 import { useState, type FC, type BaseSyntheticEvent } from 'react';
 import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
+import toast, { Toaster } from 'react-hot-toast';
 
 import { AiOutlinePhone } from 'react-icons/ai';
 import { HiOutlineIdentification } from 'react-icons/hi';
@@ -9,6 +11,7 @@ import Layout from '../../Components/layout/Layout';
 import PrimaryButton from '../../Components/PrimaryButton';
 import { OwnerRegisterQuery } from '../../Functions/OwnerQuery';
 import { type AppUser } from '../../types/App.type';
+import RegisterResponse from '../../types/RegisterResponse.type';
 
 const OwnerRegister: FC = () => {
   const [state, setState] = useState({
@@ -29,12 +32,37 @@ const OwnerRegister: FC = () => {
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
     OwnerRegisterQuery(state)
-      .then(() => window.location.reload())
+      .then((data) => {
+        const datos = { ...data } as RegisterResponse;
+        if (datos.id && datos.DNI && datos.phone) {
+          toast.success(`Bienvenido ${datos.firstName}! a AllSport`, {
+            style: {
+              background: "#F5F5F5",
+              color: '#4CAF50'
+            }
+          })
+          // console.log("esta es la data:", datos)
+          return setTimeout(() => window.location.reload(), 2000)
+        };
+        Swal.fire({
+          title: 'Error!',
+          text: 'No se ha podido registrar como Propietario.',
+          footer: `<b>Tip:</b>Recuerde todos los campos son obligatorios.`,
+          icon: 'error',
+          showConfirmButton: false,
+          cancelButtonText: "Intentar otra vez",
+          showCancelButton: true,
+          cancelButtonColor: '#4CAF50',
+        })
+      })
       .catch((err) => console.log(err));
   };
 
   return (
     <Layout title="Registro de propietario">
+      <Toaster
+        position='top-center'
+      />
       <form onSubmit={handleSubmit} className="relative min-h-[100vh] flex flex-col items-center">
         <div className="bg-[#D9D9D9] rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[800px] text-center ">
           +
