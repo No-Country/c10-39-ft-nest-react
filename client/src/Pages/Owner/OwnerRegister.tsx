@@ -1,17 +1,17 @@
 import { useState, type FC, type BaseSyntheticEvent } from 'react';
-import { useSelector } from 'react-redux';
-import Swal from 'sweetalert2';
 import toast, { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
 import { AiOutlinePhone } from 'react-icons/ai';
 import { HiOutlineIdentification } from 'react-icons/hi';
+import Swal from 'sweetalert2';
 
 import Input from '../../Components/inputs/Input';
 import Layout from '../../Components/layout/Layout';
 import PrimaryButton from '../../Components/PrimaryButton';
 import { OwnerRegisterQuery } from '../../Functions/OwnerQuery';
 import { type AppUser } from '../../types/App.type';
-import RegisterResponse from '../../types/RegisterResponse.type';
+import type RegisterResponse from '../../types/RegisterResponse.type';
 
 const OwnerRegister: FC = () => {
   const [state, setState] = useState({
@@ -38,11 +38,11 @@ const OwnerRegister: FC = () => {
           toast.success(`Bienvenido ${datos.firstName}! a AllSport`, {
             style: {
               background: "#F5F5F5",
-              color: '#4CAF50'
-            }
-          })
+              color: '#4CAF50',
+            },
+          });
           // console.log("esta es la data:", datos)
-          return setTimeout(() => window.location.reload(), 2000)
+          return setTimeout(() => window.location.reload(), 2000);
         };
         Swal.fire({
           title: 'Error!',
@@ -53,7 +53,7 @@ const OwnerRegister: FC = () => {
           cancelButtonText: "Intentar otra vez",
           showCancelButton: true,
           cancelButtonColor: '#4CAF50',
-        })
+        });
       })
       .catch((err) => console.log(err));
   };

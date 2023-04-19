@@ -6,8 +6,8 @@ import { TiDeleteOutline } from 'react-icons/ti';
 
 import { type HoursType } from '../types/Hour.type';
 
-import HoursItems from './HoursItems';
 import AvailabilityItem from './AvailabilityItem';
+import HoursItems from './HoursItems';
 
 interface Props {
   hours: HoursType[];

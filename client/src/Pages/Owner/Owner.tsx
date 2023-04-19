@@ -1,13 +1,13 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
+import { setComplex } from '../../App/complexSlice';
+import store from '../../App/Store';
 import Layout from '../../Components/layout/Layout';
+import { OwnerMenu } from '../../Components/OwnerMenu';
+import { GetComplexQuery } from '../../Functions/ComplexQuery';
 
 import OwnerRegister from './OwnerRegister';
-import { OwnerMenu } from '../../Components/OwnerMenu';
-import { useEffect } from 'react';
-import { GetComplexQuery } from '../../Functions/ComplexQuery';
-import store from '../../App/Store';
-import { setComplex } from '../../App/complexSlice';
 
 const Owner = () => {
   const isOwner = useSelector<any>((state) => state.user?.user?.owner);

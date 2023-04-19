@@ -1,9 +1,10 @@
 import { type FC, useState } from 'react';
 
 import { MdClose, MdEdit } from 'react-icons/md';
-import { GetReservationType } from '../../types/Reservation.type';
-import PrimaryButton from '../PrimaryButton';
+
 import { DeleteReservation } from '../../Functions/ReservationsQuery';
+import { type GetReservationType } from '../../types/Reservation.type';
+import PrimaryButton from '../PrimaryButton';
 
 interface Props {
   reservation: GetReservationType;

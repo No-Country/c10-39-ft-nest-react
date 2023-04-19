@@ -1,5 +1,6 @@
-import { sportInfo } from '../App/sportSlice';
-import ComplexType from './Complex.type';
+import { type sportInfo } from '../App/sportSlice';
+
+import type ComplexType from './Complex.type';
 import type User from './User.type';
 
 export interface AppUser {

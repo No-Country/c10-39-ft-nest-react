@@ -1,5 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import ComplexType from '../types/Complex.type';
+
+import type ComplexType from '../types/Complex.type';
 
 export interface complexDataType {
   complex: ComplexType | null;

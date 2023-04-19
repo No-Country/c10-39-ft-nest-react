@@ -1,9 +1,9 @@
 import { useEffect, type FC, useState } from 'react';
 
-import Layout from '../../Components/layout/Layout';
 import SportField from '../../Components/cards/SportField';
+import Layout from '../../Components/layout/Layout';
 import { getOwnerSportFields } from '../../Functions/SportFieldsQuery';
-import { sportData } from '../../types/Sport.type';
+import { type sportData } from '../../types/Sport.type';
 
 const SFOwner: FC = () => {
   const [sportFields, setSportFields] = useState<sportData[]>([]);
