@@ -39,7 +39,7 @@ export class OwnerService {
 
       await this.userRepository.save(userDB);
 
-      return { ...owner };
+      return { ...owner, firstName: userDB.firstName };
     } catch (error) {
       this.handleDBException(error);
     }
