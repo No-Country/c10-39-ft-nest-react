@@ -35,7 +35,7 @@ const OwnerRegister: FC = () => {
       .then((data) => {
         const datos = { ...data } as RegisterResponse;
         if (datos.id && datos.DNI && datos.phone) {
-          toast.success(`Bienvenido ${datos.firstName}! a AllSport`, {
+          toast.success(`${datos.firstName}! ya estas registrado como propietario`, {
             style: {
               background: "#F5F5F5",
               color: '#4CAF50'
