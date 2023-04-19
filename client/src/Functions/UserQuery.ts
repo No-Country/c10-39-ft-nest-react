@@ -26,6 +26,7 @@ export async function registerUser(body: RegisterBody) {
 
     if (query.data.user) store.dispatch(setUser(query.data.user));
     if (query.data.token) localStorage.setItem('token', query.data.token);
+    return query;
   } catch (error) {
     console.log(error);
   }
