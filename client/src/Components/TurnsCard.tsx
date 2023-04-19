@@ -1,4 +1,5 @@
 import { type FC, useState } from 'react';
+import { GoKebabVertical } from 'react-icons/go';
 
 import { MdKeyboardArrowLeft } from 'react-icons/md';
 
@@ -15,7 +16,7 @@ const TurnsCard: FC<QuestionType> = ({ question }) => {
   const handleClick = () => setOpenQuestion(!openQuestion);
 
   return (
-    <div key={question.id} className=" bg-grey relative p-5 shadow-md ">
+    <div key={question.id} className=" bg-grey relative p-1 shadow-md ">
       <button
         onClick={handleClick}
         className={`ml-12 text-xl transition-transform ${
@@ -27,8 +28,14 @@ const TurnsCard: FC<QuestionType> = ({ question }) => {
       <div className="text-center text-[#6C6C6C]">Todo pelota</div>
       <div>Todo pelota</div>
 
-      <div className={`${openQuestion ? 'h-auto ' : 'h-0'} mt-3 overflow-hidden`}>
-        <div className=" bg-white w-full"> Nombre: Joaquin</div>
+      <div className={`${openQuestion ? 'h-auto ' : 'h-0'} mt-3 relative overflow-hidden`}>
+        <button
+          onClick={handleClick}
+          className={`ml-12 text-xl transition-transform  absolute right-6`}
+        >
+          <GoKebabVertical></GoKebabVertical>
+        </button>
+        <div className=" bg-white">Nombre: Joaquin</div>
         <div className=" bg-white"> Nombre: Joaquin</div>
       </div>
     </div>
