@@ -1,11 +1,11 @@
 import { type BaseSyntheticEvent, type FC, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 import { AiFillEye } from 'react-icons/ai';
 import { HiOutlineUser, HiUser } from 'react-icons/hi';
 import { IoMdMail } from 'react-icons/io';
+import Swal from 'sweetalert2';
 
 import Input from '../../Components/inputs/Input';
 import { registerUser } from '../../Functions/UserQuery';
@@ -40,10 +40,10 @@ const Register: FC = () => {
             toast.success(`Bienvenido ${query.data.user.firstName}! a AllSport`, {
               style: {
                 background: "#F5F5F5",
-                color: '#4CAF50'
-              }
-            })
-            return setTimeout(() => navigate('/inicio'), 2000)
+                color: '#4CAF50',
+              },
+            });
+            return setTimeout(() => navigate('/inicio'), 2000);
           };
           Swal.fire({
             title: 'Error!',
@@ -55,8 +55,8 @@ const Register: FC = () => {
             showCancelButton: true,
             cancelButtonText: "Intentar otra vez",
           }).then((result) => {
-            if (result.isConfirmed) return navigate('/ingresar')
-          })
+            if (result.isConfirmed) return navigate('/ingresar');
+          });
 
         })
         .catch((err) => console.log(err));

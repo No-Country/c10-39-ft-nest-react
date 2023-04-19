@@ -1,8 +1,9 @@
-import { useState, type FC, ChangeEvent } from 'react';
+import { useState, type FC, type ChangeEvent } from 'react';
 
-import { TiDeleteOutline, TiTick } from 'react-icons/ti';
-import { HoursType } from '../types/Hour.type';
 import { HiPencil } from 'react-icons/hi';
+import { TiDeleteOutline, TiTick } from 'react-icons/ti';
+
+import { type HoursType } from '../types/Hour.type';
 
 interface Props {
   initialRange: HoursType;

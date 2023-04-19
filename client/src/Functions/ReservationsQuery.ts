@@ -1,4 +1,5 @@
-import { GetReservationType } from '../types/Reservation.type';
+import { type GetReservationType } from '../types/Reservation.type';
+
 import axios from './axios';
 
 interface DataType {

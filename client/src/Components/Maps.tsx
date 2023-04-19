@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { GoogleMap, Marker } from '@react-google-maps/api';
-import { coordsType } from '../types/Sport.type';
+
+import { type coordsType } from '../types/Sport.type';
 
 interface Props {
   initialCoords: coordsType;

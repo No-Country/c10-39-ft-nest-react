@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
-import Layout from '../../Components/layout/Layout';
 import SportCard from '../../Components/cards/SportCard';
+import Layout from '../../Components/layout/Layout';
 import { getAllSports } from '../../Functions/SportQuery';
 
 interface SportItem {

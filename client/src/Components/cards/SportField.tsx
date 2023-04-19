@@ -1,10 +1,10 @@
-import { FC, useState } from 'react';
-
+import { type FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { MdKeyboardArrowLeft } from 'react-icons/md';
 
+import { type sportData } from '../../types/Sport.type';
 import PrimaryButton from '../PrimaryButton';
-import { sportData } from '../../types/Sport.type';
 
 interface sportFieldType {
   complexData: boolean;

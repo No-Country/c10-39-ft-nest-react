@@ -1,9 +1,10 @@
 import { type BaseSyntheticEvent, type FC, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 import { FaBasketballBall } from 'react-icons/fa';
+import Swal from 'sweetalert2';
+
 
 import { loginUser } from '../../Functions/UserQuery';
 
@@ -20,37 +21,36 @@ const Login: FC = () => {
         if (query?.data.user) {
           toast.success(`Bienvenido ${query.data.user.firstName}!`, {
             style: {
-              background: "#F5F5F5",
-              color: '#4CAF50'
-            }
-          })
-          return setTimeout(() => navigate('/inicio'), 2000)
-        };
+              background: '#F5F5F5',
+              color: '#4CAF50',
+            },
+          });
+          return setTimeout(() => navigate('/inicio'), 2000);
+        }
         Swal.fire({
           title: 'Error!',
           text: 'Email o Contraseña no validos',
           footer: `<b>Tip:</b>Recuerde activar o desactivar las mayusculas.`,
           icon: 'error',
-          confirmButtonText: "Registrarse",
+          confirmButtonText: 'Registrarse',
           confirmButtonColor: '#4CAF50',
           showCancelButton: true,
-          cancelButtonText: "Intentar otra vez",
-        }).then((result) => {
-          if (result.isConfirmed) return navigate('/registro')
-          setMail('')
-          setPassword('')
+          cancelButtonText: 'Intentar otra vez',
         })
-      }
-      )
+          .then((result) => {
+            if (result.isConfirmed) return navigate('/registro');
+            setMail('');
+            setPassword('');
+          })
+          .catch((err) => console.log(err));
+      })
       .catch((err) => console.log(err));
   };
 
   return (
     <div className="relative h-screen w-screen flex flex-col justify-center items-center gap-10 bg-primary">
       {/* TOASTER */}
-      <Toaster
-        position='top-center'
-      />
+      <Toaster position="top-center" />
       <div>
         <FaBasketballBall className="lg:w-[272px] lg:h-[248px]   w-[128px] h-[128px] text-gradone" />
       </div>

@@ -3,14 +3,14 @@ import { useSelector } from 'react-redux';
 
 import { HiOutlineUser, HiUser } from 'react-icons/hi';
 import { IoMdMail } from 'react-icons/io';
+import { MdEdit } from 'react-icons/md';
 
 import Input from '../Components/inputs/Input';
 import Layout from '../Components/layout/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
-import { type AppUser } from '../types/App.type';
-import { updateUser } from '../Functions/UserQuery';
 import { PostFile } from '../Functions/FileQuery';
-import { MdEdit } from 'react-icons/md';
+import { updateUser } from '../Functions/UserQuery';
+import { type AppUser } from '../types/App.type';
 
 const Profile: FC = () => {
   const userInfo = useSelector((state: AppUser) => state.user.user);
