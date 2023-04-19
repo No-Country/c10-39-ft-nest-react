@@ -35,14 +35,14 @@ const NavMobile: FC<{ title: string }> = ({ title }) => {
   const handleCloseSportMenu = () => setOpenSportMenu(false);
 
   return (
-    <nav className="z-[500] px-5 bg-primary flex justify-center shadow-lg fixed w-full h-[80px] lg:hidden">
-      <div className=" gap-7 justify-start flex w-full items-center pb-5 pt-10">
-        <button className="text-white text-2xl" onClick={handleClickMenu}>
+    <nav className='z-[500] px-5 bg-primary flex justify-center shadow-lg fixed w-full h-[80px] lg:hidden'>
+      <div className=' gap-7 justify-start flex w-full items-center pb-5 pt-10'>
+        <button className='text-white text-2xl' onClick={handleClickMenu}>
           <GiHamburgerMenu />
         </button>
-        <h1 className="text-white text-xl w-full pr-1 text-left font-light">{title}</h1>
+        <h1 className='text-white text-xl w-full pr-1 text-left font-light'>{title}</h1>
       </div>
-      <div className="relative gap-7 justify-end flex items-center pb-5 pt-10 ">
+      <div className='relative gap-7 justify-end flex items-center pb-5 pt-10 '>
         <button
           className={`${
             openSportMenu ? 'rotate-90' : '-rotate-90'
@@ -52,7 +52,7 @@ const NavMobile: FC<{ title: string }> = ({ title }) => {
           <MdKeyboardArrowLeft />
         </button>
         <SportMenu handleClick={handleCloseSportMenu} state={openSportMenu} />
-        <div className="text-white text-2xl">
+        <div className='text-white text-2xl'>
           <div onClick={handleClickSecondMenu}>
             <GoKebabVertical />
           </div>
@@ -64,7 +64,7 @@ const NavMobile: FC<{ title: string }> = ({ title }) => {
             <Link
               to={'/'}
               onClick={handleCloseSecondMenu}
-              className="pl-5 py-5 active:bg-primary w-full"
+              className='pl-5 py-5 active:bg-primary w-full'
             >
               Cerrar sesion
             </Link>
@@ -76,17 +76,17 @@ const NavMobile: FC<{ title: string }> = ({ title }) => {
           openMenu ? 'tranlate-x-0' : 'translate-x-[-100%]'
         } transition-transform absolute left-0 w-5/6 h-screen bg-black text-white pt-10`}
       >
-        <div className="flex flex-row w-full justify-between px-5">
-          <Link to={'/inicio'} className="text-2xl">
+        <div className='flex flex-row w-full justify-between px-5'>
+          <Link to={'/inicio'} className='text-2xl'>
             <FaBasketballBall />
           </Link>
-          <div className="text-2xl" onClick={handleClickMenu}>
+          <div className='text-2xl' onClick={handleClickMenu}>
             <MdKeyboardArrowLeft />
           </div>
         </div>
-        <div className="flex flex-col w-full items-center gap-16 mt-10">
-          <div className="w-36 h-36 bg-white rounded-full"></div>
-          <ul className="flex flex-col items-center gap-10 text-xl">
+        <div className='flex flex-col w-full items-center gap-16 mt-10'>
+          <div className='w-36 h-36 bg-white rounded-full'></div>
+          <ul className='flex flex-col items-center gap-10 text-xl'>
             <li>
               <Link to={'/inicio'}>INICIO</Link>
             </li>
