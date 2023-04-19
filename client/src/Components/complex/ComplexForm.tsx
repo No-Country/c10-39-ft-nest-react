@@ -8,6 +8,9 @@ import {
   useRef,
 } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import toast, { Toaster } from 'react-hot-toast';
 
 import { MdLocationOn, MdTitle } from 'react-icons/md';
 
@@ -36,17 +39,67 @@ const handleAmmeniesChangeFactory =
     }));
   };
 
-const onSubmit = (state: ComplexType) => {
+const onSubmit = (state: ComplexType, navTo: (param: string) => void) => {
+
   const { id, ...data } = state;
-  if (id) {
+  if (id && data.email) {
     UpdateComplexQuery(data, id)
-      .then((value) => value && store.dispatch(setComplex(value)))
+      .then((value) => {
+        if (value?.id) {
+          toast.success(`Complejo ${value.name}! se Actualizo en AllSport`, {
+            style: {
+              background: "#F5F5F5",
+              color: '#4CAF50'
+            }
+          })
+          return setTimeout(() => {
+            value && store.dispatch(setComplex(value))
+            navTo('/propietarios')
+          }, 2000)
+        }
+        Swal.fire({
+          title: 'Error!',
+          text: 'Ocurrio un error al actualizar algunos campos',
+          footer: `<b>Tip:</b>Recuerde todos los campos son obligatorios.`,
+          icon: 'error',
+          showConfirmButton: false,
+          showCancelButton: true,
+          cancelButtonColor: '#4CAF50',
+          cancelButtonText: "Actualizar Campos",
+        })
+      })
       .catch((err) => console.log(err));
     return;
   }
 
   CreateComplexQuery(data)
-    .then((value) => value && store.dispatch(setComplex(value)))
+    .then((value) => {
+      if (value?.id) {
+        toast.success(`Complejo ${value.name}! se Agrego a AllSport`, {
+          style: {
+            background: "#F5F5F5",
+            color: '#4CAF50'
+          }
+        })
+        return setTimeout(() => {
+          value && store.dispatch(setComplex(value))
+          navTo('/propietarios')
+        }, 2000)
+      }
+      Swal.fire({
+        title: 'Error!',
+        text: 'Faltan completar algunos campos.',
+        footer: `<b>Tip:</b>Recuerde todos los campos son obligatorios.`,
+        icon: 'error',
+        showConfirmButton: false,
+        showCancelButton: true,
+        cancelButtonColor: '#4CAF50',
+        cancelButtonText: "Completar Campos",
+      })
+
+
+
+    })
     .catch((err) => console.error(err));
 };
 
@@ -54,6 +107,7 @@ export const ComplexForm: FC = () => {
   const { hasComplex, complex: complexInfo } = useSelector((state: AppComplex) => state.complex);
   const initialAddressRef = useRef('');
   const [locationLoading, setLocationLoading] = useState(false);
+  const navigate = useNavigate();
 
   const [state, setState] = useState<ComplexType>({
     id: '',
@@ -109,7 +163,7 @@ export const ComplexForm: FC = () => {
         .then((res) => {
           if (res) {
             const { lat, lng } = res;
-            onSubmit({ ...state, lat, lng });
+            onSubmit({ ...state, lat, lng }, navigate);
           }
         })
         .catch((e) => {
@@ -117,19 +171,23 @@ export const ComplexForm: FC = () => {
         });
     }
 
-    onSubmit(state);
+    onSubmit(state, navigate);
   };
 
-  const handleCancel = () =>
+  const handleCancel = () => {
     setState({
       ...complexInfo,
     });
-
+    return navigate('/propietarios')
+  }
   const handleAvailabilityChange = (newAvailability: HoursType[]) => {
     setState({ ...state, availability: newAvailability });
   };
   return (
     <form onSubmit={handleSubmit} className='flex flex-col items-center'>
+      <Toaster
+        position='top-center'
+      />
       {/* <ImageUploader className={'w-10/12 mb-[12px] mt- h-[225px] lg:h-[400px] lg:w-[800px]'} /> */}
       <div className='w-full mb-5 flex flex-col items-center gap-10 lg:flex-row lg:w-1/2 lg:justify-center lg:h-[500px]'>
         <div className='w-full flex flex-col items-center gap-5 mt-10 lg:w-4/6'>
