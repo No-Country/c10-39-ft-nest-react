@@ -5,9 +5,10 @@ import NavDesktop from './NavDesktop';
 import NavMobile from './NavMobile';
 interface props {
   title: string;
+  bg?: string;
 }
 
-const Layout: FC<PropsWithChildren<props>> = ({ children, title }) => {
+const Layout: FC<PropsWithChildren<props>> = ({ children, title, bg }) => {
   return (
     <>
       {localStorage.getItem('token') ? (
@@ -16,8 +17,8 @@ const Layout: FC<PropsWithChildren<props>> = ({ children, title }) => {
             <NavDesktop />
             <NavMobile title={title} />
           </header>
-          <div className="z-10 bg-bg max-h-screen overflow-y-scroll">
-            <div>{children}</div>
+          <div className={`relative bg-bg min-h-[88vh] lg:min-h-[85vh] ${bg ?? ''}`}>
+            {children}
           </div>
         </>
       ) : (

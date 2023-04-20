@@ -25,10 +25,10 @@ const NavDesktop: FC = () => {
   const handleCloseSportMenu = () => setOpenSportMenu(false);
 
   return (
-    <div className="hidden lg:block">
-      <nav className="sticky z-[500] box-border h-[15vh] px-20 text-white bg-primary flex flex-row shadow-lg w-full justify-between items-center">
-        <div className="flex gap-10 items-center">
-          <div className="bounce text-6xl">
+    <div className='hidden lg:block'>
+      <nav className='sticky z-10 box-border h-[15vh] px-20 text-white bg-primary flex flex-row shadow-lg w-full justify-between items-center'>
+        <div className='flex gap-10 items-center'>
+          <div className='bounce text-6xl'>
             <Link to={'/inicio'}>
               <FaBasketballBall />
             </Link>
@@ -84,26 +84,28 @@ const NavDesktop: FC = () => {
           </div>
         </div>
       </nav>
-      <ul
-        className={`absolute rounded-bl-lg z-[200] right-0 transition-transform text-white -top-24 bg-black p-5 flex flex-col gap-5 ${
-          openSecondMenu ? 'translate-y-full' : 'translate-y-0'
-        }`}
-      >
-        <li>
-          <Link to={'/perfil'}>PERFIL</Link>
-        </li>
-        <li>
-          <Link to={'/perfil/reservar'}>MIS RESERVAS</Link>
-        </li>
-        <li>
-          <Link to={'/propietarios/canchas'}>MIS CANCHAS</Link>
-        </li>
-        <li className="cursor-pointer border-t-[1px] divide-white">
-          <Link onClick={handleCloseSecondMenu} to={'/'}>
-            CERRAR SESION
-          </Link>
-        </li>
-      </ul>
+      {openSecondMenu && (
+        <ul
+          className={`absolute rounded-bl-lg z-20 right-0 transition-transform text-white -top-[11vh] bg-black p-5 flex flex-col gap-5 ${
+            openSecondMenu ? 'translate-y-full' : 'translate-y-0'
+          }`}
+        >
+          <li>
+            <Link to={'/perfil'}>PERFIL</Link>
+          </li>
+          <li>
+            <Link to={'/perfil/reservar'}>MIS RESERVAS</Link>
+          </li>
+          <li>
+            <Link to={'/propietarios/canchas'}>MIS CANCHAS</Link>
+          </li>
+          <li className='cursor-pointer border-t-[1px] divide-white'>
+            <Link onClick={handleCloseSecondMenu} to={'/'}>
+              CERRAR SESION
+            </Link>
+          </li>
+        </ul>
+      )}
     </div>
   );
 };
