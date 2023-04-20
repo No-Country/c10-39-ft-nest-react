@@ -47,7 +47,7 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
   const [state, setState] = useState<stateType | objectProp>(defaultState);
 
   const [imageSF, setImageSF] = useState('');
-  const [imageRender, setImageRender] = useState('');
+  const [imageRender, setImageRender] = useState<string | ArrayBuffer>('');
   const [file, setFile] = useState<null | File>(null);
 
   const handleFile = (e: BaseSyntheticEvent) => {
@@ -57,7 +57,7 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = () => {
-        setImageRender(reader.result);
+        reader.result && setImageRender(reader.result);
       };
     } else {
       setImageRender('');

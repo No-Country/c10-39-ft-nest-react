@@ -40,7 +40,7 @@ const Profile: FC = () => {
     });
   };
 
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState<string | ArrayBuffer>('');
   const [file, setFile] = useState<null | File>(null);
 
   const handleFile = (e: BaseSyntheticEvent) => {
@@ -50,7 +50,7 @@ const Profile: FC = () => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = () => {
-        setImage(reader.result);
+        reader.result && setImage(reader.result);
       };
     } else {
       setImage(userInfo?.image ?? '');
