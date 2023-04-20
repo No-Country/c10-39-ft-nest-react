@@ -43,7 +43,19 @@ const Profile: FC = () => {
   const [image, setImage] = useState('');
   const [file, setFile] = useState<null | File>(null);
 
-  const handleFile = (e: BaseSyntheticEvent) => setFile(e.target.files[0]);
+  const handleFile = (e: BaseSyntheticEvent) => {
+    setFile(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setImage(reader.result);
+      };
+    } else {
+      setImage(userInfo?.image ?? '');
+    }
+  };
 
   const handleSubmit = async (e: BaseSyntheticEvent) => {
     try {
