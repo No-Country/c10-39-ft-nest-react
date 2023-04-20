@@ -5,7 +5,6 @@ import {
   type SetStateAction,
   type Dispatch,
   type BaseSyntheticEvent,
-  useRef,
 } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -102,7 +101,7 @@ const onSubmit = (state: ComplexType, navTo: (param: string) => void) => {
 export const ComplexForm: FC = () => {
   const { hasComplex, complex: complexInfo } = useSelector((state: AppComplex) => state.complex);
   // const initialAddressRef = useRef("");
-  const [locationLoading, setLocationLoading] = useState(false);
+  // const [locationLoading, setLocationLoading] = useState(false);
   const navigate = useNavigate();
 
   const [state, setState] = useState<ComplexType>({
@@ -147,9 +146,9 @@ export const ComplexForm: FC = () => {
     });
   };
 
-  const handleLocationChange = (address: string) => {
-    setLocationLoading(true);
-  };
+  // const handleLocationChange = (address: string) => {
+  //   setLocationLoading(true);
+  // };
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
