@@ -15,7 +15,7 @@ import PrimaryButton from '../../Components/PrimaryButton';
 import { PostFile } from '../../Functions/FileQuery';
 import { OwnerAddSFQuery, OwnerEditSFQuery } from '../../Functions/OwnerQuery';
 import { getSportDetail } from '../../Functions/SportFieldsQuery';
-import { type appSport, type AppUser } from '../../types/App.type';
+import { type appSport } from '../../types/App.type';
 import { type ISportFieldRespones } from '../../types/SportField.type';
 import { modifyObj } from '../../utils/modifyObj';
 import { type inputData, type objectProp, validationInputs } from '../../utils/validationInputs';
@@ -47,12 +47,27 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
 
   const [state, setState] = useState<stateType | objectProp>(defaultState);
 
+
   const [images, setImages] = useState<string[]>([]);
   const [file, setFile] = useState<null | File>(null);
 
   const handleFile = (e: BaseSyntheticEvent) => setFile(e.target.files[0]);
 
-  const userInfo = useSelector((state: AppUser) => state.user.user);
+
+  const handleFile = (e: BaseSyntheticEvent) => {
+    setFile(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        reader.result && setImageRender(reader.result);
+      };
+    } else {
+      setImageRender('');
+    }
+  };
+
   const sportInfo = useSelector((state: appSport) => state.sport.sport);
   const sportNames = sportInfo?.map((item) => item.name);
   const sportFields = sportInfo?.find((item) => item.name === state.sport.value);
@@ -101,6 +116,7 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
     if (edit) {
       if (!id) return;
       await OwnerEditSFQuery(newObj, id).then((data) => {
+
         const datos = { ...data } as ISportFieldRespones;
         if (datos.id && datos.name && datos.fieldType && datos.sport) {
           toast.success(`${datos.name}, se actualizo correctamente.`, {
@@ -131,7 +147,6 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
       });
       return;
     }
-
 
     OwnerAddSFQuery(newObj).then((data) => {
       const datos = { ...data } as ISportFieldRespones;
@@ -179,13 +194,14 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
         })
         .catch(console.error);
     }
-  }, [userInfo]);
+  }, []);
 
   return (
     <Layout title='Agregar cancha'>
       <form onSubmit={handleSubmit} className='relative min-h-[100vh] flex flex-col items-center'>
         <input type='file' hidden id='ownerFiles' onChange={handleFile} />
         <label
+
           htmlFor='ownerFiles'
           className='bg-[#D9D9D9] rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[600px] text-center overflow-hidden'
         >

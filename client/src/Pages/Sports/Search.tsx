@@ -39,6 +39,8 @@ export const Search: FC = () => {
 
   const [loader, setLoader] = useState(false);
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const modifyState = (option: string) => ({ value: option, validation: true, select: true });
   const handleTurn = (option: string) => setTurn(modifyState(option));
   const handleField = (option: string) => setField(modifyState(option));
@@ -74,6 +76,7 @@ export const Search: FC = () => {
     setField(newState.field);
     setTurn(newState.turn);
     setTime(newState.time);
+    setIsSubmitted(true);
     if (!pass) return;
 
     handleSearch()
@@ -121,7 +124,7 @@ export const Search: FC = () => {
     } else if (sport && sportNames) {
       navigate('/reservar');
     }
-  }, [navigate, sport, sportNames]);
+  }, [navigate, sport, sportNames, isSubmitted]);
 
   const bg = `url('${sportData?.image}')`;
 

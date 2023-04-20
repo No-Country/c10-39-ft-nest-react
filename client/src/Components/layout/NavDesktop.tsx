@@ -25,10 +25,10 @@ const NavDesktop: FC = () => {
   const handleCloseSportMenu = () => setOpenSportMenu(false);
 
   return (
-    <div className='hidden lg:block'>
-      <nav className='sticky z-10 box-border h-[15vh] px-20 text-white bg-primary flex flex-row shadow-lg w-full justify-between items-center'>
-        <div className='flex gap-10 items-center'>
-          <div className='bounce text-6xl'>
+    <div className="hidden lg:block">
+      <nav className="sticky z-10 box-border h-[15vh] px-20 text-white bg-primary flex flex-row shadow-lg w-full justify-between items-center">
+        <div className="flex gap-10 items-center">
+          <div className="bounce text-6xl">
             <Link to={'/inicio'}>
               <FaBasketballBall />
             </Link>
@@ -99,7 +99,7 @@ const NavDesktop: FC = () => {
           <li>
             <Link to={'/propietarios/canchas'}>MIS CANCHAS</Link>
           </li>
-          <li className='cursor-pointer border-t-[1px] divide-white'>
+          <li className="cursor-pointer border-t-[1px] divide-white">
             <Link onClick={handleCloseSecondMenu} to={'/'}>
               CERRAR SESION
             </Link>
