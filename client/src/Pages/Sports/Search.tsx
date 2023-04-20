@@ -85,7 +85,7 @@ export const Search: FC = () => {
           const fetchPromise = await getSportFieldsWithSport({
             lat: Number(data.lat),
             lng: Number(data.lng),
-            rHour: Number(time),
+            rHour: Number(time.value),
             date: turn.value,
             sport,
             fieldType: field.value,

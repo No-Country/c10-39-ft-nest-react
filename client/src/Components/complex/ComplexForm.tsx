@@ -84,17 +84,18 @@ const onSubmit = (state: ComplexType, navTo: (param: string) => void) => {
           value && store.dispatch(setComplex(value));
           navTo('/propietarios');
         }, 2000);
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Faltan completar algunos campos.',
+          footer: `<b>Tip:</b>Recuerde todos los campos son obligatorios.`,
+          icon: 'error',
+          showConfirmButton: false,
+          showCancelButton: true,
+          cancelButtonColor: '#4CAF50',
+          cancelButtonText: 'Completar Campos',
+        }).catch((err) => console.log(err));
       }
-      Swal.fire({
-        title: 'Error!',
-        text: 'Faltan completar algunos campos.',
-        footer: `<b>Tip:</b>Recuerde todos los campos son obligatorios.`,
-        icon: 'error',
-        showConfirmButton: false,
-        showCancelButton: true,
-        cancelButtonColor: '#4CAF50',
-        cancelButtonText: 'Completar Campos',
-      }).catch((err) => console.log(err));
     })
     .catch((err) => console.error(err));
 };
