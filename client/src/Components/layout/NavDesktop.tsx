@@ -5,10 +5,14 @@ import { FaBasketballBall } from 'react-icons/fa';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
 
 import SportMenu from '../SportMenu';
+import { useSelector } from 'react-redux';
+import { AppUser } from '../../types/App.type';
 
 const NavDesktop: FC = () => {
   const [openSecondMenu, setOpenSecondMenu] = useState(false);
   const [openSportMenu, setOpenSportMenu] = useState(false);
+
+  const userInfo = useSelector((state: AppUser) => state.user.user);
 
   const handleClickSecondMenu = () => {
     setOpenSecondMenu(!openSecondMenu);
@@ -73,7 +77,10 @@ const NavDesktop: FC = () => {
           </li>
         </ul>
         <div className="absolute right-3 flex flex-row items-center">
-          <div className="bg-black w-10 h-10  rounded-full"></div>
+          <div
+            className="w-10 h-10 rounded-full bg-cover bg-no-repeat border border-black"
+            style={{ backgroundImage: `url(${userInfo?.image})` }}
+          ></div>
           <div
             onClick={handleClickSecondMenu}
             className={`${

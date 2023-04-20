@@ -20,6 +20,8 @@ import { type ISportFieldRespones } from '../../types/SportField.type';
 import { modifyObj } from '../../utils/modifyObj';
 import { type inputData, type objectProp, validationInputs } from '../../utils/validationInputs';
 
+import { RiImageAddFill } from 'react-icons/ri';
+
 interface Props {
   edit?: boolean;
 }
@@ -184,8 +186,13 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
             backgroundImage: imageRender === '' ? `url(${imageSF})` : `url(${imageRender})`,
           }}
           htmlFor="ownerFiles"
-          className="bg-[#D9D9D9] bg-no-repeat bg-cover rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[600px] text-center "
-        ></label>
+          className="bg-[#D9D9D9] flex justify-center items-center gap-2 bg-no-repeat bg-cover rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[600px] text-center "
+        >
+          <span className="text-lg font-bold opacity-50">Agregar imagen</span>
+          <span className="text-4xl opacity-50">
+            <RiImageAddFill />
+          </span>
+        </label>
         <div className="flex flex-col w-full items-center gap-10 lg:w-[700px]">
           <Input
             type="text"
