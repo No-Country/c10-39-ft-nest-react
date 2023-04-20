@@ -1,75 +1,75 @@
 import { type FC } from 'react';
 
-// import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
+import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
 
-// import Aldo from '../../../../../../../../aldo.png';
-// import Daniel from '../../../../../../../../daniel.png';
-// import Eric from '../../../../../../../../eric.png';
-// import Felipe from '../../../../../../../../felipe.png';
-// import Nayib from '../../../../../../../../nayib.png';
+import Aldo from '../../public/aldo.png';
+import Daniel from '../../public/daniel.png';
+import Eric from '../../public/eric.png';
+import Felipe from '../../public/felipe.png';
+import Nayib from '../../public/nayib.png';
 import Layout from '../Components/layout/Layout';
 
-// const team = [
-//   {
-//     id: 1,
-//     name: 'Felipe Suarez',
-//     description:
-//       'Desarrollador full stack, con capacidades de liderazgo, buen manejo del ingles y, habilidad para dirigir y adapatarse a cualquier grupo de trabajo.',
-//     image: Felipe,
-//     linkedin: 'https://www.linkedin.com/in/suarez-felipe/',
-//     github: 'https://www.github.com/',
-//   },
-//   {
-//     id: 2,
-//     name: 'Eric Isnado',
-//     description:
-//       'Desarrollador full stack, con gran habilidad analítica y lógica capaz de encontrar soluciones a los problemas que se plantean y con alto interés en explorar los caminos de la programación.',
-//     image: Eric,
-//     linkedin: 'https://www.linkedin.com/in/eric-denis-laura-isnado-8a1027245/',
-//     github: 'https://www.github.com/recover1988',
-//   },
-//   {
-//     id: 3,
-//     name: 'Jonathan Daniel Arce',
-//     description:
-//       'Desarrollador full stack, siempre en búsqueda de nuevos conocimientos, con buenas habilidades para tratar con personas y trabajar en equipo.',
-//     image: Daniel,
-//     linkedin: 'https://www.linkedin.com/in/jonathandanielarce/',
-//     github: 'https://www.github.com/',
-//   },
-//   {
-//     id: 4,
-//     name: 'Aldo Ricardo Reygadas Hernández',
-//     description:
-//       'Desarrollador full stack, con experiencia en front end. Y conocimientos en backend con diferentes frameworks.',
-//     image: Aldo,
-//     linkedin: 'https://www.linkedin.com/in/Aldrick13/',
-//     github: 'https://www.github.com/',
-//   },
-//   {
-//     id: 5,
-//     name: 'Gonzalo Vasquez',
-//     description:
-//       'Desarrollador full stack, con alta capacidad de aprendizaje y habilidades para desarrollar de forma ágil y solucionar problemas con prontitud.',
-//     image: '#',
-//     linkedin: '#',
-//     github: 'https://www.github.com/',
-//   },
-//   {
-//     id: 6,
-//     name: 'Nayib Javier Sales',
-//     description:
-//       'UX Designer, siempre en búsqueda de mejorar y en aprendizaje constante para mantenerse a la vanguardia de las teconologías.',
-//     image: Nayib,
-//     linkedin: 'https://www.linkedin.com/in/nayib-sales-059623218/',
-//     github: 'https://www.github.com/',
-//   },
-// ];
+const team = [
+  {
+    id: 1,
+    name: 'Felipe Suarez',
+    description:
+      'Desarrollador full stack, con capacidades de liderazgo, habilidad para dirigir y adapatarse a cualquier grupo de trabajo.',
+    image: Felipe,
+    linkedin: 'https://www.linkedin.com/in/suarez-felipe/',
+    github: 'https://www.github.com/',
+  },
+  {
+    id: 2,
+    name: 'Eric Isnado',
+    description:
+      'Desarrollador full stack, con gran habilidad analítica y lógica capaz de encontrar soluciones a los problemas que se plantean y con alto interés en explorar los caminos de la programación.',
+    image: Eric,
+    linkedin: 'https://www.linkedin.com/in/eric-denis-laura-isnado-8a1027245/',
+    github: 'https://www.github.com/recover1988',
+  },
+  {
+    id: 3,
+    name: 'Jonathan Daniel Arce',
+    description:
+      'Desarrollador full stack, siempre en búsqueda de nuevos conocimientos, con buenas habilidades para tratar con personas y trabajar en equipo.',
+    image: Daniel,
+    linkedin: 'https://www.linkedin.com/in/jonathandanielarce/',
+    github: 'https://www.github.com/',
+  },
+  {
+    id: 4,
+    name: 'Aldo Ricardo Reygadas Hernández',
+    description:
+      'Desarrollador full stack, con experiencia en front end. Y conocimientos en backend con diferentes frameworks.',
+    image: Aldo,
+    linkedin: 'https://www.linkedin.com/in/Aldrick13/',
+    github: 'https://www.github.com/',
+  },
+  {
+    id: 5,
+    name: 'Gonzalo Vasquez',
+    description:
+      'Desarrollador full stack, con alta capacidad de aprendizaje y habilidades para desarrollar de forma ágil y solucionar problemas con prontitud.',
+    image: '#',
+    linkedin: '#',
+    github: 'https://www.github.com/',
+  },
+  {
+    id: 6,
+    name: 'Nayib Javier Sales',
+    description:
+      'UX Designer, siempre en búsqueda de mejorar y en aprendizaje constante para mantenerse a la vanguardia de las teconologías.',
+    image: Nayib,
+    linkedin: 'https://www.linkedin.com/in/nayib-sales-059623218/',
+    github: 'https://www.github.com/',
+  },
+];
 
 const About: FC = () => {
   return (
     <Layout title="Nosotros">
-      {/* <div className="w-full flex justify-center p-6 text-white lg:p-14 font-roboto">
+      <div className="w-full flex justify-center p-6 text-primary lg:p-14 font-roboto">
         <div className="w-5/6">
           <h1 className="title mb-4 text-2xl lg:text-4xl xl:text-5xl text-green-700">
             Sobre Nosotros
@@ -103,7 +103,7 @@ const About: FC = () => {
             {team.map((user) => {
               return (
                 <div
-                  className="flex flex-col lg:flex-row justify-content-center items-center gap-5 py-4 rounded-xl bg-primary shadow-md hover:shadow-xl transition-all lg:p-8"
+                  className="flex flex-col lg:flex-row justify-content-center items-center gap-5 py-4 rounded-xl bg-primary text-white shadow-md hover:shadow-xl transition-all lg:p-8"
                   key={user.id}
                 >
                   <div className="w-2/5">
@@ -132,7 +132,7 @@ const About: FC = () => {
             })}
           </div>
         </div>
-      </div> */}
+      </div>
     </Layout>
   );
 };

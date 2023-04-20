@@ -50,13 +50,13 @@ const MainPage = () => {
       </div>
       <div className="flex flex-col w-full items-center gap-5">
         <Link
-          className="w-10/12 lg:w-1/5 py-3 rounded-full text-center font-bold bg-gradient-to-tr from-gradone to-gradtwo"
+          className="w-10/12 lg:w-1/5 py-3 rounded-full text-center font-bold bg-gradient-to-tr relative from-gradone to-gradtwo"
           to="/ingresar"
         >
           INICIAR SESION
         </Link>
         <Link
-          className="w-10/12 lg:w-1/5 py-3 rounded-full text-center font-bold bg-gradone"
+          className="w-10/12 lg:w-1/5 py-3 rounded-full text-center font-bold bg-gradone relative"
           to={'/registro'}
         >
           REGISTRARSE
@@ -65,7 +65,7 @@ const MainPage = () => {
           onClick={() => {
             window.location.href = `${BACKEND_URL}/auth/google`;
           }}
-          className="bg-white px-20 py-2 rounded-full"
+          className="bg-white px-20 py-2 rounded-full cursor-pointer relative"
         >
           Google
         </div>
