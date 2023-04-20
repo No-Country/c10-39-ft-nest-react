@@ -16,7 +16,7 @@ export class User {
   firstName: string;
   @Column('text', { nullable: true })
   lastName: string;
-  @Column('text', { nullable: true, default:"https://res.cloudinary.com/djvepy9sd/image/upload/v1682032832/avatar_li4rzv.jpg" })
+  @Column('text', { default:"https://res.cloudinary.com/djvepy9sd/image/upload/v1682032832/avatar_li4rzv.jpg" })
   image: string;
   @Column('bool', { default: true })
   isActive: boolean;
