@@ -5,13 +5,13 @@ interface props {
   label: string;
   value: string | number;
   name: string;
-  validation: boolean;
+  validation?: boolean;
   handleChange: (event: BaseSyntheticEvent) => void;
   icon?: any;
 }
 
 const Input: FC<props> = (props) => {
-  const { type, label, icon, value, handleChange, name, validation } = props;
+  const { type, label, icon, value, handleChange, name, validation=true } = props;
   return (
     <div className="w-10/12 flex flex-col relative h-[70px]">
       <input
