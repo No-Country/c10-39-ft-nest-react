@@ -104,7 +104,7 @@ const sports: SeedSport[] = [
   {
     name: 'football',
     images: [
-      'https://res.cloudinary.com/djvepy9sd/image/upload/v1681323530/descarga_1_n0vczv.jpg',
+      'https://res.cloudinary.com/djvepy9sd/image/upload/v1682019441/Pelota-F%C3%BAtbol_hxo3ek.jpg',
     ],
     types: ['cesped', 'cesped sintentico'],
   },

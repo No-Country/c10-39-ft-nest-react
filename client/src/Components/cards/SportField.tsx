@@ -42,7 +42,7 @@ const SportField: FC<sportFieldType> = ({ complexData, btnText, route, item }) =
           } flex w-full justify-between flex-wrap`}
         >
           {complexData ? (
-            <span className="w-1/2 flex-grow">{item?.sportsComplex?.address}</span>
+            <span className='w-1/2 flex-grow'>{item?.sportsComplex?.address}</span>
           ) : (
             <PrimaryButton text='ADMINISTRAR' onClick={() => navigate('/propietarios/turnos')} />
           )}
