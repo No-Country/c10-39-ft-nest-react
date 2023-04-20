@@ -1,7 +1,7 @@
 import { type FC, useState, type BaseSyntheticEvent, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { GiSoccerField } from 'react-icons/gi';
 import { GrGroup } from 'react-icons/gr';
@@ -15,7 +15,7 @@ import PrimaryButton from '../../Components/PrimaryButton';
 import { PostFile } from '../../Functions/FileQuery';
 import { OwnerAddSFQuery, OwnerEditSFQuery } from '../../Functions/OwnerQuery';
 import { getSportDetail } from '../../Functions/SportFieldsQuery';
-import { type appSport, type AppUser } from '../../types/App.type';
+import { type appSport } from '../../types/App.type';
 import { type ISportFieldRespones } from '../../types/SportField.type';
 import { modifyObj } from '../../utils/modifyObj';
 import { type inputData, type objectProp, validationInputs } from '../../utils/validationInputs';
@@ -35,6 +35,7 @@ interface stateType {
 
 const AddSFOwner: FC<Props> = ({ edit = false }) => {
   const navigate = useNavigate();
+  const { id = '' } = useParams();
 
   const defaultState: stateType = {
     name: { value: '', validation: true },
@@ -45,11 +46,10 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
   };
   const [state, setState] = useState<stateType | objectProp>(defaultState);
 
-  const [image, setImage] = useState('');
+  const [imageSF, setImageSF] = useState('');
   const [file, setFile] = useState<null | File>(null);
   const handleFile = (e: BaseSyntheticEvent) => setFile(e.target.files[0]);
 
-  const userInfo = useSelector((state: AppUser) => state.user.user);
   const sportInfo = useSelector((state: appSport) => state.sport.sport);
   const sportNames = sportInfo?.map((item) => item.name);
   const sportFields = sportInfo?.find((item) => item.name === state.sport.value);
@@ -78,14 +78,13 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
 
     const newObj = modifyObj({ ...body });
 
-    if (!file && !userInfo.image) throw new Error(`Error: file es null y no hay imagen guardada`);
-    const image = file ? await PostFile(file) : userInfo.image;
-    console.log(image);
+    if (!file && !imageSF) throw new Error(`Error: file es null y no hay imagen guardada`);
+    const image = file ? await PostFile(file) : imageSF;
     if (!image) throw new Error('No se pudo guardar la imagen');
+    const ObjWithImg = { ...newObj, images: [image] };
 
     if (edit) {
-      const id = '';
-      void OwnerEditSFQuery(newObj, id).then((data) => {
+      void OwnerEditSFQuery(ObjWithImg, id).then((data) => {
         const datos = { ...data } as ISportFieldRespones;
         if (datos.id && datos.name && datos.fieldType && datos.sport) {
           toast.success(`${datos.name}, se actualizo correctamente.`, {
@@ -117,53 +116,50 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
       return;
     }
 
-    OwnerAddSFQuery(newObj).then((data) => {
-      const datos = { ...data } as ISportFieldRespones;
-      if (datos.id && datos.name && datos.fieldType && datos.sport) {
-        toast.success(`${datos.name}, se registro correctamente.`, {
-          style: {
-            background: '#F5F5F5',
-            color: '#4CAF50',
-          },
-        });
-        return setTimeout(() => navigate('/propietarios'), 2000);
-      }
-      Swal.fire({
-        title: 'Error!',
-        text: 'No se ha podido registrar.',
-        footer: '<b>Tip:</b> &nbsp Recuerde todos los campos son obligatorios.',
-        icon: 'error',
-        showConfirmButton: false,
-        cancelButtonText: 'Intentar otra vez',
-        showCancelButton: true,
-        cancelButtonColor: '#4CAF50',
-      }).catch((err) => console.log(err));
-    });
+    OwnerAddSFQuery(ObjWithImg)
+      .then((data) => {
+        const datos = { ...data } as ISportFieldRespones;
+        if (datos.id && datos.name && datos.fieldType && datos.sport) {
+          toast.success(`${datos.name}, se registro correctamente.`, {
+            style: {
+              background: '#F5F5F5',
+              color: '#4CAF50',
+            },
+          });
+          return setTimeout(() => navigate('/propietarios'), 2000);
+        }
+        Swal.fire({
+          title: 'Error!',
+          text: 'No se ha podido registrar.',
+          footer: '<b>Tip:</b> &nbsp Recuerde todos los campos son obligatorios.',
+          icon: 'error',
+          showConfirmButton: false,
+          cancelButtonText: 'Intentar otra vez',
+          showCancelButton: true,
+          cancelButtonColor: '#4CAF50',
+        }).catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    setImage(userInfo?.image ?? '');
-
     if (edit) {
-      const id = '';
       getSportDetail(id)
         .then((sportField) => {
-          if (!sportField) {
-            console.log('Not found');
-            return;
-          }
-          const { name, fieldType, sport, dimensions, capacity } = sportField;
+          if (!sportField) return;
+          const { name, fieldType, sport, dimensions, capacity, images } = sportField;
           setState({
             name: { value: name, validation: true },
-            fieldType: { value: fieldType, validation: true },
-            sport: { value: sport.name, validation: true },
-            dimensions: { value: dimensions, validation: true },
-            capacity: { value: `${capacity}`, validation: true },
+            fieldType: { value: fieldType, validation: true, select: true },
+            sport: { value: sport.name, validation: true, select: true },
+            dimensions: { value: dimensions, validation: true, select: true },
+            capacity: { value: `${capacity}`, validation: true, select: true },
           });
+          setImageSF(images[0]);
         })
         .catch(console.error);
     }
-  }, [userInfo]);
+  }, []);
 
   return (
     <Layout title="Agregar cancha">
@@ -171,10 +167,10 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
         <input type="file" hidden id="ownerFiles" onChange={handleFile} />
         <label
           style={{
-            backgroundImage: `url(${image})`,
+            backgroundImage: `url(${imageSF})`,
           }}
           htmlFor="ownerFiles"
-          className="bg-[#D9D9D9] rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[600px] text-center "
+          className="bg-[#D9D9D9] bg-no-repeat bg-cover rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[600px] text-center "
         ></label>
         <div className="flex flex-col w-full items-center gap-10 lg:w-[700px]">
           <Input
