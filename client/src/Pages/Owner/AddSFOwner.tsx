@@ -237,7 +237,7 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
             validation={state.capacity.validation}
           />
         </div>
-        <div className="flex justify-end w-full px-20">
+        <div className="flex justify-end w-full pr-4 lg:px-60">
           <PrimaryButton text={edit ? 'GUARDAR' : 'CREAR'} />
         </div>
       </form>

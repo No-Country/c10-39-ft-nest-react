@@ -19,10 +19,10 @@ const Layout: FC<PropsWithChildren<props>> = ({ children, title, bg, style }) =>
             <NavMobile title={title} />
           </header>
           <div
-            className={`relative bg-bg min-h-[88vh] lg:min-h-[85vh] ${bg ?? ''}`}
+            className={`relative bg-bg min-h-[88vh] lg:min-h-[85vh] overflow-hidden ${bg ?? ''}`}
             style={style}
           >
-            <div>{children}</div>
+            <div className='overflow-scroll'>{children}</div>
           </div>
         </>
       ) : (

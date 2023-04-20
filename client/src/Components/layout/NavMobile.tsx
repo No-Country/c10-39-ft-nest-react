@@ -74,7 +74,7 @@ const NavMobile: FC<{ title: string }> = ({ title }) => {
       <div
         className={`${
           openMenu ? 'tranlate-x-0' : 'translate-x-[-100%]'
-        } transition-transform fixed left-0 w-5/6 h-full bg-black text-white pt-10`}
+        } z-[500] transition-transform fixed left-0 w-5/6 h-full bg-black text-white pt-10`}
       >
         <div className='flex flex-row w-full justify-between px-5'>
           <Link to={'/inicio'} className='text-2xl'>
