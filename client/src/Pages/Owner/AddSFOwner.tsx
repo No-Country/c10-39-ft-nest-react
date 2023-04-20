@@ -41,7 +41,7 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
         .then((sportField) => {
           if (!sportField) {
             toast.error('No Encontramos la cancha')
-            console.log('Not found');
+            // console.log('Not found');
             return;
           }
           const { name, fieldType, sport, dimensions, capacity } = sportField;

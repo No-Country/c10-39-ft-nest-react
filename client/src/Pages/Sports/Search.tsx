@@ -1,5 +1,6 @@
 import { type BaseSyntheticEvent, type ChangeEvent, type FC, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import axios from 'axios';
@@ -7,6 +8,7 @@ import { BsCalendar2Event } from 'react-icons/bs';
 import { GiSoccerField } from 'react-icons/gi';
 import { MdLocationOn } from 'react-icons/md';
 import { TfiTime } from 'react-icons/tfi';
+import Swal from 'sweetalert2';
 
 import InputLocation from '../../Components/inputs/InputLocation';
 import Select from '../../Components/inputs/Select';
@@ -15,6 +17,7 @@ import SelectHour from '../../Components/inputs/SelectHour';
 import Layout from '../../Components/layout/Layout';
 import PrimaryButton from '../../Components/PrimaryButton';
 import { type appSport } from '../../types/App.type';
+import { getSportFieldsWithSport } from '../../Functions/SportFieldsQuery';
 
 const API_KEY = 'AIzaSyB8rVxLxXlomXkjJ04LRtFHC63AtzSnyw0';
 
@@ -43,29 +46,63 @@ export const Search: FC = () => {
   };
 
   const handleSearch = async () => {
-    try {
-      const { data } = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${API_KEY}`,
-      );
-      if (!data.results[0]) {
-        throw new Error('Por favor complete la ubicacion con mas informacion');
-      }
-      const { lat, lng }: { lat: number; lng: number } = data.results[0].geometry?.location;
+    if (location) {
+      try {
+        const { data } = await axios.get(
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${API_KEY}`,
+        );
+        if (!data.results[0]) {
+          toast.error('Por favor complete la ubicacion con mas informacion')
+          // throw new Error('Por favor complete la ubicacion con mas informacion');
+        }
+        const { lat, lng }: { lat: number; lng: number } = data.results[0].geometry?.location;
 
-      return { lat, lng };
-    } catch (error) {
-      alert(error);
+        return { lat, lng };
+      } catch (error) {
+        console.log(error);
+      }
     }
+    toast.error('La ubicacion no existe o no esta definida.')
   };
 
-  const handleSubmit = (e: BaseSyntheticEvent) => {
+  const handleSubmit = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
     handleSearch()
-      .then((data) => {
+      .then(async (data) => {
         if (data && data.lat && data.lng) {
-          navigate(
-            `/reservar/${sport}/canchas?lat=${data.lat}&lng=${data.lng}&rHour=${time}&date=${turn}&fieldType=${field}`,
-          );
+          const fetchPromise = await getSportFieldsWithSport({
+            lat: Number(data.lat),
+            lng: Number(data.lng),
+            rHour: Number(time),
+            date: turn,
+            sport,
+            fieldType: field,
+          })
+          const toastId = toast.loading('Buscando...', {
+            style: {
+              background: '#F5F5F5',
+              color: '#4CAF50',
+            },
+          })
+          // toast.loading('Buscando...', {
+          //   style: {
+          //     background: '#F5F5F5',
+          //     color: '#4CAF50',
+          //   }
+          // })
+          if (fetchPromise != undefined && fetchPromise?.length > 0) {
+            return setTimeout(() => {
+              toast.dismiss(toastId)
+              navigate(
+                `/reservar/${sport}/canchas?lat=${data.lat}&lng=${data.lng}&rHour=${time}&date=${turn}&fieldType=${field}`,
+              )
+            }, 2000)
+          }
+
+          toast.dismiss(toastId)
+          toast.error('No se encontraron canchas.')
+
+
         }
       })
       .catch((err) => console.log(err));
@@ -81,6 +118,8 @@ export const Search: FC = () => {
 
   return (
     <Layout title={`${loader ? sport : ''}`}>
+      {/* TOASTER */}
+      <Toaster position="top-center" />
       <div className="w-full flex justify-center items-center">
         <form
           onSubmit={handleSubmit}
