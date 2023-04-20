@@ -156,8 +156,11 @@ const SFDetail = () => {
           </div>
         </div>
 
-        <div className="hidden lg:flex gap-5 flex-col">
-          <div className="w-[700px] h-[475px] bg-primary mt-16"></div>
+        <div className="hidden lg:flex gap-5 flex-col justify-center">
+          <div
+            className="w-[600px] h-[400px] mt-16 bg-no-repeat bg-cover rounded-lg"
+            style={{ backgroundImage: `url(${data.images[0]})` }}
+          ></div>
           <div className="flex flex-row justify-evenly w-full ">
             <PrimaryButton text="CANCELAR" onClick={handleCancel} alternative={true} />
             <PrimaryButton text="RESERVAR" onClick={handleConfirm} />

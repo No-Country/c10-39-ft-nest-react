@@ -22,16 +22,16 @@ const SportField: FC<sportFieldType> = ({ complexData, btnText, route, item }) =
   const { grill, showers, bathrooms, restobar, parking, locker } = item.sportsComplex;
 
   return (
-    <div className='mb-5'>
+    <div className="mb-5">
       <div
         style={{ backgroundImage: `url(${item?.images[0]})` }}
-        className='bg-cover bg-center w-full h-52 rounded-t-lg'
+        className="bg-cover bg-center w-full h-52 rounded-t-lg"
       ></div>
-      <div className='flex flex-col gap-16 p-5  bg-white rounded-b-lg shadow-lg'>
+      <div className="flex flex-col gap-16 p-5  bg-white rounded-b-lg shadow-lg">
         <div>
-          <span className='block text-3xl '>{item?.name}</span>
+          <span className="block text-3xl ">{item?.name}</span>
           {complexData && (
-            <span className='block opacity-70 relative bottom-2 text-lg'>
+            <span className="block opacity-70 relative bottom-2 text-lg">
               {item?.sportsComplex?.ubication}
             </span>
           )}
@@ -42,9 +42,9 @@ const SportField: FC<sportFieldType> = ({ complexData, btnText, route, item }) =
           } flex w-full justify-between flex-wrap`}
         >
           {complexData ? (
-            <span className='w-1/2 flex-grow'>{item?.sportsComplex?.address}</span>
+            <span className="w-1/2 flex-grow">{item?.sportsComplex?.address}</span>
           ) : (
-            <PrimaryButton text='ADMINISTRAR' onClick={() => navigate('/propietarios/turnos')} />
+            <PrimaryButton text="ADMINISTRAR" onClick={() => navigate('/propietarios/turnos')} />
           )}
           <PrimaryButton
             text={btnText}
@@ -54,8 +54,8 @@ const SportField: FC<sportFieldType> = ({ complexData, btnText, route, item }) =
         </div>
         {complexData && (
           <>
-            <div className='text-lg flex items-center justify-between w-[125px]'>
-              <span onClick={handleClick} className='cursor-pointer'>
+            <div className="text-lg flex items-center justify-between w-[125px]">
+              <span onClick={handleClick} className="cursor-pointer">
                 {moreInfo ? 'Ver menos' : 'Ver más'}
               </span>
               <span
@@ -68,34 +68,34 @@ const SportField: FC<sportFieldType> = ({ complexData, btnText, route, item }) =
             <ul
               className={`${moreInfo ? 'h-[240px]' : 'h-0'} transition-all text-lg overflow-hidden`}
             >
-              <li className='flex flex-row justify-between w-6/12 my-3'>
+              <li className="flex flex-row justify-between w-6/12 my-3">
                 <span>Estacionamiento</span>
-                <input type='checkbox' checked={parking} disabled />
+                <input type="checkbox" checked={parking} disabled />
               </li>
-              <li className='flex flex-row justify-between w-6/12 my-3'>
+              <li className="flex flex-row justify-between w-6/12 my-3">
                 <span>Parrilla</span>
-                <input type='checkbox' checked={grill} disabled />
+                <input type="checkbox" checked={grill} disabled />
               </li>
-              <li className='flex flex-row justify-between w-6/12 my-3'>
+              <li className="flex flex-row justify-between w-6/12 my-3">
                 <span>Casillero</span>
-                <input type='checkbox' checked={locker} disabled />
+                <input type="checkbox" checked={locker} disabled />
               </li>
-              <li className='flex flex-row justify-between w-6/12 my-3'>
+              <li className="flex flex-row justify-between w-6/12 my-3">
                 <span>Baños</span>
-                <input type='checkbox' checked={bathrooms} disabled />
+                <input type="checkbox" checked={bathrooms} disabled />
               </li>
-              <li className='flex flex-row justify-between w-6/12 my-3'>
+              <li className="flex flex-row justify-between w-6/12 my-3">
                 <span>Duchas</span>
-                <input type='checkbox' checked={showers} disabled />
+                <input type="checkbox" checked={showers} disabled />
               </li>
-              <li className='flex flex-row justify-between w-6/12 my-3'>
+              <li className="flex flex-row justify-between w-6/12 my-3">
                 {' '}
                 <span>Resto Bar</span>
                 <input
-                  type='checkbox'
+                  type="checkbox"
                   checked={restobar}
                   disabled
-                  className='disabled:accent-primary'
+                  className="disabled:accent-primary"
                 />
               </li>
             </ul>
