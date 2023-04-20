@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { FaBasketballBall } from 'react-icons/fa';
+import { FcGoogle } from "react-icons/fc";
 
 import { authUser } from '../../Functions/UserQuery';
 
@@ -65,8 +66,9 @@ const MainPage = () => {
           onClick={() => {
             window.location.href = `${BACKEND_URL}/auth/google`;
           }}
-          className="bg-white px-20 py-2 rounded-full cursor-pointer relative"
+          className="bg-white px-20 py-2 rounded-full flex flex-row items-center gap-2 transition-all hover:bg-gradtwo cursor-pointer relative"
         >
+          <FcGoogle />
           Google
         </div>
       </div>
