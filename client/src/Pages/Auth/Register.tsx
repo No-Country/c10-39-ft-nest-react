@@ -46,12 +46,13 @@ const Register: FC = () => {
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
 
-    const { newState, pass } = validationInputs({ ...state }, 3);
+    const { newState, pass } = validationInputs({ ...state }, 5);
     setState(newState);
     if (!pass) return;
 
     const { confirmPass, ...user } = state;
     const newObj = modifyObj({ ...user });
+
     if (state.password.value === confirmPass.value) {
       registerUser(newObj)
         .then((query) => {
@@ -81,6 +82,16 @@ const Register: FC = () => {
         })
         .catch((err) => console.log(err));
     } else {
+      Swal.fire({
+        title: 'Error!',
+        text: 'No se ha podido registrar.',
+        footer: `<b>Tip:</b> &nbsp Recuerde todos los campos son obligatorios, la contraseña tiene que tener mayusculas y numeros, el email debe ser uno valido.`,
+        icon: 'error',
+        showConfirmButton: false,
+        cancelButtonText: 'Intentar otra vez',
+        showCancelButton: true,
+        cancelButtonColor: '#4CAF50',
+      }).catch((err) => console.log(err));
       console.log('ERROR: Las contraseñas deben ser iguales');
     }
   };
@@ -88,7 +99,7 @@ const Register: FC = () => {
   return (
     <>
       <header className="bg-primary">
-        <h1 className="text-white text-2xl pt-10 pb-5 pl-10 lg:text-4xl lg:pl-20 lg:py-10">
+        <h1 className="text- text-2xl pt-10 pb-5 pl-10 lg:text-4xl lg:pl-20 lg:py-10">
           Registrarse
         </h1>
       </header>

@@ -63,8 +63,8 @@ const SFDetail = () => {
   const handleCancel = () => window.history.back();
   const handleConfirm = () => {
     Swal.fire({
-      title: 'Reservando!',
-      text: 'Una reservación es un compromiso de asistencia',
+      title: 'Reserva!',
+      text: 'Una reserva es un compromiso de asistencia',
       footer: `<b>Advertencia:</b> &nbsp Ante cualquier eventualidad inesperada, informe con anticipación, Gracias`,
       icon: 'warning',
       confirmButtonText: 'Confirmar Reservación',
