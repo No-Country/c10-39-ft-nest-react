@@ -1,5 +1,5 @@
 import { type BaseSyntheticEvent, type FC, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 import { AiFillEye } from 'react-icons/ai';
@@ -46,14 +46,13 @@ const Register: FC = () => {
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
 
-    const { newState, pass } = validationInputs({ ...state }, 5);
+    const { newState, pass } = validationInputs({ ...state }, 3);
     setState(newState);
     if (!pass) return;
 
     const { confirmPass, ...user } = state;
     const newObj = modifyObj({ ...user });
-
-    if (state.password === confirmPass) {
+    if (state.password.value === confirmPass.value) {
       registerUser(newObj)
         .then((query) => {
           if (query?.data.user) {
@@ -88,7 +87,6 @@ const Register: FC = () => {
 
   return (
     <>
-      <Toaster position="top-center" />
       <header className="bg-primary">
         <h1 className="text-white text-2xl pt-10 pb-5 pl-10 lg:text-4xl lg:pl-20 lg:py-10">
           Registrarse

@@ -6,13 +6,12 @@ import {
   type Dispatch,
   type BaseSyntheticEvent,
 } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { MdLocationOn, MdTitle } from 'react-icons/md';
 import Swal from 'sweetalert2';
-
 
 import { setComplex } from '../../App/complexSlice';
 import store from '../../App/Store';
@@ -30,6 +29,7 @@ import Input from '../inputs/Input';
 import InputLocation from '../inputs/InputLocation';
 import PrimaryButton from '../PrimaryButton';
 import { Checkbox } from '../ui';
+import { objectProp, validationInputs } from '../../utils/validationInputs';
 
 const handleAmmeniesChangeFactory =
   (setState: Dispatch<SetStateAction<ComplexType>>, key: keyof ComplexType) => () => {
@@ -121,6 +121,13 @@ export const ComplexForm: FC = () => {
     availability: [],
   });
 
+  const [errors, setErrors] = useState<objectProp>({
+    name: { value: '', validation: true },
+    address: { value: '', validation: true },
+    email: { value: '', validation: true },
+    phone: { value: '', validation: true },
+  });
+
   useEffect(() => {
     if (!hasComplex) {
       GetComplexQuery()
@@ -153,7 +160,19 @@ export const ComplexForm: FC = () => {
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    // console.log(initialAddressRef.current)
+
+    const { newState, pass } = validationInputs(
+      {
+        name: { value: state.name, validation: true },
+        address: { value: state.address, validation: true },
+        email: { value: state.email, validation: true },
+        phone: { value: state.phone, validation: true },
+      },
+      3,
+    );
+    setErrors(newState);
+    if (!pass) return;
+
     if (state.address !== complexInfo.address) {
       getLatLng(state.address)
         .then((res) => {
@@ -181,12 +200,10 @@ export const ComplexForm: FC = () => {
   };
   return (
     <form onSubmit={handleSubmit} className="flex flex-col items-center">
-      <Toaster position="top-center" />
-      {/* <ImageUploader className={'w-10/12 mb-[12px] mt- h-[225px] lg:h-[400px] lg:w-[800px]'} /> */}
       <div className="w-full mb-5 flex flex-col items-center gap-10 lg:flex-row lg:w-1/2 lg:justify-center lg:h-[500px]">
         <div className="w-full flex flex-col items-center gap-5 mt-10 lg:w-4/6">
           <Input
-            validation={false}
+            validation={errors.name.validation}
             type="text"
             label="Nombre del complejo"
             value={state.name}
@@ -195,7 +212,7 @@ export const ComplexForm: FC = () => {
             icon={<MdTitle />}
           />
           <Input
-            validation={false}
+            validation={errors.email.validation}
             type="text"
             label="Email"
             value={state.email}
@@ -203,7 +220,7 @@ export const ComplexForm: FC = () => {
             handleChange={handleChange}
           />
           <Input
-            validation={false}
+            validation={errors.phone.validation}
             type="text"
             label="Telefono"
             value={state.phone}
@@ -211,7 +228,7 @@ export const ComplexForm: FC = () => {
             handleChange={handleChange}
           />
           <InputLocation
-            validation={false}
+            validation={errors.address.validation}
             label="Direccion"
             value={state.address}
             handleLocationName={(location) =>

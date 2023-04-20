@@ -13,6 +13,7 @@ import { updateUser } from '../Functions/UserQuery';
 import { type AppUser } from '../types/App.type';
 import { modifyObj } from '../utils/modifyObj';
 import { type inputData, type objectProp, validationInputs } from '../utils/validationInputs';
+import { toast } from 'react-hot-toast';
 
 interface stateType {
   [key: string]: inputData;
@@ -61,7 +62,7 @@ const Profile: FC = () => {
     try {
       e.preventDefault();
 
-      const { newState, pass } = validationInputs({ ...state }, 5);
+      const { newState, pass } = validationInputs({ ...state }, 3);
       setState(newState);
       if (!pass) return;
 
@@ -70,7 +71,14 @@ const Profile: FC = () => {
 
       if (!image) throw new Error('No se pudo guardar la imagen');
       const newObj = modifyObj({ ...state });
-      await updateUser({ ...newObj, image }, userInfo.id);
+      await updateUser({ ...newObj, image }, userInfo.id).then(() =>
+        toast.success('Cambios guardados exitosamente!', {
+          style: {
+            background: '#F5F5F5',
+            color: '#4CAF50',
+          },
+        }),
+      );
     } catch (err) {
       console.log(err);
     }
@@ -98,8 +106,8 @@ const Profile: FC = () => {
           htmlFor="fileId"
           className="group border-2 flex relative justify-center items-center bg-no-repeat bg-cover cursor-pointer w-36 h-36 rounded-full m-10 lg:m-20 lg:w-40 lg:h-40 lg:overflow-hidden"
         >
-          <span className="hidden absolute w-full h-full rounded-full lg:group-hover:flex opacity-10 bg-black"></span>
-          <MdEdit className="p-2 rounded-full box-content text-2xl bg-primary absolute bottom-0 right-0 border-2 lg:hidden lg:group-hover:flex lg:text-4xl lg:relative lg:border-0 lg:bg-[transparent]" />
+          <span className="hidden absolute w-full h-full rounded-full lg:group-hover:flex backdrop-blur-sm"></span>
+          <MdEdit className="p-2 rounded-full box-content text-2xl bg-primary absolute bottom-0 right-0 lg:bg-[#fffa] border-2 lg:hidden lg:group-hover:flex lg:text-4xl lg:relative lg:border-0 lg:bg-[transparent]" />
         </label>
         <div className="w-full flex flex-col items-center gap-5 lg:w-5/12">
           <Input

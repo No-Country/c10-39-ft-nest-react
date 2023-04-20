@@ -21,6 +21,7 @@ import Reservation from './Pages/Sports/Reservation';
 import Search from './Pages/Sports/Search';
 import SFDetail from './Pages/Sports/SFDetial';
 import SportFields from './Pages/Sports/SportFields';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   useEffect(() => {
@@ -56,6 +57,7 @@ function App() {
 
         <Route path="*" element={<Navigate to="/inicio" />}></Route>
       </Routes>
+      <Toaster position="top-center" />
     </BrowserRouter>
   );
 }

@@ -1,5 +1,5 @@
 import { type FC, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 import { MdClose, MdEdit } from 'react-icons/md';
 import Swal from 'sweetalert2';
@@ -37,20 +37,20 @@ const ReservationCard: FC<Props> = ({ reservation, deleteReservations }) => {
             }
             // throw new Error('No se pudo cancelar la reserva')};
           })
-          .then(() => toast.success('Reserva cancelada exitosamente!', {
-            style: {
-              background: '#F5F5F5',
-              color: '#4CAF50',
-            },
-          }))
+          .then(() =>
+            toast.success('Reserva cancelada exitosamente!', {
+              style: {
+                background: '#F5F5F5',
+                color: '#4CAF50',
+              },
+            }),
+          )
           .catch((err) => console.log(err));
       }
     });
-
   };
   return (
     <div className="flex flex-col w-full bg-secondary px-5 py-2">
-      <Toaster position="top-center" />
       <span className="opacity-70">{reservation?.sportfield?.name}</span>
       <div className="flex flex-row w-full justify-between items-center">
         <span className="text-lg">{reservation?.sportfield?.sportsComplex?.address}</span>
