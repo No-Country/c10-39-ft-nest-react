@@ -74,15 +74,15 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
   };
 
   return (
-    <Layout title='Agregar cancha'>
-      <form onSubmit={handleSubmit} className='relative min-h-[100vh] flex flex-col items-center'>
-        <div className='bg-[#D9D9D9] rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[800px] text-center '>
+    <Layout title="Agregar cancha">
+      <form onSubmit={handleSubmit} className="relative min-h-[100vh] flex flex-col items-center">
+        <div className="bg-[#D9D9D9] rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[800px] text-center ">
           +
         </div>
-        <div className='flex flex-col w-full items-center gap-10 lg:w-[700px]'>
+        <div className="flex flex-col w-full items-center gap-10 lg:w-[700px]">
           <Input
-            type='text'
-            label='Nombre'
+            type="text"
+            label="Nombre"
             icon={<MdTitle />}
             handleChange={handleChange}
             value={state.name}
@@ -90,7 +90,7 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
           />
           <Select
             array={sportNames}
-            label='Deporte'
+            label="Deporte"
             value={state.sport}
             handleClick={(option) => setState((prev) => ({ ...prev, sport: option }))}
             icon={<GiSoccerField />}
@@ -98,30 +98,30 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
           />
           <Select
             array={sportFields?.types ?? []}
-            label='Tipo de Cancha'
+            label="Tipo de Cancha"
             value={state.fieldType}
             handleClick={(option) => setState((prev) => ({ ...prev, fieldType: option }))}
             anyOption={false}
             icon={<GiSoccerField />}
           />
           <Input
-            type='text'
-            label='Dimensiones'
+            type="text"
+            label="Dimensiones"
             icon={<GrGroup />}
             value={state.dimensions}
             handleChange={handleChange}
             name={'dimensions'}
           />
           <Input
-            type='number'
-            label='Capacidad'
+            type="number"
+            label="Capacidad"
             icon={<GrGroup />}
             value={state.capacity}
             handleChange={handleChange}
             name={'capacity'}
           />
         </div>
-        <div className='flex justify-end w-full px-20'>
+        <div className="flex justify-end w-full px-20">
           <PrimaryButton text={edit ? 'GUARDAR' : 'CREAR'} />
         </div>
       </form>
