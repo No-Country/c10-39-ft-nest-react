@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { FaBasketballBall } from 'react-icons/fa';
+import { FcGoogle } from "react-icons/fc";
 
 import { authUser } from '../../Functions/UserQuery';
 
@@ -50,13 +51,13 @@ const MainPage = () => {
       </div>
       <div className="flex flex-col w-full items-center gap-5">
         <Link
-          className="w-10/12 lg:w-1/5 py-3 rounded-full text-center font-bold bg-gradient-to-tr from-gradone to-gradtwo"
+          className="w-10/12 lg:w-1/5 py-3 rounded-full text-center font-bold bg-gradient-to-tr relative from-gradone to-gradtwo"
           to="/ingresar"
         >
           INICIAR SESION
         </Link>
         <Link
-          className="w-10/12 lg:w-1/5 py-3 rounded-full text-center font-bold bg-gradone"
+          className="w-10/12 lg:w-1/5 py-3 rounded-full text-center font-bold bg-gradone relative"
           to={'/registro'}
         >
           REGISTRARSE
@@ -65,8 +66,9 @@ const MainPage = () => {
           onClick={() => {
             window.location.href = `${BACKEND_URL}/auth/google`;
           }}
-          className="bg-white px-20 py-2 rounded-full"
+          className="bg-white px-20 py-2 rounded-full flex flex-row items-center gap-2 transition-all hover:bg-gradtwo cursor-pointer relative"
         >
+          <FcGoogle />
           Google
         </div>
       </div>

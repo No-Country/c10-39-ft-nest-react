@@ -81,9 +81,8 @@ interface updateUserBody {
 export async function updateUser(body: updateUserBody, id: string) {
   try {
     const query: QueryResponse = await axios.patch(`/users/${id}`, body);
-
     if (query.data.error) throw new Error(query.data.error);
-
+    query.data.user && store.dispatch(setUser(query.data.user));
     return query.data;
   } catch (error) {
     console.log(error);

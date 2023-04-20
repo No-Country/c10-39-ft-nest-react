@@ -1,5 +1,5 @@
 import { type BaseSyntheticEvent, type FC, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 import { FaBasketballBall } from 'react-icons/fa';
@@ -38,7 +38,7 @@ const Login: FC = () => {
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
 
-    const { newState, pass } = validationInputs(state, 5);
+    const { newState, pass } = validationInputs(state, 3);
     setState(newState);
     setVerifyInputs(true);
     if (!pass) return;
@@ -75,8 +75,6 @@ const Login: FC = () => {
 
   return (
     <div className="relative h-screen w-screen flex flex-col justify-center items-center gap-10 bg-primary">
-      {/* TOASTER */}
-      <Toaster position="top-center" />
       <div>
         <FaBasketballBall className="lg:w-[272px] lg:h-[248px]   w-[128px] h-[128px] text-gradone" />
       </div>

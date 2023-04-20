@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -105,8 +105,6 @@ const SFDetail = () => {
 
   return (
     <Layout title="Detalles de la reserva">
-      {/* TOASTER */}
-      <Toaster position="top-center" />
       <div className="flex flex-row w-full justify-center gap-20">
         <div className="flex flex-col gap-5 w-full lg:w-[550px] lg:mt-12">
           <div className="mx-[5%] h-10 my-5 flex flex-col bg-[#aaa3] px-5 py-2 rounded-lg">
