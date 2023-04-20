@@ -24,6 +24,7 @@ export interface sportData {
     restobar: boolean;
     showers: boolean;
     availability: hoursType[];
+    address: string;
   };
 }
 

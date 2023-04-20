@@ -2,15 +2,15 @@ import { type FC, useRef, useEffect } from 'react';
 
 interface props {
   label: string;
-  // onLocationChange: (latitude: number, longitude: number) => void;
-  handleLocationName: (string: string) => void;
-  location: string;
+  value: string;
+  validation: boolean;
   icon?: any;
-  validationError?: boolean;
+  handleLocationName: (string: string) => void;
+  // onLocationChange: (latitude: number, longitude: number) => void;
 }
 
 const InputLocation: FC<props> = (props) => {
-  const { label, icon, handleLocationName, location, validationError = true } = props;
+  const { label, icon, handleLocationName, value, validation } = props;
 
   const autocompleteRef = useRef<HTMLInputElement>(null);
 
@@ -46,10 +46,10 @@ const InputLocation: FC<props> = (props) => {
       <input
         id={label}
         className={`${
-          validationError ? 'divide-red' : 'divide-black'
+          validation ? 'divide-black' : 'divide-red'
         } inputFocus bg-[transparent] order-2 transition-colors border-b-2 pb-2 pl-2 pr-10 focus:outline-none`}
         type="text"
-        value={location}
+        value={value}
         onChange={(e) => handleLocationName(e.target.value)}
         ref={autocompleteRef}
         placeholder=""
@@ -57,7 +57,7 @@ const InputLocation: FC<props> = (props) => {
       <label
         htmlFor={label}
         className={`${
-          location.length === 0 ? 'translate-y-7 translate-x-2' : 'inputWritten'
+          value.length === 0 ? 'translate-y-7 translate-x-2' : 'inputWritten'
         } w-max cursor-pointer transition-transform order-1 z-[300]`}
       >
         {label}
@@ -67,7 +67,7 @@ const InputLocation: FC<props> = (props) => {
           {icon}
         </div>
       )}
-      {validationError && (
+      {validation || (
         <span className="order-3 text-red text-md">Error: debes escribir una ubicacion</span>
       )}
     </div>

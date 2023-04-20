@@ -22,7 +22,7 @@ const SportCard: FC<props> = ({ title, bgImage, href }) => {
       className={`group mx-1 relative rounded h-[220px] max-w-[700px] flex items-center justify-center lg:h-[350px] bg-cover bg-center`}
     >
       <span className="absolute w-full h-full backdrop-blur-sm group-hover:backdrop-blur-0 transition-all"></span>
-      <div className="font-segoeScript  bg-opacity-10 font-bold text-6xl text-center relative z-50">
+      <div className="font-segoeScript group-hover:opacity-0 transition-opacity bg-opacity-10 font-bold text-6xl text-center relative z-50">
         {title}
       </div>
       <div className="absolute bottom-4 right-4 z-50">

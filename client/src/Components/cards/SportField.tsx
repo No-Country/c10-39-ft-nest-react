@@ -39,10 +39,10 @@ const SportField: FC<sportFieldType> = ({ complexData, btnText, route, item }) =
         <div
           className={`${
             complexData ? 'items-center' : 'gap-5 flex-row-reverse'
-          } flex flex-col w-full justify-end lg:flex-wrap lg:flex-row`}
+          } flex w-full justify-between flex-wrap`}
         >
           {complexData ? (
-            <span className='w-1/2'>Estrellas</span>
+            <span className="w-1/2 flex-grow">{item?.sportsComplex?.address}</span>
           ) : (
             <PrimaryButton text='ADMINISTRAR' onClick={() => navigate('/propietarios/turnos')} />
           )}

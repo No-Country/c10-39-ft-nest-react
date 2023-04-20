@@ -1,4 +1,5 @@
-import { type BaseSyntheticEvent, type ChangeEvent, type FC, useState, useEffect } from 'react';
+import { type BaseSyntheticEvent, type FC, useState, useEffect } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -14,7 +15,9 @@ import SelectCalendar from '../../Components/inputs/SelectCalendar';
 import SelectHour from '../../Components/inputs/SelectHour';
 import Layout from '../../Components/layout/Layout';
 import PrimaryButton from '../../Components/PrimaryButton';
+import { getSportFieldsWithSport } from '../../Functions/SportFieldsQuery';
 import { type appSport } from '../../types/App.type';
+import { type inputData, validationInputs } from '../../utils/validationInputs';
 
 const API_KEY = 'AIzaSyB8rVxLxXlomXkjJ04LRtFHC63AtzSnyw0';
 
@@ -23,49 +26,90 @@ export const Search: FC = () => {
   const { sport = '' } = useParams();
   const sportInfo = useSelector((state: appSport) => state.sport.sport);
 
+  const sportData = sportInfo?.find((item) => item.name === sport);
+
   const sportNames = sportInfo?.map((item) => item.name);
   const sportFields = sportInfo?.find((item) => item.name === sport);
 
-  const [location, setLocation] = useState<string>('');
-  const [field, setField] = useState('');
-  const [turn, setTurn] = useState('');
-  const [time, setTime] = useState('');
+  const defaultState = { value: '', validation: true, select: true };
+  const [location, setLocation] = useState<inputData>(defaultState);
+  const [field, setField] = useState<inputData>(defaultState);
+  const [turn, setTurn] = useState<inputData>(defaultState);
+  const [time, setTime] = useState<inputData>(defaultState);
 
   const [loader, setLoader] = useState(false);
 
-  const handleField = (option: string) => setField(option);
-  const handleTurn = (option: string) => {
-    setTurn(option);
-  };
-  const handleTime = (option: string) => setTime(option);
-  const handleLocationName = (string: string) => {
-    setLocation(string);
-  };
+  const modifyState = (option: string) => ({ value: option, validation: true, select: true });
+  const handleTurn = (option: string) => setTurn(modifyState(option));
+  const handleField = (option: string) => setField(modifyState(option));
+  const handleTime = (option: string) => setTime(modifyState(option));
+  const handleLocationName = (option: string) => setLocation(modifyState(option));
 
   const handleSearch = async () => {
-    try {
-      const { data } = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${API_KEY}`,
-      );
-      if (!data.results[0]) {
-        throw new Error('Por favor complete la ubicacion con mas informacion');
-      }
-      const { lat, lng }: { lat: number; lng: number } = data.results[0].geometry?.location;
+    if (location) {
+      try {
+        const { data } = await axios.get(
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${location.value}&key=${API_KEY}`,
+        );
+        if (!data.results[0]) {
+          toast.error('Por favor complete la ubicacion con mas informacion');
+          // throw new Error('Por favor complete la ubicacion con mas informacion');
+        }
+        const { lat, lng }: { lat: number; lng: number } = data.results[0].geometry?.location;
 
-      return { lat, lng };
-    } catch (error) {
-      alert(error);
+        return { lat, lng };
+      } catch (error) {
+        console.log(error);
+      }
     }
+    toast.error('La ubicacion no existe o no esta definida.');
   };
 
-  const handleSubmit = (e: BaseSyntheticEvent) => {
+  const handleSubmit = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
+
+    const { newState, pass } = validationInputs({ location, field, turn, time }, 5);
+
+    setLocation(newState.location);
+    setField(newState.field);
+    setTurn(newState.turn);
+    setTime(newState.time);
+    if (!pass) return;
+
     handleSearch()
-      .then((data) => {
+      .then(async (data) => {
         if (data && data.lat && data.lng) {
-          navigate(
-            `/reservar/${sport}/canchas?lat=${data.lat}&lng=${data.lng}&rHour=${time}&date=${turn}&fieldType=${field}`,
-          );
+          const fetchPromise = await getSportFieldsWithSport({
+            lat: Number(data.lat),
+            lng: Number(data.lng),
+            rHour: Number(time),
+            date: turn.value,
+            sport,
+            fieldType: field.value,
+          });
+          const toastId = toast.loading('Buscando...', {
+            style: {
+              background: '#F5F5F5',
+              color: '#4CAF50',
+            },
+          });
+          // toast.loading('Buscando...', {
+          //   style: {
+          //     background: '#F5F5F5',
+          //     color: '#4CAF50',
+          //   }
+          // })
+          if (fetchPromise !== undefined && fetchPromise?.length > 0) {
+            return setTimeout(() => {
+              toast.dismiss(toastId);
+              navigate(
+                `/reservar/${sport}/canchas?lat=${data.lat}&lng=${data.lng}&rHour=${time.value}&date=${turn.value}&fieldType=${field.value}`,
+              );
+            }, 2000);
+          }
+
+          toast.dismiss(toastId);
+          toast.error('No se encontraron canchas.');
         }
       })
       .catch((err) => console.log(err));
@@ -81,34 +125,46 @@ export const Search: FC = () => {
 
   return (
     <Layout title={`${loader ? sport : ''}`}>
+      {/* TOASTER */}
+      <Toaster position="top-center" />
       <div className="w-full flex justify-center items-center">
+        <img src={sportData?.image} className="hidden lg:block fixed top-0 left-0 right-0 w-full" />
         <form
           onSubmit={handleSubmit}
-          className="flex w-full flex-col items-center lg:mx-[30%] lg:h-[600px] bg-lightWhite rounded-lg h-[500px] mt-20 lg:my-12 relative"
+          className="flex w-full flex-col items-center lg:mx-[30%] lg:h-[600px] backdrop-blur-sm bg-lightWhite rounded-lg h-[500px] mt-20 lg:my-12 relative"
         >
           <div className="flex flex-col gap-10 w-full items-center mt-10">
             <InputLocation
               label="Ubicacion"
               icon={<MdLocationOn />}
               handleLocationName={handleLocationName}
-              location={location}
+              value={location.value}
+              validation={location.validation}
             />
             {sportFields?.types && (
               <Select
                 array={sportFields?.types}
                 label="Tipo de Cancha"
-                value={field}
+                value={field.value}
                 handleClick={handleField}
                 icon={<GiSoccerField />}
+                validation={field.validation}
               />
             )}
             <SelectCalendar
               label="Dia"
-              value={turn}
+              value={turn.value}
               handleClick={handleTurn}
               icon={<BsCalendar2Event />}
+              validation={turn.validation}
             />
-            <SelectHour label="Horario" value={time} handleClick={handleTime} icon={<TfiTime />} />
+            <SelectHour
+              label="Horario"
+              value={time.value}
+              handleClick={handleTime}
+              icon={<TfiTime />}
+              validation={time.validation}
+            />
           </div>
           <div className="absolute bottom-10 right-10">
             <PrimaryButton text="BUSCAR" />

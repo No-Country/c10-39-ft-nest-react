@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 
 import { GoogleMap, Marker } from '@react-google-maps/api';
 
@@ -10,9 +10,9 @@ interface Props {
 }
 
 const Maps = ({ initialCoords, Coords }: Props) => {
-  const [coords, setCoords] = React.useState<coordsType[] | null>(null);
+  const [coords, setCoords] = useState<coordsType[] | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setCoords(Coords);
   }, [Coords]);
 
@@ -21,18 +21,18 @@ const Maps = ({ initialCoords, Coords }: Props) => {
       mapContainerStyle={{
         width: '100%',
         height: '100%',
-        borderRadius: '10px',
+        borderRadius: '20px',
       }}
       zoom={12}
       center={initialCoords}
     >
-      {/* <Marker 
+      <Marker
         position={initialCoords}
         icon={{
-          url: '/assets/images/MapMarker.svg',
+          url: '/assets/icon.png',
           scaledSize: new window.google.maps.Size(50, 50),
         }}
-      /> */}
+      />
 
       {coords &&
         coords.map((item, index) => {

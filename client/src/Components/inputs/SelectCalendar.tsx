@@ -5,18 +5,12 @@ import MyCalendar from '../MyCalendar';
 interface selectType {
   label: string;
   value: string;
-  handleClick: (option: string) => void;
+  validation: boolean;
   icon?: any;
-  validationError?: boolean;
+  handleClick: (option: string) => void;
 }
 
-const SelectCalendar: FC<selectType> = ({
-  handleClick,
-  value,
-  label,
-  icon,
-  validationError = true,
-}) => {
+const SelectCalendar: FC<selectType> = ({ handleClick, value, label, icon, validation }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
 
@@ -30,7 +24,7 @@ const SelectCalendar: FC<selectType> = ({
       <input
         id={label}
         className={`${
-          validationError ? 'divide-red' : 'divide-black'
+          validation ? 'divide-black' : 'divide-red'
         } inputFocus bg-[transparent] order-2 transition-colors  border-b-2 pb-2 pl-2 pr-10 focus:outline-none`}
         readOnly
         type={'text'}
@@ -55,9 +49,7 @@ const SelectCalendar: FC<selectType> = ({
           {icon}
         </div>
       )}
-      {validationError && (
-        <span className="order-3 text-red">Error: debes seleccionar una fecha</span>
-      )}
+      {validation || <span className="order-3 text-red">Error: debes seleccionar una fecha</span>}
     </div>
   );
 };

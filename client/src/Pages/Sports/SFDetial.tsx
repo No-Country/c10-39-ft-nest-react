@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { AiOutlineInfoCircle } from 'react-icons/ai';
+import Swal from 'sweetalert2';
 
-import SelectHour from '../../Components/inputs/SelectHour';
 import Layout from '../../Components/layout/Layout';
 import PrimaryButton from '../../Components/PrimaryButton';
 import SFDetailMenu from '../../Components/SFDetailMenu';
@@ -14,6 +15,7 @@ import { type AppUser } from '../../types/App.type';
 import { type sportData } from '../../types/Sport.type';
 
 const SFDetail = () => {
+  const navigate = useNavigate();
   const { id = '' } = useParams();
   const userEmail = useSelector((state: AppUser) => state.user?.user?.email);
 
@@ -39,6 +41,7 @@ const SFDetail = () => {
       bathrooms: false,
       restobar: false,
       showers: false,
+      address: '',
       availability: [
         {
           end_hour: '',
@@ -59,13 +62,36 @@ const SFDetail = () => {
 
   const handleCancel = () => window.history.back();
   const handleConfirm = () => {
-    PostReservations({
-      hour: Number(selectedHour),
-      date: selectedDate,
-      sportfieldId: id,
-      userEmail,
+    Swal.fire({
+      title: 'Reservando!',
+      text: 'Una reservación es un compromiso de asistencia',
+      footer: `<b>Advertencia:</b> &nbsp Ante cualquier eventualidad inesperada, informe con anticipación, Gracias`,
+      icon: 'warning',
+      confirmButtonText: 'Confirmar Reservación',
+      confirmButtonColor: '#4CAF50',
+      showCancelButton: true,
+      cancelButtonText: 'Modificar Reservacion',
     })
-      .then(() => alert('Cancha reservada'))
+      .then((result) => {
+        if (result.isConfirmed) {
+          PostReservations({
+            hour: Number(selectedHour),
+            date: selectedDate,
+            sportfieldId: id,
+            userEmail,
+          })
+            .then(() =>
+              toast.success('Cancha reservada', {
+                style: {
+                  background: '#F5F5F5',
+                  color: '#4CAF50',
+                },
+              }),
+            )
+            .catch((err) => console.log(err));
+          return setTimeout(() => navigate('/inicio'), 1000);
+        }
+      })
       .catch((err) => console.log(err));
   };
 
@@ -78,17 +104,19 @@ const SFDetail = () => {
   }, [id]);
 
   return (
-    <Layout title='Detalles de la reserva'>
-      <div className='flex flex-row w-full justify-center gap-20'>
-        <div className='flex flex-col gap-5 w-full lg:w-[550px] lg:mt-12'>
-          <div className='mx-[5%] h-10 my-5 flex flex-col bg-[#aaa3] px-5 py-2 rounded-lg'>
-            <span className='opacity-70'>{data?.name}</span>
-            <span className='text-lg'>{data?.sportsComplex?.ubication}</span>
+    <Layout title="Detalles de la reserva">
+      {/* TOASTER */}
+      <Toaster position="top-center" />
+      <div className="flex flex-row w-full justify-center gap-20">
+        <div className="flex flex-col gap-5 w-full lg:w-[550px] lg:mt-12">
+          <div className="mx-[5%] h-10 my-5 flex flex-col bg-[#aaa3] px-5 py-2 rounded-lg">
+            <span className="opacity-70">{data?.name}</span>
+            <span className="text-lg">{data?.sportsComplex?.ubication}</span>
           </div>
-          <div className='flex flex-col gap-5 bg-white pb-2 mb-10 mx-2 shadow-lg rounded-lg'>
-            <div className='relative flex flex-row items-center justify-between p-5'>
-              <span className='text-lg'>Informacion del partido</span>
-              <button onClick={handleClick} className='text-3xl'>
+          <div className="flex flex-col gap-5 bg-white pb-2 mb-10 mx-2 shadow-lg rounded-lg">
+            <div className="relative flex flex-row items-center justify-between p-5">
+              <span className="text-lg">Informacion del partido</span>
+              <button onClick={handleClick} className="text-3xl">
                 <AiOutlineInfoCircle />
               </button>
               <SFDetailMenu
@@ -99,42 +127,42 @@ const SFDetail = () => {
                 selectedDate={selectedDate}
               />
             </div>
-            <div className='bg-[#aaa2] p-5'>
-              <span className='block'>{data?.description}</span>
-              <span className='block'>
+            <div className="bg-[#aaa2] p-5">
+              <span className="block">{data?.description}</span>
+              <span className="block">
                 Capacidad: {data?.capacity} personas - {data?.dimensions} m²
               </span>
             </div>
-            <div className='bg-[#aaa2] p-5'>
-              <div className='flex flex-row justify-between w-full'>
+            <div className="bg-[#aaa2] p-5">
+              <div className="flex flex-row justify-between w-full">
                 <span>Dia</span>
                 <span>Miercoles {selectedDate}</span>
               </div>
-              <div className='flex flex-row justify-between w-full'>
+              <div className="flex flex-row justify-between w-full">
                 <span>Hora</span>
                 <span>{selectedHour}:00 hs</span>
               </div>
-              <div className='flex flex-row justify-between w-full'>
+              <div className="flex flex-row justify-between w-full">
                 <span>Duracion</span>
                 <span>60 minutos</span>
               </div>
             </div>
-            <span className='p-5'>
+            <span className="p-5">
               Importante: Este complejo no exigio una carga monetaria como garantia. Se solicita en
               caso de cancelar la reserva, hacerlo con 24 horas de antelacion.
             </span>
           </div>
-          <div className='flex flex-row justify-evenly w-full lg:hidden'>
-            <PrimaryButton text='CANCELAR' onClick={handleCancel} alternative={true} />
-            <PrimaryButton text='RESERVAR' onClick={handleConfirm} />
+          <div className="flex flex-row justify-evenly w-full lg:hidden">
+            <PrimaryButton text="CANCELAR" onClick={handleCancel} alternative={true} />
+            <PrimaryButton text="RESERVAR" onClick={handleConfirm} />
           </div>
         </div>
 
-        <div className='hidden lg:flex gap-5 flex-col'>
-          <div className='w-[700px] h-[475px] bg-primary mt-16'></div>
-          <div className='flex flex-row justify-evenly w-full '>
-            <PrimaryButton text='CANCELAR' onClick={handleCancel} alternative={true} />
-            <PrimaryButton text='RESERVAR' onClick={handleConfirm} />
+        <div className="hidden lg:flex gap-5 flex-col">
+          <div className="w-[700px] h-[475px] bg-primary mt-16"></div>
+          <div className="flex flex-row justify-evenly w-full ">
+            <PrimaryButton text="CANCELAR" onClick={handleCancel} alternative={true} />
+            <PrimaryButton text="RESERVAR" onClick={handleConfirm} />
           </div>
         </div>
       </div>

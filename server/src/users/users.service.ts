@@ -18,7 +18,7 @@ export class UsersService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private readonly configService: ConfigService,
-  ) { }
+  ) {}
 
   async findOrCreate(body: RegisterUserDTO): Promise<{ user: User; token: string }> {
     let user = await this.findByEmail(body.email);
@@ -82,17 +82,18 @@ export class UsersService {
   }
 
   /// aca falta terminar el update
-  async update(id: string, updateUserDTO: UpdateUserDTO)
-    : Promise<{ user: User; token: string; isOwner: boolean }> {
+  async update(
+    id: string,
+    updateUserDTO: UpdateUserDTO,
+  ): Promise<{ user: User; token: string; isOwner: boolean }> {
     // Promise<{user:User, token:string}>
-    const hashedPassword = bcrypt.hashSync(updateUserDTO.password, SALT);
+    // const hashedPassword = bcrypt.hashSync(updateUserDTO.password, SALT);
     console.log(id);
-
 
     const userUpdate = await this.userRepository.save({
       id,
       ...updateUserDTO,
-      password: hashedPassword
+      // password: hashedPassword
     });
     const user = await this.findOne(id);
     // await this.userRepository.save(user);
