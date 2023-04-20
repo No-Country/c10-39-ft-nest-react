@@ -40,7 +40,8 @@ interface SportFieldProps {
 
 export async function OwnerAddSFQuery(props: SportFieldProps) {
   try {
-    const { data }: dataType = await axios.post('/sportfields', { ...props });
+    props.capacity = Number(props.capacity);
+    const { data }: dataType = await axios.post('/sportfields', props);
 
     if (!Array.isArray(data) && data.error) throw new Error(`Error: data.error = ${data.error}`);
 

@@ -1,7 +1,7 @@
 import { type FC, useState, type BaseSyntheticEvent, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { GiSoccerField } from 'react-icons/gi';
 import { GrGroup } from 'react-icons/gr';
@@ -35,6 +35,7 @@ interface stateType {
 
 const AddSFOwner: FC<Props> = ({ edit = false }) => {
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const defaultState: stateType = {
     name: { value: '', validation: true },
@@ -43,10 +44,12 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
     dimensions: { value: '', validation: true, select: true },
     capacity: { value: '', validation: true, select: true },
   };
+
   const [state, setState] = useState<stateType | objectProp>(defaultState);
 
-  const [image, setImage] = useState('');
+  const [images, setImages] = useState<string[]>([]);
   const [file, setFile] = useState<null | File>(null);
+
   const handleFile = (e: BaseSyntheticEvent) => setFile(e.target.files[0]);
 
   const userInfo = useSelector((state: AppUser) => state.user.user);
@@ -67,9 +70,12 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
 
   const handleSubmit = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
+    console.log(state);
 
     const { newState, pass } = validationInputs({ ...state }, 5);
+
     setState(newState);
+
     if (!pass) return;
 
     const body = {
@@ -80,12 +86,21 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
 
     if (!file && !userInfo.image) throw new Error(`Error: file es null y no hay imagen guardada`);
     const image = file ? await PostFile(file) : userInfo.image;
-    console.log(image);
+
     if (!image) throw new Error('No se pudo guardar la imagen');
+    if (typeof image === 'string') {
+      setImages([image]);
+    } else {
+      setImages([image.data]);
+    }
+
+    if (image) {
+      newObj.images = [image];
+    }
 
     if (edit) {
-      const id = '';
-      void OwnerEditSFQuery(newObj, id).then((data) => {
+      if (!id) return;
+      await OwnerEditSFQuery(newObj, id).then((data) => {
         const datos = { ...data } as ISportFieldRespones;
         if (datos.id && datos.name && datos.fieldType && datos.sport) {
           toast.success(`${datos.name}, se actualizo correctamente.`, {
@@ -117,6 +132,7 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
       return;
     }
 
+
     OwnerAddSFQuery(newObj).then((data) => {
       const datos = { ...data } as ISportFieldRespones;
       if (datos.id && datos.name && datos.fieldType && datos.sport) {
@@ -142,92 +158,94 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
   };
 
   useEffect(() => {
-    setImage(userInfo?.image ?? '');
-
     if (edit) {
-      const id = '';
+      if (!id) return;
       getSportDetail(id)
         .then((sportField) => {
           if (!sportField) {
             console.log('Not found');
             return;
           }
-          const { name, fieldType, sport, dimensions, capacity } = sportField;
+
+          const { name, fieldType, sport, dimensions, capacity, images } = sportField;
           setState({
-            name: { value: name, validation: true },
-            fieldType: { value: fieldType, validation: true },
-            sport: { value: sport.name, validation: true },
-            dimensions: { value: dimensions, validation: true },
-            capacity: { value: `${capacity}`, validation: true },
+            name: { ...state.name, value: name },
+            fieldType: { ...state.fieldType, value: fieldType, select: true },
+            sport: { ...state.sport, value: sport.name, select: true },
+            dimensions: { ...state.dimensions, value: dimensions, select: true },
+            capacity: { ...state.capacity, value: `${capacity}`, select: true},
           });
+          setImages(images);
         })
         .catch(console.error);
     }
   }, [userInfo]);
 
   return (
-    <Layout title="Agregar cancha">
-      <form onSubmit={handleSubmit} className="relative min-h-[100vh] flex flex-col items-center">
-        <input type="file" hidden id="ownerFiles" onChange={handleFile} />
+    <Layout title='Agregar cancha'>
+      <form onSubmit={handleSubmit} className='relative min-h-[100vh] flex flex-col items-center'>
+        <input type='file' hidden id='ownerFiles' onChange={handleFile} />
         <label
-          style={{
-            backgroundImage: `url(${image})`,
-          }}
-          htmlFor="ownerFiles"
-          className="bg-[#D9D9D9] rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[600px] text-center "
-        ></label>
-        <div className="flex flex-col w-full items-center gap-10 lg:w-[700px]">
+          htmlFor='ownerFiles'
+          className='bg-[#D9D9D9] rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[600px] text-center overflow-hidden'
+        >
+          <img
+            className='w-full h-full object-fit'
+            src={file ? URL.createObjectURL(file) : images[0]}
+          />
+        </label>
+        <div className='flex flex-col w-full items-center gap-10 lg:w-[700px]'>
           <Input
-            type="text"
-            label="Nombre"
+            type='text'
+            label='Nombre'
             icon={<MdTitle />}
             handleChange={handleChange}
             value={state.name.value}
             name={'name'}
-            validation={state.name.validation}
+            validation={edit || state.name.validation}
           />
           <Select
             array={sportNames}
-            label="Deporte"
+            label='Deporte'
             value={state.sport.value}
             handleClick={(option) =>
               setState((prev) => ({ ...prev, sport: { value: option, validation: true } }))
             }
             icon={<GiSoccerField />}
             anyOption={false}
-            validation={state.sport.validation}
+            validation={edit || state.sport.validation}
           />
           <Select
             array={sportFields?.types ?? []}
-            label="Tipo de Cancha"
+            label='Tipo de Cancha'
             value={state.fieldType.value}
             handleClick={(option) =>
               setState((prev) => ({ ...prev, fieldType: { value: option, validation: true } }))
             }
             anyOption={false}
             icon={<GiSoccerField />}
-            validation={state.fieldType.validation}
+            validation={edit || state.fieldType.validation}
           />
           <Input
-            type="text"
-            label="Dimensiones"
+            type='text'
+            label='Dimensiones'
             icon={<GrGroup />}
             value={state.dimensions.value}
             handleChange={handleChange}
             name={'dimensions'}
-            validation={state.dimensions.validation}
+            validation={edit || state.dimensions.validation}
           />
           <Input
-            type="number"
-            label="Capacidad"
+            type='number'
+            label='Capacidad'
             icon={<GrGroup />}
             value={state.capacity.value}
             handleChange={handleChange}
             name={'capacity'}
-            validation={state.capacity.validation}
+            validation={edit || state.capacity.validation}
           />
         </div>
-        <div className="flex justify-end w-full px-20">
+        <div className='flex justify-end w-full px-20'>
           <PrimaryButton text={edit ? 'GUARDAR' : 'CREAR'} />
         </div>
       </form>
