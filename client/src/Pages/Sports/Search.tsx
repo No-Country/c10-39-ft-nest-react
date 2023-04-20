@@ -1,4 +1,4 @@
-import { type BaseSyntheticEvent, type ChangeEvent, type FC, useState, useEffect } from 'react';
+import { type BaseSyntheticEvent, type FC, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -15,6 +15,7 @@ import SelectHour from '../../Components/inputs/SelectHour';
 import Layout from '../../Components/layout/Layout';
 import PrimaryButton from '../../Components/PrimaryButton';
 import { type appSport } from '../../types/App.type';
+import { inputData, validationInputs } from '../../utils/validationInputs';
 
 const API_KEY = 'AIzaSyB8rVxLxXlomXkjJ04LRtFHC63AtzSnyw0';
 
@@ -26,26 +27,24 @@ export const Search: FC = () => {
   const sportNames = sportInfo?.map((item) => item.name);
   const sportFields = sportInfo?.find((item) => item.name === sport);
 
-  const [location, setLocation] = useState<string>('');
-  const [field, setField] = useState('');
-  const [turn, setTurn] = useState('');
-  const [time, setTime] = useState('');
+  const defaultState = { value: '', validation: true, select: true };
+  const [location, setLocation] = useState<inputData>(defaultState);
+  const [field, setField] = useState<inputData>(defaultState);
+  const [turn, setTurn] = useState<inputData>(defaultState);
+  const [time, setTime] = useState<inputData>(defaultState);
 
   const [loader, setLoader] = useState(false);
 
-  const handleField = (option: string) => setField(option);
-  const handleTurn = (option: string) => {
-    setTurn(option);
-  };
-  const handleTime = (option: string) => setTime(option);
-  const handleLocationName = (string: string) => {
-    setLocation(string);
-  };
+  const modifyState = (option: string) => ({ value: option, validation: true, select: true });
+  const handleTurn = (option: string) => setTurn(modifyState(option));
+  const handleField = (option: string) => setField(modifyState(option));
+  const handleTime = (option: string) => setTime(modifyState(option));
+  const handleLocationName = (option: string) => setLocation(modifyState(option));
 
   const handleSearch = async () => {
     try {
       const { data } = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${API_KEY}`,
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${location.value}&key=${API_KEY}`,
       );
       if (!data.results[0]) {
         throw new Error('Por favor complete la ubicacion con mas informacion');
@@ -60,11 +59,20 @@ export const Search: FC = () => {
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
+
+    const { newState, pass } = validationInputs({ location, field, turn, time }, 5);
+
+    setLocation(newState.location);
+    setField(newState.field);
+    setTurn(newState.turn);
+    setTime(newState.time);
+    if (!pass) return;
+
     handleSearch()
       .then((data) => {
         if (data && data.lat && data.lng) {
           navigate(
-            `/reservar/${sport}/canchas?lat=${data.lat}&lng=${data.lng}&rHour=${time}&date=${turn}&fieldType=${field}`,
+            `/reservar/${sport}/canchas?lat=${data.lat}&lng=${data.lng}&rHour=${time.value}&date=${turn.value}&fieldType=${field.value}`,
           );
         }
       })
@@ -91,24 +99,33 @@ export const Search: FC = () => {
               label="Ubicacion"
               icon={<MdLocationOn />}
               handleLocationName={handleLocationName}
-              location={location}
+              value={location.value}
+              validation={location.validation}
             />
             {sportFields?.types && (
               <Select
                 array={sportFields?.types}
                 label="Tipo de Cancha"
-                value={field}
+                value={field.value}
                 handleClick={handleField}
                 icon={<GiSoccerField />}
+                validation={field.validation}
               />
             )}
             <SelectCalendar
               label="Dia"
-              value={turn}
+              value={turn.value}
               handleClick={handleTurn}
               icon={<BsCalendar2Event />}
+              validation={turn.validation}
             />
-            <SelectHour label="Horario" value={time} handleClick={handleTime} icon={<TfiTime />} />
+            <SelectHour
+              label="Horario"
+              value={time.value}
+              handleClick={handleTime}
+              icon={<TfiTime />}
+              validation={time.validation}
+            />
           </div>
           <div className="absolute bottom-10 right-10">
             <PrimaryButton text="BUSCAR" />

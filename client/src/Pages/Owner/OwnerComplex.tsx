@@ -3,7 +3,7 @@ import Layout from '../../Components/layout/Layout';
 
 const OwnerComplex = () => {
   return (
-    <Layout title='Complejo'>
+    <Layout title="Complejo">
       <ComplexForm />
     </Layout>
   );

@@ -211,7 +211,7 @@ export const ComplexForm: FC = () => {
           />
           <InputLocation
             label="Direccion"
-            location={state.address}
+            value={state.address}
             handleLocationName={(location) =>
               handleChange({ target: { name: 'address', value: location } })
             }

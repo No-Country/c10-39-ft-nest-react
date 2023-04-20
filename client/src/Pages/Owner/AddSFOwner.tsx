@@ -35,10 +35,10 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
 
   const defaultState: stateType = {
     name: { value: '', validation: true },
-    fieldType: { value: '', validation: true },
-    sport: { value: '', validation: true },
-    dimensions: { value: '', validation: true },
-    capacity: { value: '', validation: true },
+    fieldType: { value: '', validation: true, select: true },
+    sport: { value: '', validation: true, select: true },
+    dimensions: { value: '', validation: true, select: true },
+    capacity: { value: '', validation: true, select: true },
   };
   const [state, setState] = useState<stateType | objectProp>(defaultState);
 
@@ -48,9 +48,10 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
   const handleChange = (event: BaseSyntheticEvent) => {
     setState((prev) => {
       const target = event.target;
+      const name = target.name;
       return {
         ...prev,
-        [target.name]: { value: target.value, validation: true },
+        [name]: { ...state[name], value: target.value },
       };
     });
   };
@@ -127,7 +128,7 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
             }
             icon={<GiSoccerField />}
             anyOption={false}
-            // validation={state.sport.validation}
+            validation={state.sport.validation}
           />
           <Select
             array={sportFields?.types ?? []}
@@ -138,7 +139,7 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
             }
             anyOption={false}
             icon={<GiSoccerField />}
-            // validation={state.fieldType.validation}
+            validation={state.fieldType.validation}
           />
           <Input
             type="text"
