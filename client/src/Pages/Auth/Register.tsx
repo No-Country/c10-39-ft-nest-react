@@ -9,8 +9,8 @@ import Swal from 'sweetalert2';
 
 import Input from '../../Components/inputs/Input';
 import { registerUser } from '../../Functions/UserQuery';
-import { inputData, objectProp, validationInputs } from '../../utils/validationInputs';
 import { modifyObj } from '../../utils/modifyObj';
+import { type inputData, type objectProp, validationInputs } from '../../utils/validationInputs';
 
 interface stateType {
   [key: string]: inputData;

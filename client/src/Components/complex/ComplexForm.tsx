@@ -5,14 +5,14 @@ import {
   type SetStateAction,
   type Dispatch,
   type BaseSyntheticEvent,
-  useRef,
 } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import toast, { Toaster } from 'react-hot-toast';
 
 import { MdLocationOn, MdTitle } from 'react-icons/md';
+import Swal from 'sweetalert2';
+
 
 import { setComplex } from '../../App/complexSlice';
 import store from '../../App/Store';
@@ -40,7 +40,6 @@ const handleAmmeniesChangeFactory =
   };
 
 const onSubmit = (state: ComplexType, navTo: (param: string) => void) => {
-
   const { id, ...data } = state;
   if (id && data.email) {
     UpdateComplexQuery(data, id)
@@ -48,27 +47,25 @@ const onSubmit = (state: ComplexType, navTo: (param: string) => void) => {
         if (value?.id) {
           toast.success(`Complejo ${value.name}! se Actualizo en AllSport`, {
             style: {
-              background: "#F5F5F5",
-              color: '#4CAF50'
-            }
-          })
+              background: '#F5F5F5',
+              color: '#4CAF50',
+            },
+          });
           return setTimeout(() => {
-            value && store.dispatch(setComplex(value))
-            navTo('/propietarios')
-          }, 2000)
-        } else {
-          Swal.fire({
-            title: 'Error!',
-            text: 'Ocurrio un error al actualizar algunos campos',
-            footer: `<b>Tip:</b> &nbsp Recuerde todos los campos son obligatorios.`,
-            icon: 'error',
-            showConfirmButton: false,
-            showCancelButton: true,
-            cancelButtonColor: '#4CAF50',
-            cancelButtonText: "Actualizar Campos",
-          })
+            value && store.dispatch(setComplex(value));
+            navTo('/propietarios');
+          }, 2000);
         }
-
+        Swal.fire({
+          title: 'Error!',
+          text: 'Ocurrio un error al actualizar algunos campos',
+          footer: `<b>Tip:</b>Recuerde todos los campos son obligatorios.`,
+          icon: 'error',
+          showConfirmButton: false,
+          showCancelButton: true,
+          cancelButtonColor: '#4CAF50',
+          cancelButtonText: 'Actualizar Campos',
+        }).catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
     return;
@@ -79,28 +76,25 @@ const onSubmit = (state: ComplexType, navTo: (param: string) => void) => {
       if (value?.id) {
         toast.success(`Complejo ${value.name}! se Agrego a AllSport`, {
           style: {
-            background: "#F5F5F5",
-            color: '#4CAF50'
-          }
-        })
+            background: '#F5F5F5',
+            color: '#4CAF50',
+          },
+        });
         return setTimeout(() => {
-          value && store.dispatch(setComplex(value))
-          navTo('/propietarios')
-        }, 2000)
-      } else {
-        Swal.fire({
-          title: 'Error!',
-          text: 'Faltan completar algunos campos.',
-          footer: `<b>Tip:</b> &nbsp Recuerde todos los campos son obligatorios.`,
-          icon: 'error',
-          showConfirmButton: false,
-          showCancelButton: true,
-          cancelButtonColor: '#4CAF50',
-          cancelButtonText: "Completar Campos",
-        })
+          value && store.dispatch(setComplex(value));
+          navTo('/propietarios');
+        }, 2000);
       }
-
-
+      Swal.fire({
+        title: 'Error!',
+        text: 'Faltan completar algunos campos.',
+        footer: `<b>Tip:</b>Recuerde todos los campos son obligatorios.`,
+        icon: 'error',
+        showConfirmButton: false,
+        showCancelButton: true,
+        cancelButtonColor: '#4CAF50',
+        cancelButtonText: 'Completar Campos',
+      }).catch((err) => console.log(err));
     })
     .catch((err) => console.error(err));
 };
@@ -108,7 +102,7 @@ const onSubmit = (state: ComplexType, navTo: (param: string) => void) => {
 export const ComplexForm: FC = () => {
   const { hasComplex, complex: complexInfo } = useSelector((state: AppComplex) => state.complex);
   // const initialAddressRef = useRef("");
-  const [locationLoading, setLocationLoading] = useState(false);
+  // const [locationLoading, setLocationLoading] = useState(false);
   const navigate = useNavigate();
 
   const [state, setState] = useState<ComplexType>({
@@ -153,9 +147,9 @@ export const ComplexForm: FC = () => {
     });
   };
 
-  const handleLocationChange = (address: string) => {
-    setLocationLoading(true);
-  };
+  // const handleLocationChange = (address: string) => {
+  //   setLocationLoading(true);
+  // };
 
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
@@ -166,7 +160,6 @@ export const ComplexForm: FC = () => {
           if (res) {
             const { lat, lng } = res;
             onSubmit({ ...state, lat, lng }, navigate);
-            return
           }
         })
         .catch((e) => {
@@ -175,51 +168,52 @@ export const ComplexForm: FC = () => {
     }
 
     onSubmit(state, navigate);
-    return
   };
 
   const handleCancel = () => {
     setState({
       ...complexInfo,
     });
-    return navigate('/propietarios')
-  }
+    return navigate('/propietarios');
+  };
   const handleAvailabilityChange = (newAvailability: HoursType[]) => {
     setState({ ...state, availability: newAvailability });
   };
   return (
-    <form onSubmit={handleSubmit} className='flex flex-col items-center'>
-      <Toaster
-        position='top-center'
-      />
+    <form onSubmit={handleSubmit} className="flex flex-col items-center">
+      <Toaster position="top-center" />
       {/* <ImageUploader className={'w-10/12 mb-[12px] mt- h-[225px] lg:h-[400px] lg:w-[800px]'} /> */}
-      <div className='w-full mb-5 flex flex-col items-center gap-10 lg:flex-row lg:w-1/2 lg:justify-center lg:h-[500px]'>
-        <div className='w-full flex flex-col items-center gap-5 mt-10 lg:w-4/6'>
+      <div className="w-full mb-5 flex flex-col items-center gap-10 lg:flex-row lg:w-1/2 lg:justify-center lg:h-[500px]">
+        <div className="w-full flex flex-col items-center gap-5 mt-10 lg:w-4/6">
           <Input
-            type='text'
-            label='Nombre del complejo'
+            validation={false}
+            type="text"
+            label="Nombre del complejo"
             value={state.name}
             name={'name'}
             handleChange={handleChange}
             icon={<MdTitle />}
           />
           <Input
-            type='text'
-            label='Email'
+            validation={false}
+            type="text"
+            label="Email"
             value={state.email}
             name={'email'}
             handleChange={handleChange}
           />
           <Input
-            type='text'
-            label='Telefono'
+            validation={false}
+            type="text"
+            label="Telefono"
             value={state.phone}
             name={'phone'}
             handleChange={handleChange}
           />
           <InputLocation
-            label='Direccion'
-            location={state.address}
+            validation={false}
+            label="Direccion"
+            value={state.address}
             handleLocationName={(location) =>
               handleChange({ target: { name: 'address', value: location } })
             }
@@ -230,7 +224,7 @@ export const ComplexForm: FC = () => {
             changeAvailability={handleAvailabilityChange}
           />
         </div>
-        <div className='w-10/12 mt-5 flex flex-col gap-3 text-lg lg:w-2/6 lg:relative lg:top-8'>
+        <div className="w-10/12 mt-5 flex flex-col gap-3 text-lg lg:w-2/6 lg:relative lg:top-8">
           <Checkbox
             name={'parking'}
             value={state.parking}
@@ -268,8 +262,8 @@ export const ComplexForm: FC = () => {
           </Checkbox>
         </div>
       </div>
-      <div className='flex w-10/12 justify-between lg:relative lg:w-4/12 lg:m-10'>
-        <PrimaryButton type='button' text='CANCELAR' alternative={true} onClick={handleCancel} />
+      <div className="flex w-10/12 justify-between lg:relative lg:w-4/12 lg:m-10">
+        <PrimaryButton type="button" text="CANCELAR" alternative={true} onClick={handleCancel} />
         <PrimaryButton text={hasComplex ? 'GUARDAR' : 'CREAR'} />
       </div>
     </form>

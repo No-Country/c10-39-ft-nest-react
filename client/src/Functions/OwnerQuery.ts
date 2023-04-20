@@ -51,6 +51,7 @@ export async function OwnerAddSFQuery(props: SportFieldProps) {
 }
 export async function OwnerEditSFQuery(props: SportFieldProps, id: string) {
   try {
+    props.capacity = Number(props.capacity);
     const { data }: dataType = await axios.patch(`/sportfields/${id}`, props);
 
     if (!Array.isArray(data) && data.error) throw new Error(`Error: data.error = ${data.error}`);

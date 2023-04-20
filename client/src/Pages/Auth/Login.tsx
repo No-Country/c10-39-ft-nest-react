@@ -52,7 +52,7 @@ const Login: FC = () => {
               color: '#4CAF50',
             },
           });
-          return setTimeout(() => navigate('/inicio'), 1000);
+          return setTimeout(() => navigate('/inicio'), 1500);
         }
         Swal.fire({
           title: 'Error!',

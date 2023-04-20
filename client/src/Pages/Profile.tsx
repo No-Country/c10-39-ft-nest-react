@@ -11,8 +11,8 @@ import PrimaryButton from '../Components/PrimaryButton';
 import { PostFile } from '../Functions/FileQuery';
 import { updateUser } from '../Functions/UserQuery';
 import { type AppUser } from '../types/App.type';
-import { inputData, objectProp, validationInputs } from '../utils/validationInputs';
 import { modifyObj } from '../utils/modifyObj';
+import { type inputData, type objectProp, validationInputs } from '../utils/validationInputs';
 
 interface stateType {
   [key: string]: inputData;
@@ -52,8 +52,6 @@ const Profile: FC = () => {
       const { newState, pass } = validationInputs({ ...state }, 5);
       setState(newState);
       if (!pass) return;
-
-      if (!userInfo) throw new Error('Error: userInfo is undefined');
 
       if (!file && !userInfo.image) throw new Error(`Error: file es null y no hay imagen guardada`);
       const image = file ? await PostFile(file) : userInfo.image;

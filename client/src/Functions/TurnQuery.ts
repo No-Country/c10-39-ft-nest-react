@@ -1,4 +1,5 @@
-import { TurnType } from '../types/Turn.type';
+import { type TurnType } from '../types/Turn.type';
+
 import axios from './axios';
 
 export async function GetTurns() {

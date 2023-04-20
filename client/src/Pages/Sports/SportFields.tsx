@@ -69,7 +69,7 @@ const SportFields: FC = () => {
                 />
               ))}
           </div>
-          <div className="hidden rounded-lg lg:block w-[700px] h-[475px] bg-primary mt-20">
+          <div className="hidden rounded-3xl lg:block w-[700px] h-[475px] bg-primary mt-20">
             {data.length && (
               <Maps
                 initialCoords={{

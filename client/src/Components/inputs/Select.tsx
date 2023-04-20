@@ -4,10 +4,10 @@ interface selectType {
   array: string[];
   label: string;
   value: string;
-  handleClick: (option: string) => void;
+  validation: boolean;
   anyOption?: boolean;
   icon?: any;
-  validationError?: boolean;
+  handleClick: (option: string) => void;
 }
 
 const Select: FC<selectType> = ({
@@ -17,7 +17,7 @@ const Select: FC<selectType> = ({
   label,
   icon,
   anyOption = true,
-  validationError = true,
+  validation,
 }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
@@ -32,7 +32,7 @@ const Select: FC<selectType> = ({
       <input
         id={label}
         className={`${
-          validationError ? 'divide-red' : 'divide-black'
+          validation ? 'divide-black' : 'divide-red'
         } inputFocus bg-[transparent] order-2 transition-colors  border-b-2 pb-2 pl-2 pr-10 focus:outline-none`}
         readOnly
         type={'text'}
@@ -77,7 +77,7 @@ const Select: FC<selectType> = ({
           {icon}
         </div>
       )}
-      {validationError && (
+      {validation || (
         <span className="order-3 text-red">Error: debes seleccionar un tipo de cancha</span>
       )}
     </div>

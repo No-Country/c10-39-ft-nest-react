@@ -1,6 +1,7 @@
 export interface inputData {
   value: string;
   validation: boolean;
+  select?: boolean;
 }
 
 export type objectProp = Record<string, inputData>;
@@ -16,7 +17,11 @@ export const validationInputs: validationType = (inputs, wLength) => {
     const inputName: string = e[0];
     const inputInfo: inputData = e[1];
     const wordWithoutSpaces = inputInfo.value.replace(/\s+/g, '');
-    inputInfo.validation = wordWithoutSpaces.length > wLength;
+    if (inputInfo.select) {
+      inputInfo.validation = wordWithoutSpaces.length >= 1;
+    } else {
+      inputInfo.validation = wordWithoutSpaces.length > wLength;
+    }
 
     return {
       [inputName]: inputInfo,

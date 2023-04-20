@@ -42,11 +42,14 @@ const AvailabilityRange: FC<Props> = ({ hours, changeAvailability }) => {
   };
 
   return (
-    <div className='w-10/12 relative'>
-      <div className='flex justify-between pr-2 divide-black divide-solid border-b-2'>
-        <p>Disponibilidad</p>
+    <div className="w-10/12 relative mt-12">
+      <div className="flex justify-between pr-2 divide-black divide-solid border-b-2">
+        <label htmlFor="addAvailability" className="cursor-pointer">
+          Disponibilidad
+        </label>
         <button
-          type='button'
+          id="addAvailability"
+          type="button"
           onClick={handleClick}
           className={`ml-12 text-xl transition-transform ${open ? 'rotate-90' : '-rotate-90'}`}
         >
@@ -54,8 +57,8 @@ const AvailabilityRange: FC<Props> = ({ hours, changeAvailability }) => {
         </button>
       </div>
       {open && (
-        <div className='z-10 w-full absolute bg-white rounded-md px-1 shadow-lg'>
-          <ul className='hoursScrollbar py-3 overflow-y-scroll max-h-[160px] relative left-1'>
+        <div className="z-10 w-full absolute bg-white rounded-md px-1 shadow-lg">
+          <ul className="hoursScrollbar py-3 overflow-y-scroll max-h-[160px] relative left-1">
             {hours.length > 0 &&
               hours.map((range, idx) => {
                 return (
@@ -77,8 +80,8 @@ const AvailabilityRange: FC<Props> = ({ hours, changeAvailability }) => {
             )}
           </ul>
           {!adding && (
-            <div className='flex justify-center items-center p-2 w-full'>
-              <button type='button' className='px-2' onClick={() => setAdding(!adding)}>
+            <div className="flex justify-center items-center p-2 w-full">
+              <button type="button" className="px-2" onClick={() => setAdding(!adding)}>
                 Agregar
               </button>
               <IoMdAdd />

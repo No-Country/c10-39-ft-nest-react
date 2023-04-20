@@ -27,13 +27,13 @@ const ReservationCard: FC<Props> = ({ reservation, deleteReservations }) => {
       confirmButtonText: 'Cancelar Reservación',
       confirmButtonColor: '#4CAF50',
       showCancelButton: true,
-      cancelButtonText: 'Volver'
+      cancelButtonText: 'Volver',
     }).then((result) => {
       if (result.isConfirmed) {
         DeleteReservation(id)
           .then(() => {
             if (deleteReservations(id)) {
-              toast.error('No se pudo cancelar la reservacion')
+              toast.error('No se pudo cancelar la reservacion');
             }
             // throw new Error('No se pudo cancelar la reserva')};
           })
@@ -45,7 +45,7 @@ const ReservationCard: FC<Props> = ({ reservation, deleteReservations }) => {
           }))
           .catch((err) => console.log(err));
       }
-    })
+    });
 
   };
   return (
