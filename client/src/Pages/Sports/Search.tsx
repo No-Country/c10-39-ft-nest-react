@@ -86,7 +86,7 @@ export const Search: FC = () => {
           onSubmit={handleSubmit}
           className="flex w-full flex-col items-center lg:mx-[30%] lg:h-[600px] bg-lightWhite rounded-lg h-[500px] mt-20 lg:my-12 relative"
         >
-          <div className="flex flex-col gap-5 w-full items-center mt-10 lg:gap-10">
+          <div className="flex flex-col gap-10 w-full items-center mt-10">
             <InputLocation
               label="Ubicacion"
               icon={<MdLocationOn />}

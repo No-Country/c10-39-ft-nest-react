@@ -9,7 +9,7 @@ import Input from '../../Components/inputs/Input';
 import Layout from '../../Components/layout/Layout';
 import PrimaryButton from '../../Components/PrimaryButton';
 import { OwnerEditSFQuery } from '../../Functions/OwnerQuery';
-import { AppUser } from '../../types/App.type';
+import { type AppUser } from '../../types/App.type';
 
 const SFownerEdit: FC = () => {
   const [state, setState] = useState({

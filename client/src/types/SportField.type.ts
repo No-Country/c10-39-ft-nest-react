@@ -1,4 +1,4 @@
-import { IReservation } from './Reservation.type';
+import { type IReservation } from './Reservation.type';
 
 export interface ISportField {
   id: string;
