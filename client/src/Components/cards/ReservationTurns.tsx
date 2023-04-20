@@ -1,6 +1,8 @@
 import { type FC, useState } from 'react';
+import toast from 'react-hot-toast';
 
 import { GoKebabVertical } from 'react-icons/go';
+import Swal from 'sweetalert2';
 
 import { DeleteTurns } from '../../Functions/TurnQuery';
 
@@ -18,9 +20,25 @@ const ReservationTurns: FC<props> = ({ reservation, fieldType }) => {
   const handleModal = () => setShowModal(!showModal);
 
   const handleDelete = () => {
-    DeleteTurns({ id: reservation.id })
-      .then(() => alert('Reserva eliminada'))
+    Swal.fire({
+      title: 'Cuidado!',
+      text: 'Esta por eliminar una reserva!',
+      footer: `<b>Advertencia:</b> &nbsp Una vez eliminada la reserva, estara disponible para otros usuarios.`,
+      icon: 'warning',
+      confirmButtonText: 'Eliminar',
+      confirmButtonColor: '#4CAF50',
+      showCancelButton: true,
+      cancelButtonText: 'Volver',
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          DeleteTurns({ id: reservation.id })
+            .then(() => toast.success('Reserva eliminada', { duration: 2000 }))
+            .catch((err) => console.log(err));
+        }
+      })
       .catch((err) => console.log(err));
+
   };
 
   return (
