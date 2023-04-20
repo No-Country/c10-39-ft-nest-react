@@ -21,12 +21,12 @@ export class CreateSportsComplexDTO {
 
   @ApiProperty({
     description: 'Address of the Complex',
-    maxLength: 60,
+    maxLength: 200,
     minLength: 3,
     example: 'Av. Fuerza Aerea Argentina 3712',
   })
   @IsNotEmpty()
-  @Length(3, 60)
+  @Length(3, 200)
   address: string;
 
   @ApiProperty({

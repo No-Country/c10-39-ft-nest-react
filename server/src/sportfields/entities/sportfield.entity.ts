@@ -11,7 +11,7 @@ export class SportField {
   @Column('text')
   name: string;
 
-  @Column('text')
+  @Column('text', { nullable: true })
   description: string;
 
   @Column('text')

@@ -31,22 +31,17 @@ export async function OwnerRegisterQuery(props: ownerRegisterProps) {
 }
 
 interface SportFieldProps {
-  title: string;
-  sportField: string;
-  capacity: string;
+  name: string;
+  sport: string;
+  fieldType: string;
+  dimensions: string;
+  capacity: string | number;
 }
 
-export async function OwnerAddSFQuery(props: SportFieldProps, token: string, id: string) {
+export async function OwnerAddSFQuery(props: SportFieldProps) {
   try {
-    const { data }: dataType = await axios.post(
-      '/sportfields',
-      { ...props, id },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
+    props.capacity = Number(props.capacity);
+    const { data }: dataType = await axios.post('/sportfields', { ...props });
 
     if (!Array.isArray(data) && data.error) throw new Error(`Error: data.error = ${data.error}`);
 
@@ -55,17 +50,10 @@ export async function OwnerAddSFQuery(props: SportFieldProps, token: string, id:
     console.log(error);
   }
 }
-export async function OwnerEditSFQuery(props: SportFieldProps, token: string, id: string) {
+export async function OwnerEditSFQuery(props: SportFieldProps, id: string) {
   try {
-    const { data }: dataType = await axios.patch(
-      '/sportfields',
-      { ...props, id },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
+    props.capacity = Number(props.capacity);
+    const { data }: dataType = await axios.patch(`/sportfields/${id}`, props);
 
     if (!Array.isArray(data) && data.error) throw new Error(`Error: data.error = ${data.error}`);
 

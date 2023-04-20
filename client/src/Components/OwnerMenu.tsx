@@ -1,26 +1,26 @@
 import { type FC } from 'react';
-
 import { useSelector } from 'react-redux';
-import { AppComplex } from '../types/App.type';
 
-import Card from './Card';
-import OwnerCard from './OwnerCard';
+import { type AppComplex } from '../types/App.type';
+
+import Card from './cards/Card';
+import OwnerCard from './cards/OwnerCard';
 
 export const OwnerMenu: FC = () => {
   const hasComplex = useSelector((state: AppComplex) => state.complex?.hasComplex);
 
-  console.log(hasComplex);
-
   return (
-    <div className='w-full pb-12 h-full  fixed bg-tenis-desktop bg-cover bg-[30%] '>
-      <div className='overflow-y-scroll flex flex-col pb-12 gap-16 mx-1 h-full pt-24 relative lg:flex-row lg:mx-20 lg:pt-0 lg:items-center lg:bottom-20 lg:justify-between'>
-        <OwnerCard exists={hasComplex} />
-        {hasComplex && (
-          <>
-            <Card route='/propietarios/canchas' title='Mis canchas' />
-            <Card route='/propietarios/agregar-cancha' title='Agregar cancha' />
-          </>
-        )}
+    <div className='w-full h-fit'>
+      <div className='w-full px-3 py-5 lg:absolute :lgtop-[15%] lg:top-1/4'>
+        <div className='flex flex-col w-full h-full gap-10 lg:flex-row lg:justify-center'>
+          <OwnerCard exists={hasComplex} />
+          {hasComplex && (
+            <>
+              <Card route='/propietarios/canchas' title='Mis canchas' />
+              <Card route='/propietarios/agregar-cancha' title='Agregar cancha' />
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

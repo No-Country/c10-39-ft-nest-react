@@ -1,6 +1,5 @@
-import { searchType } from '../types/Search.type';
+import { type searchType } from '../types/Search.type';
 import { type sportData } from '../types/Sport.type';
-import { ISportField } from '../types/SportField.type';
 
 import axios from './axios';
 
@@ -33,10 +32,12 @@ interface hoursType {
   start_hour: string;
 }
 
-export async function getSportAvailability(id: string) {
+export async function getSportAvailability(body: string, id: string) {
   try {
-    const { data }: { data: hoursType[] } = await axios.get(`/sportfields/${id}/availability`);
-    return data;
+    const { data } = await axios.post<{ turns: hoursType[] }>(`/sportfields/${id}/availability`, {
+      date: body,
+    });
+    return data.turns;
   } catch (error) {
     console.error(error);
   }
@@ -44,7 +45,7 @@ export async function getSportAvailability(id: string) {
 
 export async function getOwnerSportFields() {
   try {
-    const { data } = await axios.get<ISportField[]>('/sportfields/');
+    const { data } = await axios.get<sportData[]>('/sportfields/');
     return data;
   } catch (e) {
     console.error(e);

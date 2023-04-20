@@ -5,23 +5,22 @@ import 'react-calendar/dist/Calendar.css';
 
 import { authUser } from './Functions/UserQuery';
 import About from './Pages/About';
-import AddSFOwner from './Pages/AddSFOwner';
+import Login from './Pages/Auth/Login';
+import MainPage from './Pages/Auth/MainPage';
+import Register from './Pages/Auth/Register';
 import Help from './Pages/Help';
 import Home from './Pages/Home';
-import Login from './Pages/Login';
-import MainPage from './Pages/MainPage';
-import Owner from './Pages/Owner';
-import OwnerComplex from './Pages/OwnerComplex';
+import AddSFOwner from './Pages/Owner/AddSFOwner';
+import Owner from './Pages/Owner/Owner';
+import OwnerComplex from './Pages/Owner/OwnerComplex';
+import SFOwner from './Pages/Owner/SFOwner';
+import Turns from './Pages/Owner/Turns';
 import Profile from './Pages/Profile';
 import ProfileReservation from './Pages/ProfileReservation';
-import Register from './Pages/Register';
-import Reservation from './Pages/Reservation';
-import Search from './Pages/Search';
-import SFDetail from './Pages/SFDetial';
-import SFOwner from './Pages/SFOwner';
-import SFownerEdit from './Pages/SFOwnerEdit';
-import SportFields from './Pages/SportFields';
-import Turns from './Pages/Turns';
+import Reservation from './Pages/Sports/Reservation';
+import Search from './Pages/Sports/Search';
+import SFDetail from './Pages/Sports/SFDetial';
+import SportFields from './Pages/Sports/SportFields';
 
 function App() {
   useEffect(() => {
@@ -41,7 +40,7 @@ function App() {
 
         <Route path="/propietarios" element={<Owner />}></Route>
         <Route path="/propietarios/canchas" element={<SFOwner />}></Route>
-        <Route path="/propietarios/canchas/:id" element={<SFownerEdit />}></Route>
+        <Route path="/propietarios/canchas/:id" element={<AddSFOwner edit={true} />}></Route>
         <Route path="/propietarios/turnos" element={<Turns />}></Route>
         <Route path="/propietarios/agregar-cancha" element={<AddSFOwner />}></Route>
         <Route path="/propietarios/complejo" element={<OwnerComplex />}></Route>
@@ -55,7 +54,7 @@ function App() {
         <Route path="/ingresar" element={<Login />}></Route>
         <Route path="/registro" element={<Register />}></Route>
 
-        <Route path="*" element={<Navigate to="/" />}></Route>
+        <Route path="*" element={<Navigate to="/inicio" />}></Route>
       </Routes>
     </BrowserRouter>
   );

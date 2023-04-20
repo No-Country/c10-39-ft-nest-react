@@ -26,6 +26,7 @@ export async function registerUser(body: RegisterBody) {
 
     if (query.data.user) store.dispatch(setUser(query.data.user));
     if (query.data.token) localStorage.setItem('token', query.data.token);
+    return query;
   } catch (error) {
     console.log(error);
   }
@@ -70,7 +71,14 @@ export async function authUser(): Promise<void> {
   }
 }
 
-export async function updateUser(body: RegisterBody, token: string, id: string) {
+interface updateUserBody {
+  email: string;
+  firstName: string;
+  lastName: string;
+  image: string;
+}
+
+export async function updateUser(body: updateUserBody, id: string) {
   try {
     const query: QueryResponse = await axios.patch(`/users/${id}`, body);
 

@@ -10,12 +10,11 @@ interface SportItem {
   types: string[];
 }
 
-export async function getAllSports(token: string) {
+export async function getAllSports() {
   try {
     const { data }: { data: SportItem[] } = await axios.get('/sports', {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
       },
     });
     return data;
@@ -31,6 +30,7 @@ export async function getAllSport() {
       return {
         name: item.name,
         types: item.types,
+        image: item.images[0],
       };
     });
     store.dispatch(setSport(sportData));

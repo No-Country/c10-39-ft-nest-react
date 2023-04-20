@@ -1,79 +1,124 @@
 import { type FC, useState, type BaseSyntheticEvent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { AiFillEye } from 'react-icons/ai';
 import { HiOutlineUser, HiUser } from 'react-icons/hi';
 import { IoMdMail } from 'react-icons/io';
+import { MdEdit } from 'react-icons/md';
 
-import Input from '../Components/Input';
-import Layout from '../Components/Layout';
+import Input from '../Components/inputs/Input';
+import Layout from '../Components/layout/Layout';
 import PrimaryButton from '../Components/PrimaryButton';
-import { type AppUser } from '../types/App.type';
+import { PostFile } from '../Functions/FileQuery';
 import { updateUser } from '../Functions/UserQuery';
+import { type AppUser } from '../types/App.type';
+import { modifyObj } from '../utils/modifyObj';
+import { type inputData, type objectProp, validationInputs } from '../utils/validationInputs';
+
+interface stateType {
+  [key: string]: inputData;
+  email: inputData;
+  firstName: inputData;
+  lastName: inputData;
+}
 
 const Profile: FC = () => {
   const userInfo = useSelector((state: AppUser) => state.user.user);
-
-  const [state, setState] = useState({
-    email: userInfo?.email || '',
-    firstName: userInfo?.firstName || '',
-    lastName: userInfo?.lastName || '',
-    password: '',
-  });
+  const defaultState: stateType = {
+    email: { value: userInfo?.email || '', validation: true },
+    firstName: { value: userInfo?.firstName || '', validation: true },
+    lastName: { value: userInfo?.lastName || '', validation: true },
+  };
+  const [state, setState] = useState<stateType | objectProp>(defaultState);
 
   const handleChange = (event: BaseSyntheticEvent) => {
     setState((prev) => {
       const target = event.target;
       return {
         ...prev,
-        [target.name]: target.value,
+        [target.name]: { value: target.value, validation: true },
       };
     });
   };
 
-  const handleSubmit = (e: BaseSyntheticEvent) => {
-    e.preventDefault();
-    const token = localStorage.getItem('token') ?? '';
-    updateUser(state, token, userInfo.id).catch((err) => console.log(err));
+  const [image, setImage] = useState<string | ArrayBuffer>('');
+  const [file, setFile] = useState<null | File>(null);
+
+  const handleFile = (e: BaseSyntheticEvent) => {
+    setFile(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        reader.result && setImage(reader.result);
+      };
+    } else {
+      setImage(userInfo?.image ?? '');
+    }
   };
 
-  const handleCancel = () =>
-    setState({
-      email: userInfo?.email,
-      firstName: userInfo?.firstName,
-      lastName: userInfo?.lastName,
-      password: '',
-    });
+  const handleSubmit = async (e: BaseSyntheticEvent) => {
+    try {
+      e.preventDefault();
+
+      const { newState, pass } = validationInputs({ ...state }, 5);
+      setState(newState);
+      if (!pass) return;
+
+      if (!file && !userInfo.image) throw new Error(`Error: file es null y no hay imagen guardada`);
+      const image = file ? await PostFile(file) : userInfo.image;
+
+      if (!image) throw new Error('No se pudo guardar la imagen');
+      const newObj = modifyObj({ ...state });
+      await updateUser({ ...newObj, image }, userInfo.id);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleCancel = () => {
+    setState(defaultState);
+    setFile(null);
+    setImage(userInfo?.image ?? '');
+  };
 
   useEffect(() => {
-    setState({
-      email: userInfo?.email || '',
-      firstName: userInfo?.firstName || '',
-      lastName: userInfo?.lastName || '',
-      password: '',
-    });
+    setState(defaultState);
+    setImage(userInfo?.image ?? '');
   }, [userInfo]);
 
   return (
     <Layout title="Perfil">
       <form onSubmit={handleSubmit} className="flex flex-col items-center w-full">
-        <div className="bg-black w-36 h-36 rounded-full m-10 lg:m-20 lg:w-40 lg:h-40"></div>
+        <input type="file" hidden id="fileId" onChange={handleFile} />
+        <label
+          style={{
+            backgroundImage: `url(${image})`,
+          }}
+          htmlFor="fileId"
+          className="group border-2 flex relative justify-center items-center bg-no-repeat bg-cover cursor-pointer w-36 h-36 rounded-full m-10 lg:m-20 lg:w-40 lg:h-40 lg:overflow-hidden"
+        >
+          <span className="hidden absolute w-full h-full rounded-full lg:group-hover:flex opacity-10 bg-black"></span>
+          <MdEdit className="p-2 rounded-full box-content text-2xl bg-primary absolute bottom-0 right-0 border-2 lg:hidden lg:group-hover:flex lg:text-4xl lg:relative lg:border-0 lg:bg-[transparent]" />
+        </label>
         <div className="w-full flex flex-col items-center gap-5 lg:w-5/12">
           <Input
             type="text"
             label="Nombre"
             handleChange={handleChange}
             name="firstName"
-            value={state.firstName}
+            value={state.firstName.value}
             icon={<HiOutlineUser />}
+            validation={state.firstName.validation}
           />
           <Input
             type="text"
             label="Apellido"
             icon={<HiUser />}
             name="lastName"
-            value={state.lastName}
+            value={state.lastName.value}
             handleChange={handleChange}
+            validation={state.lastName.validation}
           />
           <Input
             type="mail"
@@ -81,15 +126,8 @@ const Profile: FC = () => {
             icon={<IoMdMail />}
             handleChange={handleChange}
             name="email"
-            value={state.email}
-          />
-          <Input
-            type="password"
-            label="Contraseña"
-            handleChange={handleChange}
-            name={'password'}
-            value={state.password}
-            icon={<AiFillEye />}
+            value={state.email.value}
+            validation={state.email.validation}
           />
         </div>
         <div className="flex w-10/12 justify-between absolute bottom-0 lg:relative lg:w-4/12 lg:m-10">

@@ -9,7 +9,7 @@ import { SportsService } from 'src/sports/sports.service';
 import { SportsComplexService } from 'src/sports-complex/sports-complex.service';
 import { Repository } from 'typeorm';
 
-import { CreateSportFieldDto, UpdateSportFieldDto } from './dto';
+import { CreateSportFieldDto, GetDayAvailabilityDto, UpdateSportFieldDto } from './dto';
 import { SportField } from './entities/sportfield.entity';
 import { AuthUserDTO, UserDTO } from 'src/Core/auth/dto';
 import SportsComplex from 'src/sports-complex/entities/sports-complex.entity';
@@ -67,12 +67,15 @@ export class SportfieldsService {
     }));
   }
 
-  async findUserReservations(user: AuthUserDTO) {
+  async findOwnerReservations(user: AuthUserDTO) {
     const reservations = await this.sportFieldRepository
       .createQueryBuilder('sf')
-      .innerJoinAndSelect('sf.reservation', 'res', 'res.userId = :userId', { userId: user.id })
-      .leftJoin('sf.sportsComplex', 'sc')
-      .addSelect('sc.address')
+      .innerJoinAndSelect('sf.reservation', 'res')
+      .leftJoin('res.user', 'user')
+      .addSelect(['user.firstName', 'user.lastName', 'user.email'])
+      .innerJoinAndSelect('sf.sportsComplex', 'sc', 'sc.ownerId = :ownerId', {
+        ownerId: user.ownerId,
+      })
       .getMany();
 
     return reservations;
@@ -82,6 +85,32 @@ export class SportfieldsService {
     const sportField = await this.sportFieldRepository.findOneBy({ id });
 
     return sportField.availability;
+  }
+
+  async getDayAvailability(id: string, getDayAvailabilityDto: GetDayAvailabilityDto) {
+    const { date } = getDayAvailabilityDto;
+    const sportField = await this.sportFieldRepository
+      .createQueryBuilder('sf')
+      .innerJoinAndSelect('sf.sportsComplex', 'sp', 'sf.id = :id', { id })
+      .leftJoinAndSelect('sp.availability', 'av')
+      .leftJoinAndSelect('sf.reservation', 'res', 'res.date = :date', { date })
+      .getOne();
+
+    const reservations = sportField.reservation.map((res) => res.hour);
+    return {
+      turns: sportField.availability.reduce((acc, range) => {
+        let { start_hour, end_hour } = range;
+        start_hour = typeof start_hour === 'string' ? parseInt(start_hour) : start_hour;
+        end_hour = typeof end_hour === 'string' ? parseInt(end_hour) : end_hour;
+
+        const turns = [];
+        for (let i = start_hour; i < end_hour; i++) {
+          if (reservations.includes(i)) continue;
+          turns.push({ start_hour: i, end_hour: i + 1 });
+        }
+        return [...acc, ...turns];
+      }, []),
+    };
   }
 
   async getReservations(id: string) {
@@ -95,18 +124,16 @@ export class SportfieldsService {
   }
 
   async findOne(id: string) {
-    const sportfield = await this.sportFieldRepository.findOneBy({ id });
+    const sportfield = await this.sportFieldRepository.findOne({
+      where: { id },
+      relations: { sport: true },
+    });
     if (!sportfield) throw new NotFoundException('SportField not found');
     return sportfield;
   }
 
   async create(createSportFieldDto: CreateSportFieldDto, ownerId: string) {
-    const {
-      sport: sportName,
-      sportsComplexId,
-      fieldType,
-      ...sportFieldAttrs
-    } = createSportFieldDto;
+    const { sport: sportName, fieldType, ...sportFieldAttrs } = createSportFieldDto;
 
     const newSportField = this.sportFieldRepository.create({
       ...sportFieldAttrs,
@@ -115,10 +142,10 @@ export class SportfieldsService {
     newSportField.sport = await this.getSport(sportName, fieldType);
     newSportField.fieldType = fieldType;
 
-    const sportsComplex = await this.sportsComplexService.findOneWithOwner(sportsComplexId);
-    console.log(sportsComplex);
+    const sportsComplex = await this.sportsComplexService.findOneByOwnerId(ownerId);
+    console.log(sportsComplex, ownerId);
 
-    if (sportsComplex.owner?.id !== ownerId)
+    if (!sportsComplex || sportsComplex.owner?.id !== ownerId)
       throw new ForbiddenException('Insuficient Permissions');
 
     newSportField.sportsComplex = sportsComplex;
@@ -173,6 +200,11 @@ export class SportfieldsService {
   ): Promise<any> {
     const R = 6371; // Radio de la Tierra en kilómetros
     const limit = 20; // Límite de resultados
+    // console.log(date);
+    // const splittedDate = date.split('/');
+    // const fDate = `${splittedDate[1]}/${splittedDate[0]}/${splittedDate[2]}`;
+    // console.log(fDate);
+    //
 
     const nearbySportFields = await this.sportFieldRepository
       .createQueryBuilder('sportField')
@@ -198,10 +230,12 @@ export class SportfieldsService {
       .innerJoin(
         'sportField.sport',
         'sport',
-        'sport.name = :sport AND sportField.fieldType = :fieldType',
+        `sport.name = :sport ${
+          fieldType === 'Cualquier tipo' ? '' : ' AND sportField.fieldType = :fieldType'
+        }`,
         { sport, fieldType },
       )
-      .leftJoin('sportField.sportsComplex', 'sportsComplex')
+      .leftJoinAndSelect('sportField.sportsComplex', 'sportsComplex')
       .innerJoin(
         'sportsComplex.availability',
         'ar',
@@ -221,7 +255,10 @@ export class SportfieldsService {
     const availableSportFields = nearbySportFields.filter((sp) => sp.reservation.length === 0);
 
     const sportFields = plainToClass(SportField, availableSportFields);
-    return sportFields;
+    return sportFields.map((sportField) => {
+      const { reservation: _, ...sf } = sportField;
+      return sf;
+    });
   }
 
   private async checkOwner(ownerId: string, sportFieldId: string) {

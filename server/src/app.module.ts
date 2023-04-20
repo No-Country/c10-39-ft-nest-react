@@ -19,6 +19,7 @@ import { SportsComplexModule } from './sports-complex/sports-complex.module';
 import { AvailabilityRange } from './sports-complex/entities/availability-range.entity';
 import User from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
+import { ImageModule } from './image/image.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { UsersModule } from './users/users.module';
     SportsComplexModule,
     OwnerModule,
     ReservationModule,
+    ImageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

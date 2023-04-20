@@ -26,8 +26,12 @@ const SportMenu: FC<sportProps> = ({ handleClick, state }) => {
       {sportNames?.length ? (
         sportNames.map((item) => {
           return (
-            <li key={item} className="pl-5 py-5 active:bg-primary">
-              <Link onClick={handleClick} to={`/reservar/${item}`}>
+            <li key={item}>
+              <Link
+                className="pl-5 py-5 active:bg-primary block"
+                onClick={handleClick}
+                to={`/reservar/${item}`}
+              >
                 {item}
               </Link>
             </li>
