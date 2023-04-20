@@ -82,7 +82,7 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
   const handleSubmit = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
 
-    const { newState, pass } = validationInputs({ ...state }, 5);
+    const { newState, pass } = validationInputs({ ...state }, 3);
     setState(newState);
     if (!pass) return;
 

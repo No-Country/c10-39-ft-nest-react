@@ -6,13 +6,12 @@ import {
   type Dispatch,
   type BaseSyntheticEvent,
 } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { MdLocationOn, MdTitle } from 'react-icons/md';
 import Swal from 'sweetalert2';
-
 
 import { setComplex } from '../../App/complexSlice';
 import store from '../../App/Store';
@@ -181,8 +180,6 @@ export const ComplexForm: FC = () => {
   };
   return (
     <form onSubmit={handleSubmit} className="flex flex-col items-center">
-      <Toaster position="top-center" />
-      {/* <ImageUploader className={'w-10/12 mb-[12px] mt- h-[225px] lg:h-[400px] lg:w-[800px]'} /> */}
       <div className="w-full mb-5 flex flex-col items-center gap-10 lg:flex-row lg:w-1/2 lg:justify-center lg:h-[500px]">
         <div className="w-full flex flex-col items-center gap-5 mt-10 lg:w-4/6">
           <Input
