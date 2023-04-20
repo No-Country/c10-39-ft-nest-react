@@ -1,4 +1,4 @@
-import { type FC, useState, useEffect } from 'react';
+import { type FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { FaBasketballBall } from 'react-icons/fa';

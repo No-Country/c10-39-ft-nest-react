@@ -65,7 +65,6 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
 
     const body = {
       ...state,
-      capacity: { value: parseInt(state.capacity.value), validation: true },
     };
 
     const newObj = modifyObj({ ...body });

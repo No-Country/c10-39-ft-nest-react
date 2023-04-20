@@ -65,7 +65,7 @@ const onSubmit = (state: ComplexType, navTo: (param: string) => void) => {
           showCancelButton: true,
           cancelButtonColor: '#4CAF50',
           cancelButtonText: 'Actualizar Campos',
-        });
+        }).catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
     return;
@@ -160,7 +160,6 @@ export const ComplexForm: FC = () => {
           if (res) {
             const { lat, lng } = res;
             onSubmit({ ...state, lat, lng }, navigate);
-            return;
           }
         })
         .catch((e) => {
@@ -169,7 +168,6 @@ export const ComplexForm: FC = () => {
     }
 
     onSubmit(state, navigate);
-    return;
   };
 
   const handleCancel = () => {

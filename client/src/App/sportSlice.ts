@@ -3,6 +3,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 export interface sportInfo {
   name: string;
   types: string[];
+  image: string;
 }
 export interface sportType {
   sport: sportInfo[] | null;

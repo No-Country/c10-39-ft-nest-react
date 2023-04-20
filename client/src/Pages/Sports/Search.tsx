@@ -24,6 +24,8 @@ export const Search: FC = () => {
   const { sport = '' } = useParams();
   const sportInfo = useSelector((state: appSport) => state.sport.sport);
 
+  const sportData = sportInfo?.find((item) => item.name === sport);
+
   const sportNames = sportInfo?.map((item) => item.name);
   const sportFields = sportInfo?.find((item) => item.name === sport);
 
@@ -90,9 +92,10 @@ export const Search: FC = () => {
   return (
     <Layout title={`${loader ? sport : ''}`}>
       <div className="w-full flex justify-center items-center">
+        <img src={sportData?.image} className="hidden lg:block fixed top-0 left-0 right-0 w-full" />
         <form
           onSubmit={handleSubmit}
-          className="flex w-full flex-col items-center lg:mx-[30%] lg:h-[600px] bg-lightWhite rounded-lg h-[500px] mt-20 lg:my-12 relative"
+          className="flex w-full flex-col items-center lg:mx-[30%] lg:h-[600px] backdrop-blur-sm bg-lightWhite rounded-lg h-[500px] mt-20 lg:my-12 relative"
         >
           <div className="flex flex-col gap-10 w-full items-center mt-10">
             <InputLocation

@@ -30,6 +30,7 @@ export async function getAllSport() {
       return {
         name: item.name,
         types: item.types,
+        image: item.images[0],
       };
     });
     store.dispatch(setSport(sportData));
