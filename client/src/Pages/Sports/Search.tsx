@@ -1,5 +1,6 @@
 import { type BaseSyntheticEvent, type FC, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import axios from 'axios';
@@ -7,6 +8,7 @@ import { BsCalendar2Event } from 'react-icons/bs';
 import { GiSoccerField } from 'react-icons/gi';
 import { MdLocationOn } from 'react-icons/md';
 import { TfiTime } from 'react-icons/tfi';
+import Swal from 'sweetalert2';
 
 import InputLocation from '../../Components/inputs/InputLocation';
 import Select from '../../Components/inputs/Select';
@@ -16,6 +18,7 @@ import Layout from '../../Components/layout/Layout';
 import PrimaryButton from '../../Components/PrimaryButton';
 import { type appSport } from '../../types/App.type';
 import { inputData, validationInputs } from '../../utils/validationInputs';
+import { getSportFieldsWithSport } from '../../Functions/SportFieldsQuery';
 
 const API_KEY = 'AIzaSyB8rVxLxXlomXkjJ04LRtFHC63AtzSnyw0';
 
@@ -44,22 +47,27 @@ export const Search: FC = () => {
   const handleLocationName = (option: string) => setLocation(modifyState(option));
 
   const handleSearch = async () => {
-    try {
-      const { data } = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${location.value}&key=${API_KEY}`,
-      );
-      if (!data.results[0]) {
-        throw new Error('Por favor complete la ubicacion con mas informacion');
-      }
-      const { lat, lng }: { lat: number; lng: number } = data.results[0].geometry?.location;
 
-      return { lat, lng };
-    } catch (error) {
-      alert(error);
+    if (location) {
+      try {
+        const { data } = await axios.get(
+          `https://maps.googleapis.com/maps/api/geocode/json?address=${location.value}&key=${API_KEY}`,
+        );
+        if (!data.results[0]) {
+          toast.error('Por favor complete la ubicacion con mas informacion')
+          // throw new Error('Por favor complete la ubicacion con mas informacion');
+        }
+        const { lat, lng }: { lat: number; lng: number } = data.results[0].geometry?.location;
+
+        return { lat, lng };
+      } catch (error) {
+        console.log(error);
+      }
     }
+    toast.error('La ubicacion no existe o no esta definida.')
   };
 
-  const handleSubmit = (e: BaseSyntheticEvent) => {
+  const handleSubmit = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
 
     const { newState, pass } = validationInputs({ location, field, turn, time }, 5);
@@ -71,11 +79,40 @@ export const Search: FC = () => {
     if (!pass) return;
 
     handleSearch()
-      .then((data) => {
+      .then(async (data) => {
         if (data && data.lat && data.lng) {
-          navigate(
+          const fetchPromise = await getSportFieldsWithSport({
+            lat: Number(data.lat),
+            lng: Number(data.lng),
+            rHour: Number(time),
+            date: turn,
+            sport,
+            fieldType: field,
+          })
+          const toastId = toast.loading('Buscando...', {
+            style: {
+              background: '#F5F5F5',
+              color: '#4CAF50',
+            },
+          })
+          // toast.loading('Buscando...', {
+          //   style: {
+          //     background: '#F5F5F5',
+          //     color: '#4CAF50',
+          //   }
+          // })
+          if (fetchPromise != undefined && fetchPromise?.length > 0) {
+            return setTimeout(() => {
+              toast.dismiss(toastId)
+              navigate(
             `/reservar/${sport}/canchas?lat=${data.lat}&lng=${data.lng}&rHour=${time.value}&date=${turn.value}&fieldType=${field.value}`,
-          );
+              )
+            }, 2000)
+          }
+
+          toast.dismiss(toastId)
+          toast.error('No se encontraron canchas.')
+
         }
       })
       .catch((err) => console.log(err));
@@ -91,6 +128,8 @@ export const Search: FC = () => {
 
   return (
     <Layout title={`${loader ? sport : ''}`}>
+      {/* TOASTER */}
+      <Toaster position="top-center" />
       <div className="w-full flex justify-center items-center">
         <img src={sportData?.image} className="hidden lg:block fixed top-0 left-0 right-0 w-full" />
         <form
