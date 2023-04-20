@@ -12,9 +12,10 @@ import Layout from '../../Components/layout/Layout';
 import PrimaryButton from '../../Components/PrimaryButton';
 import { OwnerAddSFQuery, OwnerEditSFQuery } from '../../Functions/OwnerQuery';
 import { getSportDetail } from '../../Functions/SportFieldsQuery';
-import { type appSport, AppUser } from '../../types/App.type';
+import { AppUser, type appSport } from '../../types/App.type';
 import { inputData, objectProp, validationInputs } from '../../utils/validationInputs';
 import { modifyObj } from '../../utils/modifyObj';
+import { PostFile } from '../../Functions/FileQuery';
 
 interface Props {
   edit?: boolean;
@@ -30,7 +31,6 @@ interface stateType {
 }
 
 const AddSFOwner: FC<Props> = ({ edit = false }) => {
-  const sportInfo = useSelector((state: appSport) => state.sport.sport);
   const { id = '' } = useParams();
 
   const defaultState: stateType = {
@@ -42,6 +42,12 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
   };
   const [state, setState] = useState<stateType | objectProp>(defaultState);
 
+  const [image, setImage] = useState('');
+  const [file, setFile] = useState<null | File>(null);
+  const handleFile = (e: BaseSyntheticEvent) => setFile(e.target.files[0]);
+
+  const userInfo = useSelector((state: AppUser) => state.user.user);
+  const sportInfo = useSelector((state: appSport) => state.sport.sport);
   const sportNames = sportInfo?.map((item) => item.name);
   const sportFields = sportInfo?.find((item) => item.name === state.sport.value);
 
@@ -56,7 +62,7 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
     });
   };
 
-  const handleSubmit = (e: BaseSyntheticEvent) => {
+  const handleSubmit = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
 
     const { newState, pass } = validationInputs({ ...state }, 5);
@@ -68,6 +74,11 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
     };
 
     const newObj = modifyObj({ ...body });
+
+    if (!file && !userInfo.image) throw new Error(`Error: file es null y no hay imagen guardada`);
+    const image = file ? await PostFile(file) : userInfo.image;
+    console.log(image);
+    if (!image) throw new Error('No se pudo guardar la imagen');
 
     if (edit) {
       OwnerEditSFQuery(newObj, id).catch((err) => console.log(err));
@@ -82,6 +93,8 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
   };
 
   useEffect(() => {
+    setImage(userInfo?.image ?? '');
+
     if (edit) {
       getSportDetail(id)
         .then((sportField) => {
@@ -100,14 +113,19 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
         })
         .catch(console.error);
     }
-  }, []);
+  }, [userInfo]);
 
   return (
     <Layout title="Agregar cancha">
       <form onSubmit={handleSubmit} className="relative min-h-[100vh] flex flex-col items-center">
-        <div className="bg-[#D9D9D9] rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[800px] text-center ">
-          +
-        </div>
+        <input type="file" hidden id="ownerFiles" onChange={handleFile} />
+        <label
+          style={{
+            backgroundImage: `url(${image})`,
+          }}
+          htmlFor="ownerFiles"
+          className="bg-[#D9D9D9] rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[600px] text-center "
+        ></label>
         <div className="flex flex-col w-full items-center gap-10 lg:w-[700px]">
           <Input
             type="text"
