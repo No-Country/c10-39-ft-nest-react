@@ -56,7 +56,7 @@ const Profile: FC = () => {
       if (!userInfo) throw new Error('Error: userInfo is undefined');
 
       if (!file && !userInfo.image) throw new Error(`Error: file es null y no hay imagen guardada`);
-      const image: undefined | string = file ? await PostFile(file) : userInfo.image;
+      const image = file ? await PostFile(file) : userInfo.image;
 
       if (!image) throw new Error('No se pudo guardar la imagen');
       const newObj = modifyObj({ ...state });
@@ -85,9 +85,10 @@ const Profile: FC = () => {
             backgroundImage: `url(${image})`,
           }}
           htmlFor="fileId"
-          className="group border-2 flex relative justify-center items-center bg cursor-pointer w-36 h-36 rounded-full m-10 lg:m-20 lg:w-40 lg:h-40"
+          className="group border-2 flex relative justify-center items-center bg-no-repeat bg-cover cursor-pointer w-36 h-36 rounded-full m-10 lg:m-20 lg:w-40 lg:h-40 lg:overflow-hidden"
         >
-          <MdEdit className="p-2 rounded-full box-content text-2xl bg-primary absolute bottom-0 right-0 border-2 lg:hidden lg:group-hover:flex lg:text-4xl lg:relative lg:border-0 lg:backdrop-blur-sm lg:bg-[transparent]" />
+          <span className="hidden absolute w-full h-full rounded-full lg:group-hover:flex opacity-10 bg-black"></span>
+          <MdEdit className="p-2 rounded-full box-content text-2xl bg-primary absolute bottom-0 right-0 border-2 lg:hidden lg:group-hover:flex lg:text-4xl lg:relative lg:border-0 lg:bg-[transparent]" />
         </label>
         <div className="w-full flex flex-col items-center gap-5 lg:w-5/12">
           <Input

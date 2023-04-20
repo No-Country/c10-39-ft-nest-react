@@ -79,7 +79,6 @@ interface updateUserBody {
 }
 
 export async function updateUser(body: updateUserBody, id: string) {
-  console.log(body);
   try {
     const query: QueryResponse = await axios.patch(`/users/${id}`, body);
 
