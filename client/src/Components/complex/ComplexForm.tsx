@@ -56,17 +56,19 @@ const onSubmit = (state: ComplexType, navTo: (param: string) => void) => {
             value && store.dispatch(setComplex(value))
             navTo('/propietarios')
           }, 2000)
+        } else {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Ocurrio un error al actualizar algunos campos',
+            footer: `<b>Tip:</b> &nbsp Recuerde todos los campos son obligatorios.`,
+            icon: 'error',
+            showConfirmButton: false,
+            showCancelButton: true,
+            cancelButtonColor: '#4CAF50',
+            cancelButtonText: "Actualizar Campos",
+          })
         }
-        Swal.fire({
-          title: 'Error!',
-          text: 'Ocurrio un error al actualizar algunos campos',
-          footer: `<b>Tip:</b>Recuerde todos los campos son obligatorios.`,
-          icon: 'error',
-          showConfirmButton: false,
-          showCancelButton: true,
-          cancelButtonColor: '#4CAF50',
-          cancelButtonText: "Actualizar Campos",
-        })
+
       })
       .catch((err) => console.log(err));
     return;
@@ -85,17 +87,19 @@ const onSubmit = (state: ComplexType, navTo: (param: string) => void) => {
           value && store.dispatch(setComplex(value))
           navTo('/propietarios')
         }, 2000)
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Faltan completar algunos campos.',
+          footer: `<b>Tip:</b> &nbsp Recuerde todos los campos son obligatorios.`,
+          icon: 'error',
+          showConfirmButton: false,
+          showCancelButton: true,
+          cancelButtonColor: '#4CAF50',
+          cancelButtonText: "Completar Campos",
+        })
       }
-      Swal.fire({
-        title: 'Error!',
-        text: 'Faltan completar algunos campos.',
-        footer: `<b>Tip:</b>Recuerde todos los campos son obligatorios.`,
-        icon: 'error',
-        showConfirmButton: false,
-        showCancelButton: true,
-        cancelButtonColor: '#4CAF50',
-        cancelButtonText: "Completar Campos",
-      })
+
 
     })
     .catch((err) => console.error(err));
