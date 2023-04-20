@@ -186,6 +186,7 @@ export const ComplexForm: FC = () => {
       <div className="w-full mb-5 flex flex-col items-center gap-10 lg:flex-row lg:w-1/2 lg:justify-center lg:h-[500px]">
         <div className="w-full flex flex-col items-center gap-5 mt-10 lg:w-4/6">
           <Input
+            validation={false}
             type="text"
             label="Nombre del complejo"
             value={state.name}
@@ -194,6 +195,7 @@ export const ComplexForm: FC = () => {
             icon={<MdTitle />}
           />
           <Input
+            validation={false}
             type="text"
             label="Email"
             value={state.email}
@@ -201,6 +203,7 @@ export const ComplexForm: FC = () => {
             handleChange={handleChange}
           />
           <Input
+            validation={false}
             type="text"
             label="Telefono"
             value={state.phone}
@@ -208,6 +211,7 @@ export const ComplexForm: FC = () => {
             handleChange={handleChange}
           />
           <InputLocation
+            validation={false}
             label="Direccion"
             value={state.address}
             handleLocationName={(location) =>
