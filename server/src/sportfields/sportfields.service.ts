@@ -128,6 +128,7 @@ export class SportfieldsService {
       where: { id },
       relations: { sport: true },
     });
+    console.log(sportfield)
     if (!sportfield) throw new NotFoundException('SportField not found');
     return sportfield;
   }
