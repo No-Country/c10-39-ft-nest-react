@@ -13,7 +13,6 @@ import Layout from '../../Components/layout/Layout';
 import PrimaryButton from '../../Components/PrimaryButton';
 import { OwnerAddSFQuery, OwnerEditSFQuery } from '../../Functions/OwnerQuery';
 import { appSport, AppUser } from '../../types/App.type';
-import Select from '../../Components/inputs/Select';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getSportDetail } from '../../Functions/SportFieldsQuery';
 import { ISportField, ISportFieldRespones } from '../../types/SportField.type';
