@@ -1,4 +1,4 @@
-import { objectProp } from './validationInputs';
+import { type objectProp } from './validationInputs';
 
 type validationType = (obj: objectProp) => any;
 

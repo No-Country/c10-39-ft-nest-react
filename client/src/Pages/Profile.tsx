@@ -11,8 +11,8 @@ import PrimaryButton from '../Components/PrimaryButton';
 import { PostFile } from '../Functions/FileQuery';
 import { updateUser } from '../Functions/UserQuery';
 import { type AppUser } from '../types/App.type';
-import { inputData, objectProp, validationInputs } from '../utils/validationInputs';
 import { modifyObj } from '../utils/modifyObj';
+import { type inputData, type objectProp, validationInputs } from '../utils/validationInputs';
 
 interface stateType {
   [key: string]: inputData;

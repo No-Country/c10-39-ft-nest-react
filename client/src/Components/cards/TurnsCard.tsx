@@ -1,7 +1,9 @@
 import { type FC, useState } from 'react';
 
 import { MdKeyboardArrowLeft } from 'react-icons/md';
-import { TurnType } from '../../types/Turn.type';
+
+import { type TurnType } from '../../types/Turn.type';
+
 import ReservationTurns from './ReservationTurns';
 
 interface TurnProp {

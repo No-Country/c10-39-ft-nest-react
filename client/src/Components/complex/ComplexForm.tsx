@@ -6,12 +6,13 @@ import {
   type Dispatch,
   type BaseSyntheticEvent,
 } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import toast, { Toaster } from 'react-hot-toast';
 
 import { MdLocationOn, MdTitle } from 'react-icons/md';
+import Swal from 'sweetalert2';
+
 
 import { setComplex } from '../../App/complexSlice';
 import store from '../../App/Store';

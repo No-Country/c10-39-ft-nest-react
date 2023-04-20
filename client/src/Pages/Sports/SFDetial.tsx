@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import toast, { Toaster } from 'react-hot-toast';
 
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import Swal from 'sweetalert2';

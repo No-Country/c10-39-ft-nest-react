@@ -1,6 +1,6 @@
 import { type BaseSyntheticEvent, type FC, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import toast, { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import axios from 'axios';
@@ -8,7 +8,6 @@ import { BsCalendar2Event } from 'react-icons/bs';
 import { GiSoccerField } from 'react-icons/gi';
 import { MdLocationOn } from 'react-icons/md';
 import { TfiTime } from 'react-icons/tfi';
-import Swal from 'sweetalert2';
 
 import InputLocation from '../../Components/inputs/InputLocation';
 import Select from '../../Components/inputs/Select';
@@ -16,9 +15,9 @@ import SelectCalendar from '../../Components/inputs/SelectCalendar';
 import SelectHour from '../../Components/inputs/SelectHour';
 import Layout from '../../Components/layout/Layout';
 import PrimaryButton from '../../Components/PrimaryButton';
-import { type appSport } from '../../types/App.type';
-import { inputData, validationInputs } from '../../utils/validationInputs';
 import { getSportFieldsWithSport } from '../../Functions/SportFieldsQuery';
+import { type appSport } from '../../types/App.type';
+import { type inputData, validationInputs } from '../../utils/validationInputs';
 
 const API_KEY = 'AIzaSyB8rVxLxXlomXkjJ04LRtFHC63AtzSnyw0';
 
@@ -47,14 +46,13 @@ export const Search: FC = () => {
   const handleLocationName = (option: string) => setLocation(modifyState(option));
 
   const handleSearch = async () => {
-
     if (location) {
       try {
         const { data } = await axios.get(
           `https://maps.googleapis.com/maps/api/geocode/json?address=${location.value}&key=${API_KEY}`,
         );
         if (!data.results[0]) {
-          toast.error('Por favor complete la ubicacion con mas informacion')
+          toast.error('Por favor complete la ubicacion con mas informacion');
           // throw new Error('Por favor complete la ubicacion con mas informacion');
         }
         const { lat, lng }: { lat: number; lng: number } = data.results[0].geometry?.location;
@@ -64,7 +62,7 @@ export const Search: FC = () => {
         console.log(error);
       }
     }
-    toast.error('La ubicacion no existe o no esta definida.')
+    toast.error('La ubicacion no existe o no esta definida.');
   };
 
   const handleSubmit = async (e: BaseSyntheticEvent) => {
@@ -85,34 +83,33 @@ export const Search: FC = () => {
             lat: Number(data.lat),
             lng: Number(data.lng),
             rHour: Number(time),
-            date: turn,
+            date: turn.value,
             sport,
-            fieldType: field,
-          })
+            fieldType: field.value,
+          });
           const toastId = toast.loading('Buscando...', {
             style: {
               background: '#F5F5F5',
               color: '#4CAF50',
             },
-          })
+          });
           // toast.loading('Buscando...', {
           //   style: {
           //     background: '#F5F5F5',
           //     color: '#4CAF50',
           //   }
           // })
-          if (fetchPromise != undefined && fetchPromise?.length > 0) {
+          if (fetchPromise !== undefined && fetchPromise?.length > 0) {
             return setTimeout(() => {
-              toast.dismiss(toastId)
+              toast.dismiss(toastId);
               navigate(
-            `/reservar/${sport}/canchas?lat=${data.lat}&lng=${data.lng}&rHour=${time.value}&date=${turn.value}&fieldType=${field.value}`,
-              )
-            }, 2000)
+                `/reservar/${sport}/canchas?lat=${data.lat}&lng=${data.lng}&rHour=${time.value}&date=${turn.value}&fieldType=${field.value}`,
+              );
+            }, 2000);
           }
 
-          toast.dismiss(toastId)
-          toast.error('No se encontraron canchas.')
-
+          toast.dismiss(toastId);
+          toast.error('No se encontraron canchas.');
         }
       })
       .catch((err) => console.log(err));

@@ -10,8 +10,8 @@ import Layout from '../../Components/layout/Layout';
 import PrimaryButton from '../../Components/PrimaryButton';
 import { OwnerRegisterQuery } from '../../Functions/OwnerQuery';
 import type RegisterResponse from '../../types/RegisterResponse.type';
-import { inputData, objectProp, validationInputs } from '../../utils/validationInputs';
 import { modifyObj } from '../../utils/modifyObj';
+import { type inputData, type objectProp, validationInputs } from '../../utils/validationInputs';
 
 interface stateType {
   [key: string]: inputData;
