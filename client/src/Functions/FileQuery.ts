@@ -13,7 +13,7 @@ export async function PostFile(file: File) {
         },
       },
     );
-    return data.data;
+    return data;
   } catch (error) {
     console.error(error);
   }

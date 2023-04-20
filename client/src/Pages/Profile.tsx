@@ -11,22 +11,31 @@ import PrimaryButton from '../Components/PrimaryButton';
 import { PostFile } from '../Functions/FileQuery';
 import { updateUser } from '../Functions/UserQuery';
 import { type AppUser } from '../types/App.type';
+import { inputData, objectProp, validationInputs } from '../utils/validationInputs';
+import { modifyObj } from '../utils/modifyObj';
+
+interface stateType {
+  [key: string]: inputData;
+  email: inputData;
+  firstName: inputData;
+  lastName: inputData;
+}
 
 const Profile: FC = () => {
   const userInfo = useSelector((state: AppUser) => state.user.user);
-
-  const [state, setState] = useState({
-    email: userInfo?.email || '',
-    firstName: userInfo?.firstName || '',
-    lastName: userInfo?.lastName || '',
-  });
+  const defaultState: stateType = {
+    email: { value: userInfo?.email || '', validation: true },
+    firstName: { value: userInfo?.firstName || '', validation: true },
+    lastName: { value: userInfo?.lastName || '', validation: true },
+  };
+  const [state, setState] = useState<stateType | objectProp>(defaultState);
 
   const handleChange = (event: BaseSyntheticEvent) => {
     setState((prev) => {
       const target = event.target;
       return {
         ...prev,
-        [target.name]: target.value,
+        [target.name]: { value: target.value, validation: true },
       };
     });
   };
@@ -37,35 +46,33 @@ const Profile: FC = () => {
   const handleFile = (e: BaseSyntheticEvent) => setFile(e.target.files[0]);
 
   const handleSubmit = async (e: BaseSyntheticEvent) => {
-    e.preventDefault();
     try {
+      e.preventDefault();
+
+      const { newState, pass } = validationInputs({ ...state }, 5);
+      setState(newState);
+      if (!pass) return;
+
       if (!userInfo) throw new Error('Error: userInfo is undefined');
 
       if (!file && !userInfo.image) throw new Error(`Error: file es null y no hay imagen guardada`);
-      const image: undefined | string = file ? await PostFile(file) : userInfo.image;
+      const image = file ? await PostFile(file) : userInfo.image;
 
       if (!image) throw new Error('No se pudo guardar la imagen');
-      await updateUser({ ...state, image }, userInfo.id);
+      const newObj = modifyObj({ ...state });
+      await updateUser({ ...newObj, image }, userInfo.id);
     } catch (err) {
       console.log(err);
     }
   };
 
   const handleCancel = () => {
-    setState({
-      email: userInfo?.email,
-      firstName: userInfo?.firstName,
-      lastName: userInfo?.lastName,
-    });
+    setState(defaultState);
     setFile(null);
   };
 
   useEffect(() => {
-    setState({
-      email: userInfo?.email || '',
-      firstName: userInfo?.firstName || '',
-      lastName: userInfo?.lastName || '',
-    });
+    setState(defaultState);
     setImage(userInfo?.image ?? '');
   }, [userInfo]);
 
@@ -78,9 +85,10 @@ const Profile: FC = () => {
             backgroundImage: `url(${image})`,
           }}
           htmlFor="fileId"
-          className="group border-2 flex relative justify-center items-center bg cursor-pointer w-36 h-36 rounded-full m-10 lg:m-20 lg:w-40 lg:h-40"
+          className="group border-2 flex relative justify-center items-center bg-no-repeat bg-cover cursor-pointer w-36 h-36 rounded-full m-10 lg:m-20 lg:w-40 lg:h-40 lg:overflow-hidden"
         >
-          <MdEdit className="p-2 rounded-full box-content text-2xl bg-primary absolute bottom-0 right-0 border-2 lg:hidden lg:group-hover:flex lg:text-4xl lg:relative lg:border-0 lg:backdrop-blur-sm lg:bg-[transparent]" />
+          <span className="hidden absolute w-full h-full rounded-full lg:group-hover:flex opacity-10 bg-black"></span>
+          <MdEdit className="p-2 rounded-full box-content text-2xl bg-primary absolute bottom-0 right-0 border-2 lg:hidden lg:group-hover:flex lg:text-4xl lg:relative lg:border-0 lg:bg-[transparent]" />
         </label>
         <div className="w-full flex flex-col items-center gap-5 lg:w-5/12">
           <Input
@@ -88,16 +96,18 @@ const Profile: FC = () => {
             label="Nombre"
             handleChange={handleChange}
             name="firstName"
-            value={state.firstName}
+            value={state.firstName.value}
             icon={<HiOutlineUser />}
+            validation={state.firstName.validation}
           />
           <Input
             type="text"
             label="Apellido"
             icon={<HiUser />}
             name="lastName"
-            value={state.lastName}
+            value={state.lastName.value}
             handleChange={handleChange}
+            validation={state.lastName.validation}
           />
           <Input
             type="mail"
@@ -105,7 +115,8 @@ const Profile: FC = () => {
             icon={<IoMdMail />}
             handleChange={handleChange}
             name="email"
-            value={state.email}
+            value={state.email.value}
+            validation={state.email.validation}
           />
         </div>
         <div className="flex w-10/12 justify-between absolute bottom-0 lg:relative lg:w-4/12 lg:m-10">
