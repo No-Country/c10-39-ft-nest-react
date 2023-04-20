@@ -18,14 +18,13 @@ const SportField: FC<sportFieldType> = ({ complexData, btnText, route, item }) =
   const navigate = useNavigate();
 
   const handleClick = () => setMoreInfo(!moreInfo);
-
   return (
     <div className="mb-5 shadow-lg">
       <div
         style={{ backgroundImage: `url(${item?.images[0]})` }}
         className="bg-cover bg-center w-full h-52 rounded-t-lg"
       ></div>
-      <div className="flex flex-col gap-5 p-5 bg-white rounded-b-lg">
+      <div className="flex flex-col gap-5 pl-5 py-5 pr-3 bg-white rounded-b-lg">
         <div>
           <span className="block text-3xl ">{item?.name}</span>
           {complexData && (
@@ -37,10 +36,10 @@ const SportField: FC<sportFieldType> = ({ complexData, btnText, route, item }) =
         <div
           className={`${
             complexData ? 'items-center' : 'gap-5 flex-row-reverse'
-          } flex w-full justify-left flex-wrap`}
+          } flex w-full justify-between flex-wrap`}
         >
           {complexData ? (
-            <span className="w-1/2">Estrellas</span>
+            <span className="w-1/2 flex-grow">{item?.sportsComplex?.address}</span>
           ) : (
             <PrimaryButton text="ADMINISTRAR" onClick={() => navigate('/propietarios/turnos')} />
           )}

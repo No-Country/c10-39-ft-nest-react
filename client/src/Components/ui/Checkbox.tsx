@@ -20,13 +20,13 @@ export const Checkbox: FC<PropsWithChildren<Props>> = ({
         className ?? ''
       }`}
     >
-      <label htmlFor={name} className='text-lg'>
+      <label htmlFor={name} className="text-lg">
         {children}
       </label>
       <input
         id={name}
-        className='accent-primary'
-        type='checkbox'
+        className="accent-primary cursor-pointer"
+        type="checkbox"
         onChange={handleChange}
         checked={value}
       />

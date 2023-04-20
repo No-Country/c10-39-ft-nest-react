@@ -13,22 +13,73 @@ import PrimaryButton from '../../Components/PrimaryButton';
 import { OwnerAddSFQuery, OwnerEditSFQuery } from '../../Functions/OwnerQuery';
 import { getSportDetail } from '../../Functions/SportFieldsQuery';
 import { type appSport, AppUser } from '../../types/App.type';
+import { inputData, objectProp, validationInputs } from '../../utils/validationInputs';
+import { modifyObj } from '../../utils/modifyObj';
 
 interface Props {
   edit?: boolean;
+}
+
+interface stateType {
+  [key: string]: inputData;
+  name: inputData;
+  fieldType: inputData;
+  sport: inputData;
+  dimensions: inputData;
+  capacity: inputData;
 }
 
 const AddSFOwner: FC<Props> = ({ edit = false }) => {
   const sportInfo = useSelector((state: appSport) => state.sport.sport);
   const { id = '' } = useParams();
 
-  const [state, setState] = useState({
-    name: '',
-    fieldType: '',
-    sport: '',
-    dimensions: '',
-    capacity: '',
-  });
+  const defaultState: stateType = {
+    name: { value: '', validation: true },
+    fieldType: { value: '', validation: true },
+    sport: { value: '', validation: true },
+    dimensions: { value: '', validation: true },
+    capacity: { value: '', validation: true },
+  };
+  const [state, setState] = useState<stateType | objectProp>(defaultState);
+
+  const sportNames = sportInfo?.map((item) => item.name);
+  const sportFields = sportInfo?.find((item) => item.name === state.sport.value);
+
+  const handleChange = (event: BaseSyntheticEvent) => {
+    setState((prev) => {
+      const target = event.target;
+      return {
+        ...prev,
+        [target.name]: { value: target.value, validation: true },
+      };
+    });
+  };
+
+  const handleSubmit = (e: BaseSyntheticEvent) => {
+    e.preventDefault();
+
+    const { newState, pass } = validationInputs({ ...state }, 5);
+    setState(newState);
+    if (!pass) return;
+
+    const body = {
+      ...state,
+      capacity: { value: parseInt(state.capacity.value), validation: true },
+    };
+
+    const newObj = modifyObj({ ...body });
+
+    if (edit) {
+      OwnerEditSFQuery(newObj, id).catch((err) => console.log(err));
+      return;
+    }
+
+    OwnerAddSFQuery(newObj)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     if (edit) {
@@ -39,39 +90,17 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
             return;
           }
           const { name, fieldType, sport, dimensions, capacity } = sportField;
-          setState({ name, fieldType, sport: sport.name, dimensions, capacity: `${capacity}` });
+          setState({
+            name: { value: name, validation: true },
+            fieldType: { value: fieldType, validation: true },
+            sport: { value: sport.name, validation: true },
+            dimensions: { value: dimensions, validation: true },
+            capacity: { value: `${capacity}`, validation: true },
+          });
         })
         .catch(console.error);
     }
   }, []);
-
-  const sportNames = sportInfo?.map((item) => item.name);
-  const sportFields = sportInfo?.find((item) => item.name === state.sport);
-
-  const handleChange = (event: BaseSyntheticEvent) => {
-    setState((prev) => {
-      const target = event.target;
-      return {
-        ...prev,
-        [target.name]: target.value,
-      };
-    });
-  };
-
-  const handleSubmit = (e: BaseSyntheticEvent) => {
-    const body = { ...state, capacity: parseInt(state.capacity) };
-    e.preventDefault();
-    if (edit) {
-      OwnerEditSFQuery(body, id).catch((err) => console.log(err));
-      return;
-    }
-
-    OwnerAddSFQuery(body)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
-  };
 
   return (
     <Layout title="Agregar cancha">
@@ -85,40 +114,49 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
             label="Nombre"
             icon={<MdTitle />}
             handleChange={handleChange}
-            value={state.name}
+            value={state.name.value}
             name={'name'}
+            validation={state.name.validation}
           />
           <Select
             array={sportNames}
             label="Deporte"
-            value={state.sport}
-            handleClick={(option) => setState((prev) => ({ ...prev, sport: option }))}
+            value={state.sport.value}
+            handleClick={(option) =>
+              setState((prev) => ({ ...prev, sport: { value: option, validation: true } }))
+            }
             icon={<GiSoccerField />}
             anyOption={false}
+            // validation={state.sport.validation}
           />
           <Select
             array={sportFields?.types ?? []}
             label="Tipo de Cancha"
-            value={state.fieldType}
-            handleClick={(option) => setState((prev) => ({ ...prev, fieldType: option }))}
+            value={state.fieldType.value}
+            handleClick={(option) =>
+              setState((prev) => ({ ...prev, fieldType: { value: option, validation: true } }))
+            }
             anyOption={false}
             icon={<GiSoccerField />}
+            // validation={state.fieldType.validation}
           />
           <Input
             type="text"
             label="Dimensiones"
             icon={<GrGroup />}
-            value={state.dimensions}
+            value={state.dimensions.value}
             handleChange={handleChange}
             name={'dimensions'}
+            validation={state.dimensions.validation}
           />
           <Input
             type="number"
             label="Capacidad"
             icon={<GrGroup />}
-            value={state.capacity}
+            value={state.capacity.value}
             handleChange={handleChange}
             name={'capacity'}
+            validation={state.capacity.validation}
           />
         </div>
         <div className="flex justify-end w-full px-20">
