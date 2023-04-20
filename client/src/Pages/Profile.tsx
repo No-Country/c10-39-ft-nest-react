@@ -79,6 +79,7 @@ const Profile: FC = () => {
   const handleCancel = () => {
     setState(defaultState);
     setFile(null);
+    setImage(userInfo?.image ?? '');
   };
 
   useEffect(() => {
