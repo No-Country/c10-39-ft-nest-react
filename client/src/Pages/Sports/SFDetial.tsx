@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 import { AiOutlineInfoCircle } from 'react-icons/ai';
+import Swal from 'sweetalert2';
 
 import SelectHour from '../../Components/inputs/SelectHour';
 import Layout from '../../Components/layout/Layout';
@@ -14,6 +16,7 @@ import { type AppUser } from '../../types/App.type';
 import { type sportData } from '../../types/Sport.type';
 
 const SFDetail = () => {
+  const navigate = useNavigate();
   const { id = '' } = useParams();
   const userEmail = useSelector((state: AppUser) => state.user?.user?.email);
 
@@ -59,15 +62,41 @@ const SFDetail = () => {
 
   const handleCancel = () => window.history.back();
   const handleConfirm = () => {
-    PostReservations({
-      hour: Number(selectedHour),
-      date: selectedDate,
-      sportfieldId: id,
-      userEmail,
+    Swal.fire({
+      title: 'Reservando!',
+      text: 'Una reservación es un compromiso de asistencia',
+      footer: `<b>Advertencia:</b> &nbsp Ante cualquier eventualidad inesperada, informe con anticipación, Gracias`,
+      icon: 'warning',
+      confirmButtonText: 'Confirmar Reservación',
+      confirmButtonColor: '#4CAF50',
+      showCancelButton: true,
+      cancelButtonText: 'Modificar Reservacion',
     })
-      .then(() => alert('Cancha reservada'))
+      .then((result) => {
+        if (result.isConfirmed) {
+          PostReservations({
+            hour: Number(selectedHour),
+            date: selectedDate,
+            sportfieldId: id,
+            userEmail,
+          })
+            .then(() => toast.success('Cancha reservada', {
+              style: {
+                background: '#F5F5F5',
+                color: '#4CAF50',
+              }
+            })
+            )
+            .catch((err) => console.log(err));
+          return setTimeout(() => navigate('/inicio'), 1000);
+        }
+      })
       .catch((err) => console.log(err));
   };
+
+
+
+
 
   const handleClick = () => setOpenMenu(!openMenu);
 
@@ -79,6 +108,8 @@ const SFDetail = () => {
 
   return (
     <Layout title='Detalles de la reserva'>
+      {/* TOASTER */}
+      <Toaster position="top-center" />
       <div className='flex flex-row w-full justify-center gap-20'>
         <div className='flex flex-col gap-5 w-full lg:w-[550px] lg:mt-12'>
           <div className='mx-[5%] h-10 my-5 flex flex-col bg-[#aaa3] px-5 py-2 rounded-lg'>
