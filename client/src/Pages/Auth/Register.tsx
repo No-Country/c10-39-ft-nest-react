@@ -51,7 +51,7 @@ const Register: FC = () => {
           Swal.fire({
             title: 'Error!',
             text: 'Faltan completar algunos campos. Si ya tiene cuenta aprete en "Ingresar".',
-            footer: `<b>Tip:</b>Recuerde todos los campos son obligatorios.`,
+            footer: `<b>Tip:</b> &nbsp Recuerde todos los campos son obligatorios.`,
             icon: 'error',
             confirmButtonText: "Ingresar",
             confirmButtonColor: '#4CAF50',

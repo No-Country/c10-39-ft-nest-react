@@ -1,5 +1,7 @@
 import { type FC, useState, type BaseSyntheticEvent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
+import toast, { Toaster } from 'react-hot-toast';
 
 import { GiSoccerField } from 'react-icons/gi';
 import { GrGroup } from 'react-icons/gr';
@@ -11,14 +13,16 @@ import PrimaryButton from '../../Components/PrimaryButton';
 import { OwnerAddSFQuery, OwnerEditSFQuery } from '../../Functions/OwnerQuery';
 import { appSport, AppUser } from '../../types/App.type';
 import Select from '../../Components/inputs/Select';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getSportDetail } from '../../Functions/SportFieldsQuery';
+import { ISportField, ISportFieldRespones } from '../../types/SportField.type';
 
 interface Props {
   edit?: boolean;
 }
 
 const AddSFOwner: FC<Props> = ({ edit = false }) => {
+  const navigate = useNavigate();
   const sportInfo = useSelector((state: appSport) => state.sport.sport);
   const { id = '' } = useParams();
 
@@ -35,6 +39,7 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
       getSportDetail(id)
         .then((sportField) => {
           if (!sportField) {
+            toast.error('No Encontramos la cancha')
             console.log('Not found');
             return;
           }
@@ -62,19 +67,70 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
     const body = { ...state, capacity: parseInt(state.capacity) };
     e.preventDefault();
     if (edit) {
-      OwnerEditSFQuery(body, id).catch((err) => console.log(err));
+      OwnerEditSFQuery(body, id)
+        .then((data) => {
+          const datos = { ...data } as ISportFieldRespones;
+          if (datos.id && datos.name && datos.fieldType && datos.sport) {
+            toast.success(`${datos.name}, se actualizo correctamente.`, {
+              style: {
+                background: "#F5F5F5",
+                color: '#4CAF50'
+              }
+            })
+            return setTimeout(() => navigate('/propietarios'), 2000)
+          };
+          Swal.fire({
+            title: 'Error!',
+            text: 'No se ha podido registrar.',
+            footer: '<b>Tip:</b> &nbsp Recuerde todos los campos son obligatorios.',
+            icon: 'error',
+            //Confirm Button
+            showConfirmButton: true,
+            confirmButtonText: 'Volver a Propietarios',
+            confirmButtonColor: '#4CAF50',
+            //Cancel Button
+            showCancelButton: true,
+            cancelButtonText: "Intentar otra vez",
+          }).then(response => {
+            if (response.isConfirmed) return navigate('/propietarios')
+          })
+        })
+
+        .catch((err) => console.log(err));
       return;
     }
 
     OwnerAddSFQuery(body)
-      .then((res) => {
-        console.log(res);
+      .then((data) => {
+        const datos = { ...data } as ISportFieldRespones;
+        if (datos.id && datos.name && datos.fieldType && datos.sport) {
+          toast.success(`${datos.name}, se registro correctamente.`, {
+            style: {
+              background: "#F5F5F5",
+              color: '#4CAF50'
+            }
+          })
+          return setTimeout(() => navigate('/propietarios'), 2000)
+        };
+        Swal.fire({
+          title: 'Error!',
+          text: 'No se ha podido registrar.',
+          footer: '<b>Tip:</b> &nbsp Recuerde todos los campos son obligatorios.',
+          icon: 'error',
+          showConfirmButton: false,
+          cancelButtonText: "Intentar otra vez",
+          showCancelButton: true,
+          cancelButtonColor: '#4CAF50',
+        })
       })
       .catch((err) => console.log(err));
   };
 
   return (
     <Layout title='Agregar cancha'>
+      <Toaster
+        position='top-center'
+      />
       <form onSubmit={handleSubmit} className='relative min-h-[100vh] flex flex-col items-center'>
         <div className='bg-[#D9D9D9] rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[800px] text-center '>
           +

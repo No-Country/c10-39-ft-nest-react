@@ -29,7 +29,7 @@ const Login: FC = () => {
         Swal.fire({
           title: 'Error!',
           text: 'Email o Contraseña no validos',
-          footer: `<b>Tip:</b>Recuerde activar o desactivar las mayusculas.`,
+          footer: `<b>Tip:</b> &nbsp Recuerde activar o desactivar las mayusculas.`,
           icon: 'error',
           confirmButtonText: "Registrarse",
           confirmButtonColor: '#4CAF50',
