@@ -47,8 +47,22 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
   const [state, setState] = useState<stateType | objectProp>(defaultState);
 
   const [imageSF, setImageSF] = useState('');
+  const [imageRender, setImageRender] = useState<string | ArrayBuffer>('');
   const [file, setFile] = useState<null | File>(null);
-  const handleFile = (e: BaseSyntheticEvent) => setFile(e.target.files[0]);
+
+  const handleFile = (e: BaseSyntheticEvent) => {
+    setFile(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        reader.result && setImageRender(reader.result);
+      };
+    } else {
+      setImageRender('');
+    }
+  };
 
   const sportInfo = useSelector((state: appSport) => state.sport.sport);
   const sportNames = sportInfo?.map((item) => item.name);
@@ -167,7 +181,7 @@ const AddSFOwner: FC<Props> = ({ edit = false }) => {
         <input type="file" hidden id="ownerFiles" onChange={handleFile} />
         <label
           style={{
-            backgroundImage: `url(${imageSF})`,
+            backgroundImage: imageRender === '' ? `url(${imageSF})` : `url(${imageRender})`,
           }}
           htmlFor="ownerFiles"
           className="bg-[#D9D9D9] bg-no-repeat bg-cover rounded-lg w-10/12 cursor-pointer my-[70px] relative h-[225px] lg:h-[400px] lg:w-[600px] text-center "
