@@ -47,7 +47,7 @@ const OwnerRegister: FC = () => {
         Swal.fire({
           title: 'Error!',
           text: 'No se ha podido registrar como Propietario.',
-          footer: `<b>Tip:</b>Recuerde todos los campos son obligatorios.`,
+          footer: `<b>Tip:</b> &nbsp Recuerde todos los campos son obligatorios.`,
           icon: 'error',
           showConfirmButton: false,
           cancelButtonText: "Intentar otra vez",
