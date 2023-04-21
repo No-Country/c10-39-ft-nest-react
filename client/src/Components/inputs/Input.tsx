@@ -11,7 +11,7 @@ interface props {
 }
 
 const Input: FC<props> = (props) => {
-  const { type, label, icon, value, handleChange, name, validation=true } = props;
+  const { type, label, icon, value, handleChange, name, validation = true } = props;
   return (
     <div className="w-10/12 flex flex-col relative h-[70px]">
       <input
@@ -38,7 +38,7 @@ const Input: FC<props> = (props) => {
         </div>
       )}
       {validation || (
-        <span className="order-3 text-red">Error el campo debe tener al menos 5 caracteres</span>
+        <span className="order-3 text-red">Error el campo debe tener al menos 3 caracteres</span>
       )}
     </div>
   );
