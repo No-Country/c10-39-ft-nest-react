@@ -13,9 +13,10 @@ interface props {
     id: string;
   };
   fieldType: string;
+  handleReload: () => void;
 }
 
-const ReservationTurns: FC<props> = ({ reservation, fieldType }) => {
+const ReservationTurns: FC<props> = ({ reservation, fieldType, handleReload }) => {
   const [showModal, setShowModal] = useState(false);
   const handleModal = () => setShowModal(!showModal);
 
@@ -34,11 +35,11 @@ const ReservationTurns: FC<props> = ({ reservation, fieldType }) => {
         if (result.isConfirmed) {
           DeleteTurns({ id: reservation.id })
             .then(() => toast.success('Reserva eliminada', { duration: 2000 }))
+            .then(() => handleReload())
             .catch((err) => console.log(err));
         }
       })
       .catch((err) => console.log(err));
-
   };
 
   return (

@@ -1,12 +1,14 @@
+/* eslint-disable import/no-absolute-path */
 import { type FC } from 'react';
 
 import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
 
-import Aldo from '../../public/aldo.png';
-import Daniel from '../../public/daniel.png';
-import Eric from '../../public/eric.png';
-import Felipe from '../../public/felipe.png';
-import Nayib from '../../public/nayib.png';
+import Aldo from '/aldo.png';
+import Daniel from '/daniel.png';
+import Eric from '/eric.png';
+import Felipe from '/felipe.png';
+import Nayib from '/nayib.png';
+
 import Layout from '../Components/layout/Layout';
 
 const team = [
