@@ -43,7 +43,7 @@ const onSubmit = (state: ComplexType, navTo: (param: string) => void) => {
   const { id, ...data } = state;
   if (id && data.email) {
     UpdateComplexQuery(data, id)
-      .then(value => {
+      .then((value) => {
         if (value?.id) {
           toast.success(`Complejo ${value.name}! se Actualizo en AllSport`, {
             style: {
@@ -67,8 +67,8 @@ const onSubmit = (state: ComplexType, navTo: (param: string) => void) => {
             cancelButtonText: 'Actualizar Campos',
           }).catch((err) => console.log(err));
         }
-      }
-      ).catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
   } else {
     CreateComplexQuery(data)
       .then((value) => {
@@ -174,20 +174,16 @@ export const ComplexForm: FC = () => {
     setErrors(newState);
     if (!pass) return;
 
-    if (state.address !== complexInfo.address) {
-      getLatLng(state.address)
-        .then((res) => {
-          if (res) {
-            const { lat, lng } = res;
-            onSubmit({ ...state, lat, lng }, navigate);
-          }
-        })
-        .catch((e) => {
-          console.error(e);
-        });
-    }
-
-    onSubmit(state, navigate);
+    getLatLng(state.address)
+      .then((res) => {
+        if (res) {
+          const { lat, lng } = res;
+          onSubmit({ ...state, lat, lng }, navigate);
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   };
 
   const handleCancel = () => {
