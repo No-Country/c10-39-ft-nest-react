@@ -28,18 +28,19 @@ Queremos agradecer a No Country la oportunidad de poder ganar experiencia median
 
 Este proyecto esta deployado en:
 
-```
-https://allsport.vercel.app/
-```
+[All Sport](https://allsport.vercel.app/)
 
 El servidor se aloja en `Railway` y el cliente en ``Vercel`.
 
 ## Screenshots
 
-![App Screenshot](https://res.cloudinary.com/djvepy9sd/image/upload/v1682086502/app1_cps6zd.png)
-![App2 Screenshot](https://res.cloudinary.com/djvepy9sd/image/upload/v1682086509/app2_ezswjm.png)
-![App3 Screenshot](https://res.cloudinary.com/djvepy9sd/image/upload/v1682086503/app3_ihhfhc.png)
+<img src="https://res.cloudinary.com/djvepy9sd/image/upload/v1682086502/app1_cps6zd.png" alt="app1" width="50%" heigth="50%" />
+<img src="https://res.cloudinary.com/djvepy9sd/image/upload/v1682086509/app2_ezswjm.png" alt="app2" width="50%" heigth="50%" />
+<img src="https://res.cloudinary.com/djvepy9sd/image/upload/v1682086503/app3_ihhfhc.png" alt="app3" width="50%" heigth="50%" />
 
 ## License
 
-[No Country](https://uploads-ssl.webflow.com/62cc216ce23f79c10bc88169/63973e99052373b810cce94b_Branding%20NC-06-p-800.png)
+<img src="https://uploads-ssl.webflow.com/62cc216ce23f79c10bc88169/63973e99052373b810cce94b_Branding%20NC-06-p-800.png" alt="nocountry" width="50%" heigth="50%" />
+</br>
+
+[No Country](https://www.nocountry.tech/)
