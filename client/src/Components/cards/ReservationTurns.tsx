@@ -21,7 +21,7 @@ const ReservationTurns: FC<props> = ({ reservation, fieldType, handleReload, use
   const [showModal, setShowModal] = useState(false);
   const handleModal = () => setShowModal(!showModal);
 
-  const name = `${user.firstName} ${user.lastName} - ${user.email}`;
+  const name = `${user.firstName} ${user.lastName}`;
 
   const handleDelete = () => {
     Swal.fire({
@@ -50,6 +50,7 @@ const ReservationTurns: FC<props> = ({ reservation, fieldType, handleReload, use
     <div className={`bg-white p-5 mt-3 relative `}>
       <ul>
         <li>Nombre: {name}</li>
+        <li>Mail: {user.email}</li>
         <li>Tipo de cancha: {fieldType}</li>
         <li>Dia: {reservation.date}</li>
         <li>
@@ -67,11 +68,11 @@ const ReservationTurns: FC<props> = ({ reservation, fieldType, handleReload, use
         <>
           <button
             onClick={handleDelete}
-            className='bg-bg cursor-pointer text-xl z-50 absolute top-0 right-16 pl-4 pr-10 py-5'
+            className="bg-bg cursor-pointer text-xl z-50 absolute top-0 right-16 pl-4 pr-10 py-5"
           >
             Quitar reserva
           </button>
-          <div className='absolute z-10 top-0 left-0 w-full h-full bg-gradone opacity-60'></div>
+          <div className="absolute z-10 top-0 left-0 w-full h-full bg-gradone opacity-60"></div>
         </>
       )}
     </div>
