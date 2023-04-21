@@ -16,7 +16,7 @@ export const Checkbox: FC<PropsWithChildren<Props>> = ({
 }) => {
   return (
     <fieldset
-      className={`flex w-full justify-between divide-black divide-solid border-b-2 ${
+      className={`flex w-full justify-between divide-solid border-b border-[#0002] ${
         className ?? ''
       }`}
     >

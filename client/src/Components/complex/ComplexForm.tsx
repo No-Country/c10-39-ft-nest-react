@@ -30,6 +30,8 @@ import InputLocation from '../inputs/InputLocation';
 import PrimaryButton from '../PrimaryButton';
 import { Checkbox } from '../ui';
 import { objectProp, validationInputs } from '../../utils/validationInputs';
+import { IoMdMail } from 'react-icons/io';
+import { AiOutlinePhone } from 'react-icons/ai';
 
 const handleAmmeniesChangeFactory =
   (setState: Dispatch<SetStateAction<ComplexType>>, key: keyof ComplexType) => () => {
@@ -174,6 +176,13 @@ export const ComplexForm: FC = () => {
     setErrors(newState);
     if (!pass) return;
 
+    toast.success(`Cargando`, {
+      style: {
+        background: '#F5F5F5',
+        color: '#4CAF50',
+      },
+    });
+
     getLatLng(state.address)
       .then((res) => {
         if (res) {
@@ -197,7 +206,7 @@ export const ComplexForm: FC = () => {
   };
   return (
     <form onSubmit={handleSubmit} className="flex flex-col items-center">
-      <div className="w-full mb-5 flex flex-col items-center gap-10 lg:flex-row lg:w-1/2 lg:justify-center lg:h-[500px]">
+      <div className="w-full mb-5 flex flex-col items-center lg:items-start gap-10 lg:flex-row lg:w-1/2 lg:justify-center lg:h-[500px]">
         <div className="w-full flex flex-col items-center gap-5 mt-10 lg:w-4/6">
           <Input
             validation={errors.name.validation}
@@ -215,6 +224,7 @@ export const ComplexForm: FC = () => {
             value={state.email}
             name={'email'}
             handleChange={handleChange}
+            icon={<IoMdMail />}
           />
           <Input
             validation={errors.phone.validation}
@@ -223,6 +233,7 @@ export const ComplexForm: FC = () => {
             value={state.phone}
             name={'phone'}
             handleChange={handleChange}
+            icon={<AiOutlinePhone />}
           />
           <InputLocation
             validation={errors.address.validation}
@@ -238,7 +249,7 @@ export const ComplexForm: FC = () => {
             changeAvailability={handleAvailabilityChange}
           />
         </div>
-        <div className="w-10/12 mt-5 flex flex-col gap-3 text-lg lg:w-2/6 lg:relative lg:top-8">
+        <div className="w-10/12 mt-5 flex bg-lightWhite h-max p-5 rounded-lg flex-col gap-3 text-lg lg:w-2/6 lg:relative lg:top-8">
           <Checkbox
             name={'parking'}
             value={state.parking}

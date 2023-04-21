@@ -1,13 +1,14 @@
 /* eslint-disable import/no-absolute-path */
 import { type FC } from 'react';
 
-import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
+import { AiFillBehanceCircle, AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
 
 import Aldo from '/aldo.png';
 import Daniel from '/daniel.png';
 import Eric from '/eric.png';
 import Felipe from '/felipe.png';
 import Nayib from '/nayib.png';
+import Gonza from '/gonza.jpeg';
 
 import Layout from '../Components/layout/Layout';
 
@@ -18,8 +19,8 @@ const team = [
     description:
       'Desarrollador full stack, con capacidades de liderazgo, habilidad para dirigir y adapatarse a cualquier grupo de trabajo.',
     image: Felipe,
-    linkedin: 'https://www.linkedin.com/in/suarez-felipe/',
-    github: 'https://www.github.com/',
+    linkedin: 'https://www.linkedin.com/in/suarez-felipe',
+    github: 'https://github.com/Felipe-Suarez',
   },
   {
     id: 2,
@@ -27,7 +28,7 @@ const team = [
     description:
       'Desarrollador full stack, con gran habilidad analítica y lógica capaz de encontrar soluciones a los problemas que se plantean y con alto interés en explorar los caminos de la programación.',
     image: Eric,
-    linkedin: 'https://www.linkedin.com/in/eric-denis-laura-isnado-8a1027245/',
+    linkedin: 'https://www.linkedin.com/in/eric-denis-laura-isnado-8a1027245',
     github: 'https://www.github.com/recover1988',
   },
   {
@@ -36,8 +37,8 @@ const team = [
     description:
       'Desarrollador full stack, siempre en búsqueda de nuevos conocimientos, con buenas habilidades para tratar con personas y trabajar en equipo.',
     image: Daniel,
-    linkedin: 'https://www.linkedin.com/in/jonathandanielarce/',
-    github: 'https://www.github.com/',
+    linkedin: 'https://www.linkedin.com/in/jonathandanielarce',
+    github: 'https://github.com/ArceDaniel',
   },
   {
     id: 4,
@@ -45,17 +46,17 @@ const team = [
     description:
       'Desarrollador full stack, con experiencia en front end. Y conocimientos en backend con diferentes frameworks.',
     image: Aldo,
-    linkedin: 'https://www.linkedin.com/in/Aldrick13/',
-    github: 'https://www.github.com/',
+    linkedin: 'https://www.linkedin.com/in/Aldrick13',
+    github: 'https://github.com/AlDRick13',
   },
   {
     id: 5,
     name: 'Gonzalo Vasquez',
     description:
       'Desarrollador full stack, con alta capacidad de aprendizaje y habilidades para desarrollar de forma ágil y solucionar problemas con prontitud.',
-    image: '#',
-    linkedin: '#',
-    github: 'https://www.github.com/',
+    image: Gonza,
+    linkedin: 'https://www.linkedin.com/in/gonzalo-vasquez-414491177',
+    github: 'https://github.com/GonzaloGV',
   },
   {
     id: 6,
@@ -63,8 +64,8 @@ const team = [
     description:
       'UX Designer, siempre en búsqueda de mejorar y en aprendizaje constante para mantenerse a la vanguardia de las teconologías.',
     image: Nayib,
-    linkedin: 'https://www.linkedin.com/in/nayib-sales-059623218/',
-    github: 'https://www.github.com/',
+    linkedin: 'https://www.linkedin.com/in/nayib-sales-059623218',
+    behance: 'https://www.behance.net/nayibsales',
   },
 ];
 
@@ -112,18 +113,22 @@ const About: FC = () => {
                     <img
                       src={user.image}
                       alt="not found"
-                      width={256}
-                      height={256}
-                      className="rounded-full"
+                      className="rounded-full h-[200px]  object-cover"
                     />
                   </div>
                   <div className="flex flex-col gap-3 justify-between w-3/5">
                     <h2 className="text-2xl font-semibold">{user.name}</h2>
                     <p>{user.description}</p>
                     <div className="flex justify-end items-center gap-2 my-2">
-                      <a className="text-5xl" href={user.github}>
-                        <AiFillGithub className="transition-all hover:text-gradtwo" />
-                      </a>
+                      {user.github ? (
+                        <a className="text-5xl" href={user.github}>
+                          <AiFillGithub className="transition-all hover:text-gradtwo" />
+                        </a>
+                      ) : (
+                        <a className="text-5xl" href={user.behance}>
+                          <AiFillBehanceCircle className="transition-all hover:text-gradtwo" />
+                        </a>
+                      )}
                       <a className="text-5xl" href={user.linkedin}>
                         <AiFillLinkedin className="transition-all hover:text-gradtwo" />
                       </a>
