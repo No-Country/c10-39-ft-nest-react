@@ -7,7 +7,8 @@ export const getLatLng = async (location: string) => {
     const { data } = await axios.get(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${API_KEY}`,
     );
-
+    console.log(data);
+    
     const { lat, lng }: { lat: number; lng: number } = data.results[0].geometry?.location;
 
     return { lat, lng };
