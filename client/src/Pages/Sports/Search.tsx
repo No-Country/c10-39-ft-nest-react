@@ -19,7 +19,7 @@ import { getSportFieldsWithSport } from '../../Functions/SportFieldsQuery';
 import { type appSport } from '../../types/App.type';
 import { type inputData, validationInputs } from '../../utils/validationInputs';
 
-const API_KEY = "AIzaSyB8rVxLxXlomXkjJ04LRtFHC63AtzSnyw0";
+const API_KEY = 'AIzaSyB8rVxLxXlomXkjJ04LRtFHC63AtzSnyw0';
 
 export const Search: FC = () => {
   const navigate = useNavigate();
@@ -55,7 +55,6 @@ export const Search: FC = () => {
         );
         if (!data.results[0]) {
           toast.error('Por favor complete la ubicacion con mas informacion');
-          // throw new Error('Por favor complete la ubicacion con mas informacion');
         }
         const { lat, lng }: { lat: number; lng: number } = data.results[0].geometry?.location;
 
@@ -96,12 +95,6 @@ export const Search: FC = () => {
               color: '#4CAF50',
             },
           });
-          // toast.loading('Buscando...', {
-          //   style: {
-          //     background: '#F5F5F5',
-          //     color: '#4CAF50',
-          //   }
-          // })
           if (fetchPromise !== undefined && fetchPromise?.length > 0) {
             return setTimeout(() => {
               toast.dismiss(toastId);

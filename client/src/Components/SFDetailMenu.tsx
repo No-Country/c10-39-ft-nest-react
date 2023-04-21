@@ -1,4 +1,4 @@
-import { type FC, useState } from 'react';
+import { type FC, useState, useEffect } from 'react';
 
 import HoursList from './HoursList';
 import MyCalendar from './MyCalendar';
@@ -28,23 +28,27 @@ const SFDetailMenu: FC<props> = (props) => {
     handleCloseMenu();
   };
 
+  const handleClickHours = () => {
+    setOpenHours(!openHours);
+    setOpenCalendar(false);
+  };
+  const handleClickCalendar = () => {
+    setOpenCalendar(!openCalendar);
+    setOpenHours(false);
+  };
+
   return (
     <>
       <ul
-        className={`${
-          openMenu ? 'flex' : 'hidden'
-        }   items-center absolute right-12 top-[50px] h-auto w-52 bg-white shadow-2xl rounded-md flex-col`}
+        className={`items-center absolute right-12 top-[50px] h-auto w-52 bg-white shadow-2xl rounded-md flex-col`}
       >
         <li
-          onClick={() => setOpenCalendar(!openCalendar)}
+          onClick={handleClickCalendar}
           className="pl-5 py-5 hover:bg-primary w-full cursor-pointer"
         >
           Cambiar día
         </li>
-        <li
-          className="pl-5 py-5 hover:bg-primary w-full cursor-pointer"
-          onClick={() => setOpenHours(!openHours)}
-        >
+        <li className="pl-5 py-5 hover:bg-primary w-full cursor-pointer" onClick={handleClickHours}>
           Cambiar horario
         </li>
         {openCalendar && (
