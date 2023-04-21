@@ -27,9 +27,10 @@ const ReservationTurns: FC<props> = ({ reservation, fieldType, handleReload }) =
       footer: `<b>Advertencia:</b> &nbsp Una vez eliminada la reserva, estara disponible para otros usuarios.`,
       icon: 'warning',
       confirmButtonText: 'Eliminar',
-      confirmButtonColor: '#4CAF50',
+      confirmButtonColor: '#808080',
       showCancelButton: true,
       cancelButtonText: 'Volver',
+      cancelButtonColor: '#4CAF50'
     })
       .then((result) => {
         if (result.isConfirmed) {
