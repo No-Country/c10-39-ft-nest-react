@@ -71,7 +71,7 @@ const SFDetail = () => {
       confirmButtonColor: '#808080',
       showCancelButton: true,
       cancelButtonText: 'Modificar Reservacion',
-      cancelButtonColor: '#4CAF50'
+      cancelButtonColor: '#4CAF50',
     })
       .then((result) => {
         if (result.isConfirmed) {
@@ -118,13 +118,15 @@ const SFDetail = () => {
               <button onClick={handleClick} className="text-3xl">
                 <AiOutlineInfoCircle />
               </button>
-              <SFDetailMenu
-                openMenu={openMenu}
-                handleSelectHour={handleSelectHour}
-                handleSelectCalendar={handleSelectCalendar}
-                handleCloseMenu={handleCloseMenu}
-                selectedDate={selectedDate}
-              />
+              {openMenu && (
+                <SFDetailMenu
+                  openMenu={openMenu}
+                  handleSelectHour={handleSelectHour}
+                  handleSelectCalendar={handleSelectCalendar}
+                  handleCloseMenu={handleCloseMenu}
+                  selectedDate={selectedDate}
+                />
+              )}
             </div>
             <div className="bg-[#aaa2] p-5">
               <span className="block">{data?.description}</span>

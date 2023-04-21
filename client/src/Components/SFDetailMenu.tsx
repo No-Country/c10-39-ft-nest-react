@@ -12,7 +12,7 @@ interface props {
 }
 
 const SFDetailMenu: FC<props> = (props) => {
-  const { openMenu, handleSelectHour, handleSelectCalendar, handleCloseMenu, selectedDate } = props;
+  const { handleSelectHour, handleSelectCalendar, handleCloseMenu, selectedDate } = props;
   const [openHours, setOpenHours] = useState(false);
   const [openCalendar, setOpenCalendar] = useState(false);
 
