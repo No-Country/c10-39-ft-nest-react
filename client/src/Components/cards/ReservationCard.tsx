@@ -21,19 +21,20 @@ const ReservationCard: FC<Props> = ({ reservation, deleteReservations }) => {
     const id = reservation.id;
     Swal.fire({
       title: 'Alerta!',
-      text: '¿Desea Cancelar esta Reservación?',
-      footer: `<b>Advertencia:</b> &nbsp Una vez cancelada la reservacion, el turno estara disponible para otro usuario.`,
+      text: '¿Desea cancelar esta reserva?',
+      footer: `<b>Advertencia:</b> &nbsp Una vez cancelada la reserva, el turno estara disponible para otro usuario.`,
       icon: 'question',
-      confirmButtonText: 'Cancelar Reservación',
-      confirmButtonColor: '#4CAF50',
+      confirmButtonText: 'Cancelar',
+      confirmButtonColor: '#EE4B2B',
       showCancelButton: true,
       cancelButtonText: 'Volver',
+      cancelButtonColor: '#4CAF50 '
     }).then((result) => {
       if (result.isConfirmed) {
         DeleteReservation(id)
           .then(() => {
             if (deleteReservations(id)) {
-              toast.error('No se pudo cancelar la reservacion');
+              toast.error('No se pudo cancelar la reserva');
             }
             // throw new Error('No se pudo cancelar la reserva')};
           })
