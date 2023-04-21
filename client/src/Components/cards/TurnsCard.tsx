@@ -36,6 +36,7 @@ const TurnsCard: FC<TurnProp> = ({ turn, handleReload }) => {
               key={item.id}
               reservation={item}
               fieldType={turn.fieldType}
+              user={item.user}
               handleReload={handleReload}
             />
           );

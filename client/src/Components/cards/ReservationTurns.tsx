@@ -13,12 +13,15 @@ interface props {
     id: string;
   };
   fieldType: string;
+  user: { firstName: string; lastName: string; email: string };
   handleReload: () => void;
 }
 
-const ReservationTurns: FC<props> = ({ reservation, fieldType, handleReload }) => {
+const ReservationTurns: FC<props> = ({ reservation, fieldType, handleReload, user }) => {
   const [showModal, setShowModal] = useState(false);
   const handleModal = () => setShowModal(!showModal);
+
+  const name = `${user.firstName} ${user.lastName} - ${user.email}`;
 
   const handleDelete = () => {
     Swal.fire({
@@ -30,7 +33,7 @@ const ReservationTurns: FC<props> = ({ reservation, fieldType, handleReload }) =
       confirmButtonColor: '#808080',
       showCancelButton: true,
       cancelButtonText: 'Volver',
-      cancelButtonColor: '#4CAF50'
+      cancelButtonColor: '#4CAF50',
     })
       .then((result) => {
         if (result.isConfirmed) {
@@ -46,7 +49,7 @@ const ReservationTurns: FC<props> = ({ reservation, fieldType, handleReload }) =
   return (
     <div className={`bg-white p-5 mt-3 relative `}>
       <ul>
-        <li>Nombre: Joaquin</li>
+        <li>Nombre: {name}</li>
         <li>Tipo de cancha: {fieldType}</li>
         <li>Dia: {reservation.date}</li>
         <li>
@@ -64,11 +67,11 @@ const ReservationTurns: FC<props> = ({ reservation, fieldType, handleReload }) =
         <>
           <button
             onClick={handleDelete}
-            className="bg-bg cursor-pointer text-xl z-50 absolute top-0 right-16 pl-4 pr-10 py-5"
+            className='bg-bg cursor-pointer text-xl z-50 absolute top-0 right-16 pl-4 pr-10 py-5'
           >
             Quitar reserva
           </button>
-          <div className="absolute z-10 top-0 left-0 w-full h-full bg-gradone opacity-60"></div>
+          <div className='absolute z-10 top-0 left-0 w-full h-full bg-gradone opacity-60'></div>
         </>
       )}
     </div>

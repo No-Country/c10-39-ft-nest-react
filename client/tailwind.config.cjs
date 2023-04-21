@@ -25,6 +25,15 @@ module.exports = {
         grey: '#0000000F',
         red: '#f00',
       },
+      keyframes: {
+        dropdown: {
+          from: { transform: 'translateY(-100%)' },
+          to: { transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        'dropdown-in': 'dropdown 200ms linear',
+      },
     },
     colors: {
       white: '#fff',
