@@ -123,18 +123,18 @@ export const Search: FC = () => {
 
   return (
     <Layout title={`${loader ? sport : ''}`}>
-      <div className="w-full flex justify-center items-center">
         <div
-          className="hidden lg:block absolute w-full h-full bg-cover"
+          className='hidden lg:block absolute w-full h-full bg-cover'
           style={{ backgroundImage: bg }}
         />
+      <div className='w-full flex justify-center items-center pt-10 pb-2'>
         <form
           onSubmit={handleSubmit}
-          className="flex w-full flex-col items-center lg:mx-[30%]  backdrop-blur-sm bg-lightWhite rounded-lg h-fit mt-20 lg:my-12 relative"
+          className='flex w-full flex-col items-center lg:mx-[30%]  backdrop-blur-sm bg-lightWhite rounded-lg h-fit relative'
         >
-          <div className="flex flex-col gap-10 w-full items-center mt-10 ">
+          <div className='flex flex-col gap-10 w-full items-center mt-10 '>
             <InputLocation
-              label="Ubicacion"
+              label='Ubicacion'
               icon={<MdLocationOn />}
               handleLocationName={handleLocationName}
               value={location.value}
@@ -143,7 +143,7 @@ export const Search: FC = () => {
             {sportFields?.types && (
               <Select
                 array={sportFields?.types}
-                label="Tipo de Cancha"
+                label='Tipo de Cancha'
                 value={field.value}
                 handleClick={handleField}
                 icon={<GiSoccerField />}
@@ -151,14 +151,14 @@ export const Search: FC = () => {
               />
             )}
             <SelectCalendar
-              label="Dia"
+              label='Dia'
               value={turn.value}
               handleClick={handleTurn}
               icon={<BsCalendar2Event />}
               validation={turn.validation}
             />
             <SelectHour
-              label="Horario"
+              label='Horario'
               value={time.value}
               handleClick={handleTime}
               icon={<TfiTime />}
@@ -166,8 +166,8 @@ export const Search: FC = () => {
             />
           </div>
           {/* <div className="">  "lg:absolute lg:bottom-10 lg:right-10" */}
-          <div className="flex justify-end w-[88%] my-5">
-            <PrimaryButton text="BUSCAR" />
+          <div className='flex justify-end w-[88%] my-5'>
+            <PrimaryButton text='BUSCAR' />
           </div>
         </form>
       </div>

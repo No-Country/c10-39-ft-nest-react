@@ -14,15 +14,15 @@ const Layout: FC<PropsWithChildren<props>> = ({ children, title, bg, style }) =>
     <>
       {localStorage.getItem('token') ? (
         <>
-          <header>
+          <header className='sticky z-[500] top-0'>
             <NavDesktop />
             <NavMobile title={title} />
           </header>
           <div
-            className={`relative bg-bg min-h-[88vh] lg:min-h-[85vh] overflow-hidden ${bg ?? ''}`}
+            className={`relative bg-bg min-h-[88vh] lg:min-h-[85vh] overflow-y-hidden ${bg ?? ''}`}
             style={style}
           >
-            <div className='overflow-scroll'>{children}</div>
+            <div>{children}</div>
           </div>
         </>
       ) : (

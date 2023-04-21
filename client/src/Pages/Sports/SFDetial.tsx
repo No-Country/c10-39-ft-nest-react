@@ -105,17 +105,17 @@ const SFDetail = () => {
   }, [id]);
 
   return (
-    <Layout title="Detalles de la reserva">
-      <div className="flex flex-row w-full justify-center gap-20">
-        <div className="flex flex-col gap-5 w-full lg:w-[550px] lg:mt-12">
-          <div className="mx-[5%] h-10 my-5 flex flex-col bg-[#aaa3] px-5 py-2 rounded-lg">
-            <span className="opacity-70">{data?.name}</span>
-            <span className="text-lg">{data?.sportsComplex?.ubication}</span>
+    <Layout title='Detalles de la reserva'>
+      <div className='flex flex-row w-full justify-center gap-20'>
+        <div className='flex flex-col gap-3 w-full lg:w-[550px] lg:mt-2'>
+          <div className='mx-[5%] h-10 my-1 mt-5  lg:mt-1 flex flex-col bg-[#aaa3] px-5 py-2 rounded-lg'>
+            <span className='opacity-70'>{data?.name}</span>
+            <span className='text-lg'>{data?.sportsComplex?.ubication}</span>
           </div>
-          <div className="flex flex-col gap-5 bg-white pb-2 mb-10 mx-2 shadow-lg rounded-lg">
-            <div className="relative flex flex-row items-center justify-between p-5">
-              <span className="text-lg">Informacion del partido</span>
-              <button onClick={handleClick} className="text-3xl">
+          <div className='flex flex-col gap-5 bg-white pb-2 mb-10 mx-2 shadow-lg rounded-lg'>
+            <div className='relative flex flex-row items-center justify-between p-5'>
+              <span className='text-lg'>Informacion del partido</span>
+              <button onClick={handleClick} className='text-3xl'>
                 <AiOutlineInfoCircle />
               </button>
               {openMenu && (
@@ -128,45 +128,45 @@ const SFDetail = () => {
                 />
               )}
             </div>
-            <div className="bg-[#aaa2] p-5">
-              <span className="block">{data?.description}</span>
-              <span className="block">
+            <div className='bg-[#aaa2] p-5'>
+              <span className='block'>{data?.description}</span>
+              <span className='block'>
                 Capacidad: {data?.capacity} personas - {data?.dimensions} m²
               </span>
             </div>
-            <div className="bg-[#aaa2] p-5">
-              <div className="flex flex-row justify-between w-full">
+            <div className='bg-[#aaa2] p-5'>
+              <div className='flex flex-row justify-between w-full'>
                 <span>Dia</span>
                 <span>Miercoles {selectedDate}</span>
               </div>
-              <div className="flex flex-row justify-between w-full">
+              <div className='flex flex-row justify-between w-full'>
                 <span>Hora</span>
                 <span>{selectedHour}:00 hs</span>
               </div>
-              <div className="flex flex-row justify-between w-full">
+              <div className='flex flex-row justify-between w-full'>
                 <span>Duracion</span>
                 <span>60 minutos</span>
               </div>
             </div>
-            <span className="p-5">
+            <span className='p-5'>
               Importante: Este complejo no exigio una carga monetaria como garantia. Se solicita en
               caso de cancelar la reserva, hacerlo con 24 horas de antelacion.
             </span>
           </div>
-          <div className="flex flex-row justify-evenly w-full lg:hidden">
-            <PrimaryButton text="CANCELAR" onClick={handleCancel} alternative={true} />
-            <PrimaryButton text="RESERVAR" onClick={handleConfirm} />
+          <div className='flex flex-row justify-evenly w-full lg:hidden'>
+            <PrimaryButton text='CANCELAR' onClick={handleCancel} alternative={true} />
+            <PrimaryButton text='RESERVAR' onClick={handleConfirm} />
           </div>
         </div>
 
-        <div className="hidden lg:flex gap-5 flex-col justify-center">
+        <div className='hidden lg:flex gap-5 flex-col justify-center'>
           <div
-            className="w-[600px] h-[400px] mt-16 bg-no-repeat bg-cover rounded-lg"
+            className='w-[600px] h-[400px] mt-6 bg-no-repeat bg-cover rounded-lg'
             style={{ backgroundImage: `url(${data.images[0]})` }}
           ></div>
-          <div className="flex flex-row justify-evenly w-full ">
-            <PrimaryButton text="CANCELAR" onClick={handleCancel} alternative={true} />
-            <PrimaryButton text="RESERVAR" onClick={handleConfirm} />
+          <div className='flex flex-row justify-evenly w-full '>
+            <PrimaryButton text='CANCELAR' onClick={handleCancel} alternative={true} />
+            <PrimaryButton text='RESERVAR' onClick={handleConfirm} />
           </div>
         </div>
       </div>
