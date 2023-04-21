@@ -53,7 +53,7 @@ const SportFields: FC = () => {
   return (
     <Layout title='Canchas'>
       {data.length ? (
-        <div className='flex flex-row w-full justify-center gap-20 overflow-hidden max-h-[90vh]'>
+        <div className='flex flex-row w-full justify-center gap-20 overflow-hidden max-h-[88vh] lg:max-h-[85vh]'>
           <div
             className={`${
               data.length > 1 ? 'scrollbarSF overflow-y-scroll' : ''
@@ -71,7 +71,7 @@ const SportFields: FC = () => {
                 />
               ))}
           </div>
-          <div className="hidden rounded-3xl lg:block w-[700px] h-[475px] bg-primary mt-20">
+          <div className='hidden rounded-3xl lg:block w-[700px] h-[475px] bg-primary mt-12'>
             {data.length && (
               <Maps
                 initialCoords={{

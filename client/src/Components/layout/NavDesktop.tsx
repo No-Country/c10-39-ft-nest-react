@@ -29,26 +29,26 @@ const NavDesktop: FC = () => {
   const handleCloseSportMenu = () => setOpenSportMenu(false);
 
   return (
-    <div className="hidden lg:block">
-      <nav className="sticky z-10 box-border h-[15vh] px-20 text-white bg-primary flex flex-row shadow-lg w-full justify-between items-center">
-        <div className="flex gap-10 items-center">
-          <div className="bounce text-6xl">
+    <div className='hidden lg:block'>
+      <nav className='sticky z-20 box-border h-[15vh] px-20 text-white bg-primary flex flex-row shadow-lg w-full justify-between items-center'>
+        <div className='flex gap-10 items-center'>
+          <div className='bounce text-6xl'>
             <Link to={'/inicio'}>
               <FaBasketballBall />
             </Link>
           </div>
-          <div className="text-4xl">
+          <div className='text-4xl'>
             <Link to={'/inicio'}>ALL SPORT</Link>
           </div>
         </div>
-        <ul className="flex flex-row gap-4 text-lg mr-2">
+        <ul className='flex flex-row gap-4 text-lg mr-2'>
           <li>
-            <Link className="p-5 rounded-full" to={'/inicio'}>
+            <Link className='p-5 rounded-full' to={'/inicio'}>
               INICIO
             </Link>
           </li>
-          <li className="relative">
-            <button className="flex items-center gap-2" onClick={handleClickSportsMenu}>
+          <li className='relative'>
+            <button className='flex items-center gap-2' onClick={handleClickSportsMenu}>
               RESERVAR
               <span
                 className={`${
@@ -61,24 +61,24 @@ const NavDesktop: FC = () => {
             <SportMenu handleClick={handleCloseSportMenu} state={openSportMenu} />
           </li>
           <li>
-            <Link className="p-5 rounded-full" to={'/propietarios'}>
+            <Link className='p-5 rounded-full' to={'/propietarios'}>
               PROPIETARIOS
             </Link>
           </li>
           <li>
-            <Link className="p-5 rounded-full" to={'/ayuda'}>
+            <Link className='p-5 rounded-full' to={'/ayuda'}>
               AYUDA
             </Link>
           </li>
           <li>
-            <Link className="p-5 rounded-full" to={'/nosotros'}>
+            <Link className='p-5 rounded-full' to={'/nosotros'}>
               NOSOTROS
             </Link>
           </li>
         </ul>
-        <div className="absolute right-3 flex flex-row items-center">
+        <div className='absolute right-3 flex flex-row items-center'>
           <div
-            className="w-10 h-10 rounded-full bg-cover bg-no-repeat border border-black"
+            className='w-10 h-10 rounded-full bg-cover bg-no-repeat border border-black'
             style={{ backgroundImage: `url(${userInfo?.image})` }}
           ></div>
           <div
@@ -91,10 +91,10 @@ const NavDesktop: FC = () => {
           </div>
         </div>
       </nav>
-      {openSecondMenu && (
+      <div className='relative w-full h-full'>
         <ul
-          className={`absolute rounded-bl-lg z-20 right-0 transition-transform text-white -top-[11vh] bg-black p-5 flex flex-col gap-5 ${
-            openSecondMenu ? 'translate-y-full' : 'translate-y-0'
+          className={`absolute rounded-bl-lg z-10 right-0 text-white  bg-black p-5 flex flex-col gap-5 transition-transform ${
+            openSecondMenu ? 'translate-y-0' : '-translate-y-full'
           }`}
         >
           <li>
@@ -106,13 +106,13 @@ const NavDesktop: FC = () => {
           <li>
             <Link to={'/propietarios/canchas'}>MIS CANCHAS</Link>
           </li>
-          <li className="cursor-pointer border-t-[1px] divide-white">
+          <li className='cursor-pointer border-t-[1px] divide-white'>
             <Link onClick={handleCloseSecondMenu} to={'/'}>
               CERRAR SESION
             </Link>
           </li>
         </ul>
-      )}
+      </div>
     </div>
   );
 };

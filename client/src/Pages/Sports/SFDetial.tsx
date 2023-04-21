@@ -68,7 +68,7 @@ const SFDetail = () => {
       footer: `<b>Advertencia:</b> &nbsp Ante cualquier eventualidad inesperada, informe con anticipación, Gracias`,
       icon: 'warning',
       confirmButtonText: 'Confirmar Reservación',
-      confirmButtonColor: '#0000000F',
+      confirmButtonColor: '#808080',
       showCancelButton: true,
       cancelButtonText: 'Modificar Reservacion',
       cancelButtonColor: '#4CAF50'

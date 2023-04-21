@@ -71,15 +71,15 @@ const OwnerRegister: FC = () => {
   };
 
   return (
-    <Layout title="Registro de propietario">
+    <Layout title='Registro de propietario'>
       <form
         onSubmit={handleSubmit}
-        className="relative min-h-[100vh] flex flex-col items-center justify-center"
+        className='relative min-h-[85vh] flex flex-col items-center justify-center'
       >
-        <div className="flex flex-col w-full items-center gap-10 lg:w-[700px]">
+        <div className='flex flex-col w-full items-center gap-10 lg:w-[700px]'>
           <Input
-            type="text"
-            label="Documento"
+            type='text'
+            label='Documento'
             icon={<HiOutlineIdentification />}
             handleChange={handleChange}
             value={state.document.value}
@@ -87,8 +87,8 @@ const OwnerRegister: FC = () => {
             validation={state.document.validation}
           />
           <Input
-            type="text"
-            label="Numero de telefono"
+            type='text'
+            label='Numero de telefono'
             icon={<AiOutlinePhone />}
             handleChange={handleChange}
             value={state.phone.value}
@@ -96,8 +96,8 @@ const OwnerRegister: FC = () => {
             validation={state.phone.validation}
           />
         </div>
-        <div className="absolute bottom-0 right-10 lg:relative lg:my-10 lg:w-[675px] lg:flex lg:justify-end">
-          <PrimaryButton text="AGREGAR" />
+        <div className='absolute bottom-0 right-10 lg:relative lg:my-10 lg:w-[675px] lg:flex lg:justify-end'>
+          <PrimaryButton text='AGREGAR' />
         </div>
       </form>
     </Layout>

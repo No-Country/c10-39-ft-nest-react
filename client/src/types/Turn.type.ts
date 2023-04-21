@@ -7,6 +7,11 @@ export interface TurnType {
       date: string;
       hour: number;
       id: string;
+      user: {
+        firstName: string;
+        lastName: string;
+        email: string;
+      };
     },
   ];
   sportsComplex: {
