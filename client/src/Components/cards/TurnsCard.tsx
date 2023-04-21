@@ -8,9 +8,10 @@ import ReservationTurns from './ReservationTurns';
 
 interface TurnProp {
   turn: TurnType;
+  handleReload: () => void;
 }
 
-const TurnsCard: FC<TurnProp> = ({ turn }) => {
+const TurnsCard: FC<TurnProp> = ({ turn, handleReload }) => {
   const [open, setOpen] = useState(false);
   const handleClick = () => setOpen(!open);
 
@@ -30,7 +31,15 @@ const TurnsCard: FC<TurnProp> = ({ turn }) => {
       </div>
       <div className={`${open ? 'flex' : 'hidden'} flex-col gap-2 bg-grey`}>
         {turn.reservation.map((item) => {
-          return <ReservationTurns key={item.id} reservation={item} fieldType={turn.fieldType} />;
+          return (
+            <ReservationTurns
+              key={item.id}
+              reservation={item}
+              fieldType={turn.fieldType}
+              user={item.user}
+              handleReload={handleReload}
+            />
+          );
         })}
       </div>
     </div>
