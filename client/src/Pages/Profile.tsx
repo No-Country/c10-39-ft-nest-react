@@ -104,7 +104,7 @@ const Profile: FC = () => {
             backgroundImage: `url(${image})`,
           }}
           htmlFor="fileId"
-          className="group border-2 flex relative justify-center items-center bg-no-repeat bg-cover cursor-pointer w-36 h-36 rounded-full m-10 lg:m-20 lg:w-40 lg:h-40 lg:overflow-hidden"
+          className="group border-2 hover:border-none flex relative justify-center items-center bg-no-repeat bg-cover cursor-pointer w-36 h-36 rounded-full m-10 lg:m-20 lg:w-40 lg:h-40 lg:overflow-hidden"
         >
           <span className="hidden absolute w-full h-full rounded-full lg:group-hover:flex backdrop-blur-sm"></span>
           <MdEdit className="p-2 rounded-full box-content text-2xl bg-primary absolute bottom-0 right-0 lg:bg-[#fffa] border-2 lg:hidden lg:group-hover:flex lg:text-4xl lg:relative lg:border-0 lg:bg-[transparent]" />
