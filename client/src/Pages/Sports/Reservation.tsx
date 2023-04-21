@@ -23,7 +23,7 @@ const Reservation = () => {
 
   setTimeout(() => {
     setLoader(false);
-  }, 1000);
+  }, 500);
 
   return (
     <>
