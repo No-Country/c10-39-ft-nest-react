@@ -226,7 +226,7 @@ export class SportfieldsService {
         'sportsComplex.lat',
         'sportsComplex.lng',
         'sportsComplex.images',
-        `(${R} * acos(cos(radians(:lat)) * cos(radians(:lat)) * cos(radians(:lng) - radians(:lng)) + sin(radians(:lat)) * sin(radians(:lat)))) as distancia`,
+        `(${R} * acos(cos(radians(:lat)) * cos(radians(sportsComplex.lat)) * cos(radians(sportsComplex.lng) - radians(:lng)) + sin(radians(:lat)) * sin(radians(sportsComplex.lat)))) as distancia`,
       ])
       .innerJoin(
         'sportField.sport',
@@ -247,6 +247,7 @@ export class SportfieldsService {
         rHour,
         date,
       })
+      .where(`(${R} * acos(cos(radians(:lat)) * cos(radians(sportsComplex.lat)) * cos(radians(sportsComplex.lng) - radians(:lng)) + sin(radians(:lat)) * sin(radians(sportsComplex.lat)))) <= :radius`, {lat, lng, radius: 10000})
       .orderBy('distancia', 'ASC')
       .setParameter('lat', lat)
       .setParameter('lng', lng)

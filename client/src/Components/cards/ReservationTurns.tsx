@@ -13,9 +13,10 @@ interface props {
     id: string;
   };
   fieldType: string;
+  handleReload: () => void;
 }
 
-const ReservationTurns: FC<props> = ({ reservation, fieldType }) => {
+const ReservationTurns: FC<props> = ({ reservation, fieldType, handleReload }) => {
   const [showModal, setShowModal] = useState(false);
   const handleModal = () => setShowModal(!showModal);
 
@@ -26,19 +27,20 @@ const ReservationTurns: FC<props> = ({ reservation, fieldType }) => {
       footer: `<b>Advertencia:</b> &nbsp Una vez eliminada la reserva, estara disponible para otros usuarios.`,
       icon: 'warning',
       confirmButtonText: 'Eliminar',
-      confirmButtonColor: '#4CAF50',
+      confirmButtonColor: '#808080',
       showCancelButton: true,
       cancelButtonText: 'Volver',
+      cancelButtonColor: '#4CAF50'
     })
       .then((result) => {
         if (result.isConfirmed) {
           DeleteTurns({ id: reservation.id })
             .then(() => toast.success('Reserva eliminada', { duration: 2000 }))
+            .then(() => handleReload())
             .catch((err) => console.log(err));
         }
       })
       .catch((err) => console.log(err));
-
   };
 
   return (

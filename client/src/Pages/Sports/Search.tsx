@@ -19,7 +19,7 @@ import { getSportFieldsWithSport } from '../../Functions/SportFieldsQuery';
 import { type appSport } from '../../types/App.type';
 import { type inputData, validationInputs } from '../../utils/validationInputs';
 
-const API_KEY = import.meta.env.GOOGLE_API_KEY;
+const API_KEY = "AIzaSyB8rVxLxXlomXkjJ04LRtFHC63AtzSnyw0";
 
 export const Search: FC = () => {
   const navigate = useNavigate();
