@@ -46,7 +46,7 @@ const Register: FC = () => {
   const handleSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
 
-    const { newState, pass } = validationInputs({ ...state }, 5);
+    const { newState, pass } = validationInputs({ ...state }, 3);
     setState(newState);
     if (!pass) return;
 
