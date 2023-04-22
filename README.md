@@ -1,6 +1,8 @@
 # All Sport APP
 
-Es una aplicacion con el proposito de poder realizar reservas de campos deportivos como canchas de futbol, basquet, etc. En donde los usuarios puedan registrarse como propietarios y poner a disposicion de otros usuario la dispnibilidad de sus predios.
+La aplicación All Sport es una solución completa que satisface dos necesidades importantes en el mundo deportivo. En primer lugar, ofrece a los usuarios una amplia gama de opciones fáciles y rápidas para practicar deportes en sus áreas de ubicación preferidas. La aplicación es fácil de usar y permite a los usuarios buscar y reservar canchas deportivas con tan solo unos pocos clics, lo que les ahorra tiempo y esfuerzo.
+
+En segundo lugar, All Sport ayuda a los propietarios de complejos deportivos a llegar a una audiencia más amplia y hacer crecer sus negocios. La aplicación les permite crear y gestionar sus complejos deportivos de manera eficiente, lo que les permite atraer más clientes y aumentar la exposición de sus instalaciones deportivas. En resumen, All Sport es una solución integral que beneficia tanto a los usuarios como a los propietarios de complejos deportivos.
 
 ## Front End
 
