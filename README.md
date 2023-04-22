@@ -4,7 +4,7 @@ Es una aplicacion con el proposito de poder realizar reservas de campos deportiv
 
 ## Front End
 
-La parte del clientes esta realizada en Vite, con `React` y `Typescript`, se uso `Redux` para administrar el estado global de la app y las ventanas modales se uso `SweetAlert2` y `ReactHotToast`. Para la consulta de las ciudades usamos la api de `GoogleMaps`, para registrar y poder ver los locales en mapas.
+La parte del clientes esta realizada en Vite, con `React` y `Tailwind`, se uso `Redux` para administrar el estado global de la app y las ventanas modales se uso `SweetAlert2` y `ReactHotToast`. Para la consulta de las ciudades usamos la api de `GoogleMaps`, para registrar y poder ver los locales en mapas.
 
 ## Back End
 
